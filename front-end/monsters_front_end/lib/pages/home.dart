@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:monsters_front_end/pages/interaction.dart';
 
 class MainPage extends StatelessWidget {
   @override
@@ -15,7 +16,7 @@ class MainPage extends StatelessWidget {
             Tab(text: "圖鑑"),
             Tab(text: "新增"),
             Tab(text: "歷史紀錄"),
-            Tab(text: "社群"),
+            InteractionPage()
           ],
         ),
         drawer: Drawer(
@@ -111,7 +112,7 @@ class DrawerTile extends StatelessWidget {
           SizedBox(width: 24.0),
         ],
       ),
-      onTap:  () => onPressed,
+      onTap: () => onPressed,
     );
   }
 }
