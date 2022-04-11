@@ -15,12 +15,13 @@ class Monsters extends StatelessWidget {
       title: '貘sters',
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
         GitmeRebornRoutes.login: (context) => LoginPage(),
-        GitmeRebornRoutes.home:(context) => MainPage(),
+        GitmeRebornRoutes.home: (context) => MainPage(),
       },
-      onGenerateRoute: (settings){
+      onGenerateRoute: (settings) {
         switch (settings.name) {
           case GitmeRebornRoutes.root:
             return MaterialPageRoute(builder: (context) => LoginPage());
@@ -28,7 +29,7 @@ class Monsters extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => LoginPage());
         }
       },
-      debugShowCheckedModeBanner: false,  
+      debugShowCheckedModeBanner: false,
     );
   }
 }
