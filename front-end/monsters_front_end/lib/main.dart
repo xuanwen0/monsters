@@ -12,7 +12,7 @@ class Monsters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '貘sters',
+      title: '貘nsters',
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
