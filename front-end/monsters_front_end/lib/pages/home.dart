@@ -1,6 +1,8 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, avoid_print
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, avoid_print, prefer_const_constructors_in_immutables, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
+import 'package:monsters_front_end/pages/annoyance.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/manual.dart';
@@ -17,6 +19,8 @@ class _MainPageState extends State<MainPage>
   late AnimationController animationController;
   late Animation degOneTranslationAnimation;
   late Animation rotationAnimation;
+
+  LocalStorage storage = LocalStorage('current_tab');
 
   double getRadiansFromDegree(double degree) {
     double unitRadian = 57.295779513;
@@ -37,10 +41,9 @@ class _MainPageState extends State<MainPage>
     });
   }
 
-  int currentTab = 0;
   final List<Widget> screens = [
     InteractionPage(),
-    Manual(),
+    AnnoyancePage(),
     History(),
     Social(),
   ];
@@ -55,62 +58,62 @@ class _MainPageState extends State<MainPage>
         child: currentScreen,
         bucket: bucket,
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerTile(
-              icon: Icon(Icons.person),
-              text: "個人資料",
-              onPressed: () {
-                print("個人資料");
-              },
-            ),
-            DrawerTile(
-                icon: Icon(Icons.settings),
-                text: "設定",
-                onPressed: () {
-                  print("設定");
-                }),
-            DrawerTile(
-                icon: Icon(Icons.info),
-                text: "使用說明",
-                onPressed: () {
-                  print("使用說明");
-                }),
-            DrawerTile(
-                icon: Icon(Icons.thumb_up),
-                text: "使用回饋",
-                onPressed: () {
-                  print("使用回饋");
-                }),
-            DrawerTile(
-              icon: Icon(Icons.power_settings_new),
-              text: "登出",
-              onPressed: () async {
-                await showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (context) => AlertDialog(
-                    content: Text("Are you sure to exit current account"),
-                    actions: <Widget>[
-                      TextButton(
-                        child: Text("Cancel"),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                      TextButton(
-                        child: Text("Ok"),
-                        onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                            context, "/login", ModalRoute.withName("/")),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
+      // drawer: Drawer(
+      //   child: ListView(
+      //     padding: EdgeInsets.zero,
+      //     children: <Widget>[
+      //       DrawerTile(
+      //         icon: Icon(Icons.person),
+      //         text: "個人資料",
+      //         onPressed: () {
+      //           print("個人資料");
+      //         },
+      //       ),
+      //       DrawerTile(
+      //           icon: Icon(Icons.settings),
+      //           text: "設定",
+      //           onPressed: () {
+      //             print("設定");
+      //           }),
+      //       DrawerTile(
+      //           icon: Icon(Icons.info),
+      //           text: "使用說明",
+      //           onPressed: () {
+      //             print("使用說明");
+      //           }),
+      //       DrawerTile(
+      //           icon: Icon(Icons.thumb_up),
+      //           text: "使用回饋",
+      //           onPressed: () {
+      //             print("使用回饋");
+      //           }),
+      //       DrawerTile(
+      //         icon: Icon(Icons.power_settings_new),
+      //         text: "登出",
+      //         onPressed: () async {
+      //           await showDialog(
+      //             context: context,
+      //             barrierDismissible: false,
+      //             builder: (context) => AlertDialog(
+      //               content: Text("Are you sure to exit current account"),
+      //               actions: <Widget>[
+      //                 TextButton(
+      //                   child: Text("Cancel"),
+      //                   onPressed: () => Navigator.pop(context),
+      //                 ),
+      //                 TextButton(
+      //                   child: Text("Ok"),
+      //                   onPressed: () => Navigator.pushNamedAndRemoveUntil(
+      //                       context, "/login", ModalRoute.withName("/")),
+      //                 ),
+      //               ],
+      //             ),
+      //           );
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.transparent,
@@ -133,7 +136,9 @@ class _MainPageState extends State<MainPage>
                       Icons.import_contacts,
                       color: Colors.white,
                     ),
-                    onClick: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => AnnoyancePage()));
+                    }
                   ),
                 ),
               ),
@@ -153,7 +158,7 @@ class _MainPageState extends State<MainPage>
                       Icons.sentiment_dissatisfied,
                       color: Colors.white,
                     ),
-                    onClick: () {},
+                    onPressed: () {},
                   ),
                 ),
               ),
@@ -169,7 +174,7 @@ class _MainPageState extends State<MainPage>
                     Icons.add,
                     color: Colors.white,
                   ),
-                  onClick: () {
+                  onPressed: () {
                     if (animationController.isCompleted) {
                       animationController.reverse();
                     } else {
@@ -197,7 +202,7 @@ class _MainPageState extends State<MainPage>
                     onPressed: () {
                       setState(() {
                         currentScreen = InteractionPage();
-                        currentTab = 0;
+                        storage.setItem('current_tab', 0);
                       });
                     },
                     child: Column(
@@ -205,12 +210,12 @@ class _MainPageState extends State<MainPage>
                       children: [
                         Icon(
                           Icons.games,
-                          color: currentTab == 0 ? Colors.blue : Colors.grey,
+                          color: storage.getItem('current_tab') == 0 ? Colors.blue : Colors.grey,
                         ),
                         Text(
                           '互動',
                           style: TextStyle(
-                            color: currentTab == 0 ? Colors.blue : Colors.grey,
+                            color: storage.getItem('current_tab') == 0 ? Colors.blue : Colors.grey,
                           ),
                         )
                       ],
@@ -220,8 +225,8 @@ class _MainPageState extends State<MainPage>
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = Manual();
-                        currentTab = 1;
+                        currentScreen = AnnoyancePage();
+                        storage.setItem('current_tab', 1);
                       });
                     },
                     child: Column(
@@ -229,12 +234,12 @@ class _MainPageState extends State<MainPage>
                       children: [
                         Icon(
                           Icons.book,
-                          color: currentTab == 1 ? Colors.blue : Colors.grey,
+                          color: storage.getItem('current_tab') == 1 ? Colors.blue : Colors.grey,
                         ),
                         Text(
                           '圖鑑',
                           style: TextStyle(
-                            color: currentTab == 1 ? Colors.blue : Colors.grey,
+                            color: storage.getItem('current_tab') == 1 ? Colors.blue : Colors.grey,
                           ),
                         )
                       ],
@@ -250,7 +255,7 @@ class _MainPageState extends State<MainPage>
                     onPressed: () {
                       setState(() {
                         currentScreen = History();
-                        currentTab = 2;
+                        storage.setItem('current_tab', 2);
                       });
                     },
                     child: Column(
@@ -258,12 +263,12 @@ class _MainPageState extends State<MainPage>
                       children: [
                         Icon(
                           Icons.history,
-                          color: currentTab == 2 ? Colors.blue : Colors.grey,
+                          color: storage.getItem('current_tab') == 2 ? Colors.blue : Colors.grey,
                         ),
                         Text(
                           '歷史紀錄',
                           style: TextStyle(
-                            color: currentTab == 2 ? Colors.blue : Colors.grey,
+                            color: storage.getItem('current_tab') == 2 ? Colors.blue : Colors.grey,
                           ),
                         )
                       ],
@@ -273,8 +278,8 @@ class _MainPageState extends State<MainPage>
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = Social();
-                        currentTab = 3;
+                        currentScreen = History();
+                        storage.setItem('current_tab', 3);
                       });
                     },
                     child: Column(
@@ -282,12 +287,12 @@ class _MainPageState extends State<MainPage>
                       children: [
                         Icon(
                           Icons.social_distance_outlined,
-                          color: currentTab == 3 ? Colors.blue : Colors.grey,
+                          color: storage.getItem('current_tab') == 3 ? Colors.blue : Colors.grey,
                         ),
                         Text(
                           '社交',
                           style: TextStyle(
-                            color: currentTab == 3 ? Colors.blue : Colors.grey,
+                            color: storage.getItem('current_tab') == 3 ? Colors.blue : Colors.grey,
                           ),
                         )
                       ],
@@ -303,43 +308,43 @@ class _MainPageState extends State<MainPage>
   }
 }
 
-class DrawerTile extends StatelessWidget {
-  final Icon icon;
-  final String text;
-  final Function onPressed;
+// class DrawerTile extends StatelessWidget {
+//   final Icon icon;
+//   final String text;
+//   final Function onPressed;
 
-  const DrawerTile(
-      {Key? key, required this.icon, this.text = "", required this.onPressed})
-      : super(key: key);
+//   const DrawerTile(
+//       {Key? key, required this.icon, this.text = "", required this.onPressed})
+//       : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Row(
-        children: <Widget>[
-          icon,
-          Text(text),
-          SizedBox(width: 24.0),
-        ],
-      ),
-      onTap: () => onPressed,
-    );
-  }
-}
-
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListTile(
+//       title: Row(
+//         children: <Widget>[
+//           icon,
+//           Text(text),
+//           SizedBox(width: 24.0),
+//         ],
+//       ),
+//       onTap: () => onPressed,
+//     );
+//   }
+// }
 class CircularButton extends StatelessWidget {
   final double width;
   final double height;
   final Color color;
   final Icon icon;
-  final void Function() onClick;
+  final Function() onPressed;
 
-  CircularButton(
-      {required this.color,
-      required this.width,
-      required this.height,
-      required this.icon,
-      required this.onClick});
+  CircularButton({
+    required this.color,
+    required this.width,
+    required this.height,
+    required this.icon,
+    required this.onPressed, 
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -347,7 +352,7 @@ class CircularButton extends StatelessWidget {
       decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       width: width,
       height: height,
-      child: IconButton(icon: icon, onPressed: onClick, enableFeedback: true),
+      child: IconButton(icon: icon, onPressed: onPressed, enableFeedback: true),
     );
   }
 }

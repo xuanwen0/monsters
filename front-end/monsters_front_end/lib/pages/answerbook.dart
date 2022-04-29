@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, unnecessary_string_interpolations, prefer_const_constructors, file_names
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 
@@ -76,7 +78,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          RaisedButton(
+          TextButton(
             child: Text('看答案'),
             onPressed: changedata,
           ),

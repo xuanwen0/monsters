@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:monsters_front_end/pages/psychologicial_game.dart';
 import 'answerbook.dart';
@@ -16,14 +18,14 @@ class _InteractionPage extends StatelessWidget {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        RaisedButton(
+        TextButton(
           child: Text('解答之書'),
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => AnswerbookPage()));
           },
         ),
-        RaisedButton(
+        TextButton(
           child: Text('心理小遊戲'),
           onPressed: () {
             Navigator.push(context,

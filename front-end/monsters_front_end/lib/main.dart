@@ -1,13 +1,15 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/login.dart';
 import 'package:monsters_front_end/routes.dart';
 
+
 void main() {
   runApp(Monsters());
 }
 
-// ignore: use_key_in_widget_constructors
 class Monsters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
