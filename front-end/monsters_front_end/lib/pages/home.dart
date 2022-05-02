@@ -222,6 +222,7 @@ class _MainPageState extends State<MainPage>
                           ),
                           onClick: () {
                             print('First Button');
+                            animationController.reverse();
                           },
                         ),
                       ),
@@ -243,7 +244,7 @@ class _MainPageState extends State<MainPage>
                             color: Colors.white,
                           ),
                           onClick: () {
-                            print('Second button');
+                            animationController.reverse();
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
