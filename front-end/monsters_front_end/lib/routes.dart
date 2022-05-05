@@ -1,6 +1,6 @@
-class GitmeRebornRoutes{
+class GitmeRebornRoutes {
   static const root = "/";
   static const login = "/login";
   static const home = "/home";
-  static const interactive = "/interactive"; 
+  static const interaction = "/interaction";
 }
