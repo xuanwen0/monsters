@@ -4,6 +4,7 @@ import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
+import 'package:monsters_front_end/pages/monster_detail.dart';
 import 'package:monsters_front_end/pages/social.dart';
 
 class Manual extends StatefulWidget {
@@ -232,7 +233,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  //pageBuilder: () => XD_monstersBook_detail(),
+                  pageBuilder: () => Monster_detail(),
                 ),
               ],
               child: Stack(
