@@ -65,6 +65,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icon_top.png
+    - assets/monsters_book_monster.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

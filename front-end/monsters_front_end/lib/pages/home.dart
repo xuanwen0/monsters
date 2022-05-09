@@ -83,197 +83,6 @@ class _MainPageState extends State<MainPage>
               color: const Color(0xffffed97),
             ),
           ),
-          //互動的圓
-          Pinned.fromPins(
-            Pin(size: 69.0, start: 9.0),
-            Pin(size: 68.0, end: 5.0),
-            child: PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => InteractionPage(),
-                ),
-              ],
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xffffffff),
-                  borderRadius:
-                      BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                ),
-              ),
-            ),
-          ),
-          //圖鑑的圓
-          Pinned.fromPins(
-            Pin(size: 69.0, middle: 0.2624),
-            Pin(size: 68.0, end: 5.0),
-            child: PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => Manual(),
-                ),
-              ],
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xffffffff),
-                  borderRadius:
-                      BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                ),
-              ),
-            ),
-          ),
-          //歷史紀錄的圓
-          Pinned.fromPins(
-            Pin(size: 69.0, middle: 0.7347),
-            Pin(size: 68.0, end: 5.0),
-            child: PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => History(),
-                ),
-              ],
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xffffffff),
-                  borderRadius:
-                      BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                ),
-              ),
-            ),
-          ),
-          //新增的圓
-          Pinned.fromPins(
-            Pin(size: 69.0, middle: 0.4985),
-            Pin(size: 68.0, end: 5.0),
-            child: Container(
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: <Widget>[
-                  Positioned(
-                      child: Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: <Widget>[
-                      IgnorePointer(
-                        child: Container(
-                          color: Colors.transparent,
-                          height: 150.0,
-                          width: 150.0,
-                        ),
-                      ),
-                      Transform(
-                        transform: Matrix4.rotationZ(
-                            getRadiansFromDegree(rotationAnimation.value)),
-                        alignment: Alignment.center,
-                        child: CircularButton(
-                          color: Color(0xffffffff),
-                          width: 70,
-                          height: 70,
-                          icon: Icon(
-                            Icons.add_rounded,
-                            color: Color(0xffffbb00),
-                            size: 50,
-                          ),
-                          onClick: () {
-                            if (animationController.isCompleted) {
-                              animationController.reverse();
-                            } else {
-                              animationController.forward();
-                            }
-                          },
-                        ),
-                      ),
-                      Transform.translate(
-                        offset: Offset.fromDirection(getRadiansFromDegree(235),
-                            degOneTranslationAnimation.value * 55),
-                        child: Transform(
-                          transform: Matrix4.rotationZ(
-                              getRadiansFromDegree(rotationAnimation.value))
-                            ..scale(degOneTranslationAnimation.value),
-                          alignment: Alignment.center,
-                          child: CircularButton(
-                            color: Colors.orangeAccent,
-                            width: 60,
-                            height: 60,
-                            icon: Icon(
-                              Icons.import_contacts,
-                              color: Colors.white,
-                              size: 40,
-                            ),
-                            onClick: () {
-                              print('First Button');
-                              animationController.reverse();
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => add_diary()));
-                            },
-                          ),
-                        ),
-                      ),
-                      Transform.translate(
-                        offset: Offset.fromDirection(getRadiansFromDegree(305),
-                            degTwoTranslationAnimation.value * 55),
-                        child: Transform(
-                          transform: Matrix4.rotationZ(
-                              getRadiansFromDegree(rotationAnimation.value))
-                            ..scale(degTwoTranslationAnimation.value),
-                          alignment: Alignment.center,
-                          child: CircularButton(
-                            color: Colors.blueAccent,
-                            width: 60,
-                            height: 60,
-                            icon: Icon(
-                              Icons.sentiment_dissatisfied,
-                              color: Colors.white,
-                              size: 40,
-                            ),
-                            onClick: () {
-                              print('Second button');
-                              animationController.reverse();
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AnnoyancePage()));
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ))
-                ],
-              ),
-            ),
-          ),
-          //社群的圓
-          Pinned.fromPins(
-            Pin(size: 69.0, end: 10.0),
-            Pin(size: 68.0, end: 5.0),
-            child: PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => Social(),
-                ),
-              ],
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xffffffff),
-                  borderRadius:
-                      BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                ),
-              ),
-            ),
-          ),
           //logo
           Pinned.fromPins(
             Pin(start: 74.0, end: 73.0),
@@ -340,141 +149,318 @@ class _MainPageState extends State<MainPage>
           ),
           //圖鑑
           Pinned.fromPins(
-            Pin(size: 24.0, middle: 0.2887),
-            Pin(size: 46.7, end: 14.0),
+            Pin(size: 69.0, middle: 0.2624),
+            Pin(size: 68.0, end: 5.0),
             child:
                 // Adobe XD layer: 'book' (group)
-                Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(start: 0.3, end: 0.0),
-                  Pin(size: 27.1, start: 0.0),
-                  child:
-                      // Adobe XD layer: 'Icon awesome-book' (shape)
-                      SvgPicture.string(
-                    _svg_i02mi2,
-                    allowDrawingOutsideViewBox: true,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(start: 0.0, end: 0.0),
-                  Pin(size: 16.0, end: 0.0),
-                  child: Text(
-                    '圖鑑',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 12,
-                      color: const Color(0xffa0522d),
-                    ),
-                    softWrap: false,
-                  ),
+                PageLink(
+              links: [
+                PageLinkInfo(
+                  transition: LinkTransition.Fade,
+                  ease: Curves.easeOut,
+                  duration: 0.3,
+                  pageBuilder: () => Manual(),
                 ),
               ],
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xffffffff),
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(-0.015, -0.398),
+                    child: SizedBox(
+                      width: 24.0,
+                      height: 27.0,
+                      child:
+                          // Adobe XD layer: 'Icon awesome-book' (shape)
+                          SvgPicture.string(
+                        _svg_i02mi2,
+                        allowDrawingOutsideViewBox: true,
+                      ),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 24.0, middle: 0.4889),
+                    Pin(size: 16.0, end: 9.0),
+                    child: Text(
+                      '圖鑑',
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 12,
+                        color: const Color(0xffa0522d),
+                      ),
+                      softWrap: false,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           //歷史紀錄
           Pinned.fromPins(
-            Pin(size: 48.0, middle: 0.7253),
-            Pin(size: 47.2, end: 14.0),
+            Pin(size: 69.0, middle: 0.7347),
+            Pin(size: 68.0, end: 5.0),
             child:
-                // Adobe XD layer: 'history' (group)
-                Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(start: 0.0, end: 0.0),
-                  Pin(size: 16.0, end: 0.0),
-                  child: Text(
-                    '歷史紀錄',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 12,
-                      color: const Color(0xffa0522d),
-                    ),
-                    softWrap: false,
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(start: 10.0, end: 10.0),
-                  Pin(size: 28.0, start: 0.0),
-                  child:
-                      // Adobe XD layer: 'Icon awesome-history' (shape)
-                      SvgPicture.string(
-                    _svg_uat9w,
-                    allowDrawingOutsideViewBox: true,
-                    fit: BoxFit.fill,
-                  ),
+                // Adobe XD layer: 'book' (group)
+                PageLink(
+              links: [
+                PageLinkInfo(
+                  transition: LinkTransition.Fade,
+                  ease: Curves.easeOut,
+                  duration: 0.3,
+                  pageBuilder: () => History(),
                 ),
               ],
+              child:
+                  // Adobe XD layer: 'history' (group)
+                  Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xffffffff),
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 48.0, end: 9.0),
+                    Pin(size: 16.0, end: 9.0),
+                    child: Text(
+                      '歷史紀錄',
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 12,
+                        color: const Color(0xffa0522d),
+                      ),
+                      softWrap: false,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(0.073, -0.408),
+                    child: SizedBox(
+                      width: 28.0,
+                      height: 28.0,
+                      child:
+                          // Adobe XD layer: 'Icon awesome-history' (shape)
+                          SvgPicture.string(
+                        _svg_uat9w,
+                        allowDrawingOutsideViewBox: true,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           //社群
           Pinned.fromPins(
-            Pin(size: 35.0, end: 27.0),
-            Pin(size: 44.3, end: 14.0),
+            Pin(size: 69.0, end: 10.0),
+            Pin(size: 68.0, end: 5.0),
             child:
                 // Adobe XD layer: 'social' (group)
-                Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 24.0, end: 5.0),
-                  Pin(size: 16.0, end: 0.0),
-                  child: Text(
-                    '社群',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 12,
-                      color: const Color(0xffa0522d),
-                    ),
-                    softWrap: false,
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(start: 0.0, end: 0.0),
-                  Pin(size: 22.3, start: 0.0),
-                  child:
-                      // Adobe XD layer: 'Icon material-people' (shape)
-                      SvgPicture.string(
-                    _svg_kzt9m,
-                    allowDrawingOutsideViewBox: true,
-                    fit: BoxFit.fill,
-                  ),
+                PageLink(
+              links: [
+                PageLinkInfo(
+                  transition: LinkTransition.Fade,
+                  ease: Curves.easeOut,
+                  duration: 0.3,
+                  pageBuilder: () => Social(),
                 ),
               ],
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xffffffff),
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 24.0, middle: 0.5111),
+                    Pin(size: 16.0, end: 9.0),
+                    child: Text(
+                      '社群',
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 12,
+                        color: const Color(0xffa0522d),
+                      ),
+                      softWrap: false,
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(start: 17.0, end: 17.0),
+                    Pin(size: 22.3, middle: 0.3217),
+                    child:
+                        // Adobe XD layer: 'Icon material-people' (shape)
+                        SvgPicture.string(
+                      _svg_kzt9m,
+                      allowDrawingOutsideViewBox: true,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           //互動
           Pinned.fromPins(
-            Pin(size: 28.7, start: 29.0),
-            Pin(size: 47.5, end: 14.0),
+            Pin(size: 69.0, start: 9.0),
+            Pin(size: 68.0, end: 5.0),
             child:
                 // Adobe XD layer: 'interactive' (group)
-                Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(start: 3.0, end: 1.7),
-                  Pin(size: 16.0, end: 0.0),
-                  child: Text(
-                    '互動',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 12,
-                      color: const Color(0xffa0522d),
+                PageLink(
+              links: [
+                PageLinkInfo(
+                  transition: LinkTransition.Fade,
+                  ease: Curves.easeOut,
+                  duration: 0.3,
+                  pageBuilder: () => InteractionPage(),
+                ),
+              ],
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xffffffff),
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
-                    softWrap: false,
                   ),
-                ),
-                Pinned.fromPins(
-                  Pin(start: 0.0, end: 0.0),
-                  Pin(size: 28.7, start: 0.0),
-                  child:
-                      // Adobe XD layer: 'Icon material-gamep…' (shape)
-                      SvgPicture.string(
-                    _svg_a3julx,
-                    allowDrawingOutsideViewBox: true,
-                    fit: BoxFit.fill,
+                  Pinned.fromPins(
+                    Pin(size: 24.0, middle: 0.5111),
+                    Pin(size: 16.0, end: 9.0),
+                    child: Text(
+                      '互動',
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 12,
+                        color: const Color(0xffa0522d),
+                      ),
+                      softWrap: false,
+                    ),
                   ),
-                ),
+                  Align(
+                    alignment: Alignment(-0.008, -0.415),
+                    child: SizedBox(
+                      width: 29.0,
+                      height: 29.0,
+                      child:
+                          // Adobe XD layer: 'Icon material-gamep…' (shape)
+                          SvgPicture.string(
+                        _svg_a3julx,
+                        allowDrawingOutsideViewBox: true,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          //新增
+          Pinned.fromPins(
+            Pin(size: 69.0, middle: 0.4985),
+            Pin(size: 68.0, end: 5.0),
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                Positioned(
+                    child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: <Widget>[
+                    IgnorePointer(
+                      child: Container(
+                        color: Colors.transparent,
+                        height: 150.0,
+                        width: 150.0,
+                      ),
+                    ),
+                    Transform(
+                      transform: Matrix4.rotationZ(
+                          getRadiansFromDegree(rotationAnimation.value)),
+                      alignment: Alignment.center,
+                      child: CircularButton(
+                        color: const Color(0xffffffff),
+                        width: 70,
+                        height: 70,
+                        icon: const Icon(
+                          Icons.add_rounded,
+                          color: const Color(0xffffbb00),
+                          size: 50,
+                        ),
+                        onClick: () {
+                          if (animationController.isCompleted) {
+                            animationController.reverse();
+                          } else {
+                            animationController.forward();
+                          }
+                        },
+                      ),
+                    ),
+                    Transform.translate(
+                      offset: Offset.fromDirection(getRadiansFromDegree(235),
+                          degOneTranslationAnimation.value * 55),
+                      child: Transform(
+                        transform: Matrix4.rotationZ(
+                            getRadiansFromDegree(rotationAnimation.value))
+                          ..scale(degOneTranslationAnimation.value),
+                        alignment: Alignment.center,
+                        child: CircularButton(
+                          color: Colors.orangeAccent,
+                          width: 60,
+                          height: 60,
+                          icon: const Icon(
+                            Icons.import_contacts,
+                            color: Colors.white,
+                            size: 40,
+                          ),
+                          onClick: () {
+                            print('First Button');
+                            animationController.reverse();
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => Add_diary()));
+                          },
+                        ),
+                      ),
+                    ),
+                    Transform.translate(
+                      offset: Offset.fromDirection(getRadiansFromDegree(305),
+                          degTwoTranslationAnimation.value * 55),
+                      child: Transform(
+                        transform: Matrix4.rotationZ(
+                            getRadiansFromDegree(rotationAnimation.value))
+                          ..scale(degTwoTranslationAnimation.value),
+                        alignment: Alignment.center,
+                        child: CircularButton(
+                          color: Colors.blueAccent,
+                          width: 60,
+                          height: 60,
+                          icon: const Icon(
+                            Icons.sentiment_dissatisfied,
+                            color: Colors.white,
+                            size: 40,
+                          ),
+                          onClick: () {
+                            print('Second button');
+                            animationController.reverse();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AnnoyancePage()));
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ))
               ],
             ),
           ),
@@ -483,6 +469,7 @@ class _MainPageState extends State<MainPage>
     );
   }
 }
+
 // drawer: Drawer(
 //   child: ListView(
 //     padding: EdgeInsets.zero,
