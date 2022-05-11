@@ -1,11 +1,33 @@
+spring:
+  datasource:
+    url: jdbc:mysql://140.131.114.242:3306/111- monsters?useSSL=false&serverTimezone=Asia/Taipei
+    username: monsters
+    password: MONsters@ntub108
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: true
+    show-sql: false
+    generate-ddl: false
+    hibernate:
+      dialect: org.hibernate.dialect.MySQLDialect
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: ${spring.jpa.database-platform}
+        hbm2ddl:
+          auto: ${spring.jpa.hibernate.ddl-auto}
+        show_sql: ${spring.jpa.show-sql}
+        format_sql: ${spring.jpa.show-sql}
 server:
   port: 8080
   delegate-port: 8080
   servlet:
     encoding:
       charset: UTF-8
-  cors:
-    origins: http://localhost:8080
+  cores:
+    origins: >
+      http://localhost:8080
     http-methods:
       - 'GET'
       - 'POST'
@@ -17,27 +39,3 @@ server:
       - '*'
     export-http-headers:
       - 'X-Auth-Token'
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/monsters?useSSL=false&serverTimezone=Asia/Taipei
-    username: root
-    password: czb96800528
-    driverClassName: com.mysql.cj.jdbc.Driver
-  jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-    open-in-view: true
-    show-sql: false
-    generate-ddl: false
-    hibernate:
-      ddl-auto: none
-      naming:
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    properties:
-      hibernate:
-        dialect: ${spring.jpa.database-platform}
-        hbm2ddl:
-          auto: ${spring.jpa.hibernate.ddl-auto}
-        show_sql: ${spring.jpa.show-sql}
-        format_sql: ${spring.jpa.show-sql}

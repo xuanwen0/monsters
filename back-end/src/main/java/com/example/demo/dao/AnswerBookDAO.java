@@ -1,8 +1,8 @@
 package com.example.demo.dao;
 
-import com.example.demo.entity.Annoyance;
+import com.example.demo.entity.AnswerBook;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-public interface AnnoyanceDAO extends JpaRepository<Annoyance, Integer> {
+public interface AnswerBookDAO extends JpaRepository<AnswerBook, Integer> {
 }
