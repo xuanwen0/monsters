@@ -2,6 +2,8 @@ import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monsters_front_end/pages/dailyTest_correct.dart';
+import 'package:monsters_front_end/pages/dailyTest_wrong.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 
 class Daily_test extends StatefulWidget {
@@ -73,21 +75,29 @@ class _Daily_testState extends State<Daily_test> {
                 alignment: WrapAlignment.center,
                 spacing: 20,
                 runSpacing: 20,
-                children: [{}, {}, {}, {}].map((itemData) {
-                  return SizedBox(
+                children: [
+                  SizedBox(
                     width: 357.0,
                     height: 86.0,
                     child: Stack(
                       children: <Widget>[
-                        //長條
-                        Container(
-                          decoration: BoxDecoration(
-                            color: const Color(0xffffffff),
-                            borderRadius: BorderRadius.circular(22.0),
+                        PageLink(
+                          links: [
+                            PageLinkInfo(
+                              transition: LinkTransition.Fade,
+                              ease: Curves.easeOut,
+                              duration: 0.3,
+                              pageBuilder: () => DailyTest_correct(),
+                            ),
+                          ],
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xffffffff),
+                              borderRadius: BorderRadius.circular(22.0),
+                            ),
+                            margin: EdgeInsets.fromLTRB(13.0, 17.0, 0.0, 18.0),
                           ),
-                          margin: EdgeInsets.fromLTRB(13.0, 17.0, 0.0, 18.0),
                         ),
-                        //圓
                         Pinned.fromPins(
                           Pin(size: 87.0, start: 0.0),
                           Pin(start: 0.0, end: 0.0),
@@ -101,11 +111,119 @@ class _Daily_testState extends State<Daily_test> {
                         ),
                       ],
                     ),
-                  );
-                }).toList(),
+                  ),
+                  SizedBox(
+                    width: 357.0,
+                    height: 86.0,
+                    child: Stack(
+                      children: <Widget>[
+                        PageLink(
+                          links: [
+                            PageLinkInfo(
+                              transition: LinkTransition.Fade,
+                              ease: Curves.easeOut,
+                              duration: 0.3,
+                              pageBuilder: () => DailyTest_wrong(),
+                            ),
+                          ],
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xffffffff),
+                              borderRadius: BorderRadius.circular(22.0),
+                            ),
+                            margin: EdgeInsets.fromLTRB(13.0, 17.0, 0.0, 18.0),
+                          ),
+                        ),
+                        Pinned.fromPins(
+                          Pin(size: 87.0, start: 0.0),
+                          Pin(start: 0.0, end: 0.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xffffffff),
+                              borderRadius: BorderRadius.all(
+                                  Radius.elliptical(9999.0, 9999.0)),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 357.0,
+                    height: 86.0,
+                    child: Stack(
+                      children: <Widget>[
+                        PageLink(
+                          links: [
+                            PageLinkInfo(
+                              transition: LinkTransition.Fade,
+                              ease: Curves.easeOut,
+                              duration: 0.3,
+                              pageBuilder: () => DailyTest_wrong(),
+                            ),
+                          ],
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xffffffff),
+                              borderRadius: BorderRadius.circular(22.0),
+                            ),
+                            margin: EdgeInsets.fromLTRB(13.0, 17.0, 0.0, 18.0),
+                          ),
+                        ),
+                        Pinned.fromPins(
+                          Pin(size: 87.0, start: 0.0),
+                          Pin(start: 0.0, end: 0.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xffffffff),
+                              borderRadius: BorderRadius.all(
+                                  Radius.elliptical(9999.0, 9999.0)),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 357.0,
+                    height: 86.0,
+                    child: Stack(
+                      children: <Widget>[
+                        PageLink(
+                          links: [
+                            PageLinkInfo(
+                              transition: LinkTransition.Fade,
+                              ease: Curves.easeOut,
+                              duration: 0.3,
+                              pageBuilder: () => DailyTest_wrong(),
+                            ),
+                          ],
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xffffffff),
+                              borderRadius: BorderRadius.circular(22.0),
+                            ),
+                            margin: EdgeInsets.fromLTRB(13.0, 17.0, 0.0, 18.0),
+                          ),
+                        ),
+                        Pinned.fromPins(
+                          Pin(size: 87.0, start: 0.0),
+                          Pin(start: 0.0, end: 0.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xffffffff),
+                              borderRadius: BorderRadius.all(
+                                  Radius.elliptical(9999.0, 9999.0)),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
+          ), //A
           //A
           Pinned.fromPins(
             Pin(size: 26.0, start: 58.0),
