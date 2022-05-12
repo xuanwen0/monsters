@@ -13,6 +13,7 @@ import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/psychologicial_game.dart';
 import 'package:monsters_front_end/pages/psychologicial_test.dart';
 import 'package:monsters_front_end/pages/social.dart';
+import 'package:monsters_front_end/state/drawer.dart';
 import 'answerbook.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -69,61 +70,7 @@ class _InteractionPageState extends State<InteractionPage>
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       key: _scaffoldKEy,
-      endDrawer: Drawer(
-        backgroundColor: Color(0xfffffed4),
-        child: ListView(children: [
-          ListTile(
-            title: Text(
-              "個人資料",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Drawer_userInformation()));
-            },
-          ),
-          ListTile(
-            title: Text(
-              "設定",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Drawer_settings()));
-            },
-          ),
-          ListTile(
-            title: Text(
-              "使用說明",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "使用回饋",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-          ),
-        ]),
-      ),
+      endDrawer: GetDrawer(context),
       body: Stack(
         children: <Widget>[
           //標題
@@ -693,7 +640,7 @@ class CircularButton extends StatelessWidget {
   final Icon icon;
   final void Function() onClick;
 
-  CircularButton(
+  const CircularButton(
       {required this.color,
       required this.width,
       required this.height,

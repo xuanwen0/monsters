@@ -64,7 +64,7 @@ class _Annoyance_resolveState extends State<Annoyance_resolve> {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image:
-                                  const AssetImage('assets/eaten_Badthing.png'),
+                                  const AssetImage('assets/image/eaten_Badthing.png'),
                               fit: BoxFit.fill,
                             ),
                           ),

@@ -11,6 +11,7 @@ import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/social.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monsters_front_end/state/drawer.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -67,61 +68,7 @@ class _MainPageState extends State<MainPage>
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       key: _scaffoldKEy,
-      endDrawer: Drawer(
-        backgroundColor: Color(0xfffffed4),
-        child: ListView(children: [
-          ListTile(
-            title: Text(
-              "個人資料",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Drawer_userInformation()));
-            },
-          ),
-          ListTile(
-            title: Text(
-              "設定",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Drawer_settings()));
-            },
-          ),
-          ListTile(
-            title: Text(
-              "使用說明",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "使用回饋",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-          ),
-        ]),
-      ),
+      endDrawer: GetDrawer(context),
       body: Stack(
         children: <Widget>[
           //抽屜
@@ -162,7 +109,7 @@ class _MainPageState extends State<MainPage>
                 Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/icon_top.png'),
+                  image: AssetImage('assets/image/icon_top.png'),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -472,10 +419,6 @@ class _MainPageState extends State<MainPage>
                           onClick: () {
                             print('Second button');
                             animationController.reverse();
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => Add_diary()));
                           },
                         ),
                       ),
@@ -490,86 +433,6 @@ class _MainPageState extends State<MainPage>
     );
   }
 }
-
-// drawer: Drawer(
-//   child: ListView(
-//     padding: EdgeInsets.zero,
-//     children: <Widget>[
-//       DrawerTile(
-//         icon: Icon(Icons.person),
-//         text: "個人資料",
-//         onPressed: () {
-//           print("個人資料");
-//         },
-//       ),
-//       DrawerTile(
-//           icon: Icon(Icons.settings),
-//           text: "設定",
-//           onPressed: () {
-//             print("設定");
-//           }),
-//       DrawerTile(
-//           icon: Icon(Icons.info),
-//           text: "使用說明",
-//           onPressed: () {
-//             print("使用說明");
-//           }),
-//       DrawerTile(
-//           icon: Icon(Icons.thumb_up),
-//           text: "使用回饋",
-//           onPressed: () {
-//             print("使用回饋");
-//           }),
-//       DrawerTile(
-//         icon: Icon(Icons.power_settings_new),
-//         text: "登出",
-//         onPressed: () async {
-//           await showDialog(
-//             context: context,
-//             barrierDismissible: false,
-//             builder: (context) => AlertDialog(
-//               content: Text("Are you sure to exit current account"),
-//               actions: <Widget>[
-//                 TextButton(
-//                   child: Text("Cancel"),
-//                   onPressed: () => Navigator.pop(context),
-//                 ),
-//                 TextButton(
-//                   child: Text("Ok"),
-//                   onPressed: () => Navigator.pushNamedAndRemoveUntil(
-//                       context, "/login", ModalRoute.withName("/")),
-//                 ),
-//               ],
-//             ),
-//           );
-//         },
-//       ),
-//     ],
-//   ),
-// ),
-// class DrawerTile extends StatelessWidget {
-//   final Icon icon;
-//   final String text;
-//   final Function onPressed;
-
-//   const DrawerTile(
-//       {Key? key, required this.icon, this.text = "", required this.onPressed})
-//       : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListTile(
-//       title: Row(
-//         children: <Widget>[
-//           icon,
-//           Text(text),
-//           SizedBox(width: 24.0),
-//         ],
-//       ),
-//       onTap: () => onPressed,
-//     );
-//   }
-// }
 class CircularButton extends StatelessWidget {
   final double width;
   final double height;

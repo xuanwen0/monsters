@@ -9,6 +9,7 @@ import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/monster_detail.dart';
 import 'package:monsters_front_end/pages/social.dart';
+import 'package:monsters_front_end/state/drawer.dart';
 
 class Manual extends StatefulWidget {
   @override
@@ -62,61 +63,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       key: _scaffoldKEy,
-      endDrawer: Drawer(
-        backgroundColor: Color(0xfffffed4),
-        child: ListView(children: [
-          ListTile(
-            title: Text(
-              "個人資料",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Drawer_userInformation()));
-            },
-          ),
-          ListTile(
-            title: Text(
-              "設定",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Drawer_settings()));
-            },
-          ),
-          ListTile(
-            title: Text(
-              "使用說明",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "使用回饋",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-          ),
-        ]),
-      ),
+      endDrawer: GetDrawer(context),
       body: Stack(
         children: <Widget>[
           //標題
@@ -278,7 +225,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: const AssetImage(
-                              'assets/monsters_book_monster.png'),
+                              'assets/image/monsters_book_monster.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -365,7 +312,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: const AssetImage(
-                            'assets/monsters_book_monster.png'),
+                            'assets/image/monsters_book_monster.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -451,7 +398,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: const AssetImage(
-                            'assets/monsters_book_monster.png'),
+                            'assets/image/monsters_book_monster.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -537,7 +484,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: const AssetImage(
-                            'assets/monsters_book_monster.png'),
+                            'assets/image/monsters_book_monster.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
