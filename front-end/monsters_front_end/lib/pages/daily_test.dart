@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, camel_case_types, constant_identifier_names
-
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
@@ -20,6 +18,7 @@ class _Daily_testState extends State<Daily_test> {
       backgroundColor: const Color(0xfffffed4),
       body: Stack(
         children: <Widget>[
+          //標題
           Pinned.fromPins(
             Pin(size: 188.0, middle: 0.5),
             Pin(size: 63.0, start: 11.0),
@@ -33,6 +32,7 @@ class _Daily_testState extends State<Daily_test> {
               softWrap: false,
             ),
           ),
+          //題目白底
           Pinned.fromPins(
             Pin(start: 34.0, end: 34.0),
             Pin(size: 195.0, start: 111.0),
@@ -43,10 +43,12 @@ class _Daily_testState extends State<Daily_test> {
               ),
             ),
           ),
+          //箭頭
           Pinned.fromPins(
             Pin(size: 45.6, start: 14.4),
             Pin(size: 41.1, start: 23.4),
             child:
+                // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
                 PageLink(
               links: [
                 PageLinkInfo(
@@ -63,6 +65,7 @@ class _Daily_testState extends State<Daily_test> {
               ),
             ),
           ),
+          //答案選項白底
           Pinned.fromPins(
             Pin(start: 28.0, end: 27.0),
             Pin(size: 409.0, end: 41.0),
@@ -99,11 +102,24 @@ class _Daily_testState extends State<Daily_test> {
                           Pin(size: 87.0, start: 0.0),
                           Pin(start: 0.0, end: 0.0),
                           child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color(0xffffffff),
+                            decoration: const BoxDecoration(
+                              color: Color(0xffffffff),
                               borderRadius: BorderRadius.all(
                                   Radius.elliptical(9999.0, 9999.0)),
                             ),
+                          ),
+                        ),
+                        Pinned.fromPins(
+                          Pin(size: 26.0, start: 30.0),
+                          Pin(size: 53.0, middle: 0.35),
+                          child: const Text(
+                            'A',
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 40,
+                              color: Color(0xffa0522d),
+                            ),
+                            softWrap: false,
                           ),
                         ),
                       ],
@@ -142,6 +158,19 @@ class _Daily_testState extends State<Daily_test> {
                             ),
                           ),
                         ),
+                        Pinned.fromPins(
+                          Pin(size: 23.0, start: 30.0),
+                          Pin(size: 53.0, middle: 0.35),
+                          child: Text(
+                            'B',
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 40,
+                              color: const Color(0xffa0522d),
+                            ),
+                            softWrap: false,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -178,6 +207,19 @@ class _Daily_testState extends State<Daily_test> {
                             ),
                           ),
                         ),
+                        Pinned.fromPins(
+                          Pin(size: 25.0, start: 30.0),
+                          Pin(size: 53.0, middle: 0.35),
+                          child: Text(
+                            'C',
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 40,
+                              color: const Color(0xffa0522d),
+                            ),
+                            softWrap: false,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -212,6 +254,19 @@ class _Daily_testState extends State<Daily_test> {
                               borderRadius: BorderRadius.all(
                                   Radius.elliptical(9999.0, 9999.0)),
                             ),
+                          ),
+                        ),
+                        Pinned.fromPins(
+                          Pin(size: 28.0, start: 30.0),
+                          Pin(size: 53.0, middle: 0.35),
+                          child: Text(
+                            'D',
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 40,
+                              color: const Color(0xffa0522d),
+                            ),
+                            softWrap: false,
                           ),
                         ),
                       ],
@@ -219,58 +274,6 @@ class _Daily_testState extends State<Daily_test> {
                   ),
                 ],
               ),
-            ),
-          ),
-          Pinned.fromPins(
-            Pin(size: 26.0, start: 58.0),
-            Pin(size: 53.0, middle: 0.4717),
-            child: Text(
-              'A',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 40,
-                color: const Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
-          Pinned.fromPins(
-            Pin(size: 23.0, start: 59.0),
-            Pin(size: 53.0, middle: 0.6207),
-            child: Text(
-              'B',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 40,
-                color: const Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
-          Pinned.fromPins(
-            Pin(size: 25.0, start: 56.0),
-            Pin(size: 53.0, middle: 0.7655),
-            child: Text(
-              'C',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 40,
-                color: const Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
-          Pinned.fromPins(
-            Pin(size: 28.0, start: 57.0),
-            Pin(size: 53.0, end: 65.0),
-            child: Text(
-              'D',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 40,
-                color: const Color(0xffa0522d),
-              ),
-              softWrap: false,
             ),
           ),
         ],
