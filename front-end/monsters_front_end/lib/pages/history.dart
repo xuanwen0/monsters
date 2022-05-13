@@ -9,6 +9,8 @@ import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/social.dart';
 import 'package:monsters_front_end/state/drawer.dart';
 
+import 'annoyanceChat.dart';
+
 class History extends StatefulWidget {
   const History({Key? key}) : super(key: key);
 
@@ -783,10 +785,10 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                           onClick: () {
                             print('First Button');
                             animationController.reverse();
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => XD_mainPage()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AnnoyanceChat()));
                           },
                         ),
                       ),
@@ -811,10 +813,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                           onClick: () {
                             print('Second button');
                             animationController.reverse();
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => Add_diary()));
                           },
                         ),
                       ),

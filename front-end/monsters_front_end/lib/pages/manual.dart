@@ -11,6 +11,8 @@ import 'package:monsters_front_end/pages/monster_detail.dart';
 import 'package:monsters_front_end/pages/social.dart';
 import 'package:monsters_front_end/state/drawer.dart';
 
+import 'annoyanceChat.dart';
+
 class Manual extends StatefulWidget {
   @override
   _ManualState createState() => _ManualState();
@@ -822,10 +824,10 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                           onClick: () {
                             print('First Button');
                             animationController.reverse();
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => XD_mainPage()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AnnoyanceChat()));
                           },
                         ),
                       ),
@@ -850,10 +852,6 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                           onClick: () {
                             print('Second button');
                             animationController.reverse();
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => Add_diary()));
                           },
                         ),
                       ),

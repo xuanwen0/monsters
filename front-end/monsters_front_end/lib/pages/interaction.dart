@@ -14,6 +14,7 @@ import 'package:monsters_front_end/pages/psychologicial_game.dart';
 import 'package:monsters_front_end/pages/psychologicial_test.dart';
 import 'package:monsters_front_end/pages/social.dart';
 import 'package:monsters_front_end/state/drawer.dart';
+import 'annoyanceChat.dart';
 import 'answerbook.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -586,10 +587,10 @@ class _InteractionPageState extends State<InteractionPage>
                           onClick: () {
                             print('First Button');
                             animationController.reverse();
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => XD_mainPage()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AnnoyanceChat()));
                           },
                         ),
                       ),
@@ -614,10 +615,6 @@ class _InteractionPageState extends State<InteractionPage>
                           onClick: () {
                             print('Second button');
                             animationController.reverse();
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => Add_diary()));
                           },
                         ),
                       ),
