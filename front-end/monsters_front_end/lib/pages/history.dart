@@ -9,6 +9,8 @@ import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/social.dart';
 import 'package:monsters_front_end/state/drawer.dart';
 
+import 'annoyanceChat.dart';
+
 class History extends StatefulWidget {
   const History({Key? key}) : super(key: key);
 
@@ -74,7 +76,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
               '歷史紀錄',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 40,
                 color: Color(0xffa0522d),
               ),
               softWrap: false,
@@ -551,7 +553,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       '圖鑑',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -594,7 +596,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       '歷史紀錄',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -648,7 +650,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       '社群',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -700,7 +702,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       '互動',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -783,6 +785,10 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                           onClick: () {
                             print('First Button');
                             animationController.reverse();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AnnoyanceChat()));
                             // Navigator.push(
                             //     context,
                             //     MaterialPageRoute(

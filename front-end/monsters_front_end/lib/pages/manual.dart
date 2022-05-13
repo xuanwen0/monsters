@@ -11,6 +11,8 @@ import 'package:monsters_front_end/pages/monster_detail.dart';
 import 'package:monsters_front_end/pages/social.dart';
 import 'package:monsters_front_end/state/drawer.dart';
 
+import 'annoyanceChat.dart';
+
 class Manual extends StatefulWidget {
   @override
   _ManualState createState() => _ManualState();
@@ -590,7 +592,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       '圖鑑',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -633,7 +635,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       '歷史紀錄',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -687,7 +689,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       '社群',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -739,7 +741,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       '互動',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -822,6 +824,11 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                           onClick: () {
                             print('First Button');
                             animationController.reverse();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AnnoyanceChat()));
+
                             // Navigator.push(
                             //     context,
                             //     MaterialPageRoute(

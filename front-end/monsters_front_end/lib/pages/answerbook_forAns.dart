@@ -90,9 +90,10 @@ class _AnswerbookforAnsPage extends State<AnswerbookforAnsPage> {
             Pin(size: 63.0, start: 9.0),
             child: const Text(
               '解答之書',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 30,
                 color: Color(0xffa0522d),
               ),
               softWrap: false,
@@ -165,7 +166,8 @@ class _AnswerbookforAnsPage extends State<AnswerbookforAnsPage> {
                 Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: const AssetImage('assets/image/background_answerBook.png'),
+                  image: const AssetImage(
+                      'assets/image/background_answerBook.png'),
                   fit: BoxFit.fill,
                   colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.45), BlendMode.dstIn),
@@ -254,7 +256,8 @@ class _AnswerbookforAnsPage extends State<AnswerbookforAnsPage> {
                 Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/image/background_answerBook_logo.png'),
+                  image:
+                      AssetImage('assets/image/background_answerBook_logo.png'),
                   fit: BoxFit.fill,
                 ),
               ),

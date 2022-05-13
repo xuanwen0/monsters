@@ -10,6 +10,8 @@ import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/state/drawer.dart';
 
+import 'annoyanceChat.dart';
+
 class Social extends StatefulWidget {
   const Social({Key? key}) : super(key: key);
 
@@ -582,7 +584,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                       '圖鑑',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -625,7 +627,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                       '歷史紀錄',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -679,7 +681,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                       '社群',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -731,7 +733,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                       '互動',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -825,6 +827,11 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                           onClick: () {
                             print('First Button');
                             animationController.reverse();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AnnoyanceChat()));
+
                             // Navigator.push(
                             //     context,
                             //     MaterialPageRoute(

@@ -145,8 +145,7 @@ class _MainPageState extends State<MainPage>
                     child: SizedBox(
                       width: 24.0,
                       height: 27.0,
-                      child:
-                          SvgPicture.string(
+                      child: SvgPicture.string(
                         _svg_i02mi2,
                         allowDrawingOutsideViewBox: true,
                       ),
@@ -159,7 +158,7 @@ class _MainPageState extends State<MainPage>
                       '圖鑑',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -172,8 +171,7 @@ class _MainPageState extends State<MainPage>
           Pinned.fromPins(
             Pin(size: 69.0, middle: 0.7347),
             Pin(size: 68.0, end: 5.0),
-            child:
-                PageLink(
+            child: PageLink(
               links: [
                 PageLinkInfo(
                   transition: LinkTransition.Fade,
@@ -182,8 +180,7 @@ class _MainPageState extends State<MainPage>
                   pageBuilder: () => History(),
                 ),
               ],
-              child:
-                  Stack(
+              child: Stack(
                 children: <Widget>[
                   Container(
                     decoration: const BoxDecoration(
@@ -199,7 +196,7 @@ class _MainPageState extends State<MainPage>
                       '歷史紀錄',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -210,8 +207,7 @@ class _MainPageState extends State<MainPage>
                     child: SizedBox(
                       width: 28.0,
                       height: 28.0,
-                      child:
-                          SvgPicture.string(
+                      child: SvgPicture.string(
                         _svg_uat9w,
                         allowDrawingOutsideViewBox: true,
                       ),
@@ -224,8 +220,7 @@ class _MainPageState extends State<MainPage>
           Pinned.fromPins(
             Pin(size: 69.0, end: 10.0),
             Pin(size: 68.0, end: 5.0),
-            child:
-                PageLink(
+            child: PageLink(
               links: [
                 PageLinkInfo(
                   transition: LinkTransition.Fade,
@@ -250,7 +245,7 @@ class _MainPageState extends State<MainPage>
                       '社群',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -259,8 +254,7 @@ class _MainPageState extends State<MainPage>
                   Pinned.fromPins(
                     Pin(start: 17.0, end: 17.0),
                     Pin(size: 22.3, middle: 0.3217),
-                    child:
-                        SvgPicture.string(
+                    child: SvgPicture.string(
                       _svg_kzt9m,
                       allowDrawingOutsideViewBox: true,
                       fit: BoxFit.fill,
@@ -273,8 +267,7 @@ class _MainPageState extends State<MainPage>
           Pinned.fromPins(
             Pin(size: 69.0, start: 9.0),
             Pin(size: 68.0, end: 5.0),
-            child:
-                PageLink(
+            child: PageLink(
               links: [
                 PageLinkInfo(
                   transition: LinkTransition.Fade,
@@ -299,7 +292,7 @@ class _MainPageState extends State<MainPage>
                       '互動',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -310,8 +303,7 @@ class _MainPageState extends State<MainPage>
                     child: SizedBox(
                       width: 29.0,
                       height: 29.0,
-                      child:
-                          SvgPicture.string(
+                      child: SvgPicture.string(
                         _svg_a3julx,
                         allowDrawingOutsideViewBox: true,
                       ),
@@ -378,7 +370,6 @@ class _MainPageState extends State<MainPage>
                             size: 40,
                           ),
                           onClick: () {
-                            print('First Button');
                             animationController.reverse();
                             Navigator.push(
                                 context,
@@ -422,6 +413,7 @@ class _MainPageState extends State<MainPage>
     );
   }
 }
+
 class CircularButton extends StatelessWidget {
   final double width;
   final double height;
