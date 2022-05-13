@@ -4,6 +4,7 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:monsters_front_end/pages/annoyance.dart';
+import 'package:monsters_front_end/pages/annoyanceChat.dart';
 import 'package:monsters_front_end/pages/drawer_setting.dart';
 import 'package:monsters_front_end/pages/drawer_userInformation.dart';
 import 'package:monsters_front_end/pages/history.dart';
@@ -145,7 +146,6 @@ class _MainPageState extends State<MainPage>
                       width: 24.0,
                       height: 27.0,
                       child:
-                          // Adobe XD layer: 'Icon awesome-book' (shape)
                           SvgPicture.string(
                         _svg_i02mi2,
                         allowDrawingOutsideViewBox: true,
@@ -169,12 +169,10 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
-          //歷史紀錄
           Pinned.fromPins(
             Pin(size: 69.0, middle: 0.7347),
             Pin(size: 68.0, end: 5.0),
             child:
-                // Adobe XD layer: 'book' (group)
                 PageLink(
               links: [
                 PageLinkInfo(
@@ -185,7 +183,6 @@ class _MainPageState extends State<MainPage>
                 ),
               ],
               child:
-                  // Adobe XD layer: 'history' (group)
                   Stack(
                 children: <Widget>[
                   Container(
@@ -214,7 +211,6 @@ class _MainPageState extends State<MainPage>
                       width: 28.0,
                       height: 28.0,
                       child:
-                          // Adobe XD layer: 'Icon awesome-history' (shape)
                           SvgPicture.string(
                         _svg_uat9w,
                         allowDrawingOutsideViewBox: true,
@@ -225,12 +221,10 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
-          //社群
           Pinned.fromPins(
             Pin(size: 69.0, end: 10.0),
             Pin(size: 68.0, end: 5.0),
             child:
-                // Adobe XD layer: 'social' (group)
                 PageLink(
               links: [
                 PageLinkInfo(
@@ -266,7 +260,6 @@ class _MainPageState extends State<MainPage>
                     Pin(start: 17.0, end: 17.0),
                     Pin(size: 22.3, middle: 0.3217),
                     child:
-                        // Adobe XD layer: 'Icon material-people' (shape)
                         SvgPicture.string(
                       _svg_kzt9m,
                       allowDrawingOutsideViewBox: true,
@@ -277,12 +270,10 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
-          //互動
           Pinned.fromPins(
             Pin(size: 69.0, start: 9.0),
             Pin(size: 68.0, end: 5.0),
             child:
-                // Adobe XD layer: 'interactive' (group)
                 PageLink(
               links: [
                 PageLinkInfo(
@@ -320,7 +311,6 @@ class _MainPageState extends State<MainPage>
                       width: 29.0,
                       height: 29.0,
                       child:
-                          // Adobe XD layer: 'Icon material-gamep…' (shape)
                           SvgPicture.string(
                         _svg_a3julx,
                         allowDrawingOutsideViewBox: true,
@@ -331,7 +321,6 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
-          //新增
           Pinned.fromPins(
             Pin(size: 69.0, middle: 0.4985),
             Pin(size: 68.0, end: 5.0),
@@ -359,7 +348,7 @@ class _MainPageState extends State<MainPage>
                         height: 70,
                         icon: const Icon(
                           Icons.add_rounded,
-                          color: const Color(0xffffbb00),
+                          color: Color(0xffffbb00),
                           size: 50,
                         ),
                         onClick: () {
@@ -394,7 +383,7 @@ class _MainPageState extends State<MainPage>
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AnnoyancePage()));
+                                    builder: (context) => AnnoyanceChat()));
                           },
                         ),
                       ),

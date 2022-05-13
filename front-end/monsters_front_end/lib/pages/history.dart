@@ -94,8 +94,8 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
             child: IconButton(
               alignment: Alignment.center,
               iconSize: 57.0,
-              icon: Icon(Icons.menu_rounded),
-              color: Color(0xffffbb00),
+              icon: const Icon(Icons.menu_rounded),
+              color: const Color(0xffffbb00),
               onPressed: () => _scaffoldKEy.currentState?.openEndDrawer(),
             ),
           ),
@@ -268,7 +268,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => History_detail(),
+                  pageBuilder: () => const History_detail(),
                 ),
               ],
               child: Stack(
@@ -292,7 +292,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       ),
                     ),
                   ),
-                  Align(
+                  const Align(
                     alignment: Alignment(0.029, 0.0),
                     child: SizedBox(
                       width: 155.0,
@@ -302,7 +302,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         style: TextStyle(
                           fontFamily: 'Segoe UI',
                           fontSize: 20,
-                          color: const Color(0xffa0522d),
+                          color: Color(0xffa0522d),
                         ),
                         softWrap: false,
                       ),
@@ -311,12 +311,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   Pinned.fromPins(
                     Pin(size: 53.0, end: 16.0),
                     Pin(size: 21.0, start: 12.0),
-                    child: Text(
+                    child: const Text(
                       'mm/dd',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 16,
-                        color: const Color(0xff613018),
+                        color: Color(0xff613018),
                       ),
                       softWrap: false,
                     ),
@@ -525,14 +525,14 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
               child: Stack(
                 children: <Widget>[
                   Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
+                    decoration: const BoxDecoration(
+                      color: Color(0xffffffff),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
                   ),
                   Align(
-                    alignment: Alignment(-0.015, -0.398),
+                    alignment: const Alignment(-0.015, -0.398),
                     child: SizedBox(
                       width: 24.0,
                       height: 27.0,
@@ -547,12 +547,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   Pinned.fromPins(
                     Pin(size: 24.0, middle: 0.4889),
                     Pin(size: 16.0, end: 9.0),
-                    child: Text(
+                    child: const Text(
                       '圖鑑',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 12,
-                        color: const Color(0xffa0522d),
+                        color: Color(0xffa0522d),
                       ),
                       softWrap: false,
                     ),
@@ -590,18 +590,18 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   Pinned.fromPins(
                     Pin(size: 48.0, end: 9.0),
                     Pin(size: 16.0, end: 9.0),
-                    child: Text(
+                    child: const Text(
                       '歷史紀錄',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 12,
-                        color: const Color(0xffa0522d),
+                        color: Color(0xffa0522d),
                       ),
                       softWrap: false,
                     ),
                   ),
                   Align(
-                    alignment: Alignment(0.073, -0.408),
+                    alignment: const Alignment(0.073, -0.408),
                     child: SizedBox(
                       width: 28.0,
                       height: 28.0,
@@ -629,7 +629,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => Social(),
+                  pageBuilder: () => const Social(),
                 ),
               ],
               child: Stack(
@@ -644,12 +644,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   Pinned.fromPins(
                     Pin(size: 24.0, middle: 0.5111),
                     Pin(size: 16.0, end: 9.0),
-                    child: Text(
+                    child: const Text(
                       '社群',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 12,
-                        color: const Color(0xffa0522d),
+                        color: Color(0xffa0522d),
                       ),
                       softWrap: false,
                     ),
@@ -696,18 +696,18 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   Pinned.fromPins(
                     Pin(size: 24.0, middle: 0.5111),
                     Pin(size: 16.0, end: 9.0),
-                    child: Text(
+                    child: const Text(
                       '互動',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 12,
-                        color: const Color(0xffa0522d),
+                        color: Color(0xffa0522d),
                       ),
                       softWrap: false,
                     ),
                   ),
                   Align(
-                    alignment: Alignment(-0.008, -0.415),
+                    alignment: const Alignment(-0.008, -0.415),
                     child: SizedBox(
                       width: 29.0,
                       height: 29.0,
@@ -811,6 +811,10 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                           onClick: () {
                             print('Second button');
                             animationController.reverse();
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => Add_diary()));
                           },
                         ),
                       ),

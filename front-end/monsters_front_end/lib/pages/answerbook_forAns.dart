@@ -1,20 +1,86 @@
-// ignore_for_file: use_key_in_widget_constructors, unnecessary_string_interpolations, prefer_const_constructors, file_names
-
+import 'dart:math';
 import 'package:adobe_xd/adobe_xd.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:monsters_front_end/pages/answerbook_forAns.dart';
 
 import 'interaction.dart';
 
-class AnswerbookPage extends StatefulWidget {
+List<String> robotAnswers = [
+  "不要忽略你看見的",
+  "當然",
+  "好",
+  "不是很好",
+  "不會失望的",
+  "尋求支援",
+  "僅此一次",
+  "試了才知道",
+  "試著妥協",
+  "當局者迷旁觀者清",
+  "思考後再問我",
+  "前不著村，後不著店",
+  "船到橋頭自然直",
+  "有關係嗎",
+  "結果會讓你驚訝",
+  "主動一點",
+  "認清現實吧",
+  "天機不可洩漏",
+  "不要讓自己後悔",
+  "不要",
+  "不可能",
+  "那又如何",
+  "想想未來",
+  "做你想做的",
+  "失敗又如何",
+  "答案就在眼前",
+  "不要浪費時間",
+  "時機未至",
+  "先解決必須完成的",
+  "去問專業的人",
+  "是又如何",
+  "時間會解決",
+  "休息片刻",
+  "給自己一點時間",
+  "勇往直前",
+  "不做無用之功",
+  "將會成功",
+  "這會很冒險",
+  "真不了的假的",
+  "假不了的真的",
+  "不要太過分了",
+  "斷捨離",
+  "拭目以待",
+  "盡全力了嗎",
+  "見好就收",
+  "我想想",
+  "下次再說",
+  "別人說了不算"
+];
+var numbersOfAnswers = robotAnswers.length;
+String randomAnswer = "";
+Random random = Random();
+
+class AnswerbookforAnsPage extends StatefulWidget {
   @override
-  _AnswerbookPageState createState() => _AnswerbookPageState();
+  _AnswerbookforAnsPage createState() => _AnswerbookforAnsPage();
 }
 
-class _AnswerbookPageState extends State<AnswerbookPage> {
+class _AnswerbookforAnsPage extends State<AnswerbookforAnsPage> {
+  String datatochange = robotAnswers[random.nextInt(numbersOfAnswers)];
+
+  void changedata() {
+    setState(() {
+      datatochange = robotAnswers[random.nextInt(numbersOfAnswers)];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    void changedata() {
+      setState(() {
+        datatochange = robotAnswers[random.nextInt(numbersOfAnswers)];
+      });
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       body: Stack(
@@ -22,12 +88,12 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
           Pinned.fromPins(
             Pin(size: 188.0, middle: 0.5),
             Pin(size: 63.0, start: 9.0),
-            child: Text(
+            child: const Text(
               '解答之書',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
                 fontSize: 47,
-                color: const Color(0xffa0522d),
+                color: Color(0xffa0522d),
               ),
               softWrap: false,
             ),
@@ -125,8 +191,8 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
                       Pin(size: 70.0, start: 0.0),
                       Pin(start: 0.0, end: 0.0),
                       child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xffffed97),
+                        decoration: const BoxDecoration(
+                          color: Color(0xffffed97),
                           borderRadius: BorderRadius.all(
                               Radius.elliptical(9999.0, 9999.0)),
                         ),
@@ -136,8 +202,8 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
                       Pin(size: 70.0, end: 0.0),
                       Pin(start: 0.0, end: 0.0),
                       child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xffffed97),
+                        decoration: const BoxDecoration(
+                          color: Color(0xffffed97),
                           borderRadius: BorderRadius.all(
                               Radius.elliptical(9999.0, 9999.0)),
                         ),
@@ -146,26 +212,15 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
                   ],
                 ),
                 Pinned.fromPins(
-                  Pin(size: 80.0, middle: 0.5),
-                  Pin(start: 6.0, end: 5.0),
-                  child: PageLink(
-                    links: [
-                      PageLinkInfo(
-                        transition: LinkTransition.Fade,
-                        ease: Curves.easeOut,
-                        duration: 0.3,
-                        pageBuilder: () => AnswerbookforAnsPage(),
-                      ),
-                    ],
-                    child: Text(
-                      '解答',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 40,
-                        color: const Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
+                  Pin(size: 100.0, middle: 0.5),
+                  Pin(start: 6.0, end: 4.0),
+                  child: TextButton(
+                    child: const Text('再一次',
+                        style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 23,
+                            color: Color(0xffa0522d))),
+                    onPressed: changedata,
                   ),
                 ),
               ],
@@ -179,25 +234,25 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
             ),
           ),
           Pinned.fromPins(
-            Pin(start: 52.0, end: 52.0),
-            Pin(size: 185.0, middle: 0.3659),
-            child: Text(
-              '歡迎來到解答之書，請閉上眼睛\n並深呼吸，心中想著現在的煩惱\n或疑問，準備好就可以按下解答\n的按鈕即可得到答案。',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 18,
-                color: Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
+              Pin(start: 50.0, end: 50.0), Pin(size: 50.0, middle: 0.4),
+              child: Center(
+                child: Text(
+                  datatochange,
+                  style: const TextStyle(
+                    fontFamily: 'Segoe UI',
+                    fontSize: 25,
+                    color: Color.fromARGB(255, 185, 40, 83),
+                  ),
+                  softWrap: false,
+                ),
+              )),
           Pinned.fromPins(
             Pin(start: 64.0, end: 64.0),
             Pin(size: 154.0, middle: 0.726),
             child:
                 // Adobe XD layer: 'book-png-transparen…' (shape)
                 Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/image/background_answerBook_logo.png'),
                   fit: BoxFit.fill,
