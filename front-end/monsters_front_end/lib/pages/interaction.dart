@@ -5,11 +5,15 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
 import 'package:monsters_front_end/pages/daily_test.dart';
 import 'package:monsters_front_end/pages/destress.dart';
+import 'package:monsters_front_end/pages/drawer_setting.dart';
+import 'package:monsters_front_end/pages/drawer_userInformation.dart';
 import 'package:monsters_front_end/pages/history.dart';
+import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/psychologicial_game.dart';
 import 'package:monsters_front_end/pages/psychologicial_test.dart';
 import 'package:monsters_front_end/pages/social.dart';
+import 'package:monsters_front_end/state/drawer.dart';
 import 'answerbook.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -62,8 +66,11 @@ class _InteractionPageState extends State<InteractionPage>
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
+      key: _scaffoldKEy,
+      endDrawer: GetDrawer(context),
       body: Stack(
         children: <Widget>[
           //標題
@@ -88,156 +95,15 @@ class _InteractionPageState extends State<InteractionPage>
               color: const Color(0xffffed97),
             ),
           ),
-          //新增
-          Pinned.fromPins(
-            Pin(size: 69.0, middle: 0.4985),
-            Pin(size: 68.0, end: 5.0),
-            child: Container(
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: <Widget>[
-                  Positioned(
-                      child: Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: <Widget>[
-                      IgnorePointer(
-                        child: Container(
-                          color: Colors.transparent,
-                          height: 150.0,
-                          width: 150.0,
-                        ),
-                      ),
-                      Transform(
-                        transform: Matrix4.rotationZ(
-                            getRadiansFromDegree(rotationAnimation.value)),
-                        alignment: Alignment.center,
-                        child: CircularButton(
-                          color: Color(0xffffffff),
-                          width: 70,
-                          height: 70,
-                          icon: Icon(
-                            Icons.add_rounded,
-                            color: Color(0xffffbb00),
-                            size: 50,
-                          ),
-                          onClick: () {
-                            if (animationController.isCompleted) {
-                              animationController.reverse();
-                            } else {
-                              animationController.forward();
-                            }
-                          },
-                        ),
-                      ),
-                      Transform.translate(
-                        offset: Offset.fromDirection(getRadiansFromDegree(235),
-                            degOneTranslationAnimation.value * 55),
-                        child: Transform(
-                          transform: Matrix4.rotationZ(
-                              getRadiansFromDegree(rotationAnimation.value))
-                            ..scale(degOneTranslationAnimation.value),
-                          alignment: Alignment.center,
-                          child: CircularButton(
-                            color: Colors.orangeAccent,
-                            width: 60,
-                            height: 60,
-                            icon: Icon(
-                              Icons.import_contacts,
-                              color: Colors.white,
-                              size: 40,
-                            ),
-                            onClick: () {
-                              print('First Button');
-                              animationController.reverse();
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => Add_diary()));
-                            },
-                          ),
-                        ),
-                      ),
-                      Transform.translate(
-                        offset: Offset.fromDirection(getRadiansFromDegree(305),
-                            degTwoTranslationAnimation.value * 55),
-                        child: Transform(
-                          transform: Matrix4.rotationZ(
-                              getRadiansFromDegree(rotationAnimation.value))
-                            ..scale(degTwoTranslationAnimation.value),
-                          alignment: Alignment.center,
-                          child: CircularButton(
-                            color: Colors.blueAccent,
-                            width: 60,
-                            height: 60,
-                            icon: Icon(
-                              Icons.sentiment_dissatisfied,
-                              color: Colors.white,
-                              size: 40,
-                            ),
-                            onClick: () {
-                              print('Second button');
-                              animationController.reverse();
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => XD_mainPage()));
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ))
-                ],
-              ),
-            ),
-          ),
           //抽屜
-          Pinned.fromPins(
-            Pin(size: 41.0, end: 15.0),
-            Pin(size: 36.0, start: 25.0),
-            child: PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  //pageBuilder: () => XD_drawer(),
-                ),
-              ],
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromPins(
-                    Pin(start: 0.0, end: 0.0),
-                    Pin(size: 4.0, start: 0.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffbb00),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(start: 0.0, end: 0.0),
-                    Pin(size: 4.0, middle: 0.5),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffbb00),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(start: 0.0, end: 0.0),
-                    Pin(size: 5.0, end: 0.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffbb00),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              alignment: Alignment.center,
+              iconSize: 57.0,
+              icon: Icon(Icons.menu_rounded),
+              color: Color(0xffffbb00),
+              onPressed: () => _scaffoldKEy.currentState?.openEndDrawer(),
             ),
           ),
           //解答之書等按鈕
@@ -618,7 +484,7 @@ class _InteractionPageState extends State<InteractionPage>
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => InteractionPage(),
+                  pageBuilder: () => MainPage(),
                 ),
               ],
               child: Stack(
@@ -660,6 +526,107 @@ class _InteractionPageState extends State<InteractionPage>
               ),
             ),
           ),
+          //新增
+          Pinned.fromPins(
+            Pin(size: 69.0, middle: 0.4985),
+            Pin(size: 68.0, end: 5.0),
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                Positioned(
+                    child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: <Widget>[
+                    IgnorePointer(
+                      child: Container(
+                        color: Colors.transparent,
+                        height: 150.0,
+                        width: 150.0,
+                      ),
+                    ),
+                    Transform(
+                      transform: Matrix4.rotationZ(
+                          getRadiansFromDegree(rotationAnimation.value)),
+                      alignment: Alignment.center,
+                      child: CircularButton(
+                        color: const Color(0xffffffff),
+                        width: 70,
+                        height: 70,
+                        icon: const Icon(
+                          Icons.add_rounded,
+                          color: const Color(0xffffbb00),
+                          size: 50,
+                        ),
+                        onClick: () {
+                          if (animationController.isCompleted) {
+                            animationController.reverse();
+                          } else {
+                            animationController.forward();
+                          }
+                        },
+                      ),
+                    ),
+                    Transform.translate(
+                      offset: Offset.fromDirection(getRadiansFromDegree(235),
+                          degOneTranslationAnimation.value * 55),
+                      child: Transform(
+                        transform: Matrix4.rotationZ(
+                            getRadiansFromDegree(rotationAnimation.value))
+                          ..scale(degOneTranslationAnimation.value),
+                        alignment: Alignment.center,
+                        child: CircularButton(
+                          color: Colors.blueAccent,
+                          width: 60,
+                          height: 60,
+                          icon: const Icon(
+                            Icons.sentiment_dissatisfied,
+                            color: Colors.white,
+                            size: 40,
+                          ),
+                          onClick: () {
+                            print('First Button');
+                            animationController.reverse();
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => XD_mainPage()));
+                          },
+                        ),
+                      ),
+                    ),
+                    Transform.translate(
+                      offset: Offset.fromDirection(getRadiansFromDegree(305),
+                          degTwoTranslationAnimation.value * 55),
+                      child: Transform(
+                        transform: Matrix4.rotationZ(
+                            getRadiansFromDegree(rotationAnimation.value))
+                          ..scale(degTwoTranslationAnimation.value),
+                        alignment: Alignment.center,
+                        child: CircularButton(
+                          color: Colors.orangeAccent,
+                          width: 60,
+                          height: 60,
+                          icon: const Icon(
+                            Icons.import_contacts,
+                            color: Colors.white,
+                            size: 40,
+                          ),
+                          onClick: () {
+                            print('Second button');
+                            animationController.reverse();
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => Add_diary()));
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ))
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -673,7 +640,7 @@ class CircularButton extends StatelessWidget {
   final Icon icon;
   final void Function() onClick;
 
-  CircularButton(
+  const CircularButton(
       {required this.color,
       required this.width,
       required this.height,

@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monsters_front_end/pages/drawer_setting.dart';
+import 'package:monsters_front_end/pages/drawer_userInformation.dart';
 import 'package:monsters_front_end/pages/history.dart';
+import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/manual.dart';
+import 'package:monsters_front_end/state/drawer.dart';
 
 class Social extends StatefulWidget {
   const Social({Key? key}) : super(key: key);
@@ -56,8 +60,11 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
+      key: _scaffoldKEy,
+      endDrawer: GetDrawer(context),
       body: Stack(
         children: <Widget>[
           //標題
@@ -653,7 +660,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => Social(),
+                  pageBuilder: () => MainPage(),
                 ),
               ],
               child: Stack(
@@ -748,58 +755,14 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
             ),
           ),
           //抽屜
-          Pinned.fromPins(
-            Pin(size: 41.0, end: 15.0),
-            Pin(size: 36.0, start: 25.0),
-            child: PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  //pageBuilder: () => XD_drawer(),
-                ),
-              ],
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromPins(
-                    Pin(start: 0.0, end: 0.0),
-                    Pin(size: 4.0, start: 0.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffbb00),
-                        borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(
-                            width: 8.0, color: const Color(0xffffbb00)),
-                      ),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(start: 0.0, end: 0.0),
-                    Pin(size: 4.0, middle: 0.5),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffbb00),
-                        borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(
-                            width: 8.0, color: const Color(0xffffbb00)),
-                      ),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(start: 0.0, end: 0.0),
-                    Pin(size: 5.0, end: 0.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffbb00),
-                        borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(
-                            width: 8.0, color: const Color(0xffffbb00)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              alignment: Alignment.center,
+              iconSize: 57.0,
+              icon: Icon(Icons.menu_rounded),
+              color: Color(0xffffbb00),
+              onPressed: () => _scaffoldKEy.currentState?.openEndDrawer(),
             ),
           ),
           //新增
@@ -851,11 +814,11 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                           ..scale(degOneTranslationAnimation.value),
                         alignment: Alignment.center,
                         child: CircularButton(
-                          color: Colors.orangeAccent,
+                          color: Colors.blueAccent,
                           width: 60,
                           height: 60,
                           icon: const Icon(
-                            Icons.import_contacts,
+                            Icons.sentiment_dissatisfied,
                             color: Colors.white,
                             size: 40,
                           ),
@@ -865,7 +828,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                             // Navigator.push(
                             //     context,
                             //     MaterialPageRoute(
-                            //         builder: (context) => Add_diary()));
+                            //         builder: (context) => XD_mainPage()));
                           },
                         ),
                       ),
@@ -879,11 +842,11 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                           ..scale(degTwoTranslationAnimation.value),
                         alignment: Alignment.center,
                         child: CircularButton(
-                          color: Colors.blueAccent,
+                          color: Colors.orangeAccent,
                           width: 60,
                           height: 60,
                           icon: const Icon(
-                            Icons.sentiment_dissatisfied,
+                            Icons.import_contacts,
                             color: Colors.white,
                             size: 40,
                           ),
@@ -893,7 +856,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                             // Navigator.push(
                             //     context,
                             //     MaterialPageRoute(
-                            //         builder: (context) => XD_mainPage()));
+                            //         builder: (context) => Add_diary()));
                           },
                         ),
                       ),

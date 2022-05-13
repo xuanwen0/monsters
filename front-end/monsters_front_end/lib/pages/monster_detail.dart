@@ -49,7 +49,7 @@ class _Monster_detailState extends State<Monster_detail> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image:
-                          const AssetImage('assets/monsters_book_monster.png'),
+                          const AssetImage('assets/image/monsters_book_monster.png'),
                       fit: BoxFit.fill,
                     ),
                     borderRadius: BorderRadius.circular(24.0),

@@ -198,15 +198,6 @@ class _trying extends State<trying> {
                   ),
                 )),
           ),
-          // data == 1
-          //     ? Container(
-          //         height: 60,
-          //         width: 60,
-          //         child: CircleAvatar(
-          //           backgroundImage: AssetImage("images/default.jpg"),
-          //         ),
-          //       )
-          //     : Container(),
         ],
       ),
     );

@@ -4,11 +4,15 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:monsters_front_end/pages/annoyance.dart';
+import 'package:monsters_front_end/pages/annoyanceChat.dart';
+import 'package:monsters_front_end/pages/drawer_setting.dart';
+import 'package:monsters_front_end/pages/drawer_userInformation.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/social.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monsters_front_end/state/drawer.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -61,10 +65,24 @@ class _MainPageState extends State<MainPage>
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
+      key: _scaffoldKEy,
+      endDrawer: GetDrawer(context),
       body: Stack(
         children: <Widget>[
+          //抽屜
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              alignment: Alignment.centerRight,
+              iconSize: 57.0,
+              icon: Icon(Icons.menu_rounded),
+              color: Color(0xffffbb00),
+              onPressed: () => _scaffoldKEy.currentState?.openEndDrawer(),
+            ),
+          ),
           //草地
           Pinned.fromPins(
             Pin(start: -27.0, end: -27.0),
@@ -92,58 +110,9 @@ class _MainPageState extends State<MainPage>
                 Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/icon_top.png'),
+                  image: AssetImage('assets/image/icon_top.png'),
                   fit: BoxFit.fill,
                 ),
-              ),
-            ),
-          ),
-          //抽屜
-          Pinned.fromPins(
-            Pin(size: 41.0, end: 15.0),
-            Pin(size: 36.0, start: 25.0),
-            child: PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  //pageBuilder: () => XD_drawer(),
-                ),
-              ],
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromPins(
-                    Pin(start: 0.0, end: 0.0),
-                    Pin(size: 4.0, start: 0.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffbb00),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(start: 0.0, end: 0.0),
-                    Pin(size: 4.0, middle: 0.5),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffbb00),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(start: 0.0, end: 0.0),
-                    Pin(size: 5.0, end: 0.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffbb00),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  ),
-                ],
               ),
             ),
           ),
@@ -177,7 +146,6 @@ class _MainPageState extends State<MainPage>
                       width: 24.0,
                       height: 27.0,
                       child:
-                          // Adobe XD layer: 'Icon awesome-book' (shape)
                           SvgPicture.string(
                         _svg_i02mi2,
                         allowDrawingOutsideViewBox: true,
@@ -201,12 +169,10 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
-          //歷史紀錄
           Pinned.fromPins(
             Pin(size: 69.0, middle: 0.7347),
             Pin(size: 68.0, end: 5.0),
             child:
-                // Adobe XD layer: 'book' (group)
                 PageLink(
               links: [
                 PageLinkInfo(
@@ -217,7 +183,6 @@ class _MainPageState extends State<MainPage>
                 ),
               ],
               child:
-                  // Adobe XD layer: 'history' (group)
                   Stack(
                 children: <Widget>[
                   Container(
@@ -246,7 +211,6 @@ class _MainPageState extends State<MainPage>
                       width: 28.0,
                       height: 28.0,
                       child:
-                          // Adobe XD layer: 'Icon awesome-history' (shape)
                           SvgPicture.string(
                         _svg_uat9w,
                         allowDrawingOutsideViewBox: true,
@@ -257,12 +221,10 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
-          //社群
           Pinned.fromPins(
             Pin(size: 69.0, end: 10.0),
             Pin(size: 68.0, end: 5.0),
             child:
-                // Adobe XD layer: 'social' (group)
                 PageLink(
               links: [
                 PageLinkInfo(
@@ -298,7 +260,6 @@ class _MainPageState extends State<MainPage>
                     Pin(start: 17.0, end: 17.0),
                     Pin(size: 22.3, middle: 0.3217),
                     child:
-                        // Adobe XD layer: 'Icon material-people' (shape)
                         SvgPicture.string(
                       _svg_kzt9m,
                       allowDrawingOutsideViewBox: true,
@@ -309,12 +270,10 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
-          //互動
           Pinned.fromPins(
             Pin(size: 69.0, start: 9.0),
             Pin(size: 68.0, end: 5.0),
             child:
-                // Adobe XD layer: 'interactive' (group)
                 PageLink(
               links: [
                 PageLinkInfo(
@@ -352,7 +311,6 @@ class _MainPageState extends State<MainPage>
                       width: 29.0,
                       height: 29.0,
                       child:
-                          // Adobe XD layer: 'Icon material-gamep…' (shape)
                           SvgPicture.string(
                         _svg_a3julx,
                         allowDrawingOutsideViewBox: true,
@@ -363,7 +321,6 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
-          //新增
           Pinned.fromPins(
             Pin(size: 69.0, middle: 0.4985),
             Pin(size: 68.0, end: 5.0),
@@ -391,7 +348,7 @@ class _MainPageState extends State<MainPage>
                         height: 70,
                         icon: const Icon(
                           Icons.add_rounded,
-                          color: const Color(0xffffbb00),
+                          color: Color(0xffffbb00),
                           size: 50,
                         ),
                         onClick: () {
@@ -412,21 +369,21 @@ class _MainPageState extends State<MainPage>
                           ..scale(degOneTranslationAnimation.value),
                         alignment: Alignment.center,
                         child: CircularButton(
-                          color: Colors.orangeAccent,
+                          color: Colors.blueAccent,
                           width: 60,
                           height: 60,
                           icon: const Icon(
-                            Icons.import_contacts,
+                            Icons.sentiment_dissatisfied,
                             color: Colors.white,
                             size: 40,
                           ),
                           onClick: () {
                             print('First Button');
                             animationController.reverse();
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => Add_diary()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AnnoyanceChat()));
                           },
                         ),
                       ),
@@ -440,21 +397,17 @@ class _MainPageState extends State<MainPage>
                           ..scale(degTwoTranslationAnimation.value),
                         alignment: Alignment.center,
                         child: CircularButton(
-                          color: Colors.blueAccent,
+                          color: Colors.orangeAccent,
                           width: 60,
                           height: 60,
                           icon: const Icon(
-                            Icons.sentiment_dissatisfied,
+                            Icons.import_contacts,
                             color: Colors.white,
                             size: 40,
                           ),
                           onClick: () {
                             print('Second button');
                             animationController.reverse();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AnnoyancePage()));
                           },
                         ),
                       ),
@@ -469,86 +422,6 @@ class _MainPageState extends State<MainPage>
     );
   }
 }
-
-// drawer: Drawer(
-//   child: ListView(
-//     padding: EdgeInsets.zero,
-//     children: <Widget>[
-//       DrawerTile(
-//         icon: Icon(Icons.person),
-//         text: "個人資料",
-//         onPressed: () {
-//           print("個人資料");
-//         },
-//       ),
-//       DrawerTile(
-//           icon: Icon(Icons.settings),
-//           text: "設定",
-//           onPressed: () {
-//             print("設定");
-//           }),
-//       DrawerTile(
-//           icon: Icon(Icons.info),
-//           text: "使用說明",
-//           onPressed: () {
-//             print("使用說明");
-//           }),
-//       DrawerTile(
-//           icon: Icon(Icons.thumb_up),
-//           text: "使用回饋",
-//           onPressed: () {
-//             print("使用回饋");
-//           }),
-//       DrawerTile(
-//         icon: Icon(Icons.power_settings_new),
-//         text: "登出",
-//         onPressed: () async {
-//           await showDialog(
-//             context: context,
-//             barrierDismissible: false,
-//             builder: (context) => AlertDialog(
-//               content: Text("Are you sure to exit current account"),
-//               actions: <Widget>[
-//                 TextButton(
-//                   child: Text("Cancel"),
-//                   onPressed: () => Navigator.pop(context),
-//                 ),
-//                 TextButton(
-//                   child: Text("Ok"),
-//                   onPressed: () => Navigator.pushNamedAndRemoveUntil(
-//                       context, "/login", ModalRoute.withName("/")),
-//                 ),
-//               ],
-//             ),
-//           );
-//         },
-//       ),
-//     ],
-//   ),
-// ),
-// class DrawerTile extends StatelessWidget {
-//   final Icon icon;
-//   final String text;
-//   final Function onPressed;
-
-//   const DrawerTile(
-//       {Key? key, required this.icon, this.text = "", required this.onPressed})
-//       : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListTile(
-//       title: Row(
-//         children: <Widget>[
-//           icon,
-//           Text(text),
-//           SizedBox(width: 24.0),
-//         ],
-//       ),
-//       onTap: () => onPressed,
-//     );
-//   }
-// }
 class CircularButton extends StatelessWidget {
   final double width;
   final double height;
