@@ -831,11 +831,6 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => AnnoyanceChat()));
-
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => XD_mainPage()));
                           },
                         ),
                       ),
@@ -860,10 +855,6 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                           onClick: () {
                             print('Second button');
                             animationController.reverse();
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => Add_diary()));
                           },
                         ),
                       ),

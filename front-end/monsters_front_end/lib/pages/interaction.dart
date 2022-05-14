@@ -596,10 +596,6 @@ class _InteractionPageState extends State<InteractionPage>
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => AnnoyanceChat()));
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => XD_mainPage()));
                           },
                         ),
                       ),
@@ -624,10 +620,6 @@ class _InteractionPageState extends State<InteractionPage>
                           onClick: () {
                             print('Second button');
                             animationController.reverse();
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => Add_diary()));
                           },
                         ),
                       ),
