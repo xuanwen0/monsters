@@ -82,7 +82,7 @@ class _InteractionPageState extends State<InteractionPage>
               '互動區',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 40,
                 color: const Color(0xffa0522d),
               ),
               softWrap: false,
@@ -141,9 +141,10 @@ class _InteractionPageState extends State<InteractionPage>
                             Pin(size: 48.0, start: 10.0),
                             child: const Text(
                               '解答之書',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Segoe UI',
-                                fontSize: 36,
+                                fontSize: 22,
                                 color: Color(0xffa0522d),
                               ),
                               softWrap: false,
@@ -180,9 +181,10 @@ class _InteractionPageState extends State<InteractionPage>
                             Pin(size: 48.0, end: 10.0),
                             child: const Text(
                               '每日測驗',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Segoe UI',
-                                fontSize: 36,
+                                fontSize: 22,
                                 color: Color(0xffa0522d),
                               ),
                               softWrap: false,
@@ -219,9 +221,10 @@ class _InteractionPageState extends State<InteractionPage>
                             Pin(size: 48.0, middle: 0.5),
                             child: const Text(
                               '深度心理測驗',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Segoe UI',
-                                fontSize: 36,
+                                fontSize: 22,
                                 color: Color(0xffa0522d),
                               ),
                               softWrap: false,
@@ -255,12 +258,13 @@ class _InteractionPageState extends State<InteractionPage>
                           ),
                           Pinned.fromPins(
                             Pin(start: 70.0, end: 43.0),
-                            Pin(size: 48.0, middle: 0.5),
+                            Pin(size: 68.0, middle: 0.75),
                             child: const Text(
                               '心理小遊戲',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Segoe UI',
-                                fontSize: 36,
+                                fontSize: 22,
                                 color: Color(0xffa0522d),
                               ),
                               softWrap: false,
@@ -297,9 +301,10 @@ class _InteractionPageState extends State<InteractionPage>
                             Pin(size: 48.0, end: 10.0),
                             child: const Text(
                               '紓壓方法',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Segoe UI',
-                                fontSize: 36,
+                                fontSize: 22,
                                 color: Color(0xffa0522d),
                               ),
                               softWrap: false,
@@ -355,7 +360,7 @@ class _InteractionPageState extends State<InteractionPage>
                       '圖鑑',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -398,7 +403,7 @@ class _InteractionPageState extends State<InteractionPage>
                       '歷史紀錄',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -452,7 +457,7 @@ class _InteractionPageState extends State<InteractionPage>
                       '社群',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -504,7 +509,7 @@ class _InteractionPageState extends State<InteractionPage>
                       '互動',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,

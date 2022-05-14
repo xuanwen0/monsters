@@ -105,7 +105,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                             errorBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
                           ),
-                          style: TextStyle(fontSize: 18, color: Colors.black),
+                          style: TextStyle(fontSize: 12, color: Colors.black),
                           onChanged: (value) {},
                         ),
                       ),
@@ -145,7 +145,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                         child: Text(
                           "怪獸正在工作中",
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 30, color: Colors.orange),
+                          style: TextStyle(fontSize: 25, color: Colors.orange),
                         ),
                       ),
                     ),
@@ -262,7 +262,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
           if (chatRound == 3) {
             if (acceptDrawingMembers.contains(text)) {
               userAnswers.add(text!);
-              reply("給煩惱程度打一個分數～\n5是最接近煩惱的喔！");
+              reply("給煩惱程度打一個分數～\n5分是最煩惱的喔！");
             } else {
               cannotRead();
             }

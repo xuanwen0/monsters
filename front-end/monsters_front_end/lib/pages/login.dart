@@ -59,7 +59,7 @@ class _loginState extends State<LoginPage> {
                         '登入',
                         style: TextStyle(
                           fontFamily: 'Segoe UI',
-                          fontSize: 25,
+                          fontSize: 20,
                           color: const Color(0xffffffff),
                         ),
                         softWrap: false,
@@ -90,7 +90,7 @@ class _loginState extends State<LoginPage> {
                       '註冊',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 25,
+                        fontSize: 20,
                         color: const Color(0xffffffff),
                       ),
                       softWrap: false,
@@ -121,7 +121,8 @@ class _loginState extends State<LoginPage> {
                         Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: const AssetImage('assets/image/icon_google.jpg'),
+                          image:
+                              const AssetImage('assets/image/icon_google.jpg'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -134,7 +135,7 @@ class _loginState extends State<LoginPage> {
                       '從Google登入',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 22,
+                        fontSize: 16,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -179,7 +180,7 @@ class _loginState extends State<LoginPage> {
                       '從LINE登入',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 22,
+                        fontSize: 16,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -208,7 +209,8 @@ class _loginState extends State<LoginPage> {
                       Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: const AssetImage('assets/image/icon_facebook.png'),
+                        image:
+                            const AssetImage('assets/image/icon_facebook.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -218,10 +220,10 @@ class _loginState extends State<LoginPage> {
                   Pin(size: 165.0, end: 9.0),
                   Pin(start: 5.0, end: 4.0),
                   child: Text(
-                    '從Facebook 登入',
+                    '從Facebook登入',
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
-                      fontSize: 22,
+                      fontSize: 16,
                       color: const Color(0xffa0522d),
                     ),
                     softWrap: false,

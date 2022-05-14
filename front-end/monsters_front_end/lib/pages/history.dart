@@ -76,7 +76,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
               '歷史紀錄',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 40,
                 color: Color(0xffa0522d),
               ),
               softWrap: false,
@@ -553,7 +553,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       '圖鑑',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -596,7 +596,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       '歷史紀錄',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -650,7 +650,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       '社群',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -702,7 +702,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       '互動',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 12,
+                        fontSize: 10,
                         color: Color(0xffa0522d),
                       ),
                       softWrap: false,

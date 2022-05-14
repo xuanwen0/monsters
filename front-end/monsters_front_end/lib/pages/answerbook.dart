@@ -24,9 +24,10 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
             Pin(size: 63.0, start: 9.0),
             child: Text(
               '解答之書',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 30,
                 color: const Color(0xffa0522d),
               ),
               softWrap: false,
@@ -99,7 +100,8 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
                 Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: const AssetImage('assets/image/background_answerBook.png'),
+                  image: const AssetImage(
+                      'assets/image/background_answerBook.png'),
                   fit: BoxFit.fill,
                   colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.45), BlendMode.dstIn),
@@ -146,8 +148,8 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
                   ],
                 ),
                 Pinned.fromPins(
-                  Pin(size: 80.0, middle: 0.5),
-                  Pin(start: 6.0, end: 5.0),
+                  Pin(size: 100.0, middle: 0.5),
+                  Pin(start: 6.0, end: 4.0),
                   child: PageLink(
                     links: [
                       PageLinkInfo(
@@ -159,9 +161,10 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
                     ],
                     child: Text(
                       '解答',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 40,
+                        fontSize: 23,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -182,7 +185,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
             Pin(start: 52.0, end: 52.0),
             Pin(size: 185.0, middle: 0.3659),
             child: Text(
-              '歡迎來到解答之書，請閉上眼睛\n並深呼吸，心中想著現在的煩惱\n或疑問，準備好就可以按下解答\n的按鈕即可得到答案。',
+              '歡迎來到解答之書，請閉上\n眼睛並深呼吸，心中想著現\n在的煩惱或疑問，準備好了就\n可以按下解答的按鈕獲得\n答案。',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
                 fontSize: 18,
@@ -199,7 +202,8 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
                 Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/image/background_answerBook_logo.png'),
+                  image:
+                      AssetImage('assets/image/background_answerBook_logo.png'),
                   fit: BoxFit.fill,
                 ),
               ),
