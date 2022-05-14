@@ -2,6 +2,7 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:monsters_front_end/pages/drawing_colors.dart';
 
 class AnnoyanceChat extends StatefulWidget {
   @override
@@ -261,6 +262,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
           }
           if (chatRound == 3) {
             if (acceptDrawingMembers.contains(text)) {
+              if (text == "是") {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Drawing_colors()));
+              }
               userAnswers.add(text!);
               reply("給煩惱程度打一個分數～\n5是最接近煩惱的喔！");
             } else {

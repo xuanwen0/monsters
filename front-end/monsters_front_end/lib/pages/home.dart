@@ -145,8 +145,7 @@ class _MainPageState extends State<MainPage>
                     child: SizedBox(
                       width: 24.0,
                       height: 27.0,
-                      child:
-                          SvgPicture.string(
+                      child: SvgPicture.string(
                         _svg_i02mi2,
                         allowDrawingOutsideViewBox: true,
                       ),
@@ -172,8 +171,7 @@ class _MainPageState extends State<MainPage>
           Pinned.fromPins(
             Pin(size: 69.0, middle: 0.7347),
             Pin(size: 68.0, end: 5.0),
-            child:
-                PageLink(
+            child: PageLink(
               links: [
                 PageLinkInfo(
                   transition: LinkTransition.Fade,
@@ -182,8 +180,7 @@ class _MainPageState extends State<MainPage>
                   pageBuilder: () => History(),
                 ),
               ],
-              child:
-                  Stack(
+              child: Stack(
                 children: <Widget>[
                   Container(
                     decoration: const BoxDecoration(
@@ -210,8 +207,7 @@ class _MainPageState extends State<MainPage>
                     child: SizedBox(
                       width: 28.0,
                       height: 28.0,
-                      child:
-                          SvgPicture.string(
+                      child: SvgPicture.string(
                         _svg_uat9w,
                         allowDrawingOutsideViewBox: true,
                       ),
@@ -224,8 +220,7 @@ class _MainPageState extends State<MainPage>
           Pinned.fromPins(
             Pin(size: 69.0, end: 10.0),
             Pin(size: 68.0, end: 5.0),
-            child:
-                PageLink(
+            child: PageLink(
               links: [
                 PageLinkInfo(
                   transition: LinkTransition.Fade,
@@ -259,8 +254,7 @@ class _MainPageState extends State<MainPage>
                   Pinned.fromPins(
                     Pin(start: 17.0, end: 17.0),
                     Pin(size: 22.3, middle: 0.3217),
-                    child:
-                        SvgPicture.string(
+                    child: SvgPicture.string(
                       _svg_kzt9m,
                       allowDrawingOutsideViewBox: true,
                       fit: BoxFit.fill,
@@ -273,8 +267,7 @@ class _MainPageState extends State<MainPage>
           Pinned.fromPins(
             Pin(size: 69.0, start: 9.0),
             Pin(size: 68.0, end: 5.0),
-            child:
-                PageLink(
+            child: PageLink(
               links: [
                 PageLinkInfo(
                   transition: LinkTransition.Fade,
@@ -310,8 +303,7 @@ class _MainPageState extends State<MainPage>
                     child: SizedBox(
                       width: 29.0,
                       height: 29.0,
-                      child:
-                          SvgPicture.string(
+                      child: SvgPicture.string(
                         _svg_a3julx,
                         allowDrawingOutsideViewBox: true,
                       ),
@@ -321,9 +313,10 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
+          //新增
           Pinned.fromPins(
-            Pin(size: 69.0, middle: 0.4985),
-            Pin(size: 68.0, end: 5.0),
+            Pin(size: 150.0, middle: 0.5),
+            Pin(size: 150.0, end: 5.0),
             child: Stack(
               alignment: Alignment.bottomCenter,
               children: <Widget>[
@@ -343,12 +336,12 @@ class _MainPageState extends State<MainPage>
                           getRadiansFromDegree(rotationAnimation.value)),
                       alignment: Alignment.center,
                       child: CircularButton(
-                        color: const Color(0xffffffff),
+                        color: Color.fromRGBO(255, 255, 255, 1),
                         width: 70,
                         height: 70,
                         icon: const Icon(
                           Icons.add_rounded,
-                          color: Color(0xffffbb00),
+                          color: Color.fromRGBO(255, 187, 0, 1),
                           size: 50,
                         ),
                         onClick: () {
@@ -362,7 +355,7 @@ class _MainPageState extends State<MainPage>
                     ),
                     Transform.translate(
                       offset: Offset.fromDirection(getRadiansFromDegree(235),
-                          degOneTranslationAnimation.value * 55),
+                          degOneTranslationAnimation.value * 80),
                       child: Transform(
                         transform: Matrix4.rotationZ(
                             getRadiansFromDegree(rotationAnimation.value))
@@ -370,15 +363,14 @@ class _MainPageState extends State<MainPage>
                         alignment: Alignment.center,
                         child: CircularButton(
                           color: Colors.blueAccent,
-                          width: 60,
-                          height: 60,
+                          width: 70,
+                          height: 70,
                           icon: const Icon(
                             Icons.sentiment_dissatisfied,
                             color: Colors.white,
                             size: 40,
                           ),
                           onClick: () {
-                            print('First Button');
                             animationController.reverse();
                             Navigator.push(
                                 context,
@@ -390,7 +382,7 @@ class _MainPageState extends State<MainPage>
                     ),
                     Transform.translate(
                       offset: Offset.fromDirection(getRadiansFromDegree(305),
-                          degTwoTranslationAnimation.value * 55),
+                          degTwoTranslationAnimation.value * 80),
                       child: Transform(
                         transform: Matrix4.rotationZ(
                             getRadiansFromDegree(rotationAnimation.value))
@@ -398,15 +390,14 @@ class _MainPageState extends State<MainPage>
                         alignment: Alignment.center,
                         child: CircularButton(
                           color: Colors.orangeAccent,
-                          width: 60,
-                          height: 60,
+                          width: 70,
+                          height: 70,
                           icon: const Icon(
                             Icons.import_contacts,
                             color: Colors.white,
                             size: 40,
                           ),
                           onClick: () {
-                            print('Second button');
                             animationController.reverse();
                           },
                         ),
@@ -422,6 +413,7 @@ class _MainPageState extends State<MainPage>
     );
   }
 }
+
 class CircularButton extends StatelessWidget {
   final double width;
   final double height;
