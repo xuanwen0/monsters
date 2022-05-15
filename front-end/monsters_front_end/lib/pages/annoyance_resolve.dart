@@ -34,7 +34,7 @@ class _Annoyance_resolveState extends State<Annoyance_resolve> {
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => History_detail(),
+                  pageBuilder: () => const History_detail(),
                 ),
               ],
               child: SvgPicture.string(
@@ -61,10 +61,10 @@ class _Annoyance_resolveState extends State<Annoyance_resolve> {
                       children: <Widget>[
                         // Adobe XD layer: 'Pencil-Scribble-PNG…' (shape)
                         Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               image:
-                                  const AssetImage('assets/image/eaten_Badthing.png'),
+                                  AssetImage('assets/image/eaten_Badthing.png'),
                               fit: BoxFit.fill,
                             ),
                           ),

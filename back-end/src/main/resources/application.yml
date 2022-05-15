@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://140.131.114.242:3306/111- monsters?useSSL=false&serverTimezone=Asia/Taipei
-    username: monsters
-    password: MONsters@ntub108
+    url: jdbc:mysql://localhost:3306/monsters?useSSL=false&serverTimezone=Asia/Taipei
+    username: root
+    password: czb96800528
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -26,8 +26,7 @@ server:
     encoding:
       charset: UTF-8
   cores:
-    origins: >
-      http://localhost:8080
+    origins: http://localhost:8080
     http-methods:
       - 'GET'
       - 'POST'

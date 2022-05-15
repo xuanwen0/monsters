@@ -3,6 +3,7 @@
 import 'package:adobe_xd/page_link.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
+import 'package:monsters_front_end/pages/annoyance.dart';
 import 'package:monsters_front_end/pages/daily_test.dart';
 import 'package:monsters_front_end/pages/destress.dart';
 import 'package:monsters_front_end/pages/drawer_setting.dart';
@@ -594,7 +595,7 @@ class _InteractionPageState extends State<InteractionPage>
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AnnoyanceChat()));
+                                    builder: (context) => AnnoyancePage()));
                           },
                         ),
                       ),

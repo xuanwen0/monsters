@@ -9,7 +9,7 @@ import 'package:monsters_front_end/model/annoyanceModel.dart';
 
 class AnnoyanceRepository implements ApiDataSource{
   final client = http.Client();
-  final String domain = "http://localhost:8080";
+  final String domain = "http://10.0.2.2:8080";
   @override
   Future<String> createAnnoyance(Annoyance annoyance) {
     return _createAnnoyance(
@@ -23,9 +23,10 @@ class AnnoyanceRepository implements ApiDataSource{
     Annoyance annoyance,
   ) async {
     try {
+      print('1');
       final request = await client.post(
         url,
-        headers: {'Content-Type' : 'application/json'},  
+        headers: {'Content-type':'application/json'},  
         body: annoyance.toJson()
       );
       if(request.statusCode==200){
@@ -37,7 +38,8 @@ class AnnoyanceRepository implements ApiDataSource{
       }else {
         return request.body;
       }
-    } catch (e) {
+     } catch (e) {
+       print(e);
       return e.toString();
     }
   }
@@ -100,9 +102,9 @@ class _AnnoyancePage extends State<AnnoyancePage>{
                 Annoyance(
                   account: accountController.text,
                   context: annoyanceController.text,
-                  type: int.parse(typeController.text),
+                  type: typeController.text,
                   mood: moodController.text,
-                  index: int.parse(indexController.text)
+                  index: indexController.text
                 ),
               );
             },

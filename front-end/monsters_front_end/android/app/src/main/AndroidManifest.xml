@@ -1,9 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.monsters_front_end">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="monsters_front_end"
-        android:name="${applicationName}"
         android:usesCleartextTraffic="true"
+        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
