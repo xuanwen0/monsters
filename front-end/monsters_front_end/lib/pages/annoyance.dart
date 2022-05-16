@@ -7,7 +7,7 @@ import 'package:monsters_front_end/API/annoyanceAPI.dart';
 import 'package:http/http.dart' as http;
 import 'package:monsters_front_end/model/annoyanceModel.dart';
 
-class AnnoyanceRepository implements ApiDataSource{
+class AnnoyanceRepository implements AnnoyanceApiDataSource{
   final client = http.Client();
   final String domain = "http://10.0.2.2:8080";
   @override
@@ -23,7 +23,6 @@ class AnnoyanceRepository implements ApiDataSource{
     Annoyance annoyance,
   ) async {
     try {
-      print('1');
       final request = await client.post(
         url,
         headers: {'Content-type':'application/json'},  
@@ -39,7 +38,6 @@ class AnnoyanceRepository implements ApiDataSource{
         return request.body;
       }
      } catch (e) {
-       print(e);
       return e.toString();
     }
   }
@@ -102,9 +100,9 @@ class _AnnoyancePage extends State<AnnoyancePage>{
                 Annoyance(
                   account: accountController.text,
                   context: annoyanceController.text,
-                  type: typeController.text,
+                  type: int.parse(typeController.text),
                   mood: moodController.text,
-                  index: indexController.text
+                  index: int.parse(indexController.text)
                 ),
               );
             },

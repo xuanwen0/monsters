@@ -2,7 +2,10 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:monsters_front_end/pages/annoyance.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
+
+import '../model/annoyanceModel.dart';
 
 class AnnoyanceChat extends StatefulWidget {
   @override
@@ -245,6 +248,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
   }
 
   void response([String? text]) async {
+    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository(); 
     setState(() {
       if (chatRound < 7) {
         if (robotSpeakable == true) {
@@ -285,6 +289,15 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
               lastSpeaking = true;
               userAnswers.add(acceptSharingMembers.indexOf(text!));
               reply("解決煩惱請馬上跟我說！我已經迫不及待想吃飯了！");
+              annoyanceRepository.createAnnoyance(
+                Annoyance(
+                  account: 'Lin',
+                  context: userAnswers[1].text,
+                  type: userAnswers[0].text,
+                  mood: userAnswers[2].text,
+                  index: userAnswers[3].text
+                ),
+              );
             } else {
               cannotRead();
             }

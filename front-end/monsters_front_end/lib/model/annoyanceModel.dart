@@ -7,9 +7,9 @@ Annoyance annoyanceFromJson(String string) => Annoyance.fromJson(json.decode(str
 class Annoyance {
   final String account;
   final String context;
-  final String type;
+  final int type;
   final String mood;
-  final String index;
+  final int index;
 
   Annoyance({
     required this.account, 
@@ -22,9 +22,9 @@ class Annoyance {
   Annoyance copyWith({
     String? account,
     String? context,
-    String? type,
+    int? type,
     String? mood,
-    String? index
+    int? index
   }) {
     return Annoyance(
       account: account ?? this.account,
@@ -46,7 +46,7 @@ class Annoyance {
 
   factory Annoyance.fromMap(Map<String, dynamic> map) {
     return Annoyance(
-      account: map['username'],
+      account: map['account'],
       context: map['password'],
       type: map['type'],
       mood: map['mood'],

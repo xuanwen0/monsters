@@ -2,6 +2,6 @@
 
 import 'package:monsters_front_end/model/annoyanceModel.dart';
 
-abstract class ApiDataSource{
+abstract class AnnoyanceApiDataSource{
   Future<String> createAnnoyance(Annoyance annoyance);
 }

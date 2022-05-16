@@ -32,15 +32,11 @@ public class AnswerBookController {
         result.put("result", true);
         result.put("errorCode", "");
         result.put("message", "查詢成功");
-        ArrayNode dataNode = result.putArray("data");
         try {
             List<AnswerBook> answerBooksList = answerBookService.find();
             int index = (int) (Math.random()*answerBooksList.size());
-                ObjectNode answerBookNode = dataNode.addObject();
-                answerBookNode.put("id", answerBooksList.get(index).getId());
-                answerBookNode.put("content", answerBooksList.get(index).getContent());
-                System.out.print(answerBookBean.getId());
-                System.out.println(answerBookBean.getContent());
+                result.put("id", answerBooksList.get(index).getId());
+                result.put("content", answerBooksList.get(index).getContent());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,63 +1,36 @@
-import 'dart:math';
+// ignore_for_file: file_names, use_key_in_widget_constructors
+import 'dart:convert';
+
 import 'package:adobe_xd/adobe_xd.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart' as http;
+import 'package:localstorage/localstorage.dart';
+import 'package:monsters_front_end/model/answerbookModel.dart';
 
+import '../API/answerbookAPI.dart';
 import 'interaction.dart';
 
-List<String> robotAnswers = [
-  "不要忽略你看見的",
-  "當然",
-  "好",
-  "不是很好",
-  "不會失望的",
-  "尋求支援",
-  "僅此一次",
-  "試了才知道",
-  "試著妥協",
-  "當局者迷旁觀者清",
-  "思考後再問我",
-  "前不著村，後不著店",
-  "船到橋頭自然直",
-  "有關係嗎",
-  "結果會讓你驚訝",
-  "主動一點",
-  "認清現實吧",
-  "天機不可洩漏",
-  "不要讓自己後悔",
-  "不要",
-  "不可能",
-  "那又如何",
-  "想想未來",
-  "做你想做的",
-  "失敗又如何",
-  "答案就在眼前",
-  "不要浪費時間",
-  "時機未至",
-  "先解決必須完成的",
-  "去問專業的人",
-  "是又如何",
-  "時間會解決",
-  "休息片刻",
-  "給自己一點時間",
-  "勇往直前",
-  "不做無用之功",
-  "將會成功",
-  "這會很冒險",
-  "真不了的假的",
-  "假不了的真的",
-  "不要太過分了",
-  "斷捨離",
-  "拭目以待",
-  "盡全力了嗎",
-  "見好就收",
-  "我想想",
-  "下次再說",
-  "別人說了不算"
-];
-var numbersOfAnswers = robotAnswers.length;
-String randomAnswer = "";
-Random random = Random();
+class AnswerbookRepository implements AnswerbookApiDataSource {
+  final client = http.Client();
+  final String domain = "http://10.0.2.2:8080";
+  @override
+  Future<Map<String, dynamic>> getAnswerbook() {
+    return _getAnswerBook(Uri.parse('$domain/answerBook/search'));
+  }
+
+  Future<Map<String, dynamic>> _getAnswerBook(Uri url) async {
+    final request =
+        await client.get(url, headers: {'Content-type': 'application/json'});
+    if (request.statusCode == 200) {
+      Map<String, dynamic> answerBook = jsonDecode(request.body);
+      return Future.value(answerBook);
+    } else {
+      Map<String, dynamic> answerBook = jsonDecode(request.body);
+      return answerBook;
+    }
+  }
+}
 
 class AnswerbookforAnsPage extends StatefulWidget {
   @override
@@ -65,22 +38,20 @@ class AnswerbookforAnsPage extends StatefulWidget {
 }
 
 class _AnswerbookforAnsPage extends State<AnswerbookforAnsPage> {
-  String datatochange = robotAnswers[random.nextInt(numbersOfAnswers)];
+  final AnswerbookRepository answerbookRepository = AnswerbookRepository();
+  String answer = '';
 
-  void changedata() {
+  void getAnswer() {
     setState(() {
-      datatochange = robotAnswers[random.nextInt(numbersOfAnswers)];
+      Future<Answerbook> answers = answerbookRepository
+          .getAnswerbook()
+          .then((value) => Answerbook.fromMap(value));
+      answers.then((value) => answer = value.content);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    void changedata() {
-      setState(() {
-        datatochange = robotAnswers[random.nextInt(numbersOfAnswers)];
-      });
-    }
-
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       body: Stack(
@@ -222,7 +193,9 @@ class _AnswerbookforAnsPage extends State<AnswerbookforAnsPage> {
                             fontFamily: 'Segoe UI',
                             fontSize: 23,
                             color: Color(0xffa0522d))),
-                    onPressed: changedata,
+                    onPressed: () {
+                      getAnswer();
+                    },
                   ),
                 ),
               ],
@@ -239,7 +212,7 @@ class _AnswerbookforAnsPage extends State<AnswerbookforAnsPage> {
               Pin(start: 50.0, end: 50.0), Pin(size: 50.0, middle: 0.4),
               child: Center(
                 child: Text(
-                  datatochange,
+                  answer,
                   style: const TextStyle(
                     fontFamily: 'Segoe UI',
                     fontSize: 25,
