@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/annoyance.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
+import 'package:monsters_front_end/pages/history.dart';
 
 import '../model/annoyanceModel.dart';
 
@@ -146,10 +147,19 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                     )
                   : ListTile(
                       title: Container(
-                        child: Text(
-                          "怪獸正在工作中",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 25, color: Colors.orange),
+                        child: FlatButton(
+                          child: Text(
+                            "怪獸正在工作中",
+                            textAlign: TextAlign.center,
+                            style:
+                                TextStyle(fontSize: 30, color: Colors.orange),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => History()));
+                          },
                         ),
                       ),
                     ),
@@ -248,7 +258,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
   }
 
   void response([String? text]) async {
-    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository(); 
+    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     setState(() {
       if (chatRound < 7) {
         if (robotSpeakable == true) {
@@ -291,12 +301,11 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
               reply("解決煩惱請馬上跟我說！我已經迫不及待想吃飯了！");
               annoyanceRepository.createAnnoyance(
                 Annoyance(
-                  account: 'Lin',
-                  context: userAnswers[1].text,
-                  type: userAnswers[0].text,
-                  mood: userAnswers[2].text,
-                  index: userAnswers[3].text
-                ),
+                    account: 'Lin',
+                    context: userAnswers[1].text,
+                    type: userAnswers[0].text,
+                    mood: userAnswers[2].text,
+                    index: userAnswers[3].text),
               );
             } else {
               cannotRead();

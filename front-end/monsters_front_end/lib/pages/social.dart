@@ -830,7 +830,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AnnoyancePage()));
+                                    builder: (context) => AnnoyanceChat()));
                           },
                         ),
                       ),

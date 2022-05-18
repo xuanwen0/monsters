@@ -827,7 +827,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AnnoyancePage()));
+                                    builder: (context) => AnnoyanceChat()));
                           },
                         ),
                       ),
