@@ -93,6 +93,23 @@ class _MainPageState extends State<MainPage>
               fit: BoxFit.fill,
             ),
           ),
+          //巴古
+          Align(
+            alignment: Alignment(0.0, 0.256),
+            child:
+                // Adobe XD layer: 'monster1' (shape)
+                Container(
+              width: 150.0,
+              height: 158.0,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: const AssetImage(
+                      'assets/image/monsters_book_monster.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
           //底部
           Pinned.fromPins(
             Pin(start: 0.0, end: 0.0),

@@ -595,7 +595,7 @@ class _InteractionPageState extends State<InteractionPage>
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AnnoyancePage()));
+                                    builder: (context) => AnnoyanceChat()));
                           },
                         ),
                       ),
