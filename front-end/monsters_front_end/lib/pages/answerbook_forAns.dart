@@ -5,7 +5,6 @@ import 'package:adobe_xd/adobe_xd.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
-import 'package:localstorage/localstorage.dart';
 import 'package:monsters_front_end/model/answerbookModel.dart';
 
 import '../API/answerbookAPI.dart';
@@ -40,15 +39,6 @@ class AnswerbookforAnsPage extends StatefulWidget {
 class _AnswerbookforAnsPage extends State<AnswerbookforAnsPage> {
   final AnswerbookRepository answerbookRepository = AnswerbookRepository();
   String answer = '';
-
-  void getAnswer() {
-    setState(() {
-      Future<Answerbook> answers = answerbookRepository
-          .getAnswerbook()
-          .then((value) => Answerbook.fromMap(value));
-      answers.then((value) => answer = value.content);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -194,7 +184,13 @@ class _AnswerbookforAnsPage extends State<AnswerbookforAnsPage> {
                             fontSize: 23,
                             color: Color(0xffa0522d))),
                     onPressed: () {
-                      getAnswer();
+                      setState(() {
+                        Future<Answerbook> answers = answerbookRepository
+                            .getAnswerbook()
+                            .then((value) => Answerbook.fromMap(value));
+                        answers.then((value) => answer = value.content);
+                        print(answer);
+                      });
                     },
                   ),
                 ),

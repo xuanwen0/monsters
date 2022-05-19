@@ -5,18 +5,11 @@ import com.example.demo.entity.AnswerBook;
 import com.example.demo.service.AnswerBookService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Random;
 
 @AllArgsConstructor
 @RestController
@@ -25,7 +18,7 @@ public class AnswerBookController {
     private final AnswerBookService answerBookService;
 
     @ResponseBody
-    @GetMapping("search")
+    @GetMapping(path = "search", produces = "application/json; charset=UTF-8")
     public String searchAnswerBook(AnswerBookBean answerBookBean) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
@@ -34,9 +27,10 @@ public class AnswerBookController {
         result.put("message", "查詢成功");
         try {
             List<AnswerBook> answerBooksList = answerBookService.find();
-            int index = (int) (Math.random()*answerBooksList.size());
-                result.put("id", answerBooksList.get(index).getId());
-                result.put("content", answerBooksList.get(index).getContent());
+            int index = (int) (Math.random() * answerBooksList.size());
+            result.put("id", answerBooksList.get(index).getId());
+            result.put("content", answerBooksList.get(index).getContent());
+            System.out.println(answerBooksList.get(index).getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
