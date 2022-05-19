@@ -258,8 +258,8 @@ class _InteractionPageState extends State<InteractionPage>
                             ),
                           ),
                           Pinned.fromPins(
-                            Pin(start: 70.0, end: 43.0),
-                            Pin(size: 68.0, middle: 0.75),
+                            Pin(start: 0.0, end: 0.0),
+                            Pin(size: 40.0, middle: 0.5),
                             child: const Text(
                               '心理小遊戲',
                               textAlign: TextAlign.center,

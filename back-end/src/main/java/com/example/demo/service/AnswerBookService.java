@@ -4,7 +4,6 @@ import com.example.demo.bean.AnswerBookBean;
 import com.example.demo.dao.AnswerBookDAO;
 import com.example.demo.entity.AnswerBook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

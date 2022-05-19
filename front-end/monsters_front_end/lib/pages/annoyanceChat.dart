@@ -42,6 +42,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
 
   @override
   Widget build(BuildContext context) {
+    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     if (firstSpeaking == true) {
       response("0");
@@ -155,6 +156,14 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                                 TextStyle(fontSize: 30, color: Colors.orange),
                           ),
                           onPressed: () {
+                            annoyanceRepository.createAnnoyance(
+                              Annoyance(
+                                  account: 'Lin',
+                                  context: userAnswers[1],
+                                  type: userAnswers[0],
+                                  mood: userAnswers[2],
+                                  index: userAnswers[3]),
+                            );
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -258,20 +267,19 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
   }
 
   void response([String? text]) async {
-    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     setState(() {
       if (chatRound < 7) {
         if (robotSpeakable == true) {
           if (chatRound == 1) {
             if (annoyTypeMembers.contains(text)) {
               userAnswers.add(annoyTypeMembers.indexOf(text!));
-              reply("關於$text的煩惱嗎？跟我說發生什麼事了吧！");
+              reply("關於" + text + "的煩惱嗎？跟我說發生什麼事了吧！");
             } else {
               cannotRead();
             }
           }
           if (chatRound == 2) {
-            userAnswers.add(text!);
+            userAnswers.add(text);
             reply("真是辛苦你了，想做一幅畫表達你的感受嗎？");
           }
           if (chatRound == 3) {
@@ -299,14 +307,6 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
               lastSpeaking = true;
               userAnswers.add(acceptSharingMembers.indexOf(text!));
               reply("解決煩惱請馬上跟我說！我已經迫不及待想吃飯了！");
-              annoyanceRepository.createAnnoyance(
-                Annoyance(
-                    account: 'Lin',
-                    context: userAnswers[1].text,
-                    type: userAnswers[0].text,
-                    mood: userAnswers[2].text,
-                    index: userAnswers[3].text),
-              );
             } else {
               cannotRead();
             }

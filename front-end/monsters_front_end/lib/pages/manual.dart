@@ -124,7 +124,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
                     decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
+                      color: Color(0xffa0522d),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
@@ -138,7 +138,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
                       fontSize: 20,
-                      color: Color(0xffa0522d),
+                      color: Color.fromARGB(255, 255, 255, 255),
                     ),
                     softWrap: false,
                   )),
@@ -229,7 +229,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                         image: DecorationImage(
                           image: const AssetImage(
                               'assets/image/monsters_book_monster.png'),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.scaleDown,
                         ),
                       ),
                     ),
@@ -240,7 +240,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       width: 95.0,
                       height: 48.0,
                       child: Text(
-                        'Name',
+                        '巴古',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Segoe UI',
                           fontSize: 36,
@@ -314,9 +315,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: const AssetImage(
-                            'assets/image/monsters_book_monster.png'),
-                        fit: BoxFit.cover,
+                        image: const AssetImage('assets/image/unknow.png'),
+                        fit: BoxFit.scaleDown,
                       ),
                     ),
                   ),
@@ -327,7 +327,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     width: 95.0,
                     height: 48.0,
                     child: Text(
-                      'Name',
+                      '???',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 36,
@@ -335,43 +336,6 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       ),
                       softWrap: false,
                     ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment(-0.109, 0.433),
-                  child: SizedBox(
-                    width: 33.0,
-                    height: 32.0,
-                    child:
-                        // Adobe XD layer: 'Icon awesome-star' (shape)
-                        SvgPicture.string(
-                      _svg_xvbnb,
-                      allowDrawingOutsideViewBox: true,
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment(0.422, 0.433),
-                  child: SizedBox(
-                    width: 33.0,
-                    height: 32.0,
-                    child:
-                        // Adobe XD layer: 'Icon awesome-star' (shape)
-                        SvgPicture.string(
-                      _svg_tn4ajf,
-                      allowDrawingOutsideViewBox: true,
-                    ),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 33.0, end: 3.5),
-                  Pin(size: 31.6, middle: 0.7167),
-                  child:
-                      // Adobe XD layer: 'Icon awesome-star' (shape)
-                      SvgPicture.string(
-                    _svg_bx5ln,
-                    allowDrawingOutsideViewBox: true,
-                    fit: BoxFit.fill,
                   ),
                 ),
               ],
@@ -400,9 +364,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: const AssetImage(
-                            'assets/image/monsters_book_monster.png'),
-                        fit: BoxFit.cover,
+                        image: const AssetImage('assets/image/unknow.png'),
+                        fit: BoxFit.scaleDown,
                       ),
                     ),
                   ),
@@ -413,7 +376,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     width: 95.0,
                     height: 48.0,
                     child: Text(
-                      'Name',
+                      '???',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 36,
@@ -421,43 +385,6 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       ),
                       softWrap: false,
                     ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment(-0.109, 0.433),
-                  child: SizedBox(
-                    width: 33.0,
-                    height: 32.0,
-                    child:
-                        // Adobe XD layer: 'Icon awesome-star' (shape)
-                        SvgPicture.string(
-                      _svg_xvbnb,
-                      allowDrawingOutsideViewBox: true,
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment(0.422, 0.433),
-                  child: SizedBox(
-                    width: 33.0,
-                    height: 32.0,
-                    child:
-                        // Adobe XD layer: 'Icon awesome-star' (shape)
-                        SvgPicture.string(
-                      _svg_tn4ajf,
-                      allowDrawingOutsideViewBox: true,
-                    ),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 33.0, end: 3.5),
-                  Pin(size: 31.6, middle: 0.7167),
-                  child:
-                      // Adobe XD layer: 'Icon awesome-star' (shape)
-                      SvgPicture.string(
-                    _svg_bx5ln,
-                    allowDrawingOutsideViewBox: true,
-                    fit: BoxFit.fill,
                   ),
                 ),
               ],
@@ -486,9 +413,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: const AssetImage(
-                            'assets/image/monsters_book_monster.png'),
-                        fit: BoxFit.cover,
+                        image: const AssetImage('assets/image/unknow.png'),
+                        fit: BoxFit.scaleDown,
                       ),
                     ),
                   ),
@@ -499,7 +425,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     width: 95.0,
                     height: 48.0,
                     child: Text(
-                      'Name',
+                      '???',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 36,
@@ -507,43 +434,6 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       ),
                       softWrap: false,
                     ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment(-0.109, 0.433),
-                  child: SizedBox(
-                    width: 33.0,
-                    height: 32.0,
-                    child:
-                        // Adobe XD layer: 'Icon awesome-star' (shape)
-                        SvgPicture.string(
-                      _svg_xvbnb,
-                      allowDrawingOutsideViewBox: true,
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment(0.422, 0.433),
-                  child: SizedBox(
-                    width: 33.0,
-                    height: 32.0,
-                    child:
-                        // Adobe XD layer: 'Icon awesome-star' (shape)
-                        SvgPicture.string(
-                      _svg_tn4ajf,
-                      allowDrawingOutsideViewBox: true,
-                    ),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 33.0, end: 3.5),
-                  Pin(size: 31.6, middle: 0.7167),
-                  child:
-                      // Adobe XD layer: 'Icon awesome-star' (shape)
-                      SvgPicture.string(
-                    _svg_bx5ln,
-                    allowDrawingOutsideViewBox: true,
-                    fit: BoxFit.fill,
                   ),
                 ),
               ],

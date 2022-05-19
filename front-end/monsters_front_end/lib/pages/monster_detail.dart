@@ -21,7 +21,7 @@ class _Monster_detailState extends State<Monster_detail> {
             Pin(size: 124.0, middle: 0.5),
             Pin(size: 63.0, start: 11.0),
             child: Text(
-              'Name',
+              '圖鑑',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
                 fontSize: 47,
@@ -48,8 +48,8 @@ class _Monster_detailState extends State<Monster_detail> {
                 Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image:
-                          const AssetImage('assets/image/monsters_book_monster.png'),
+                      image: const AssetImage(
+                          'assets/image/monsters_book_monster.png'),
                       fit: BoxFit.fill,
                     ),
                     borderRadius: BorderRadius.circular(24.0),
@@ -105,14 +105,15 @@ class _Monster_detailState extends State<Monster_detail> {
             alignment: Alignment(-0.115, 0.277),
             child: SizedBox(
               width: 168.0,
-              height: 53.0,
+              height: 60.0,
               child: Stack(
                 children: <Widget>[
                   Pinned.fromPins(
                     Pin(size: 106.0, middle: 0.5),
                     Pin(start: 0.0, end: 0.0),
                     child: const Text(
-                      'Name',
+                      '巴古',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 40,
