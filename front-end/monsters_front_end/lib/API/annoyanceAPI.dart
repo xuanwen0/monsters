@@ -4,4 +4,6 @@ import 'package:monsters_front_end/model/annoyanceModel.dart';
 
 abstract class AnnoyanceApiDataSource{
   Future<String> createAnnoyance(Annoyance annoyance);
+
+  // Future<Map<String, dynamic>> searchAnnoyance(String account);
 }
