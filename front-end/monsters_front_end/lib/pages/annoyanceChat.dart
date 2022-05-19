@@ -273,13 +273,13 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
           if (chatRound == 1) {
             if (annoyTypeMembers.contains(text)) {
               userAnswers.add(annoyTypeMembers.indexOf(text!));
-              reply("關於$text的煩惱嗎？跟我說發生什麼事了吧！");
+              reply("關於" + text + "的煩惱嗎？跟我說發生什麼事了吧！");
             } else {
               cannotRead();
             }
           }
           if (chatRound == 2) {
-            userAnswers.add(text!);
+            userAnswers.add(text);
             reply("真是辛苦你了，想做一幅畫表達你的感受嗎？");
           }
           if (chatRound == 3) {

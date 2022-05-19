@@ -21,7 +21,7 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
         children: <Widget>[
           Pinned.fromPins(
             Pin(start: 0.0, end: 0.0),
-            Pin(size: 544.0, start: 103.0),
+            Pin(size: 620.0, start: 103.0),
             child: Container(
               color: const Color(0xffffffff),
             ),
@@ -92,9 +92,10 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                   Pin(start: 6.0, end: 5.0),
                   child: Text(
                     '編輯',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
-                      fontSize: 40,
+                      fontSize: 30,
                       color: const Color(0xffa0522d),
                     ),
                     softWrap: false,

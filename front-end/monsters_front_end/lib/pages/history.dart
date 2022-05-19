@@ -146,7 +146,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
                     decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
+                      color: Color(0xffa0522d),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
@@ -160,7 +160,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
                       fontSize: 20,
-                      color: Color(0xffa0522d),
+                      color: Color.fromARGB(255, 255, 255, 255),
                     ),
                     softWrap: false,
                   )),
@@ -242,7 +242,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
                     decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
+                      color: Color(0xffa0522d),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
@@ -254,7 +254,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   style: TextStyle(
                     fontFamily: 'Segoe UI',
                     fontSize: 20,
-                    color: Color(0xffa0522d),
+                    color: Color.fromARGB(255, 255, 255, 255),
                   ),
                   softWrap: false,
                 )),

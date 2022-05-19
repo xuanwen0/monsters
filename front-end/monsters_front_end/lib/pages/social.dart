@@ -95,7 +95,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
                     decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
+                      color: Color(0xffa0522d),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
@@ -109,7 +109,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
                       fontSize: 20,
-                      color: Color(0xffa0522d),
+                      color: Color.fromARGB(255, 255, 255, 255),
                     ),
                     softWrap: false,
                   ),
@@ -171,7 +171,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                   Pin(size: 40.0, middle: 0.5385),
                   Pin(size: 27.0, start: 116.0),
                   child: const Text(
-                    '娃娃',
+                    '怪獸',
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
                       fontSize: 20,
