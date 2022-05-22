@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 
+Annoyance annoyanceFromJson(String string) => Annoyance.fromJson(json.decode(string));
+
 class Annoyance {
   final String account;
   final String context;
@@ -32,7 +34,6 @@ class Annoyance {
       index: index ?? this.index
     );
   }
-
   Map<String, dynamic> toMap() {
     return {
       'account': account,
@@ -45,7 +46,7 @@ class Annoyance {
 
   factory Annoyance.fromMap(Map<String, dynamic> map) {
     return Annoyance(
-      account: map['username'],
+      account: map['account'],
       context: map['password'],
       type: map['type'],
       mood: map['mood'],
@@ -53,9 +54,12 @@ class Annoyance {
     );
   }
 
-  String toJson() => json.encode(toMap());
+  String toJson(){
+    return json.encode(toMap());
+  }
 
   factory Annoyance.fromJson(String source) => Annoyance.fromMap(json.decode(source));
+
 
   @override
   String toString() => 'Annoyance(account: $account, context: $context, type: $type, mood: $mood, index: $type)';

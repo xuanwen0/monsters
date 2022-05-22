@@ -7,9 +7,9 @@ import 'package:monsters_front_end/API/annoyanceAPI.dart';
 import 'package:http/http.dart' as http;
 import 'package:monsters_front_end/model/annoyanceModel.dart';
 
-class AnnoyanceRepository implements ApiDataSource{
+class AnnoyanceRepository implements AnnoyanceApiDataSource{
   final client = http.Client();
-  final String domain = "http://localhost:8080";
+  final String domain = "http://10.0.2.2:8080";
   @override
   Future<String> createAnnoyance(Annoyance annoyance) {
     return _createAnnoyance(
@@ -18,6 +18,11 @@ class AnnoyanceRepository implements ApiDataSource{
     );
   }
   
+  // @override
+  // Future<Map<String, dynamic>> searchAnnoyance(String account) {
+  //   return searchAnnoyance();
+  // }
+
   Future<String> _createAnnoyance(
     Uri url,
     Annoyance annoyance,
@@ -25,7 +30,7 @@ class AnnoyanceRepository implements ApiDataSource{
     try {
       final request = await client.post(
         url,
-        headers: {'Content-Type' : 'application/json'},  
+        headers: {'Content-type':'application/json'},  
         body: annoyance.toJson()
       );
       if(request.statusCode==200){
@@ -37,10 +42,11 @@ class AnnoyanceRepository implements ApiDataSource{
       }else {
         return request.body;
       }
-    } catch (e) {
+     } catch (e) {
       return e.toString();
     }
   }
+
 }
 
 class AnnoyancePage extends StatefulWidget{

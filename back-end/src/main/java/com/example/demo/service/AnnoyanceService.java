@@ -4,12 +4,17 @@ import com.example.demo.bean.AnnoyanceBean;
 import com.example.demo.dao.AnnoyanceDAO;
 import com.example.demo.entity.Annoyance;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AnnoyanceService {
     @Autowired
-    AnnoyanceDAO annoyanceDAO;
+    private final AnnoyanceDAO annoyanceDAO;
+
+    public AnnoyanceService(AnnoyanceDAO annoyanceDAO) {
+        this.annoyanceDAO = annoyanceDAO;
+    }
 
     public AnnoyanceBean create(AnnoyanceBean annoyanceBean) {
         Annoyance annoyance = createVO(annoyanceBean);
