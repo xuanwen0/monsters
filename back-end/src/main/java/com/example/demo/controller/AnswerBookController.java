@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.bean.AnswerBookBean;
 import com.example.demo.entity.AnswerBook;
-import com.example.demo.service.AnswerBookService;
+import com.example.demo.service.impl.AnswerBookServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/answerBook")
 public class AnswerBookController {
-    private final AnswerBookService answerBookService;
+    private final AnswerBookServiceImpl answerBookService;
 
     @ResponseBody
     @GetMapping(path = "search", produces = "application/json; charset=UTF-8")
