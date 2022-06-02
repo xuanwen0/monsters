@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class AnnoyanceBean {
+public class AnnoyanceBean extends BaseBean {
     private Integer id;
     private String account;
     private String context;

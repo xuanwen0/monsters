@@ -1,6 +1,16 @@
+project:
+  root: com.example.demo
+  name: monsters
+database:
+  name: monsters
+  driver: com.mysql.cj.jdbc.Driver
+file:
+  path: D://monsters
 spring:
+  main:
+    allow-bean-definition-overriding: true
   datasource:
-    url: jdbc:mysql://localhost:3306/monsters?useSSL=false&serverTimezone=Asia/Taipei&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/monsters?useSSL=false&serverTimezone=Asia/Taipei
     username: root
     password: czb96800528
   jpa:
