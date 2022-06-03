@@ -16,6 +16,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
     GlobalKey _formKey = GlobalKey<FormState>();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _formKey, //设置globalKey，用于后面获取FormState
       backgroundColor: const Color(0xfffffed4),
       body: Stack(
