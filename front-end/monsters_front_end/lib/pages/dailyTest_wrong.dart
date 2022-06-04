@@ -32,16 +32,34 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
               softWrap: false,
             ),
           ),
+          //解答解釋
           Pinned.fromPins(
-            Pin(start: 34.0, end: 34.0),
-            Pin(size: 219.0, end: 64.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xffffffff),
-                borderRadius: BorderRadius.circular(22.0),
-              ),
-            ),
-          ),
+              Pin(start: 34.0, end: 34.0), Pin(size: 219.0, end: 30.0),
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      border:
+                          Border.all(color: Color.fromRGBO(151, 151, 151, 1)),
+                      color: Color.fromRGBO(255, 255, 255, 1),
+                      borderRadius: BorderRadius.circular(22.0),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 295.0, middle: 0.5),
+                    Pin(size: 165.0, start: 520.0),
+                    child: Text(
+                      '人生只有約900個月，所以拿張紙畫\n出30*30的表格，每過一個月就打勾。\n這樣你全部的人生就在這張紙上囉！\n\n',
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 18,
+                        color: const Color(0xffa0522d),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              )),
           Pinned.fromPins(
             Pin(size: 45.6, start: 13.7),
             Pin(size: 41.1, start: 21.9),
@@ -65,7 +83,7 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
           ),
           Pinned.fromPins(
             Pin(start: 34.0, end: 34.0),
-            Pin(size: 112.0, middle: 0.3168),
+            Pin(size: 112.0, middle: 0.2),
             child: Stack(
               children: <Widget>[
                 Container(
@@ -92,7 +110,7 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
           ),
           Pinned.fromPins(
             Pin(start: 36.2, end: 36.2),
-            Pin(size: 66.0, middle: 0.5941),
+            Pin(size: 66.0, middle: 0.45),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
@@ -376,13 +394,69 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
           ),
           Pinned.fromPins(
             Pin(size: 30.4, start: 3.6),
-            Pin(size: 38.2, middle: 0.5123),
+            Pin(size: 38.2, middle: 0.36),
             child:
                 // Adobe XD layer: 'Icon material-direc…' (shape)
                 SvgPicture.string(
               _svg_u6ihw,
               allowDrawingOutsideViewBox: true,
               fit: BoxFit.fill,
+            ),
+          ),
+          //正解
+          Pinned.fromPins(
+            Pin(start: 28.0, end: 27.0),
+            Pin(size: 86.0, middle: 0.55),
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xffffffff),
+                    borderRadius: BorderRadius.circular(22.0),
+                  ),
+                  margin: EdgeInsets.fromLTRB(13.0, 17.0, 0.0, 18.0),
+                ),
+                Pinned.fromPins(
+                  Pin(size: 87.0, start: 0.0),
+                  Pin(start: 0.0, end: 0.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xffffffff),
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                    width: 101.0,
+                    height: 37.0,
+                    child: Text(
+                      '900個月',
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 28,
+                        color: const Color(0xffa0522d),
+                      ),
+                      softWrap: false,
+                    ),
+                  ),
+                ),
+                Pinned.fromPins(
+                  Pin(size: 25.0, start: 30.0),
+                  Pin(size: 53.0, middle: 0.5),
+                  child: Text(
+                    'C',
+                    style: TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 40,
+                      color: const Color(0xffa0522d),
+                    ),
+                    softWrap: false,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

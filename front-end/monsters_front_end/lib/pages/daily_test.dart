@@ -32,17 +32,35 @@ class _Daily_testState extends State<Daily_test> {
               softWrap: false,
             ),
           ),
-          //題目白底
+          //題目
           Pinned.fromPins(
-            Pin(start: 34.0, end: 34.0),
-            Pin(size: 195.0, start: 111.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xffffffff),
-                borderRadius: BorderRadius.circular(22.0),
-              ),
-            ),
-          ),
+              Pin(start: 34.0, end: 34.0), Pin(size: 195.0, start: 111.0),
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xffffffff),
+                      borderRadius: BorderRadius.circular(22.0),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      width: 265.0,
+                      height: 37.0,
+                      child: Text(
+                        '人生大約有幾個月呢?',
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 28,
+                          color: Color.fromRGBO(160, 82, 45, 1),
+                        ),
+                        softWrap: false,
+                      ),
+                    ),
+                  ),
+                ],
+              )),
           //箭頭
           Pinned.fromPins(
             Pin(size: 45.6, start: 14.4),
@@ -82,22 +100,42 @@ class _Daily_testState extends State<Daily_test> {
                     child: Stack(
                       children: <Widget>[
                         PageLink(
-                          links: [
-                            PageLinkInfo(
-                              transition: LinkTransition.Fade,
-                              ease: Curves.easeOut,
-                              duration: 0.3,
-                              pageBuilder: () => DailyTest_correct(),
-                            ),
-                          ],
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color(0xffffffff),
-                              borderRadius: BorderRadius.circular(22.0),
-                            ),
-                            margin: EdgeInsets.fromLTRB(13.0, 17.0, 0.0, 18.0),
-                          ),
-                        ),
+                            links: [
+                              PageLinkInfo(
+                                transition: LinkTransition.Fade,
+                                ease: Curves.easeOut,
+                                duration: 0.3,
+                                pageBuilder: () => DailyTest_correct(),
+                              ),
+                            ],
+                            child: Stack(
+                              children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xffffffff),
+                                    borderRadius: BorderRadius.circular(22.0),
+                                  ),
+                                  margin: EdgeInsets.fromLTRB(
+                                      13.0, 17.0, 0.0, 18.0),
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: SizedBox(
+                                    width: 101.0,
+                                    height: 37.0,
+                                    child: Text(
+                                      '700個月',
+                                      style: TextStyle(
+                                        fontFamily: 'Segoe UI',
+                                        fontSize: 28,
+                                        color: const Color(0xffa0522d),
+                                      ),
+                                      softWrap: false,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )),
                         Pinned.fromPins(
                           Pin(size: 87.0, start: 0.0),
                           Pin(start: 0.0, end: 0.0),
@@ -131,22 +169,42 @@ class _Daily_testState extends State<Daily_test> {
                     child: Stack(
                       children: <Widget>[
                         PageLink(
-                          links: [
-                            PageLinkInfo(
-                              transition: LinkTransition.Fade,
-                              ease: Curves.easeOut,
-                              duration: 0.3,
-                              pageBuilder: () => DailyTest_wrong(),
-                            ),
-                          ],
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color(0xffffffff),
-                              borderRadius: BorderRadius.circular(22.0),
-                            ),
-                            margin: EdgeInsets.fromLTRB(13.0, 17.0, 0.0, 18.0),
-                          ),
-                        ),
+                            links: [
+                              PageLinkInfo(
+                                transition: LinkTransition.Fade,
+                                ease: Curves.easeOut,
+                                duration: 0.3,
+                                pageBuilder: () => DailyTest_wrong(),
+                              ),
+                            ],
+                            child: Stack(
+                              children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xffffffff),
+                                    borderRadius: BorderRadius.circular(22.0),
+                                  ),
+                                  margin: EdgeInsets.fromLTRB(
+                                      13.0, 17.0, 0.0, 18.0),
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: SizedBox(
+                                    width: 101.0,
+                                    height: 37.0,
+                                    child: Text(
+                                      '800個月',
+                                      style: TextStyle(
+                                        fontFamily: 'Segoe UI',
+                                        fontSize: 28,
+                                        color: const Color(0xffa0522d),
+                                      ),
+                                      softWrap: false,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )),
                         Pinned.fromPins(
                           Pin(size: 87.0, start: 0.0),
                           Pin(start: 0.0, end: 0.0),
@@ -180,22 +238,42 @@ class _Daily_testState extends State<Daily_test> {
                     child: Stack(
                       children: <Widget>[
                         PageLink(
-                          links: [
-                            PageLinkInfo(
-                              transition: LinkTransition.Fade,
-                              ease: Curves.easeOut,
-                              duration: 0.3,
-                              pageBuilder: () => DailyTest_wrong(),
-                            ),
-                          ],
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color(0xffffffff),
-                              borderRadius: BorderRadius.circular(22.0),
-                            ),
-                            margin: EdgeInsets.fromLTRB(13.0, 17.0, 0.0, 18.0),
-                          ),
-                        ),
+                            links: [
+                              PageLinkInfo(
+                                transition: LinkTransition.Fade,
+                                ease: Curves.easeOut,
+                                duration: 0.3,
+                                pageBuilder: () => DailyTest_wrong(),
+                              ),
+                            ],
+                            child: Stack(
+                              children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xffffffff),
+                                    borderRadius: BorderRadius.circular(22.0),
+                                  ),
+                                  margin: EdgeInsets.fromLTRB(
+                                      13.0, 17.0, 0.0, 18.0),
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: SizedBox(
+                                    width: 101.0,
+                                    height: 37.0,
+                                    child: Text(
+                                      '900個月',
+                                      style: TextStyle(
+                                        fontFamily: 'Segoe UI',
+                                        fontSize: 28,
+                                        color: const Color(0xffa0522d),
+                                      ),
+                                      softWrap: false,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )),
                         Pinned.fromPins(
                           Pin(size: 87.0, start: 0.0),
                           Pin(start: 0.0, end: 0.0),
@@ -229,22 +307,42 @@ class _Daily_testState extends State<Daily_test> {
                     child: Stack(
                       children: <Widget>[
                         PageLink(
-                          links: [
-                            PageLinkInfo(
-                              transition: LinkTransition.Fade,
-                              ease: Curves.easeOut,
-                              duration: 0.3,
-                              pageBuilder: () => DailyTest_wrong(),
-                            ),
-                          ],
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color(0xffffffff),
-                              borderRadius: BorderRadius.circular(22.0),
-                            ),
-                            margin: EdgeInsets.fromLTRB(13.0, 17.0, 0.0, 18.0),
-                          ),
-                        ),
+                            links: [
+                              PageLinkInfo(
+                                transition: LinkTransition.Fade,
+                                ease: Curves.easeOut,
+                                duration: 0.3,
+                                pageBuilder: () => DailyTest_wrong(),
+                              ),
+                            ],
+                            child: Stack(
+                              children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xffffffff),
+                                    borderRadius: BorderRadius.circular(22.0),
+                                  ),
+                                  margin: EdgeInsets.fromLTRB(
+                                      13.0, 17.0, 0.0, 18.0),
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: SizedBox(
+                                    width: 115.0,
+                                    height: 37.0,
+                                    child: Text(
+                                      '1000個月',
+                                      style: TextStyle(
+                                        fontFamily: 'Segoe UI',
+                                        fontSize: 28,
+                                        color: const Color(0xffa0522d),
+                                      ),
+                                      softWrap: false,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )),
                         Pinned.fromPins(
                           Pin(size: 87.0, start: 0.0),
                           Pin(start: 0.0, end: 0.0),
