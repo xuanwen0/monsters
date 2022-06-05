@@ -98,7 +98,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
                     ),
                     onPressed: () {
                       if (solve == 0) {
-                        solve = 1; //更新資料庫為已解決
+                        solve = 1; //此行替代為更新資料庫solve=1
                       }
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => History()));
