@@ -32,7 +32,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
   String secHintSharingAcception = "想分享給別人看看嗎？";
 
   int solve = 0;
-  //資料庫 抓annoyance中[solve]
+  //資料庫 抓annoyance[solve]
   var userAns = [
     "annoyance_type[value].toString",
     "annoyance[content].toString",
@@ -98,7 +98,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
                     ),
                     onPressed: () {
                       if (solve == 0) {
-                        solve = 1; //此行替代為更新資料庫solve=1
+                        solve = 1; //此行替代為"更新資料庫solve=1"
                       }
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => History()));
@@ -220,7 +220,8 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
 
       if (firstSpeaking == true) {
         firstSpeaking = false;
-        int hourNow = DateTime.now().hour.toInt() + 8;
+        int hourNow = DateTime.now().hour.toInt() +
+            8; //資料庫 抓annoyance[time]，此行hourNow只存放"小時(0~24)"
         if (hourNow < 5) {
           reply("凌晨睡不好嗎？\n有甚麼煩惱都可以跟我說"); //0~5點
         } else if (hourNow < 12) {
