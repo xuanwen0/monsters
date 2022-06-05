@@ -3,7 +3,7 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/annoyance.dart';
-import 'package:monsters_front_end/pages/history_detail.dart';
+import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/manual.dart';
@@ -271,7 +271,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => const History_detail(),
+                  pageBuilder: () => historyAnnoyanceChat(),
                 ),
               ],
               child: Stack(
@@ -332,182 +332,201 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           Pinned.fromPins(
             Pin(start: 24.0, end: 23.0),
             Pin(size: 105.0, middle: 0.4294),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(13.0),
-                    border:
-                        Border.all(width: 1.0, color: const Color(0xffa0522d)),
-                  ),
+            child: PageLink(
+              links: [
+                PageLinkInfo(
+                  transition: LinkTransition.Fade,
+                  ease: Curves.easeOut,
+                  duration: 0.3,
+                  pageBuilder: () => historyAnnoyanceChat(),
                 ),
-                Pinned.fromPins(
-                  Pin(size: 69.0, start: 25.0),
-                  Pin(start: 19.0, end: 18.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xfff4a460),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+              ],
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xffffffff),
+                      borderRadius: BorderRadius.circular(13.0),
+                      border: Border.all(
+                          width: 1.0, color: const Color(0xffa0522d)),
                     ),
                   ),
-                ),
-                const Align(
-                  alignment: Alignment(0.029, 0.0),
-                  child: SizedBox(
-                    width: 155.0,
-                    height: 27.0,
-                    child: Text(
-                      '使用者的煩惱........',
+                  Pinned.fromPins(
+                    Pin(size: 69.0, start: 25.0),
+                    Pin(start: 19.0, end: 18.0),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Color(0xfff4a460),
+                        borderRadius:
+                            BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                      ),
+                    ),
+                  ),
+                  const Align(
+                    alignment: Alignment(0.029, 0.0),
+                    child: SizedBox(
+                      width: 155.0,
+                      height: 27.0,
+                      child: Text(
+                        '使用者的煩惱........',
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 20,
+                          color: Color(0xffa0522d),
+                        ),
+                        softWrap: false,
+                      ),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 53.0, end: 16.0),
+                    Pin(size: 21.0, start: 12.0),
+                    child: const Text(
+                      'mm/dd',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 20,
-                        color: Color(0xffa0522d),
+                        fontSize: 16,
+                        color: Color(0xff613018),
                       ),
                       softWrap: false,
                     ),
                   ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 53.0, end: 16.0),
-                  Pin(size: 21.0, start: 12.0),
-                  child: const Text(
-                    'mm/dd',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 16,
-                      color: Color(0xff613018),
-                    ),
-                    softWrap: false,
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 69.0, start: 25.0),
-                  Pin(start: 19.0, end: 18.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xfff4a460),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           //歷史紀錄3
           Pinned.fromPins(
             Pin(start: 24.0, end: 23.0),
             Pin(size: 105.0, middle: 0.633),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(13.0),
-                    border:
-                        Border.all(width: 1.0, color: const Color(0xffa0522d)),
-                  ),
+            child: PageLink(
+              links: [
+                PageLinkInfo(
+                  transition: LinkTransition.Fade,
+                  ease: Curves.easeOut,
+                  duration: 0.3,
+                  pageBuilder: () => historyAnnoyanceChat(),
                 ),
-                Pinned.fromPins(
-                  Pin(size: 69.0, start: 25.0),
-                  Pin(start: 19.0, end: 18.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xfff4a460),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+              ],
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xffffffff),
+                      borderRadius: BorderRadius.circular(13.0),
+                      border: Border.all(
+                          width: 1.0, color: const Color(0xffa0522d)),
                     ),
                   ),
-                ),
-                const Align(
-                  alignment: Alignment(0.029, 0.0),
-                  child: SizedBox(
-                    width: 155.0,
-                    height: 27.0,
-                    child: Text(
-                      '使用者的煩惱........',
+                  Pinned.fromPins(
+                    Pin(size: 69.0, start: 25.0),
+                    Pin(start: 19.0, end: 18.0),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Color(0xfff4a460),
+                        borderRadius:
+                            BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                      ),
+                    ),
+                  ),
+                  const Align(
+                    alignment: Alignment(0.029, 0.0),
+                    child: SizedBox(
+                      width: 155.0,
+                      height: 27.0,
+                      child: Text(
+                        '使用者的煩惱........',
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 20,
+                          color: Color(0xffa0522d),
+                        ),
+                        softWrap: false,
+                      ),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 53.0, end: 16.0),
+                    Pin(size: 21.0, start: 12.0),
+                    child: const Text(
+                      'mm/dd',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 20,
-                        color: Color(0xffa0522d),
+                        fontSize: 16,
+                        color: Color(0xff613018),
                       ),
                       softWrap: false,
                     ),
                   ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 53.0, end: 16.0),
-                  Pin(size: 21.0, start: 12.0),
-                  child: const Text(
-                    'mm/dd',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 16,
-                      color: Color(0xff613018),
-                    ),
-                    softWrap: false,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           //歷史紀錄4
           Pinned.fromPins(
             Pin(start: 24.0, end: 23.0),
             Pin(size: 105.0, end: 110.0),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(13.0),
-                    border:
-                        Border.all(width: 1.0, color: const Color(0xffa0522d)),
-                  ),
+            child: PageLink(
+              links: [
+                PageLinkInfo(
+                  transition: LinkTransition.Fade,
+                  ease: Curves.easeOut,
+                  duration: 0.3,
+                  pageBuilder: () => historyAnnoyanceChat(),
                 ),
-                Pinned.fromPins(
-                  Pin(size: 69.0, start: 25.0),
-                  Pin(start: 19.0, end: 18.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xfff4a460),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+              ],
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xffffffff),
+                      borderRadius: BorderRadius.circular(13.0),
+                      border: Border.all(
+                          width: 1.0, color: const Color(0xffa0522d)),
                     ),
                   ),
-                ),
-                const Align(
-                  alignment: Alignment(0.029, 0.0),
-                  child: SizedBox(
-                    width: 155.0,
-                    height: 27.0,
-                    child: Text(
-                      '使用者的煩惱........',
+                  Pinned.fromPins(
+                    Pin(size: 69.0, start: 25.0),
+                    Pin(start: 19.0, end: 18.0),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Color(0xfff4a460),
+                        borderRadius:
+                            BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                      ),
+                    ),
+                  ),
+                  const Align(
+                    alignment: Alignment(0.029, 0.0),
+                    child: SizedBox(
+                      width: 155.0,
+                      height: 27.0,
+                      child: Text(
+                        '使用者的煩惱........',
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 20,
+                          color: Color(0xffa0522d),
+                        ),
+                        softWrap: false,
+                      ),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 53.0, end: 16.0),
+                    Pin(size: 21.0, start: 12.0),
+                    child: const Text(
+                      'mm/dd',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 20,
-                        color: Color(0xffa0522d),
+                        fontSize: 16,
+                        color: Color(0xff613018),
                       ),
                       softWrap: false,
                     ),
                   ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 53.0, end: 16.0),
-                  Pin(size: 21.0, start: 12.0),
-                  child: const Text(
-                    'mm/dd',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 16,
-                      color: Color(0xff613018),
-                    ),
-                    softWrap: false,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           //圖鑑
