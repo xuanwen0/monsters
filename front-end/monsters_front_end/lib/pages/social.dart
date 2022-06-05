@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/pages/annoyance.dart';
 import 'package:monsters_front_end/pages/drawer_setting.dart';
 import 'package:monsters_front_end/pages/drawer_userInformation.dart';
@@ -64,10 +65,75 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
+    const int socialCount = 6;
+    const List<String> nickNames = ['湋峻', 'A', 'B', 'C', 'D', 'E'];
+    const String socialContent = '馬上就要發表專題了，希望一切順利';
+    const List<String> shareTimes = [
+      '11:46',
+      '9:46',
+      '1:46',
+      '8:46',
+      '6:46',
+      '5:46'
+    ];
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       key: _scaffoldKEy,
-      endDrawer: GetDrawer(context),
+      endDrawer: Drawer(
+        backgroundColor: Color(0xfffffed4),
+        child: ListView(children: [
+          ListTile(
+            title: Text(
+              "個人資料",
+              style: TextStyle(
+                fontFamily: 'Segoe UI',
+                fontSize: 35.0,
+                color: const Color(0xffa0522d),
+              ),
+            ),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Drawer_userInformation()));
+            },
+          ),
+          ListTile(
+            title: Text(
+              "設定",
+              style: TextStyle(
+                fontFamily: 'Segoe UI',
+                fontSize: 35.0,
+                color: const Color(0xffa0522d),
+              ),
+            ),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Drawer_settings()));
+            },
+          ),
+          ListTile(
+            title: Text(
+              "使用說明",
+              style: TextStyle(
+                fontFamily: 'Segoe UI',
+                fontSize: 35.0,
+                color: const Color(0xffa0522d),
+              ),
+            ),
+          ),
+          ListTile(
+            title: Text(
+              "使用回饋",
+              style: TextStyle(
+                fontFamily: 'Segoe UI',
+                fontSize: 35.0,
+                color: const Color(0xffa0522d),
+              ),
+            ),
+          ),
+        ]),
+      ),
       body: Stack(
         children: <Widget>[
           //標題
@@ -84,7 +150,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
               softWrap: false,
             ),
           ),
-          //類別:煩惱
+          //類別:全部
           Pinned.fromPins(
             Pin(size: 72.0, start: 46.0),
             Pin(size: 25.0, start: 118.0),
@@ -95,7 +161,40 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
                     decoration: const BoxDecoration(
-                      color: Color(0xffa0522d),
+                      color: Color.fromRGBO(160, 82, 45, 1),
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                    ),
+                  ),
+                ),
+                Pinned.fromPins(
+                  Pin(size: 40.0, middle: 0.5385),
+                  Pin(size: 27.0, start: 116.0),
+                  child: const Text(
+                    '全部',
+                    style: TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 20,
+                      color: Color.fromRGBO(255, 255, 255, 1),
+                    ),
+                    softWrap: false,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          //類別:煩惱
+          Pinned.fromPins(
+            Pin(size: 72.0, start: 138.0),
+            Pin(size: 25.0, start: 118.0),
+            child: Stack(
+              children: <Widget>[
+                Pinned.fromPins(
+                  Pin(size: 72.0, middle: 0.5385),
+                  Pin(start: 0.0, end: 0.0),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xffffed97),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
@@ -109,7 +208,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
                       fontSize: 20,
-                      color: Color.fromARGB(255, 255, 255, 255),
+                      color: Color(0xffa0522d),
                     ),
                     softWrap: false,
                   ),
@@ -119,7 +218,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
           ),
           //類別:日記
           Pinned.fromPins(
-            Pin(size: 72.0, middle: 0.5102),
+            Pin(size: 72.0, start: 230.0),
             Pin(size: 25.0, start: 118.0),
             child: Stack(
               children: <Widget>[
@@ -150,9 +249,9 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
               ],
             ),
           ),
-          //類別:娃娃
+          //類別:怪獸
           Pinned.fromPins(
-            Pin(size: 72.0, end: 39.0),
+            Pin(size: 72.0, start: 322.0),
             Pin(size: 25.0, start: 118.0),
             child: Stack(
               children: <Widget>[
@@ -191,354 +290,162 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
               color: const Color(0xffffed97),
             ),
           ),
-          //社群1
-          Align(
-            alignment: const Alignment(-1.0, -0.3),
-            child: SizedBox(
-              width: 206.0,
-              height: 244.0,
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    width: 206.0,
-                    height: 244.0,
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      border: Border.all(
-                          width: 1.0, color: const Color(0xffa0522d)),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 53.0, start: 9.0),
-                    Pin(size: 49.0, start: 7.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffffff),
-                        borderRadius: const BorderRadius.all(
-                            Radius.elliptical(9999.0, 9999.0)),
-                        border: Border.all(
-                            width: 1.0, color: const Color(0xffa0522d)),
-                      ),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 40.0, middle: 0.4217),
-                    Pin(size: 27.0, start: 18.0),
-                    child: Text(
-                      '名字',
-                      style: const TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 20,
-                        color: Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 26.2, end: 20.0),
-                    Pin(size: 23.8, end: 6.1),
-                    child: SvgPicture.string(
-                      _svg_fb6j2b,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 26.0, middle: 0.6321),
-                    Pin(size: 28.4, end: 3.8),
-                    child: SvgPicture.string(
-                      _svg_z7peet,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 30.0, start: 16.0),
-                    Pin(size: 20.0, end: 10.0),
-                    child: Text(
-                      '時間',
-                      style: const TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 15,
-                        color: Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(start: 0.0, end: 0.0),
-                    Pin(size: 140.0, middle: 0.5962),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffffff),
-                        border: Border.all(
-                            width: 1.0, color: const Color(0xffa0522d)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          //社群2
-          Align(
-            alignment: const Alignment(1.0, -0.3),
-            child: SizedBox(
-              width: 206.0,
-              height: 244.0,
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    width: 206.0,
-                    height: 244.0,
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      border: Border.all(
-                          width: 1.0, color: const Color(0xffa0522d)),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 53.0, start: 9.0),
-                    Pin(size: 49.0, start: 7.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffffff),
-                        borderRadius: const BorderRadius.all(
-                            Radius.elliptical(9999.0, 9999.0)),
-                        border: Border.all(
-                            width: 1.0, color: const Color(0xffa0522d)),
-                      ),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 40.0, middle: 0.4217),
-                    Pin(size: 27.0, start: 18.0),
-                    child: const Text(
-                      '名字',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 20,
-                        color: Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 26.2, end: 20.0),
-                    Pin(size: 23.8, end: 6.1),
-                    child: SvgPicture.string(
-                      _svg_fb6j2b,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 26.0, middle: 0.6321),
-                    Pin(size: 28.4, end: 3.8),
-                    child: SvgPicture.string(
-                      _svg_z7peet,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 30.0, start: 16.0),
-                    Pin(size: 20.0, end: 10.0),
-                    child: const Text(
-                      '時間',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 15,
-                        color: Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(start: 0.0, end: 0.0),
-                    Pin(size: 140.0, middle: 0.5962),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffffff),
-                        border: Border.all(
-                            width: 1.0, color: const Color(0xffa0522d)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          //社群3
+          //社群列表
           Pinned.fromPins(
-            Pin(size: 206.0, start: 0.0),
-            Pin(size: 244.0, end: 103.0),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  width: 206.0,
-                  height: 244.0,
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    border:
-                        Border.all(width: 1.0, color: const Color(0xffa0522d)),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 53.0, start: 9.0),
-                  Pin(size: 49.0, start: 7.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      borderRadius: const BorderRadius.all(
-                          Radius.elliptical(9999.0, 9999.0)),
-                      border: Border.all(
-                          width: 1.0, color: const Color(0xffa0522d)),
-                    ),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 40.0, middle: 0.4217),
-                  Pin(size: 27.0, start: 18.0),
-                  child: Text(
-                    '名字',
-                    style: const TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color(0xffa0522d),
-                    ),
-                    softWrap: false,
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 26.2, end: 20.0),
-                  Pin(size: 23.8, end: 6.1),
-                  child: SvgPicture.string(
-                    _svg_fb6j2b,
-                    allowDrawingOutsideViewBox: true,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 26.0, middle: 0.6321),
-                  Pin(size: 28.4, end: 3.8),
-                  child: SvgPicture.string(
-                    _svg_z7peet,
-                    allowDrawingOutsideViewBox: true,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 30.0, start: 16.0),
-                  Pin(size: 20.0, end: 10.0),
-                  child: const Text(
-                    '時間',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 15,
-                      color: Color(0xffa0522d),
-                    ),
-                    softWrap: false,
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(start: 0.0, end: 0.0),
-                  Pin(size: 140.0, middle: 0.5962),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      border: Border.all(
-                          width: 1.0, color: const Color(0xffa0522d)),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          //社群4
-          Pinned.fromPins(
-            Pin(size: 206.0, end: 0.0),
-            Pin(size: 244.0, end: 103.0),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  width: 206.0,
-                  height: 244.0,
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    border:
-                        Border.all(width: 1.0, color: const Color(0xffa0522d)),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 53.0, start: 9.0),
-                  Pin(size: 49.0, start: 7.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      borderRadius: const BorderRadius.all(
-                          Radius.elliptical(9999.0, 9999.0)),
-                      border: Border.all(
-                          width: 1.0, color: const Color(0xffa0522d)),
-                    ),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 40.0, middle: 0.4217),
-                  Pin(size: 27.0, start: 18.0),
-                  child: const Text(
-                    '名字',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color(0xffa0522d),
-                    ),
-                    softWrap: false,
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 26.2, end: 20.0),
-                  Pin(size: 23.8, end: 6.1),
-                  child: SvgPicture.string(
-                    _svg_fb6j2b,
-                    allowDrawingOutsideViewBox: true,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 26.0, middle: 0.6321),
-                  Pin(size: 28.4, end: 3.8),
-                  child: SvgPicture.string(
-                    _svg_z7peet,
-                    allowDrawingOutsideViewBox: true,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 30.0, start: 16.0),
-                  Pin(size: 20.0, end: 10.0),
-                  child: const Text(
-                    '時間',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 15,
-                      color: Color(0xffa0522d),
-                    ),
-                    softWrap: false,
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(start: 0.0, end: 0.0),
-                  Pin(size: 140.0, middle: 0.5962),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      border: Border.all(
-                          width: 1.0, color: const Color(0xffa0522d)),
-                    ),
-                  ),
-                ),
-              ],
+            Pin(start: 0.0, end: 0.0),
+            Pin(start: 163.0, end: 85.0),
+            child: GridView(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, mainAxisSpacing: 0, crossAxisSpacing: 0),
+              children: List.generate(
+                  socialCount,
+                  //方法二
+                  //shareTimes.length,
+                  (index) => Container(
+                        alignment: Alignment.center,
+                        child: SizedBox(
+                          width: 250.0,
+                          height: 250.0,
+                          child: Stack(
+                            children: <Widget>[
+                              Stack(children: <Widget>[
+                                //底
+                                Container(
+                                  width: 250.0,
+                                  height: 250.0,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xffffffff),
+                                    border: Border.all(
+                                        width: 1.0,
+                                        color: const Color(0xffa0522d)),
+                                  ),
+                                ),
+                                //頭貼框
+                                Pinned.fromPins(
+                                  Pin(size: 53.0, start: 9.0),
+                                  Pin(size: 49.0, start: 7.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xffffffff),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.elliptical(9999.0, 9999.0)),
+                                      border: Border.all(
+                                          width: 1.0,
+                                          color: const Color(0xffa0522d)),
+                                    ),
+                                  ),
+                                ),
+                                //頭貼
+                                Pinned.fromPins(
+                                  Pin(size: 41.0, start: 15.0),
+                                  Pin(size: 41.0, start: 10.0),
+                                  child:
+                                      // Adobe XD layer: 'baku_chat' (shape)
+                                      Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.elliptical(9999.0, 9999.0)),
+                                      image: DecorationImage(
+                                        image: const AssetImage(
+                                            'assets/image/baku1.jpg'),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                //暱稱
+                                Pinned.fromPins(
+                                  Pin(size: 40.0, middle: 0.4217),
+                                  Pin(size: 27.0, start: 15.0),
+                                  child: Text(
+                                    nickNames[index],
+                                    style: TextStyle(
+                                      fontFamily: 'Segoe UI',
+                                      fontSize: 20,
+                                      color: const Color(0xffa0522d),
+                                    ),
+                                    softWrap: false,
+                                  ),
+                                ),
+                                //愛心
+                                Pinned.fromPins(
+                                  Pin(size: 26.2, end: 20.0),
+                                  Pin(size: 23.8, end: 6.1),
+                                  child: SvgPicture.string(
+                                    _svg_fb6j2b,
+                                    allowDrawingOutsideViewBox: true,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                                //留言
+                                Pinned.fromPins(
+                                  Pin(size: 26.0, middle: 0.6321),
+                                  Pin(size: 21.8, end: 10.4),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xffdcdcdc),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.elliptical(9999.0, 9999.0)),
+                                    ),
+                                  ),
+                                ),
+                                //留言
+                                Pinned.fromPins(
+                                  Pin(size: 16.3, middle: 0.6179),
+                                  Pin(size: 16.4, end: 2.2),
+                                  child: SvgPicture.string(
+                                    _svg_urb4yp,
+                                    allowDrawingOutsideViewBox: true,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                                //時間
+                                Pinned.fromPins(
+                                  Pin(size: 40.0, start: 16.0),
+                                  Pin(size: 20.0, end: 10.0),
+                                  child: Text(
+                                    shareTimes[index],
+                                    style: TextStyle(
+                                      fontFamily: 'Segoe UI',
+                                      fontSize: 15,
+                                      color: const Color(0xffa0522d),
+                                    ),
+                                    softWrap: false,
+                                  ),
+                                ),
+                                //content
+                                Pinned.fromPins(Pin(start: 0.0, end: 0.0),
+                                    Pin(size: 110.0, middle: 0.6),
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xffffffff),
+                                            border: Border.all(
+                                                width: 1.0,
+                                                color: const Color(0xffa0522d)),
+                                          ),
+                                        ),
+                                        Pinned.fromPins(
+                                          Pin(start: 16.0, end: 30.0),
+                                          Pin(size: 54.0, middle: 0.1),
+                                          child: Text(
+                                            socialContent,
+                                            style: TextStyle(
+                                              fontFamily: 'Segoe UI',
+                                              fontSize: 20,
+                                              color: const Color(0xff707070),
+                                            ),
+                                            softWrap: true,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                              ]),
+                            ],
+                          ),
+                        ),
+                      )),
             ),
           ),
           //圖鑑
@@ -585,7 +492,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                       '圖鑑',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -628,7 +535,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                       '歷史紀錄',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -682,7 +589,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                       '社群',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -734,7 +641,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                       '互動',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -853,7 +760,11 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                             size: 40,
                           ),
                           onClick: () {
-                            animationController.reverse();
+                            // animationController.reverse();
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => Add_diary()));
                           },
                         ),
                       ),
@@ -908,3 +819,5 @@ const String _svg_kzt9m =
     '<svg viewBox="350.0 719.7 35.0 22.3" ><path transform="translate(348.5, 712.21)" d="M 25.36363410949707 17.04545402526855 C 28.00454330444336 17.04545402526855 30.12045288085938 14.91363525390625 30.12045288085938 12.27272701263428 C 30.12045288085938 9.631818771362305 28.00454330444336 7.499999523162842 25.36363410949707 7.499999523162842 C 22.72272491455078 7.499999523162842 20.59090614318848 9.631818771362305 20.59090614318848 12.27272701263428 C 20.59090614318848 14.91363525390625 22.72272491455078 17.04545402526855 25.36363410949707 17.04545402526855 Z M 12.63636302947998 17.04545402526855 C 15.27727127075195 17.04545402526855 17.39318084716797 14.91363525390625 17.39318084716797 12.27272701263428 C 17.39318084716797 9.631818771362305 15.27727127075195 7.499999523162842 12.63636302947998 7.499999523162842 C 9.995454788208008 7.499999523162842 7.863636016845703 9.631818771362305 7.863636016845703 12.27272701263428 C 7.863636016845703 14.91363525390625 9.995454788208008 17.04545402526855 12.63636302947998 17.04545402526855 Z M 12.63636302947998 20.22727012634277 C 8.929545402526855 20.22727012634277 1.49999988079071 22.0886344909668 1.49999988079071 25.79545211791992 L 1.49999988079071 29.77272605895996 L 23.77272605895996 29.77272605895996 L 23.77272605895996 25.79545211791992 C 23.77272605895996 22.08863639831543 16.34317970275879 20.22727012634277 12.63636302947998 20.22727012634277 Z M 25.36363410949707 20.22727012634277 C 24.90227127075195 20.22727012634277 24.37726974487305 20.25909042358398 23.8204517364502 20.30681800842285 C 25.66590690612793 21.64318084716797 26.95454216003418 23.44090843200684 26.95454216003418 25.79545211791992 L 26.95454216003418 29.77272605895996 L 36.5 29.77272605895996 L 36.5 25.79545211791992 C 36.5 22.08863639831543 29.0704517364502 20.22727012634277 25.36363410949707 20.22727012634277 Z" fill="#a0522d" stroke="none" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';
 const String _svg_a3julx =
     '<svg viewBox="29.0 716.5 28.7 28.7" ><path transform="translate(26.0, 713.51)" d="M 21.6403694152832 10.88630962371826 L 21.6403694152832 3 L 13.03712177276611 3 L 13.03712177276611 10.88630962371826 L 17.3387451171875 15.18793296813965 L 21.6403694152832 10.88630962371826 Z M 10.88630962371826 13.03712177276611 L 3 13.03712177276611 L 3 21.6403694152832 L 10.88630962371826 21.6403694152832 L 15.18793296813965 17.3387451171875 L 10.88630962371826 13.03712177276611 Z M 13.03712177276611 23.79118156433105 L 13.03712177276611 31.677490234375 L 21.6403694152832 31.677490234375 L 21.6403694152832 23.79118156433105 L 17.3387451171875 19.48955726623535 L 13.03712177276611 23.79118156433105 Z M 23.79118156433105 13.03712177276611 L 19.48955726623535 17.3387451171875 L 23.79118156433105 21.6403694152832 L 31.677490234375 21.6403694152832 L 31.677490234375 13.03712177276611 L 23.79118156433105 13.03712177276611 Z" fill="#a0522d" stroke="none" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';
+const String _svg_urb4yp =
+    '<svg viewBox="117.2 412.4 16.3 16.4" ><path transform="matrix(-0.970296, -0.241922, 0.241922, -0.970296, 130.55, 429.12)" d="M 6.925271987915039 0.231014758348465 L 13.78001022338867 13.7873706817627 L 0.4035075902938843 13.61397266387939 L 6.925271987915039 0.231014758348465 Z" fill="#dcdcdc" stroke="none" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';
