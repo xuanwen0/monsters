@@ -32,9 +32,16 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
   String secHintSharingAcception = "想分享給別人看看嗎？";
 
   int solve = 0;
-  //資料庫抓未解決solve=0 已解決solve=1
-  List<String> userAns = ["輸入類別", "輸入內容", "輸入畫心情", "輸入煩惱指數", "輸入分享"];
-  //資料庫抓使用者回答["類別", "輸入內容", "輸入畫心情", "輸入煩惱指數", "輸入分享"]
+  //資料庫 抓annoyance中[solve]
+  var userAns = [
+    "annoyance_type[value].toString",
+    "annoyance[content].toString",
+    "annoyance[mood].toString",
+    "annoyance[index].toString",
+    "annoyance[share].toString"
+  ];
+  //資料庫 抓annoyance_type[value], annoyance[content], annoyance[mood], annoyance[index], annoyance[share]
+  //再個別轉成字串存在陣列userAns
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +84,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
                   BoxDecoration(color: Color.fromRGBO(255, 237, 151, 1)),
               alignment: Alignment.bottomCenter,
               height: 60,
+
               //margin: EdgeInsets.only(bottom: 30),
               child: ListTile(
                 title: Container(
@@ -85,8 +93,8 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
                       solve == 0 ? "我解決煩惱了！" : "恭喜你，已經解決煩惱了！",
                       textAlign: TextAlign.center,
                       style: solve == 0
-                          ? TextStyle(fontSize: 30, color: Colors.orange)
-                          : TextStyle(fontSize: 25, color: Colors.black),
+                          ? TextStyle(fontSize: 30, color: Colors.black)
+                          : TextStyle(fontSize: 25, color: Colors.orange),
                     ),
                     onPressed: () {
                       if (solve == 0) {
