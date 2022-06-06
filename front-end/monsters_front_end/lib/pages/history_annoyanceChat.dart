@@ -47,7 +47,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
   Widget build(BuildContext context) {
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-    response("0");
+    response();
     for (int i = 0; i < 5; i++) {
       insert(userAns[i]);
       response(userAns[i]);
@@ -60,7 +60,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
         ),
         backgroundColor: Color.fromRGBO(255, 237, 151, 1),
         elevation: 2.0,
-        title: Text("巴古",
+        title: Text("巴古", //資料庫 all_monster[name] -> annoyance[monster_id]
             style: TextStyle(
                 fontSize: 22, color: Color.fromARGB(255, 164, 78, 38))),
         centerTitle: true,
@@ -203,8 +203,9 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
 
       if (firstSpeaking == true) {
         firstSpeaking = false;
-        int hourNow = DateTime.now().hour.toInt() +
-            8; //資料庫 抓annoyance[time]，此行hourNow只存放"小時(0~24)"
+        int hourNow = DateTime.now()
+            .hour
+            .toInt(); //資料庫 抓annoyance[time]，此行hourNow只存放"小時(0~24)"
         if (hourNow < 5) {
           reply("凌晨睡不好嗎？\n有甚麼煩惱都可以跟我說"); //0~5點
         } else if (hourNow < 12) {
@@ -216,7 +217,6 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
         }
         reply("什麼樣子的煩惱呢？");
       }
-
       hint();
       chatRound++;
     });

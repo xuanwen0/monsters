@@ -315,7 +315,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
 
         if (firstSpeaking == true) {
           firstSpeaking = false;
-          int hourNow = DateTime.now().hour.toInt() + 8;
+          int hourNow = DateTime.now().hour.toInt();
           if (hourNow < 5) {
             reply("凌晨睡不好嗎？\n有甚麼煩惱都可以跟我說"); //0~5點
           } else if (hourNow < 12) {
