@@ -69,7 +69,14 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     const int socialCount = 6;
     const List<String> nickNames = ['湋峻', 'A', 'B', 'C', 'D', 'E'];
-    const String socialContent = '馬上就要發表專題了，希望一切順利';
+    const List<String> socialContents = [
+      '馬上就要發表專題了，希望一切順利。',
+      '馬上就要期末考了，希望可以all pass。',
+      '馬上就要期中考了，希望一切順利。',
+      '感冒了，希望趕快好起來。',
+      '跟朋友吵架了，好煩。',
+      '又到梅雨季了，不喜歡下雨天。'
+    ];
     const List<String> shareTimes = [
       '11:46',
       '9:46',
@@ -465,10 +472,10 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                           ),
                                         ),
                                         Pinned.fromPins(
-                                          Pin(start: 16.0, end: 30.0),
-                                          Pin(size: 54.0, middle: 0.1),
+                                          Pin(start: 10.0, end: 1.0),
+                                          Pin(size: 54.0, start: 5.0),
                                           child: Text(
-                                            socialContent,
+                                            socialContents[index],
                                             style: TextStyle(
                                               fontFamily: 'Segoe UI',
                                               fontSize: 20,
