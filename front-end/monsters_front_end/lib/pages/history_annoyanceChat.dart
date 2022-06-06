@@ -183,23 +183,6 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
     }
   }
 
-  void cannotRead() {
-    chatRound--;
-    reply(hintCannotRead);
-    if (chatRound == 0) {
-      reply(secHintAnnoyType);
-    }
-    if (chatRound == 2) {
-      reply(secHintDrawingAcception);
-    }
-    if (chatRound == 3) {
-      reply(secHintEmotionGrade);
-    }
-    if (chatRound == 4) {
-      reply(secHintSharingAcception);
-    }
-  }
-
   void response([String? text]) async {
     setState(() {
       if (chatRound == 1) {
