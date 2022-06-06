@@ -231,6 +231,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+
                   child: InkWell(
                       child: SizedBox.expand(
                           child: Text(
@@ -389,7 +390,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
               ],
             ),
           ),
-
           //煩惱列表
           Pinned.fromPins(
             Pin(start: 8.0, end: 8.0),
