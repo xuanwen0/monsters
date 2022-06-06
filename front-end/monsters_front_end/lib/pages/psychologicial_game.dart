@@ -13,6 +13,14 @@ class Psychologicial_game extends StatefulWidget {
 class _Psychologicial_gameState extends State<Psychologicial_game> {
   @override
   Widget build(BuildContext context) {
+    const int gameCount = 4;
+    const List<String> gameWebs = [
+      'https://girlstyle.com/tw/article/278283/%E5%BF%83%E7%90%86%E6%B8%AC%E9%A9%97-%E4%BA%BA%E6%A0%BC-%E6%BD%9B%E6%84%8F%E8%AD%98-%E6%A3%AE%E6%9E%97-%E5%B0%8F%E6%9C%A8%E5%B1%8B-%E8%8A%B1-%E5%8B%95%E7%89%A9-%E5%80%8B%E6%80%A7',
+      'https://womany.net/read/article/28510',
+      'https://www.popdaily.com.tw/korea/741531',
+      'https://www.beauty321.com/post/47206'
+    ];
+    const List<String> gameNames = ['森林', '愛情', '煩惱', '社交'];
     return Scaffold(
         backgroundColor: const Color(0xfffffed4),
         body: Stack(
@@ -55,69 +63,35 @@ class _Psychologicial_gameState extends State<Psychologicial_game> {
             ),
             //列表
             Pinned.fromPins(
-              Pin(start: 55.0, end: 55.0),
-              Pin(size: 524.0, start: 113.0),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      TextButton(
-                        onPressed: () => launch(
-                            'https://girlstyle.com/tw/article/278283/%E5%BF%83%E7%90%86%E6%B8%AC%E9%A9%97-%E4%BA%BA%E6%A0%BC-%E6%BD%9B%E6%84%8F%E8%AD%98-%E6%A3%AE%E6%9E%97-%E5%B0%8F%E6%9C%A8%E5%B1%8B-%E8%8A%B1-%E5%8B%95%E7%89%A9-%E5%80%8B%E6%80%A7'),
-                        child: new Text('森林'),
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent),
-                          foregroundColor:
-                              MaterialStateProperty.all(Color(0xffa0522d)),
-                          textStyle: MaterialStateProperty.all(
-                              TextStyle(fontSize: 40)),
+              Pin(start: 8.0, end: 8.0),
+              Pin(size: 524.0, end: 85.0),
+              child: ListView.separated(
+                primary: false,
+                itemBuilder: (BuildContext context, int index) {
+                  return Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        TextButton(
+                          onPressed: () => launch(gameWebs[index]),
+                          child: Text(gameNames[index]),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            foregroundColor: MaterialStateProperty.all(
+                                const Color.fromRGBO(160, 82, 45, 1)),
+                            textStyle: MaterialStateProperty.all(
+                                const TextStyle(fontSize: 40)),
+                          ),
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () => launch(
-                            'https://m.click108.com.tw/psychictest/index.php?PT_Type=L'),
-                        child: new Text('愛情'),
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent),
-                          foregroundColor:
-                              MaterialStateProperty.all(Color(0xffa0522d)),
-                          textStyle: MaterialStateProperty.all(
-                              TextStyle(fontSize: 40)),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () =>
-                            launch('https://www.popdaily.com.tw/korea/741531'),
-                        child: new Text('煩惱'),
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent),
-                          foregroundColor:
-                              MaterialStateProperty.all(Color(0xffa0522d)),
-                          textStyle: MaterialStateProperty.all(
-                              TextStyle(fontSize: 40)),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () =>
-                            launch('https://www.beauty321.com/post/47206'),
-                        child: new Text('社交'),
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent),
-                          foregroundColor:
-                              MaterialStateProperty.all(Color(0xffa0522d)),
-                          textStyle: MaterialStateProperty.all(
-                              TextStyle(fontSize: 40)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                      ],
+                    ),
+                  );
+                },
+                itemCount: gameCount,
+                separatorBuilder: (BuildContext context, int index) {
+                  return const Divider(height: 10.0, color: Colors.transparent);
+                },
               ),
             ),
           ],

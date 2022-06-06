@@ -67,8 +67,22 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     const int historyCount = 6;
-    const String historyContent = '馬上就要發表專題了，希望一切順利。';
-    const String historyTime = '05/25';
+    const List<String> historyContents = [
+      '馬上就要發表專題了，希望一切順利。',
+      '馬上就要期末考了，希望可以all pass。',
+      '馬上就要期中考了，希望一切順利。',
+      '感冒了，希望趕快好起來。',
+      '跟朋友吵架了，好煩。',
+      '又到梅雨季了，不喜歡下雨天。'
+    ];
+    const List<String> historyTimes = [
+      '08/25',
+      '07/21',
+      '05/25',
+      '05/09',
+      '05/02',
+      '04/25'
+    ];
 
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
@@ -376,12 +390,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                               Pinned.fromPins(
                                 Pin(size: 160.0, start: 105.0),
                                 Pin(size: 81.0, end: 10.0),
-                                child: const Text(
-                                  historyContent,
+                                child: Text(
+                                  historyContents[index],
                                   style: TextStyle(
                                     fontFamily: 'Segoe UI',
                                     fontSize: 20,
-                                    color: Color(0xff000000),
+                                    color: Color.fromRGBO(160, 82, 45, 1),
                                   ),
                                   softWrap: true,
                                 ),
@@ -390,12 +404,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                               Pinned.fromPins(
                                 Pin(size: 41.0, end: 17.0),
                                 Pin(size: 21.0, middle: 0.2262),
-                                child: const Text(
-                                  historyTime,
+                                child: Text(
+                                  historyTimes[index],
                                   style: TextStyle(
                                     fontFamily: 'Segoe UI',
                                     fontSize: 16,
-                                    color: Color(0xff613018),
+                                    color: Color.fromRGBO(97, 48, 24, 1),
                                   ),
                                   softWrap: false,
                                 ),
