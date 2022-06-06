@@ -27,8 +27,9 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
-  int selectionTab_type = 2;
-  int selectionTab_solve = 1;
+  int selectionTab_type = 1;
+  int selectionTab_solve = 0;
+  bool selectionTab_solve_enabled = false;
 
   double getRadiansFromDegree(double degree) {
     double unitRadian = 57.295779513;
@@ -201,6 +202,8 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       onTap: () {
                         setState(() {
                           selectionTab_type = 1;
+                          selectionTab_solve_enabled = false;
+                          selectionTab_solve = 0;
                         });
                       }),
                 ),
@@ -244,6 +247,8 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       onTap: () {
                         setState(() {
                           selectionTab_type = 2;
+                          selectionTab_solve_enabled = true;
+                          selectionTab_solve = 1;
                         });
                       }),
                 ),
@@ -287,6 +292,8 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       onTap: () {
                         setState(() {
                           selectionTab_type = 3;
+                          selectionTab_solve_enabled = false;
+                          selectionTab_solve = 0;
                         });
                       }),
                 ),
@@ -329,7 +336,9 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       )),
                       onTap: () {
                         setState(() {
-                          selectionTab_solve = 1;
+                          if (selectionTab_solve_enabled == true) {
+                            selectionTab_solve = 1;
+                          }
                         });
                       }),
                 ),
@@ -371,7 +380,9 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       )),
                       onTap: () {
                         setState(() {
-                          selectionTab_solve = 2;
+                          if (selectionTab_solve_enabled == true) {
+                            selectionTab_solve = 2;
+                          }
                         });
                       }),
                 ),
