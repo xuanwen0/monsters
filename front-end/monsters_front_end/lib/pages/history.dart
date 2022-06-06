@@ -6,7 +6,7 @@ import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/pages/annoyance.dart';
 import 'package:monsters_front_end/pages/drawer_setting.dart';
 import 'package:monsters_front_end/pages/drawer_userInformation.dart';
-import 'package:monsters_front_end/pages/history_detail.dart';
+import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/manual.dart';
@@ -27,6 +27,9 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
+  int selectionTab_type = 1;
+  int selectionTab_solve = 0;
+  bool selectionTab_solve_enabled = false;
 
   double getRadiansFromDegree(double degree) {
     double unitRadian = 57.295779513;
@@ -180,32 +183,43 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           //類別:全部
           Pinned.fromPins(
             Pin(size: 44.8, start: 24.5),
-            Pin(size: 27.0, start: 93.0),
+            Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
-                  Pin(size: 70.0, middle: 0.5385),
+                  Pin(size: 70.0, middle: 0.5),
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
+                    decoration: BoxDecoration(
+                      color: selectionTab_type == 1
+                          ? Color(0xffa0522d)
+                          : Color(0xffffed97),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
-                  child: SizedBox.expand(
-                      child: Text(
-                    '全部',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color(0xffa0522d),
-                    ),
-                    softWrap: false,
-                  )),
+                  child: InkWell(
+                      child: SizedBox.expand(
+                          child: Text(
+                        '全部',
+                        style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 20,
+                            color: selectionTab_type == 1 //點按後更新文字顏色
+                                ? Color(0xffffffff)
+                                : Color(0xffa0522d)),
+                        softWrap: false,
+                      )),
+                      onTap: () {
+                        setState(() {
+                          selectionTab_type = 1;
+                          selectionTab_solve_enabled = false;
+                          selectionTab_solve = 0;
+                        });
+                      }),
                 ),
               ],
             ),
@@ -213,32 +227,45 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           //類別:煩惱
           Pinned.fromPins(
             Pin(size: 44.8, middle: 0.2846),
-            Pin(size: 27.0, start: 93.0),
+            Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
                   Pin(size: 70.0, middle: 0.5385),
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color.fromRGBO(160, 82, 45, 1),
+                    decoration: BoxDecoration(
+                      color: selectionTab_type == 2
+                          ? Color(0xffa0522d)
+                          : Color(0xffffed97),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
-                  child: SizedBox.expand(
-                      child: Text(
-                    '煩惱',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                    ),
-                    softWrap: false,
-                  )),
+
+                  child: InkWell(
+                      child: SizedBox.expand(
+                          child: Text(
+                        '煩惱',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 20,
+                            color: selectionTab_type == 2 //點按後更新文字顏色
+                                ? Color(0xffffffff)
+                                : Color(0xffa0522d)),
+                        softWrap: false,
+                      )),
+                      onTap: () {
+                        setState(() {
+                          selectionTab_type = 2;
+                          selectionTab_solve_enabled = true;
+                          selectionTab_solve = 1;
+                        });
+                      }),
                 ),
               ],
             ),
@@ -246,93 +273,134 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           //類別:日記
           Pinned.fromPins(
             Pin(size: 44.8, middle: 0.5025),
-            Pin(size: 27.0, start: 93.0),
+            Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
                   Pin(size: 70.0, middle: 0.5385),
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
+                    decoration: BoxDecoration(
+                      color: selectionTab_type == 3
+                          ? Color(0xffa0522d)
+                          : Color(0xffffed97),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(1.5, 0.0, 3.3, 0.0),
-                  child: SizedBox.expand(
-                      child: Text(
-                    '日記',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color(0xffa0522d),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  child: InkWell(
+                      child: SizedBox.expand(
+                          child: Text(
+                        '日記',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 20,
+                            color: selectionTab_type == 3 //點按後更新文字顏色
+                                ? Color(0xffffffff)
+                                : Color(0xffa0522d)),
+                        softWrap: false,
+                      )),
+                      onTap: () {
+                        setState(() {
+                          selectionTab_type = 3;
+                          selectionTab_solve_enabled = false;
+                          selectionTab_solve = 0;
+                        });
+                      }),
+                ),
+              ],
+            ),
+          ),
+          //類別:未解決
+          Pinned.fromPins(
+            Pin(size: 60.0, middle: 0.7298),
+            Pin(size: 30.0, start: 93.0),
+            child: Stack(
+              children: <Widget>[
+                Pinned.fromPins(
+                  Pin(size: 75.0, middle: 0.5385),
+                  Pin(start: 0.0, end: 0.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: selectionTab_solve == 1
+                          ? Color(0xffa0522d)
+                          : Color(0xffffed97),
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
-                    softWrap: false,
-                  )),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  child: InkWell(
+                      child: SizedBox.expand(
+                          child: Text(
+                        '未解決',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 18,
+                            color: selectionTab_solve == 1 //點按後更新文字顏色
+                                ? Color(0xffffffff)
+                                : Color(0xffa0522d)),
+                        softWrap: false,
+                      )),
+                      onTap: () {
+                        setState(() {
+                          if (selectionTab_solve_enabled == true) {
+                            selectionTab_solve = 1;
+                          }
+                        });
+                      }),
                 ),
               ],
             ),
           ),
           //類別:已解決
           Pinned.fromPins(
-            Pin(size: 60.0, middle: 0.7298),
-            Pin(size: 27.0, start: 93.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 75.0, middle: 0.5385),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                const SizedBox.expand(
-                    child: Text(
-                  '已解決',
-                  style: TextStyle(
-                    fontFamily: 'Segoe UI',
-                    fontSize: 20,
-                    color: Color(0xffa0522d),
-                  ),
-                  softWrap: false,
-                )),
-              ],
-            ),
-          ),
-          //類別:未解決
-          Pinned.fromPins(
             Pin(size: 60.0, end: 15.1),
-            Pin(size: 27.0, start: 93.0),
+            Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
                   Pin(size: 75.0, middle: 0.5385),
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
+                    decoration: BoxDecoration(
+                      color: selectionTab_solve == 2
+                          ? Color(0xffa0522d)
+                          : Color(0xffffed97),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
                   ),
                 ),
-                const SizedBox.expand(
-                    child: Text(
-                  '未解決',
-                  style: TextStyle(
-                    fontFamily: 'Segoe UI',
-                    fontSize: 20,
-                    color: Color(0xffa0522d),
-                  ),
-                  softWrap: false,
-                )),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  child: InkWell(
+                      child: SizedBox.expand(
+                          child: Text(
+                        '已解決',
+                        style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 18,
+                            color: selectionTab_solve == 2 //點按後更新文字顏色
+                                ? Color(0xffffffff)
+                                : Color(0xffa0522d)),
+                        softWrap: false,
+                      )),
+                      onTap: () {
+                        setState(() {
+                          if (selectionTab_solve_enabled == true) {
+                            selectionTab_solve = 2;
+                          }
+                        });
+                      }),
+                ),
               ],
             ),
           ),
@@ -355,7 +423,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                               transition: LinkTransition.Fade,
                               ease: Curves.easeOut,
                               duration: 0.3,
-                              pageBuilder: () => History_detail(),
+                              pageBuilder: () => historyAnnoyanceChat(),
                             ),
                           ],
                           child: Stack(

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
@@ -26,7 +28,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
-
+  int selectionTab_type = 1;
   double getRadiansFromDegree(double degree) {
     double unitRadian = 57.295779513;
     return degree / unitRadian;
@@ -159,132 +161,168 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
           ),
           //類別:全部
           Pinned.fromPins(
-            Pin(size: 72.0, start: 46.0),
-            Pin(size: 25.0, start: 118.0),
+            Pin(size: 72.0, start: 25.0),
+            Pin(size: 30.0, start: 118.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
-                  Pin(size: 72.0, middle: 0.5385),
+                  Pin(size: 72.0, middle: 0.5),
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color.fromRGBO(160, 82, 45, 1),
+                    decoration: BoxDecoration(
+                      color: selectionTab_type == 1
+                          ? Color(0xffa0522d)
+                          : Color(0xffffed97),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
                   ),
                 ),
-                Pinned.fromPins(
-                  Pin(size: 40.0, middle: 0.5385),
-                  Pin(size: 27.0, start: 116.0),
-                  child: const Text(
-                    '全部',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                    ),
-                    softWrap: false,
-                  ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  child: InkWell(
+                      child: SizedBox.expand(
+                          child: Text(
+                        '全部',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 20,
+                            color: selectionTab_type == 1 //點按後更新文字顏色
+                                ? Color(0xffffffff)
+                                : Color(0xffa0522d)),
+                        softWrap: false,
+                      )),
+                      onTap: () {
+                        selectionTab_type = 1;
+                        setState(() {});
+                      }),
                 ),
               ],
             ),
           ),
           //類別:煩惱
           Pinned.fromPins(
-            Pin(size: 72.0, start: 138.0),
-            Pin(size: 25.0, start: 118.0),
+            Pin(size: 72.0, start: 115.0),
+            Pin(size: 30.0, start: 118.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
-                  Pin(size: 72.0, middle: 0.5385),
+                  Pin(size: 72.0, middle: 0.5),
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
+                    decoration: BoxDecoration(
+                      color: selectionTab_type == 2
+                          ? Color(0xffa0522d)
+                          : Color(0xffffed97),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
                   ),
                 ),
-                Pinned.fromPins(
-                  Pin(size: 40.0, middle: 0.5385),
-                  Pin(size: 27.0, start: 116.0),
-                  child: const Text(
-                    '煩惱',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color(0xffa0522d),
-                    ),
-                    softWrap: false,
-                  ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  child: InkWell(
+                      child: SizedBox.expand(
+                          child: Text(
+                        '煩惱',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 20,
+                            color: selectionTab_type == 2 //點按後更新文字顏色
+                                ? Color(0xffffffff)
+                                : Color(0xffa0522d)),
+                        softWrap: false,
+                      )),
+                      onTap: () {
+                        selectionTab_type = 2;
+                        setState(() {});
+                      }),
                 ),
               ],
             ),
           ),
           //類別:日記
           Pinned.fromPins(
-            Pin(size: 72.0, start: 230.0),
-            Pin(size: 25.0, start: 118.0),
+            Pin(size: 72.0, start: 205.0),
+            Pin(size: 30.0, start: 118.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
-                  Pin(size: 72.0, middle: 0.5385),
+                  Pin(size: 72.0, middle: 0.5),
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
+                    decoration: BoxDecoration(
+                      color: selectionTab_type == 3
+                          ? Color(0xffa0522d)
+                          : Color(0xffffed97),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
                   ),
                 ),
-                Pinned.fromPins(
-                  Pin(size: 40.0, middle: 0.5385),
-                  Pin(size: 27.0, start: 116.0),
-                  child: const Text(
-                    '日記',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color(0xffa0522d),
-                    ),
-                    softWrap: false,
-                  ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  child: InkWell(
+                      child: SizedBox.expand(
+                          child: Text(
+                        '日記',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 20,
+                            color: selectionTab_type == 3 //點按後更新文字顏色
+                                ? Color(0xffffffff)
+                                : Color(0xffa0522d)),
+                        softWrap: false,
+                      )),
+                      onTap: () {
+                        selectionTab_type = 3;
+                        setState(() {});
+                      }),
                 ),
               ],
             ),
           ),
           //類別:怪獸
           Pinned.fromPins(
-            Pin(size: 72.0, end: 39.0),
-            Pin(size: 25.0, start: 118.0),
+            Pin(size: 72.0, start: 295.0),
+            Pin(size: 30.0, start: 118.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
-                  Pin(size: 72.0, middle: 0.5385),
+                  Pin(size: 72.0, middle: 0.5),
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
+                    decoration: BoxDecoration(
+                      color: selectionTab_type == 4
+                          ? Color(0xffa0522d)
+                          : Color(0xffffed97),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
                   ),
                 ),
-                Pinned.fromPins(
-                  Pin(size: 40.0, middle: 0.5385),
-                  Pin(size: 27.0, start: 116.0),
-                  child: const Text(
-                    '怪獸',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color(0xffa0522d),
-                    ),
-                    softWrap: false,
-                  ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  child: InkWell(
+                      child: SizedBox.expand(
+                          child: Text(
+                        '怪獸',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 20,
+                            color: selectionTab_type == 4 //點按後更新文字顏色
+                                ? Color(0xffffffff)
+                                : Color(0xffa0522d)),
+                        softWrap: false,
+                      )),
+                      onTap: () {
+                        selectionTab_type = 4;
+                        setState(() {});
+                      }),
                 ),
               ],
             ),

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
@@ -24,6 +26,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
+  int selectionTab_type = 1;
 
   double getRadiansFromDegree(double degree) {
     double unitRadian = 57.295779513;
@@ -83,96 +86,134 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
               softWrap: false,
             ),
           ),
-          //類別:已解鎖
-          Pinned.fromPins(
-            Pin(size: 60.0, middle: 0.5),
-            Pin(size: 27.0, start: 91.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 72.0, middle: 0.5),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                const SizedBox.expand(
-                    child: Text(
-                  '已解鎖',
-                  style: TextStyle(
-                    fontFamily: 'Segoe UI',
-                    fontSize: 20,
-                    color: Color(0xffa0522d),
-                  ),
-                  softWrap: false,
-                )),
-              ],
-            ),
-          ),
           //類別:全部
           Pinned.fromPins(
-            Pin(size: 49.0, middle: 0.1915),
-            Pin(size: 27.0, start: 91.0),
+            Pin(size: 80.0, middle: 0.1915),
+            Pin(size: 30.0, start: 91.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
-                  Pin(size: 72.0, middle: 0.5),
+                  Pin(size: 80.0, middle: 0.5),
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffa0522d),
+                    decoration: BoxDecoration(
+                      color: selectionTab_type == 1
+                          ? Color(0xffa0522d)
+                          : Color(0xffffed97),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 4.5, vertical: 0.0),
-                  child: SizedBox.expand(
-                      child: Text(
-                    '全部',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                    softWrap: false,
-                  )),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  child: InkWell(
+                      child: SizedBox.expand(
+                          child: Text(
+                        '全部',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 20,
+                            color: selectionTab_type == 1 //點按後更新文字顏色
+                                ? Color(0xffffffff)
+                                : Color(0xffa0522d)),
+                        softWrap: false,
+                      )),
+                      onTap: () {
+                        setState(() {
+                          selectionTab_type = 1;
+                        });
+                      }),
                 ),
               ],
             ),
           ),
           //類別:未解鎖
           Pinned.fromPins(
-            Pin(size: 60.0, middle: 0.821),
-            Pin(size: 27.0, start: 91.0),
+            Pin(size: 80.0, middle: 0.821),
+            Pin(size: 30.0, start: 91.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
-                  Pin(size: 72.0, middle: 0.5),
+                  Pin(size: 80.0, middle: 0.5),
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
+                    decoration: BoxDecoration(
+                      color: selectionTab_type == 2
+                          ? Color(0xffa0522d)
+                          : Color(0xffffed97),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
                   ),
                 ),
-                const SizedBox.expand(
-                    child: Text(
-                  '未解鎖',
-                  style: TextStyle(
-                    fontFamily: 'Segoe UI',
-                    fontSize: 20,
-                    color: Color(0xffa0522d),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  child: InkWell(
+                      child: SizedBox.expand(
+                          child: Text(
+                        '未解鎖',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 20,
+                            color: selectionTab_type == 2 //點按後更新文字顏色
+                                ? Color(0xffffffff)
+                                : Color(0xffa0522d)),
+                        softWrap: false,
+                      )),
+                      onTap: () {
+                        setState(() {
+                          selectionTab_type = 2;
+                        });
+                      }),
+                ),
+              ],
+            ),
+          ),
+          //類別:已解鎖
+          Pinned.fromPins(
+            Pin(size: 80.0, middle: 0.5),
+            Pin(size: 30.0, start: 91.0),
+            child: Stack(
+              children: <Widget>[
+                Pinned.fromPins(
+                  Pin(size: 80.0, middle: 0.5),
+                  Pin(start: 0.0, end: 0.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: selectionTab_type == 3
+                          ? Color(0xffa0522d)
+                          : Color(0xffffed97),
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                    ),
                   ),
-                  softWrap: false,
-                )),
+                ),
+
+                // ignore: prefer_const_constructors
+                Padding(
+                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  child: InkWell(
+                      child: SizedBox.expand(
+                          child: Text(
+                        '已解鎖',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 20,
+                            color: selectionTab_type == 3 //點按後更新文字顏色
+                                ? Color(0xffffffff)
+                                : Color(0xffa0522d)),
+                        softWrap: false,
+                      )),
+                      onTap: () {
+                        setState(() {
+                          selectionTab_type = 3;
+                        });
+                      }),
+                ),
               ],
             ),
           ),

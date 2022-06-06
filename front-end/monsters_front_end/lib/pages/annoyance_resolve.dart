@@ -2,7 +2,7 @@ import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monsters_front_end/pages/history_detail.dart';
+import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
 
 class Annoyance_resolve extends StatefulWidget {
   @override
@@ -34,7 +34,7 @@ class _Annoyance_resolveState extends State<Annoyance_resolve> {
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => const History_detail(),
+                  pageBuilder: () => historyAnnoyanceChat(),
                 ),
               ],
               child: SvgPicture.string(
