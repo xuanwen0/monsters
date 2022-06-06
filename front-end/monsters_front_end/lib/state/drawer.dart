@@ -6,58 +6,60 @@ import '../pages/drawer_setting.dart';
 import '../pages/drawer_userInformation.dart';
 
 Widget GetDrawer(BuildContext context) {
-  var drawer = Drawer(
-      backgroundColor: const Color(0xfffffed4),
-      child: ListView(children: [
-        ListTile(
-          title: const Text(
-            "個人資料",
-            style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: Color(0xffa0522d)),
-          ),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Drawer_userInformation()));
-          },
-        ),
-        ListTile(
-          title: const Text(
-            "設定",
-            style: TextStyle(
-              fontFamily: 'Segoe UI',
-              fontSize: 35.0,
-              color: Color(0xffa0522d),
+  var drawer = Container(
+      width: 250,
+      child: Drawer(
+          backgroundColor: const Color(0xfffffed4),
+          child: ListView(children: [
+            ListTile(
+              title: const Text(
+                "個人資料",
+                style: TextStyle(
+                    fontFamily: 'Segoe UI',
+                    fontSize: 35.0,
+                    color: Color(0xffa0522d)),
+              ),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Drawer_userInformation()));
+              },
             ),
-          ),
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Drawer_settings()));
-          },
-        ),
-        const ListTile(
-          title: Text(
-            "使用說明",
-            style: TextStyle(
-              fontFamily: 'Segoe UI',
-              fontSize: 35.0,
-              color: Color(0xffa0522d),
+            ListTile(
+              title: const Text(
+                "設定",
+                style: TextStyle(
+                  fontFamily: 'Segoe UI',
+                  fontSize: 35.0,
+                  color: Color(0xffa0522d),
+                ),
+              ),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Drawer_settings()));
+              },
             ),
-          ),
-        ),
-        const ListTile(
-          title: Text(
-            "使用回饋",
-            style: TextStyle(
-              fontFamily: 'Segoe UI',
-              fontSize: 35.0,
-              color: Color(0xffa0522d),
+            const ListTile(
+              title: Text(
+                "使用說明",
+                style: TextStyle(
+                  fontFamily: 'Segoe UI',
+                  fontSize: 35.0,
+                  color: Color(0xffa0522d),
+                ),
+              ),
             ),
-          ),
-        ),
-      ]));
+            const ListTile(
+              title: Text(
+                "使用回饋",
+                style: TextStyle(
+                  fontFamily: 'Segoe UI',
+                  fontSize: 35.0,
+                  color: Color(0xffa0522d),
+                ),
+              ),
+            ),
+          ])));
   return drawer;
 }

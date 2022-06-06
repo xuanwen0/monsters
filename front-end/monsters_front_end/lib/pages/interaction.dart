@@ -145,7 +145,7 @@ class _InteractionPageState extends State<InteractionPage>
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Segoe UI',
-                                fontSize: 22,
+                                fontSize: 30,
                                 color: Color(0xffa0522d),
                               ),
                               softWrap: false,
@@ -185,7 +185,7 @@ class _InteractionPageState extends State<InteractionPage>
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Segoe UI',
-                                fontSize: 22,
+                                fontSize: 30,
                                 color: Color(0xffa0522d),
                               ),
                               softWrap: false,
@@ -225,7 +225,7 @@ class _InteractionPageState extends State<InteractionPage>
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Segoe UI',
-                                fontSize: 22,
+                                fontSize: 30,
                                 color: Color(0xffa0522d),
                               ),
                               softWrap: false,
@@ -265,7 +265,7 @@ class _InteractionPageState extends State<InteractionPage>
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Segoe UI',
-                                fontSize: 22,
+                                fontSize: 30,
                                 color: Color(0xffa0522d),
                               ),
                               softWrap: false,
@@ -305,7 +305,7 @@ class _InteractionPageState extends State<InteractionPage>
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Segoe UI',
-                                fontSize: 22,
+                                fontSize: 30,
                                 color: Color(0xffa0522d),
                               ),
                               softWrap: false,
@@ -359,9 +359,10 @@ class _InteractionPageState extends State<InteractionPage>
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '圖鑑',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -402,9 +403,10 @@ class _InteractionPageState extends State<InteractionPage>
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '歷史紀錄',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -456,9 +458,10 @@ class _InteractionPageState extends State<InteractionPage>
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '社群',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -508,9 +511,10 @@ class _InteractionPageState extends State<InteractionPage>
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '互動',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,

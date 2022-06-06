@@ -69,6 +69,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
+
     const int historyCount = 6;
     const List<String> historyContents = [
       '馬上就要發表專題了，希望一切順利。',
@@ -88,63 +89,9 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xfffffed4),
+      backgroundColor: Color(0xfffffed4),
       key: _scaffoldKEy,
-      endDrawer: Drawer(
-        backgroundColor: Color(0xfffffed4),
-        child: ListView(children: [
-          ListTile(
-            title: Text(
-              "個人資料",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Drawer_userInformation()));
-            },
-          ),
-          ListTile(
-            title: Text(
-              "設定",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Drawer_settings()));
-            },
-          ),
-          ListTile(
-            title: Text(
-              "使用說明",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "使用回饋",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-          ),
-        ]),
-      ),
+      endDrawer: GetDrawer(context),
       body: Stack(
         children: <Widget>[
           //標題
@@ -155,7 +102,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
               '歷史紀錄',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 40,
                 color: Color(0xffa0522d),
               ),
               softWrap: false,
@@ -182,7 +129,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           ),
           //類別:全部
           Pinned.fromPins(
-            Pin(size: 44.8, start: 24.5),
+            Pin(size: 50.0, start: 15.0),
             Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
@@ -200,14 +147,15 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  padding: EdgeInsets.fromLTRB(1.0, 2.0, 1.0, 1.0),
                   child: InkWell(
                       child: SizedBox.expand(
                           child: Text(
                         '全部',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Segoe UI',
-                            fontSize: 20,
+                            fontSize: 18,
                             color: selectionTab_type == 1 //點按後更新文字顏色
                                 ? Color(0xffffffff)
                                 : Color(0xffa0522d)),
@@ -226,12 +174,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           ),
           //類別:煩惱
           Pinned.fromPins(
-            Pin(size: 44.8, middle: 0.2846),
+            Pin(size: 50.0, start: 85.0),
             Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
-                  Pin(size: 70.0, middle: 0.5385),
+                  Pin(size: 70.0, middle: 0.5),
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
                     decoration: BoxDecoration(
@@ -244,8 +192,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
-
+                  padding: EdgeInsets.fromLTRB(1.0, 2.0, 1.0, 1.0),
                   child: InkWell(
                       child: SizedBox.expand(
                           child: Text(
@@ -253,7 +200,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Segoe UI',
-                            fontSize: 20,
+                            fontSize: 18,
                             color: selectionTab_type == 2 //點按後更新文字顏色
                                 ? Color(0xffffffff)
                                 : Color(0xffa0522d)),
@@ -272,12 +219,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           ),
           //類別:日記
           Pinned.fromPins(
-            Pin(size: 44.8, middle: 0.5025),
+            Pin(size: 50.0, start: 155.0),
             Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
-                  Pin(size: 70.0, middle: 0.5385),
+                  Pin(size: 70.0, middle: 0.5),
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
                     decoration: BoxDecoration(
@@ -290,7 +237,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  padding: EdgeInsets.fromLTRB(1.0, 2.0, 1.0, 1.0),
                   child: InkWell(
                       child: SizedBox.expand(
                           child: Text(
@@ -298,7 +245,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Segoe UI',
-                            fontSize: 20,
+                            fontSize: 18,
                             color: selectionTab_type == 3 //點按後更新文字顏色
                                 ? Color(0xffffffff)
                                 : Color(0xffa0522d)),
@@ -317,12 +264,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           ),
           //類別:未解決
           Pinned.fromPins(
-            Pin(size: 60.0, middle: 0.7298),
+            Pin(size: 50.0, start: 225.0),
             Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
-                  Pin(size: 75.0, middle: 0.5385),
+                  Pin(size: 70.0, middle: 0.55),
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
                     decoration: BoxDecoration(
@@ -335,7 +282,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  padding: EdgeInsets.fromLTRB(1.0, 4.0, 1.0, 1.0),
                   child: InkWell(
                       child: SizedBox.expand(
                           child: Text(
@@ -343,7 +290,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Segoe UI',
-                            fontSize: 18,
+                            fontSize: 15,
                             color: selectionTab_solve == 1 //點按後更新文字顏色
                                 ? Color(0xffffffff)
                                 : Color(0xffa0522d)),
@@ -362,12 +309,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           ),
           //類別:已解決
           Pinned.fromPins(
-            Pin(size: 60.0, end: 15.1),
+            Pin(size: 50.0, start: 295.0),
             Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
-                  Pin(size: 75.0, middle: 0.5385),
+                  Pin(size: 70.0, middle: 0.55),
                   Pin(start: 0.0, end: 0.0),
                   child: Container(
                     decoration: BoxDecoration(
@@ -380,14 +327,15 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  padding: EdgeInsets.fromLTRB(1.0, 4.0, 1.0, 1.0),
                   child: InkWell(
                       child: SizedBox.expand(
                           child: Text(
                         '已解決',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Segoe UI',
-                            fontSize: 18,
+                            fontSize: 15,
                             color: selectionTab_solve == 2 //點按後更新文字顏色
                                 ? Color(0xffffffff)
                                 : Color(0xffa0522d)),
@@ -444,20 +392,23 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                 Pin(start: 19.0, end: 18.0),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.elliptical(9999.0, 9999.0)),
-                                    image: DecorationImage(
-                                      image: const AssetImage(
-                                          'assets/image/baku1.jpg'),
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.elliptical(9999.0, 9999.0)),
+                                      image: DecorationImage(
+                                        image: const AssetImage(
+                                            'assets/image/baku1.jpg'),
+                                        fit: BoxFit.fill,
+                                      ),
+                                      border: Border.all(
+                                          width: 2.0,
+                                          color:
+                                              Color.fromRGBO(255, 187, 0, 1))),
                                 ),
                               ),
                               //內容
                               Pinned.fromPins(
-                                Pin(size: 160.0, start: 105.0),
-                                Pin(size: 81.0, end: 10.0),
+                                Pin(size: 180.0, start: 110.0),
+                                Pin(size: 80.0, end: 6.0),
                                 child: Text(
                                   historyContents[index],
                                   style: TextStyle(
@@ -470,16 +421,27 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                               ),
                               //時間
                               Pinned.fromPins(
-                                Pin(size: 41.0, end: 17.0),
-                                Pin(size: 21.0, middle: 0.2262),
-                                child: Text(
-                                  historyTimes[index],
-                                  style: TextStyle(
-                                    fontFamily: 'Segoe UI',
-                                    fontSize: 16,
-                                    color: Color.fromRGBO(97, 48, 24, 1),
+                                Pin(size: 50.0, end: 10.0),
+                                Pin(size: 25.0, middle: 0.9),
+                                child: Container(
+                                  width: 50,
+                                  height: 10,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    historyTimes[index],
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Segoe UI',
+                                      fontSize: 14,
+                                      color: Color.fromRGBO(97, 48, 24, 1),
+                                    ),
+                                    softWrap: false,
                                   ),
-                                  softWrap: false,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(width: 1.0),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                  ),
                                 ),
                               ),
                             ],
@@ -541,6 +503,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '圖鑑',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 12,
@@ -584,6 +547,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '歷史紀錄',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 12,
@@ -638,6 +602,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '社群',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 12,
@@ -690,6 +655,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '互動',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 12,

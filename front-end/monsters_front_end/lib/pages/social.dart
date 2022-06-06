@@ -88,72 +88,19 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       key: _scaffoldKEy,
-      endDrawer: Drawer(
-        backgroundColor: Color(0xfffffed4),
-        child: ListView(children: [
-          ListTile(
-            title: Text(
-              "個人資料",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Drawer_userInformation()));
-            },
-          ),
-          ListTile(
-            title: Text(
-              "設定",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Drawer_settings()));
-            },
-          ),
-          ListTile(
-            title: Text(
-              "使用說明",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "使用回饋",
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35.0,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-          ),
-        ]),
-      ),
+      endDrawer: GetDrawer(context),
       body: Stack(
         children: <Widget>[
           //標題
           Pinned.fromPins(
-            Pin(size: 94.0, middle: 0.5),
-            Pin(size: 63.0, start: 9.0),
+            Pin(size: 188.0, middle: 0.5),
+            Pin(size: 63.0, start: 11.0),
             child: const Text(
               '社群',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 40,
                 color: Color(0xffa0522d),
               ),
               softWrap: false,
@@ -161,8 +108,8 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
           ),
           //類別:全部
           Pinned.fromPins(
-            Pin(size: 72.0, start: 25.0),
-            Pin(size: 30.0, start: 118.0),
+            Pin(size: 70.0, start: 20.0),
+            Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
@@ -179,7 +126,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  padding: EdgeInsets.fromLTRB(1.0, 2.0, 1.0, 1.0),
                   child: InkWell(
                       child: SizedBox.expand(
                           child: Text(
@@ -187,7 +134,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Segoe UI',
-                            fontSize: 20,
+                            fontSize: 18,
                             color: selectionTab_type == 1 //點按後更新文字顏色
                                 ? Color(0xffffffff)
                                 : Color(0xffa0522d)),
@@ -203,8 +150,8 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
           ),
           //類別:煩惱
           Pinned.fromPins(
-            Pin(size: 72.0, start: 115.0),
-            Pin(size: 30.0, start: 118.0),
+            Pin(size: 70.0, start: 105.0),
+            Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
@@ -221,7 +168,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  padding: EdgeInsets.fromLTRB(1.0, 2.0, 1.0, 1.0),
                   child: InkWell(
                       child: SizedBox.expand(
                           child: Text(
@@ -229,7 +176,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Segoe UI',
-                            fontSize: 20,
+                            fontSize: 18,
                             color: selectionTab_type == 2 //點按後更新文字顏色
                                 ? Color(0xffffffff)
                                 : Color(0xffa0522d)),
@@ -245,8 +192,8 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
           ),
           //類別:日記
           Pinned.fromPins(
-            Pin(size: 72.0, start: 205.0),
-            Pin(size: 30.0, start: 118.0),
+            Pin(size: 70.0, start: 190.0),
+            Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
@@ -263,7 +210,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  padding: EdgeInsets.fromLTRB(1.0, 2.0, 1.0, 1.0),
                   child: InkWell(
                       child: SizedBox.expand(
                           child: Text(
@@ -271,7 +218,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Segoe UI',
-                            fontSize: 20,
+                            fontSize: 18,
                             color: selectionTab_type == 3 //點按後更新文字顏色
                                 ? Color(0xffffffff)
                                 : Color(0xffa0522d)),
@@ -287,8 +234,8 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
           ),
           //類別:怪獸
           Pinned.fromPins(
-            Pin(size: 72.0, start: 295.0),
-            Pin(size: 30.0, start: 118.0),
+            Pin(size: 72.0, start: 275.0),
+            Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
                 Pinned.fromPins(
@@ -305,7 +252,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
+                  padding: EdgeInsets.fromLTRB(1.0, 2.0, 1.0, 1.0),
                   child: InkWell(
                       child: SizedBox.expand(
                           child: Text(
@@ -313,7 +260,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Segoe UI',
-                            fontSize: 20,
+                            fontSize: 18,
                             color: selectionTab_type == 4 //點按後更新文字顏色
                                 ? Color(0xffffffff)
                                 : Color(0xffa0522d)),
@@ -338,7 +285,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
           //社群列表
           Pinned.fromPins(
             Pin(start: 0.0, end: 0.0),
-            Pin(start: 163.0, end: 85.0),
+            Pin(start: 140.0, end: 85.0),
             child: GridView(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, mainAxisSpacing: 0, crossAxisSpacing: 0),
@@ -349,41 +296,47 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                   (index) => Container(
                         alignment: Alignment.center,
                         child: SizedBox(
-                          width: 250.0,
-                          height: 250.0,
+                          width: 200.0,
+                          height: 200.0,
                           child: Stack(
                             children: <Widget>[
                               Stack(children: <Widget>[
-                                //底
+                                //底/*
                                 Container(
-                                  width: 250.0,
-                                  height: 250.0,
+                                  width: 200.0,
+                                  height: 200.0,
                                   decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    border: Border.all(
-                                        width: 1.0,
-                                        color: const Color(0xffa0522d)),
-                                  ),
+                                      color: const Color(0xffffffff),
+                                      border: Border(
+                                          top: BorderSide(
+                                              width: 1.0,
+                                              color: const Color(0xffa0522d)),
+                                          bottom: BorderSide(
+                                              width: 2.0,
+                                              color: const Color(0xffa0522d)),
+                                          left: BorderSide(
+                                              width: 2.0,
+                                              color: const Color(0xffa0522d)))),
                                 ),
                                 //頭貼框
                                 Pinned.fromPins(
                                   Pin(size: 53.0, start: 9.0),
-                                  Pin(size: 49.0, start: 7.0),
+                                  Pin(size: 53.0, start: 7.0),
                                   child: Container(
                                     decoration: BoxDecoration(
                                       color: const Color(0xffffffff),
                                       borderRadius: BorderRadius.all(
                                           Radius.elliptical(9999.0, 9999.0)),
                                       border: Border.all(
-                                          width: 1.0,
+                                          width: 0.5,
                                           color: const Color(0xffa0522d)),
                                     ),
                                   ),
                                 ),
                                 //頭貼
                                 Pinned.fromPins(
-                                  Pin(size: 41.0, start: 15.0),
-                                  Pin(size: 41.0, start: 10.0),
+                                  Pin(size: 40.0, start: 15.0),
+                                  Pin(size: 40.0, start: 10.0),
                                   child:
                                       // Adobe XD layer: 'baku_chat' (shape)
                                       Container(
@@ -400,8 +353,8 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 ),
                                 //暱稱
                                 Pinned.fromPins(
-                                  Pin(size: 40.0, middle: 0.4217),
-                                  Pin(size: 27.0, start: 15.0),
+                                  Pin(size: 40.0, middle: 0.5),
+                                  Pin(size: 27.0, start: 17.0),
                                   child: Text(
                                     nickNames[index],
                                     style: TextStyle(
@@ -460,15 +413,21 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 ),
                                 //content
                                 Pinned.fromPins(Pin(start: 0.0, end: 0.0),
-                                    Pin(size: 110.0, middle: 0.6),
+                                    Pin(size: 80.0, middle: 0.6),
                                     child: Stack(
                                       children: <Widget>[
                                         Container(
                                           decoration: BoxDecoration(
                                             color: const Color(0xffffffff),
-                                            border: Border.all(
-                                                width: 1.0,
-                                                color: const Color(0xffa0522d)),
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    width: 1.0,
+                                                    color: const Color(
+                                                        0xffa0522d)),
+                                                left: BorderSide(
+                                                    width: 2.0,
+                                                    color: const Color(
+                                                        0xffa0522d))),
                                           ),
                                         ),
                                         Pinned.fromPins(
@@ -478,7 +437,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                             socialContents[index],
                                             style: TextStyle(
                                               fontFamily: 'Segoe UI',
-                                              fontSize: 20,
+                                              fontSize: 16,
                                               color: const Color(0xff707070),
                                             ),
                                             softWrap: true,
@@ -722,8 +681,8 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
           ),
           //新增
           Pinned.fromPins(
-            Pin(size: 150.0, middle: 0.5),
-            Pin(size: 150.0, end: 5.0),
+            Pin(size: 200.0, middle: 0.5),
+            Pin(size: 200.0, end: 5.0),
             child: Stack(
               alignment: Alignment.bottomCenter,
               children: <Widget>[

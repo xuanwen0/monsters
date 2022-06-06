@@ -80,7 +80,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
               '圖鑑',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 40,
                 color: const Color(0xffa0522d),
               ),
               softWrap: false,
@@ -238,7 +238,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
           ),
           //怪獸1
           Pinned.fromPins(
-            Pin(size: 180.0, start: 13.0),
+            Pin(size: 150.0, start: 13.0),
             Pin(size: 231.0, middle: 0.2651),
             child: PageLink(
               links: [
@@ -522,9 +522,10 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '圖鑑',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -565,9 +566,10 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '歷史紀錄',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -615,13 +617,14 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     ),
                   ),
                   Pinned.fromPins(
-                    Pin(size: 24.0, middle: 0.5111),
+                    Pin(size: 24.0, middle: 0.5),
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '社群',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -671,9 +674,10 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '互動',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
