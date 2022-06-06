@@ -39,7 +39,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
           Pinned.fromPins(
               Pin(size: 260.0, end: 31.0), Pin(size: 54.0, middle: 0.308),
               child: TextFormField(
-                autofocus: true,
+                autofocus: false,
                 controller: _accountController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(

@@ -15,13 +15,18 @@ class Drawer_userInformation extends StatefulWidget {
 class _Drawer_userInformationState extends State<Drawer_userInformation> {
   @override
   Widget build(BuildContext context) {
+    const String userName = '洪靖翔';
+    const String userNickname = '阿翔';
+    const String userGender = '男';
+    const String userBirthday = '08/22';
+    const String userMail = '10846028@ntub.edu.tw';
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       body: Stack(
         children: <Widget>[
           Pinned.fromPins(
             Pin(start: 0.0, end: 0.0),
-            Pin(size: 620.0, start: 103.0),
+            Pin(size: 544.0, start: 103.0),
             child: Container(
               color: const Color(0xffffffff),
             ),
@@ -92,10 +97,9 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                   Pin(start: 6.0, end: 5.0),
                   child: Text(
                     '編輯',
-                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
-                      fontSize: 30,
+                      fontSize: 40,
                       color: const Color(0xffa0522d),
                     ),
                     softWrap: false,
@@ -104,13 +108,15 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
               ],
             ),
           ),
-          Align(
-            alignment: Alignment(0.006, -0.533),
+          Pinned.fromPins(
+            Pin(size: 257.0, middle: 0.5),
+            Pin(size: 178.0, start: 105.0),
             child: SizedBox(
               width: 257.0,
               height: 178.0,
               child: Stack(
                 children: <Widget>[
+                  //框
                   Container(
                     decoration: BoxDecoration(
                       color: const Color(0xffffffff),
@@ -118,15 +124,21 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                           width: 1.0, color: const Color(0xffa0522d)),
                     ),
                   ),
+                  //圖
                   Pinned.fromPins(
                     Pin(size: 122.4, middle: 0.4963),
                     Pin(start: 26.1, end: 26.1),
                     child:
-                        // Adobe XD layer: 'Icon material-person' (shape)
-                        SvgPicture.string(
-                      _svg_s6wsvh,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
+                        // Adobe XD layer: 'baku_chat' (shape)
+                        Container(
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                        image: DecorationImage(
+                          image: const AssetImage('assets/image/baku1.jpg'),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -145,21 +157,27 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                 children: [
                   {
                     'text': '姓名',
+                    'content': userName,
                   },
                   {
                     'text': '暱稱',
+                    'content': userNickname,
                   },
                   {
                     'text': '性別',
+                    'content': userGender,
                   },
                   {
                     'text': '生日',
+                    'content': userBirthday,
                   },
                   {
                     'text': '信箱',
+                    'content': userMail,
                   }
                 ].map((itemData) {
                   final text = itemData['text']!;
+                  final content = itemData['content']!;
                   return SizedBox(
                     width: 272.0,
                     height: 40.0,
@@ -185,6 +203,19 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                             _svg_pjak95,
                             allowDrawingOutsideViewBox: true,
                             fit: BoxFit.fill,
+                          ),
+                        ),
+                        Pinned.fromPins(
+                          Pin(size: 168.0, end: 0.0),
+                          Pin(size: 25.0, end: 7.0),
+                          child: Text(
+                            content,
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 18,
+                              color: const Color(0xff000000),
+                            ),
+                            softWrap: false,
                           ),
                         ),
                       ],
