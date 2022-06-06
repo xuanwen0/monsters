@@ -78,7 +78,6 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
       '6:46',
       '5:46'
     ];
-
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       key: _scaffoldKEy,
