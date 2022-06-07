@@ -66,6 +66,9 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
+    const int monsterCount = 6;
+    const List<String> monsterNames = ['巴古', '巴古', '巴古', '巴古', '巴古', '巴古'];
+
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       key: _scaffoldKEy,
@@ -236,248 +239,111 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
               onPressed: () => _scaffoldKEy.currentState?.openEndDrawer(),
             ),
           ),
-          //怪獸1
+          //怪獸列表
           Pinned.fromPins(
-            Pin(size: 150.0, start: 13.0),
-            Pin(size: 231.0, middle: 0.2651),
-            child: PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => Monster_detail(),
+            Pin(start: 10.0, end: 10.0),
+            Pin(start: 140.0, end: 85.0),
+            child: GridView(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, mainAxisSpacing: 30, crossAxisSpacing: 10),
+              children: List.generate(
+                monsterCount,
+                (index) => Container(
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                    width: 250.0,
+                    height: 250.0,
+                    child: PageLink(
+                      links: [
+                        PageLinkInfo(
+                          transition: LinkTransition.Fade,
+                          ease: Curves.easeOut,
+                          duration: 0.3,
+                          pageBuilder: () => Monster_detail(),
+                        ),
+                      ],
+                      child: Stack(
+                        children: <Widget>[
+                          //border
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(255, 255, 255, 1),
+                              borderRadius: BorderRadius.circular(11.0),
+                              border: Border.all(
+                                  width: 1.0, color: const Color(0xffa0522d)),
+                            ),
+                            margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 32.0),
+                          ),
+                          //image
+                          Pinned.fromPins(
+                            Pin(start: 10.0, end: 10.0),
+                            Pin(size: 179.0, start: 5.0),
+                            child:
+                                // Adobe XD layer: 'monster1' (shape)
+                                Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: const AssetImage(
+                                      'assets/image/monsters_book_monster.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                          //name
+                          Pinned.fromPins(
+                            Pin(size: 80.0, middle: 0.5),
+                            Pin(size: 40.0, end: 0.0),
+                            child: Text(
+                              monsterNames[index],
+                              style: TextStyle(
+                                fontFamily: 'Segoe UI',
+                                fontSize: 32,
+                                color: const Color(0xffa0522d),
+                              ),
+                              softWrap: false,
+                            ),
+                          ),
+                          //stars
+                          Pinned.fromPins(
+                            Pin(size: 33.0, end: 80.0),
+                            Pin(size: 31.6, middle: 0.8),
+                            child:
+                                // Adobe XD layer: 'Icon awesome-star' (shape)
+                                SvgPicture.string(
+                              _svg_bx5ln,
+                              allowDrawingOutsideViewBox: true,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Pinned.fromPins(
+                            Pin(size: 33.0, end: 42.0),
+                            Pin(size: 31.6, middle: 0.8),
+                            child:
+                                // Adobe XD layer: 'Icon awesome-star' (shape)
+                                SvgPicture.string(
+                              _svg_bx5ln,
+                              allowDrawingOutsideViewBox: true,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Pinned.fromPins(
+                            Pin(size: 33.0, end: 4.0),
+                            Pin(size: 31.6, middle: 0.8),
+                            child:
+                                // Adobe XD layer: 'Icon awesome-star' (shape)
+                                SvgPicture.string(
+                              _svg_bx5ln,
+                              allowDrawingOutsideViewBox: true,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ],
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      borderRadius: BorderRadius.circular(11.0),
-                      border: Border.all(
-                          width: 1.0, color: const Color(0xffa0522d)),
-                    ),
-                    margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 51.0),
-                  ),
-                  Pinned.fromPins(
-                    Pin(start: 15.0, end: 15.0),
-                    Pin(size: 158.3, start: 11.0),
-                    child:
-                        // Adobe XD layer: 'monster1' (shape)
-                        Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: const AssetImage(
-                              'assets/image/monsters_book_monster.png'),
-                          fit: BoxFit.scaleDown,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment(0.012, 1.0),
-                    child: SizedBox(
-                      width: 95.0,
-                      height: 48.0,
-                      child: Text(
-                        '巴古',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Segoe UI',
-                          fontSize: 36,
-                          color: const Color(0xffa0522d),
-                        ),
-                        softWrap: false,
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment(-0.109, 0.433),
-                    child: SizedBox(
-                      width: 33.0,
-                      height: 32.0,
-                      child:
-                          // Adobe XD layer: 'Icon awesome-star' (shape)
-                          SvgPicture.string(
-                        _svg_xvbnb,
-                        allowDrawingOutsideViewBox: true,
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment(0.422, 0.433),
-                    child: SizedBox(
-                      width: 33.0,
-                      height: 32.0,
-                      child:
-                          // Adobe XD layer: 'Icon awesome-star' (shape)
-                          SvgPicture.string(
-                        _svg_tn4ajf,
-                        allowDrawingOutsideViewBox: true,
-                      ),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 33.0, end: 3.5),
-                    Pin(size: 31.6, middle: 0.7167),
-                    child:
-                        // Adobe XD layer: 'Icon awesome-star' (shape)
-                        SvgPicture.string(
-                      _svg_bx5ln,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ],
               ),
-            ),
-          ),
-          //怪獸2
-          Pinned.fromPins(
-            Pin(size: 180.0, end: 12.0),
-            Pin(size: 231.0, middle: 0.2651),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(11.0),
-                    border:
-                        Border.all(width: 1.0, color: const Color(0xffa0522d)),
-                  ),
-                  margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 51.0),
-                ),
-                Pinned.fromPins(
-                  Pin(start: 15.0, end: 15.0),
-                  Pin(size: 158.3, start: 11.0),
-                  child:
-                      // Adobe XD layer: 'monster1' (shape)
-                      Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: const AssetImage('assets/image/unknow.png'),
-                        fit: BoxFit.scaleDown,
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment(0.012, 1.0),
-                  child: SizedBox(
-                    width: 95.0,
-                    height: 48.0,
-                    child: Text(
-                      '???',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 36,
-                        color: const Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          //怪獸3
-          Pinned.fromPins(
-            Pin(size: 180.0, start: 13.0),
-            Pin(size: 231.0, middle: 0.7239),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(11.0),
-                    border:
-                        Border.all(width: 1.0, color: const Color(0xffa0522d)),
-                  ),
-                  margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 51.0),
-                ),
-                Pinned.fromPins(
-                  Pin(start: 15.0, end: 15.0),
-                  Pin(size: 158.3, start: 11.0),
-                  child:
-                      // Adobe XD layer: 'monster1' (shape)
-                      Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: const AssetImage('assets/image/unknow.png'),
-                        fit: BoxFit.scaleDown,
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment(0.012, 1.0),
-                  child: SizedBox(
-                    width: 95.0,
-                    height: 48.0,
-                    child: Text(
-                      '???',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 36,
-                        color: const Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          //怪獸4
-          Pinned.fromPins(
-            Pin(size: 180.0, end: 12.0),
-            Pin(size: 231.0, middle: 0.7239),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(11.0),
-                    border:
-                        Border.all(width: 1.0, color: const Color(0xffa0522d)),
-                  ),
-                  margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 51.0),
-                ),
-                Pinned.fromPins(
-                  Pin(start: 15.0, end: 15.0),
-                  Pin(size: 158.3, start: 11.0),
-                  child:
-                      // Adobe XD layer: 'monster1' (shape)
-                      Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: const AssetImage('assets/image/unknow.png'),
-                        fit: BoxFit.scaleDown,
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment(0.012, 1.0),
-                  child: SizedBox(
-                    width: 95.0,
-                    height: 48.0,
-                    child: Text(
-                      '???',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 36,
-                        color: const Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                ),
-              ],
             ),
           ),
           //圖鑑
