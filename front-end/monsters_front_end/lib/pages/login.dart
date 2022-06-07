@@ -60,6 +60,7 @@ class _loginState extends State<LoginPage> {
                       Pin(start: 3.0, end: 3.0),
                       child: Text(
                         '登入',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Segoe UI',
                           fontSize: 20,
@@ -91,6 +92,7 @@ class _loginState extends State<LoginPage> {
                     Pin(start: 3.0, end: 3.0),
                     child: Text(
                       '註冊',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 20,
@@ -136,6 +138,7 @@ class _loginState extends State<LoginPage> {
                     Pin(start: 5.0, end: 4.0),
                     child: Text(
                       '從Google登入',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 16,
@@ -181,6 +184,7 @@ class _loginState extends State<LoginPage> {
                     Pin(start: 5.0, end: 4.0),
                     child: Text(
                       '從LINE登入',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 16,
@@ -224,6 +228,7 @@ class _loginState extends State<LoginPage> {
                   Pin(start: 5.0, end: 4.0),
                   child: Text(
                     '從Facebook登入',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
                       fontSize: 16,
