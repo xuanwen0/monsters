@@ -219,13 +219,13 @@ class _InteractionPageState extends State<InteractionPage>
                           ),
                           Pinned.fromPins(
                             Pin(start: 43.0, end: 43.0),
-                            Pin(size: 48.0, middle: 0.5),
+                            Pin(size: 40.0, middle: 0.5),
                             child: const Text(
                               '深度心理測驗',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Segoe UI',
-                                fontSize: 30,
+                                fontSize: 26,
                                 color: Color(0xffa0522d),
                               ),
                               softWrap: false,

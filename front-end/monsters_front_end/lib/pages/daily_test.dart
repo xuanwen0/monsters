@@ -24,9 +24,10 @@ class _Daily_testState extends State<Daily_test> {
             Pin(size: 63.0, start: 11.0),
             child: const Text(
               '每日測驗',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 40,
                 color: Color(0xffa0522d),
               ),
               softWrap: false,
@@ -50,9 +51,10 @@ class _Daily_testState extends State<Daily_test> {
                       height: 37.0,
                       child: Text(
                         '人生大約有幾個月呢?',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Segoe UI',
-                          fontSize: 28,
+                          fontSize: 26,
                           color: Color.fromRGBO(160, 82, 45, 1),
                         ),
                         softWrap: false,
@@ -125,9 +127,10 @@ class _Daily_testState extends State<Daily_test> {
                                     height: 37.0,
                                     child: Text(
                                       '700個月',
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: 'Segoe UI',
-                                        fontSize: 28,
+                                        fontSize: 26,
                                         color: const Color(0xffa0522d),
                                       ),
                                       softWrap: false,
@@ -148,13 +151,13 @@ class _Daily_testState extends State<Daily_test> {
                           ),
                         ),
                         Pinned.fromPins(
-                          Pin(size: 26.0, start: 30.0),
-                          Pin(size: 53.0, middle: 0.35),
+                          Pin(size: 30.0, start: 30.0),
+                          Pin(size: 40.0, middle: 0.5),
                           child: const Text(
                             'A',
                             style: TextStyle(
                               fontFamily: 'Segoe UI',
-                              fontSize: 40,
+                              fontSize: 30,
                               color: Color(0xffa0522d),
                             ),
                             softWrap: false,
@@ -194,9 +197,10 @@ class _Daily_testState extends State<Daily_test> {
                                     height: 37.0,
                                     child: Text(
                                       '800個月',
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: 'Segoe UI',
-                                        fontSize: 28,
+                                        fontSize: 26,
                                         color: const Color(0xffa0522d),
                                       ),
                                       softWrap: false,
@@ -217,13 +221,14 @@ class _Daily_testState extends State<Daily_test> {
                           ),
                         ),
                         Pinned.fromPins(
-                          Pin(size: 23.0, start: 30.0),
-                          Pin(size: 53.0, middle: 0.35),
+                          Pin(size: 30.0, start: 30.0),
+                          Pin(size: 40.0, middle: 0.5),
                           child: Text(
                             'B',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               fontFamily: 'Segoe UI',
-                              fontSize: 40,
+                              fontSize: 30,
                               color: const Color(0xffa0522d),
                             ),
                             softWrap: false,
@@ -263,9 +268,10 @@ class _Daily_testState extends State<Daily_test> {
                                     height: 37.0,
                                     child: Text(
                                       '900個月',
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: 'Segoe UI',
-                                        fontSize: 28,
+                                        fontSize: 26,
                                         color: const Color(0xffa0522d),
                                       ),
                                       softWrap: false,
@@ -286,13 +292,14 @@ class _Daily_testState extends State<Daily_test> {
                           ),
                         ),
                         Pinned.fromPins(
-                          Pin(size: 25.0, start: 30.0),
-                          Pin(size: 53.0, middle: 0.35),
+                          Pin(size: 30.0, start: 30.0),
+                          Pin(size: 40.0, middle: 0.5),
                           child: Text(
                             'C',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               fontFamily: 'Segoe UI',
-                              fontSize: 40,
+                              fontSize: 30,
                               color: const Color(0xffa0522d),
                             ),
                             softWrap: false,
@@ -332,9 +339,10 @@ class _Daily_testState extends State<Daily_test> {
                                     height: 37.0,
                                     child: Text(
                                       '1000個月',
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: 'Segoe UI',
-                                        fontSize: 28,
+                                        fontSize: 26,
                                         color: const Color(0xffa0522d),
                                       ),
                                       softWrap: false,
@@ -355,13 +363,14 @@ class _Daily_testState extends State<Daily_test> {
                           ),
                         ),
                         Pinned.fromPins(
-                          Pin(size: 28.0, start: 30.0),
-                          Pin(size: 53.0, middle: 0.35),
+                          Pin(size: 30.0, start: 30.0),
+                          Pin(size: 40.0, middle: 0.5),
                           child: Text(
                             'D',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               fontFamily: 'Segoe UI',
-                              fontSize: 40,
+                              fontSize: 30,
                               color: const Color(0xffa0522d),
                             ),
                             softWrap: false,
