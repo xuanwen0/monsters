@@ -188,7 +188,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
               '歡迎來到解答之書，請閉上\n眼睛並深呼吸，心中想著現\n在的煩惱或疑問，準備好了\n就可以按下解答的按鈕獲得\n答案。',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 24,
+                fontSize: 20,
                 color: Color(0xffa0522d),
               ),
               softWrap: false,
