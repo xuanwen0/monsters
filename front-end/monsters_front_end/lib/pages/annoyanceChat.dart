@@ -2,11 +2,11 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:monsters_front_end/pages/annoyance.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
 
 import '../model/annoyanceModel.dart';
+import '../repository/annoyanceRepo.dart';
 
 class AnnoyanceChat extends StatefulWidget {
   @override
@@ -148,7 +148,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                     )
                   : ListTile(
                       title: Container(
-                        child: FlatButton(
+                        child: TextButton(
                           child: Text(
                             "怪獸正在工作中",
                             textAlign: TextAlign.center,
@@ -159,10 +159,14 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                             annoyanceRepository.createAnnoyance(
                               Annoyance(
                                   account: 'Lin',
-                                  context: userAnswers[1],
+                                  content: userAnswers[1],
+                                  monsterId: 1,
                                   type: userAnswers[0],
                                   mood: userAnswers[2],
-                                  index: userAnswers[3]),
+                                  index: userAnswers[3],
+                                  time: DateTime.now().toIso8601String(),
+                                  solve: 0,
+                                  share: 0),
                             );
                             Navigator.push(
                                 context,
@@ -304,6 +308,11 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
           }
           if (chatRound == 5) {
             if (acceptSharingMembers.contains(text)) {
+              if(text == "是"){
+                userAnswers.add(emotionGradeMembers.indexOf("1"));
+              }else if(text == "否"){
+                userAnswers.add(emotionGradeMembers.indexOf("0"));
+              }
               lastSpeaking = true;
               userAnswers.add(acceptSharingMembers.indexOf(text!));
               reply("解決煩惱請馬上跟我說！我已經迫不及待想吃飯了！");

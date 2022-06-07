@@ -6,6 +6,7 @@ import com.example.demo.entity.Annoyance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class AnnoyanceServiceImpl extends BaseServiceImplement<AnnoyanceDAO, Ann
         this.annoyanceDAO = baseDAO;
     }
 
+    @Transactional
     @Override
     public AnnoyanceBean createAndReturnBean(AnnoyanceBean bean) {
         annoyanceDAO.insert(createVO(bean));
@@ -38,9 +40,9 @@ public class AnnoyanceServiceImpl extends BaseServiceImplement<AnnoyanceDAO, Ann
         Annoyance entity = new Annoyance();
         entity.setId(bean.getId());
         entity.setAccount(bean.getAccount());
-        entity.setContext(bean.getContext());
+        entity.setContent(bean.getContent());
         entity.setType(bean.getType());
-        entity.setDallId(bean.getDallId());
+        entity.setMonsterId(bean.getMonsterId());
         entity.setMood(bean.getMood());
         entity.setIndex(bean.getIndex());
         entity.setTime(bean.getTime());
@@ -53,9 +55,9 @@ public class AnnoyanceServiceImpl extends BaseServiceImplement<AnnoyanceDAO, Ann
         AnnoyanceBean bean = new AnnoyanceBean();
         bean.setId(entity.getId());
         bean.setAccount(entity.getAccount());
-        bean.setContext(entity.getContext());
+        bean.setContent(entity.getContent());
         bean.setType(entity.getType());
-        bean.setDallId(entity.getDallId());
+        bean.setMonsterId(entity.getMonsterId());
         bean.setMood(entity.getMood());
         bean.setIndex(entity.getIndex());
         bean.setTime(entity.getTime());

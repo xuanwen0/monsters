@@ -2,10 +2,9 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:monsters_front_end/pages/annoyance.dart';
-import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
-import '../model/annoyanceModel.dart';
+
+import '../repository/annoyanceRepo.dart';
 
 class historyAnnoyanceChat extends StatefulWidget {
   @override
@@ -88,7 +87,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
               //margin: EdgeInsets.only(bottom: 30),
               child: ListTile(
                 title: Container(
-                  child: FlatButton(
+                  child: TextButton(
                     child: Text(
                       solve == 0 ? "我解決煩惱了！" : "恭喜你，已經解決煩惱了！",
                       textAlign: TextAlign.center,

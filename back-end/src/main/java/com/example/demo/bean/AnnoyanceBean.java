@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 public class AnnoyanceBean extends BaseBean {
     private Integer id;
     private String account;
-    private String context;
+    private String content;
     private AnnoyanceTypeEnum type;
-    private int dallId;
+    private int monsterId;
     private String mood;
     private int index;
     private LocalDateTime time = LocalDateTime.now();

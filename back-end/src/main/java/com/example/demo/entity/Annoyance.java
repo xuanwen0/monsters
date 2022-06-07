@@ -15,19 +15,17 @@ public class Annoyance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "account", referencedColumnName = "account", nullable = false)
     @Column(name = "`account`", nullable = false)
     private String account;
 
-    @Column(name = "`contant`", nullable = false)
-    private String context;
+    @Column(name = "`content`", nullable = false)
+    private String content;
 
     @Column(name = "`type`", nullable = false)
     private com.example.demo.entity.enumerate.AnnoyanceTypeEnum type;
 
-    @Column(name = "`dall_id`")
-    private int dallId;
+    @Column(name = "`monster_id`")
+    private int monsterId;
 
     @Column(name = "`mood`", nullable = false)
     private String mood;

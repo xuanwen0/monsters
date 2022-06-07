@@ -1,35 +1,13 @@
 // ignore_for_file: file_names, use_key_in_widget_constructors
-import 'dart:convert';
 
 import 'package:adobe_xd/adobe_xd.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:http/http.dart' as http;
 import 'package:monsters_front_end/model/answerbookModel.dart';
 
-import '../API/answerbookAPI.dart';
+import '../repository/answerBookRepo.dart';
 import 'interaction.dart';
 
-class AnswerbookRepository implements AnswerbookApiDataSource {
-  final client = http.Client();
-  final String domain = "http://10.0.2.2:8080";
-  @override
-  Future<Map<String, dynamic>> getAnswerbook() {
-    return _getAnswerBook(Uri.parse('$domain/answerBook/search'));
-  }
-
-  Future<Map<String, dynamic>> _getAnswerBook(Uri url) async {
-    final request =
-        await client.get(url, headers: {'Content-type': 'application/json'});
-    if (request.statusCode == 200) {
-      Map<String, dynamic> answerBook = jsonDecode(request.body);
-      return Future.value(answerBook);
-    } else {
-      Map<String, dynamic> answerBook = jsonDecode(request.body);
-      return answerBook;
-    }
-  }
-}
 
 class AnswerbookforAnsPage extends StatefulWidget {
   @override
@@ -39,9 +17,15 @@ class AnswerbookforAnsPage extends StatefulWidget {
 class _AnswerbookforAnsPage extends State<AnswerbookforAnsPage> {
   final AnswerbookRepository answerbookRepository = AnswerbookRepository();
   String answer = '';
-
+  Future<Answerbook> getAnswer() {
+    Future<Answerbook> answers = answerbookRepository
+          .searchAnswerbook()
+          .then((value) => Answerbook.fromMap(value));
+    return answers;  
+  }
   @override
   Widget build(BuildContext context) {
+    getAnswer().then((value) => answer=value.content);
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       body: Stack(
@@ -185,11 +169,8 @@ class _AnswerbookforAnsPage extends State<AnswerbookforAnsPage> {
                             color: Color(0xffa0522d))),
                     onPressed: () {
                       setState(() {
-                        Future<Answerbook> answers = answerbookRepository
-                            .getAnswerbook()
-                            .then((value) => Answerbook.fromMap(value));
+                        Future<Answerbook> answers = getAnswer();
                         answers.then((value) => answer = value.content);
-                        print(answer);
                       });
                     },
                   ),

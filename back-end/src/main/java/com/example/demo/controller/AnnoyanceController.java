@@ -8,18 +8,22 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * @author linwe
+ */
 @AllArgsConstructor
-@RestController
+@Controller
 @RequestMapping(value = "/annoyance")
 public class AnnoyanceController {
     private final AnnoyanceServiceImpl annoyanceService;
-
     @ResponseBody
-    @PostMapping("create")
+    @PostMapping("/create")
     public ResponseEntity createAnnoyance(@RequestBody AnnoyanceBean annoyanceBean) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
@@ -27,7 +31,7 @@ public class AnnoyanceController {
         try {
             annoyanceService.createAndReturnBean(annoyanceBean);
             System.out.println(annoyanceBean.getAccount());
-            System.out.println(annoyanceBean.getContext());
+            System.out.println(annoyanceBean.getContent());
             System.out.println(annoyanceBean.getType());
             System.out.println(annoyanceBean.getMood());
             System.out.println(annoyanceBean.getIndex());
@@ -51,6 +55,15 @@ public class AnnoyanceController {
             for (AnnoyanceBean annoyanceBean : annoyanceList){
                 ObjectNode annoyanceNode = dataNode.addObject();
                 annoyanceNode.put("id", annoyanceBean.getId());
+                annoyanceNode.put("account", annoyanceBean.getAccount());
+                annoyanceNode.put("content", annoyanceBean.getContent());
+                annoyanceNode.put("type", annoyanceBean.getType().getId());
+                annoyanceNode.put("monsterId", annoyanceBean.getMonsterId());
+                annoyanceNode.put("mood", annoyanceBean.getIndex());
+                annoyanceNode.put("index", annoyanceBean.getIndex());
+                annoyanceNode.put("time", annoyanceBean.getTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss")));
+                annoyanceNode.put("solve", annoyanceBean.getSolve());
+                annoyanceNode.put("share", annoyanceBean.getShare());
             }
         } catch (Exception e) {
             e.printStackTrace();

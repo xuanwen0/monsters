@@ -10,11 +10,11 @@ class Answerbook {
 
   Answerbook copyWith({
     int? id,
-    String? context,
+    String? content,
   }) {
     return Answerbook(
       id: id ?? this.id,
-      content: context ?? this.content,
+      content: content ?? this.content,
     );
   }
 
