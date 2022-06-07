@@ -308,9 +308,9 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
           }
           if (chatRound == 5) {
             if (acceptSharingMembers.contains(text)) {
-              if(text == "是"){
+              if (text == "是") {
                 userAnswers.add(emotionGradeMembers.indexOf("1"));
-              }else if(text == "否"){
+              } else if (text == "否") {
                 userAnswers.add(emotionGradeMembers.indexOf("0"));
               }
               lastSpeaking = true;
