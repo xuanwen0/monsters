@@ -93,8 +93,8 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
         children: <Widget>[
           //標題
           Pinned.fromPins(
-            Pin(size: 188.0, middle: 0.5),
-            Pin(size: 63.0, start: 11.0),
+            Pin(size: 150.0, middle: 0.5),
+            Pin(size: 63.0, start: 20.0),
             child: const Text(
               '社群',
               textAlign: TextAlign.center,
@@ -108,7 +108,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
           ),
           //類別:全部
           Pinned.fromPins(
-            Pin(size: 70.0, start: 20.0),
+            Pin(size: 70.0, start: 18.0),
             Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
@@ -150,7 +150,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
           ),
           //類別:煩惱
           Pinned.fromPins(
-            Pin(size: 70.0, start: 105.0),
+            Pin(size: 70.0, start: 103.0),
             Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
@@ -192,7 +192,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
           ),
           //類別:日記
           Pinned.fromPins(
-            Pin(size: 70.0, start: 190.0),
+            Pin(size: 70.0, start: 187.0),
             Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
@@ -234,7 +234,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
           ),
           //類別:怪獸
           Pinned.fromPins(
-            Pin(size: 72.0, start: 275.0),
+            Pin(size: 72.0, start: 272.0),
             Pin(size: 30.0, start: 93.0),
             child: Stack(
               children: <Widget>[
@@ -321,7 +321,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 //頭貼框
                                 Pinned.fromPins(
                                   Pin(size: 53.0, start: 9.0),
-                                  Pin(size: 53.0, start: 7.0),
+                                  Pin(size: 53.0, start: 9.0),
                                   child: Container(
                                     decoration: BoxDecoration(
                                       color: const Color(0xffffffff),
@@ -336,7 +336,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 //頭貼
                                 Pinned.fromPins(
                                   Pin(size: 40.0, start: 15.0),
-                                  Pin(size: 40.0, start: 10.0),
+                                  Pin(size: 40.0, start: 13.0),
                                   child:
                                       // Adobe XD layer: 'baku_chat' (shape)
                                       Container(
@@ -354,7 +354,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 //暱稱
                                 Pinned.fromPins(
                                   Pin(size: 40.0, middle: 0.5),
-                                  Pin(size: 27.0, start: 17.0),
+                                  Pin(size: 27.0, start: 21.0),
                                   child: Text(
                                     nickNames[index],
                                     style: TextStyle(
@@ -367,8 +367,8 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 ),
                                 //愛心
                                 Pinned.fromPins(
-                                  Pin(size: 26.2, end: 20.0),
-                                  Pin(size: 23.8, end: 6.1),
+                                  Pin(size: 26.2, end: 7.0),
+                                  Pin(size: 23.8, end: 7),
                                   child: SvgPicture.string(
                                     _svg_fb6j2b,
                                     allowDrawingOutsideViewBox: true,
@@ -377,7 +377,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 ),
                                 //留言
                                 Pinned.fromPins(
-                                  Pin(size: 26.0, middle: 0.6321),
+                                  Pin(size: 26.0, middle: 0.72),
                                   Pin(size: 21.8, end: 10.4),
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -389,7 +389,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 ),
                                 //留言
                                 Pinned.fromPins(
-                                  Pin(size: 16.3, middle: 0.6179),
+                                  Pin(size: 16.3, middle: 0.71),
                                   Pin(size: 16.4, end: 2.2),
                                   child: SvgPicture.string(
                                     _svg_urb4yp,
@@ -399,8 +399,8 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 ),
                                 //時間
                                 Pinned.fromPins(
-                                  Pin(size: 40.0, start: 16.0),
-                                  Pin(size: 20.0, end: 10.0),
+                                  Pin(size: 40.0, start: 17.0),
+                                  Pin(size: 20.0, end: 7.0),
                                   child: Text(
                                     shareTimes[index],
                                     style: TextStyle(
@@ -413,7 +413,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 ),
                                 //content
                                 Pinned.fromPins(Pin(start: 0.0, end: 0.0),
-                                    Pin(size: 80.0, middle: 0.6),
+                                    Pin(size: 80.0, middle: 0.65),
                                     child: Stack(
                                       children: <Widget>[
                                         Container(

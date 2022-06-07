@@ -77,10 +77,11 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
         children: <Widget>[
           //標題
           Pinned.fromPins(
-            Pin(size: 94.0, middle: 0.5),
-            Pin(size: 63.0, start: 11.0),
+            Pin(size: 150.0, middle: 0.5),
+            Pin(size: 63.0, start: 20.0),
             child: Text(
               '圖鑑',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Segoe UI',
                 fontSize: 40,

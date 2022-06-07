@@ -20,14 +20,14 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
       body: Stack(
         children: <Widget>[
           Pinned.fromPins(
-            Pin(size: 188.0, middle: 0.5),
-            Pin(size: 63.0, start: 9.0),
+            Pin(size: 200.0, middle: 0.5),
+            Pin(size: 63.0, start: 11.0),
             child: Text(
               '解答之書',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 30,
+                fontSize: 40,
                 color: const Color(0xffa0522d),
               ),
               softWrap: false,
@@ -149,7 +149,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
                 ),
                 Pinned.fromPins(
                   Pin(size: 100.0, middle: 0.5),
-                  Pin(start: 6.0, end: 4.0),
+                  Pin(start: 15.0, end: 15.0),
                   child: PageLink(
                     links: [
                       PageLinkInfo(

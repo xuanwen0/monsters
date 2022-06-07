@@ -43,9 +43,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
   @override
   Widget build(BuildContext context) {
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     if (firstSpeaking == true) {
-      response("0");
+      response("first"); //intro
     }
 
     return Scaffold(

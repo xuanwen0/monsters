@@ -77,10 +77,11 @@ class _InteractionPageState extends State<InteractionPage>
         children: <Widget>[
           //標題
           Pinned.fromPins(
-            Pin(size: 141.0, middle: 0.5018),
-            Pin(size: 63.0, start: 11.0),
+            Pin(size: 150.0, middle: 0.5),
+            Pin(size: 63.0, start: 20.0),
             child: Text(
               '互動區',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Segoe UI',
                 fontSize: 40,
@@ -197,7 +198,7 @@ class _InteractionPageState extends State<InteractionPage>
                 //深度心理測驗
                 Pinned.fromPins(
                   Pin(start: 0.0, end: 0.0),
-                  Pin(size: 68.0, middle: 0.5),
+                  Pin(size: 70.0, middle: 0.5),
                   child: PageLink(
                       links: [
                         PageLinkInfo(
@@ -218,14 +219,14 @@ class _InteractionPageState extends State<InteractionPage>
                             ),
                           ),
                           Pinned.fromPins(
-                            Pin(start: 43.0, end: 43.0),
+                            Pin(start: 40.0, end: 40.0),
                             Pin(size: 40.0, middle: 0.5),
                             child: const Text(
                               '深度心理測驗',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Segoe UI',
-                                fontSize: 26,
+                                fontSize: 28,
                                 color: Color(0xffa0522d),
                               ),
                               softWrap: false,
