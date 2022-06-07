@@ -148,11 +148,20 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                   : ListTile(
                       title: Container(
                         child: TextButton(
-                          child: Text(
-                            "怪獸正在工作中",
-                            textAlign: TextAlign.center,
-                            style:
-                                TextStyle(fontSize: 30, color: Colors.orange),
+                          child: Container(
+                            width: 250,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Color.fromARGB(255, 255, 255, 229),
+                                    width: 3),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0))),
+                            child: Text(
+                              "前往歷史紀錄",
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(fontSize: 30, color: Colors.black),
+                            ),
                           ),
                           onPressed: () {
                             annoyanceRepository.createAnnoyance(

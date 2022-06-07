@@ -18,13 +18,14 @@ class _Psychologicial_testState extends State<Psychologicial_test> {
         children: <Widget>[
           //標題
           Pinned.fromPins(
-            Pin(size: 290.0, middle: 0.6),
-            Pin(size: 63.0, start: 11.0),
+            Pin(size: 250.0, middle: 0.5),
+            Pin(size: 63.0, start: 20.0),
             child: const Text(
               '深度心理測驗',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 35,
                 color: Color(0xffa0522d),
               ),
               softWrap: false,

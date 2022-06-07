@@ -67,8 +67,15 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     const int monsterCount = 6;
-    const List<String> monsterNames = ['巴古', '巴古', '巴古', '巴古', '巴古', '巴古'];
-
+    const List<String> monsterNames = ['巴古', '???', '???', '???', '???', '???'];
+    const List<String> monsterPics = [
+      'assets/image/monsters_book_monster.png',
+      'assets/image/unknow.png',
+      'assets/image/unknow.png',
+      'assets/image/unknow.png',
+      'assets/image/unknow.png',
+      'assets/image/unknow.png'
+    ];
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       key: _scaffoldKEy,
@@ -252,8 +259,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                 (index) => Container(
                   alignment: Alignment.center,
                   child: SizedBox(
-                    width: 250.0,
-                    height: 250.0,
+                    width: 160.0,
+                    height: 200.0,
                     child: PageLink(
                       links: [
                         PageLinkInfo(
@@ -278,15 +285,14 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                           //image
                           Pinned.fromPins(
                             Pin(start: 10.0, end: 10.0),
-                            Pin(size: 179.0, start: 5.0),
+                            Pin(size: 125.0, start: 5.0),
                             child:
                                 // Adobe XD layer: 'monster1' (shape)
                                 Container(
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: const AssetImage(
-                                      'assets/image/monsters_book_monster.png'),
-                                  fit: BoxFit.cover,
+                                  image: AssetImage(monsterPics[index]),
+                                  fit: BoxFit.fitHeight,
                                 ),
                               ),
                             ),
@@ -294,9 +300,10 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                           //name
                           Pinned.fromPins(
                             Pin(size: 80.0, middle: 0.5),
-                            Pin(size: 40.0, end: 0.0),
+                            Pin(size: 100.0, middle: 2.1),
                             child: Text(
                               monsterNames[index],
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Segoe UI',
                                 fontSize: 32,
@@ -305,10 +312,12 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                               softWrap: false,
                             ),
                           ),
+
+                          /*
                           //stars
                           Pinned.fromPins(
-                            Pin(size: 33.0, end: 80.0),
-                            Pin(size: 31.6, middle: 0.8),
+                            Pin(size: 30.0, end: 75.0),
+                            Pin(size: 30.0, middle: 0.72),
                             child:
                                 // Adobe XD layer: 'Icon awesome-star' (shape)
                                 SvgPicture.string(
@@ -318,8 +327,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                             ),
                           ),
                           Pinned.fromPins(
-                            Pin(size: 33.0, end: 42.0),
-                            Pin(size: 31.6, middle: 0.8),
+                            Pin(size: 30.0, end: 40.0),
+                            Pin(size: 30.0, middle: 0.72),
                             child:
                                 // Adobe XD layer: 'Icon awesome-star' (shape)
                                 SvgPicture.string(
@@ -329,8 +338,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                             ),
                           ),
                           Pinned.fromPins(
-                            Pin(size: 33.0, end: 4.0),
-                            Pin(size: 31.6, middle: 0.8),
+                            Pin(size: 30.0, end: 5.0),
+                            Pin(size: 30.0, middle: 0.72),
                             child:
                                 // Adobe XD layer: 'Icon awesome-star' (shape)
                                 SvgPicture.string(
@@ -339,6 +348,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                               fit: BoxFit.fill,
                             ),
                           ),
+                        */
                         ],
                       ),
                     ),

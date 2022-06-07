@@ -33,7 +33,7 @@ class _Monster_detailState extends State<Monster_detail> {
           //monster圖框
           Pinned.fromPins(
             Pin(start: 41.0, end: 40.0),
-            Pin(size: 331.0, middle: 0.2707),
+            Pin(size: 290.0, middle: 0.2707),
             child: Stack(
               children: <Widget>[
                 Container(
@@ -55,6 +55,7 @@ class _Monster_detailState extends State<Monster_detail> {
                     borderRadius: BorderRadius.circular(24.0),
                   ),
                 ),
+                /*
                 //星星
                 Pinned.fromPins(
                   Pin(size: 163.5, end: 15.3),
@@ -97,6 +98,7 @@ class _Monster_detailState extends State<Monster_detail> {
                     ],
                   ),
                 ),
+              */
               ],
             ),
           ),

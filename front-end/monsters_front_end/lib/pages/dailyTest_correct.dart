@@ -18,13 +18,14 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
       body: Stack(
         children: <Widget>[
           Pinned.fromPins(
-            Pin(size: 188.0, middle: 0.5),
-            Pin(size: 63.0, start: 11.0),
+            Pin(size: 200.0, middle: 0.5),
+            Pin(size: 63.0, start: 20.0),
             child: Text(
               '每日測驗',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 40,
                 color: const Color(0xffa0522d),
               ),
               softWrap: false,

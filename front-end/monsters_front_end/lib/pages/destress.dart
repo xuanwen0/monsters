@@ -18,10 +18,11 @@ class _DestressState extends State<Destress> {
         children: <Widget>[
           //標題
           Pinned.fromPins(
-            Pin(size: 188.0, middle: 0.5),
-            Pin(size: 63.0, start: 11.0),
+            Pin(size: 200.0, middle: 0.5),
+            Pin(size: 63.0, start: 20.0),
             child: const Text(
               '紓壓方法',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Segoe UI',
                 fontSize: 47,
