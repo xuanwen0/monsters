@@ -27,13 +27,14 @@ class _Psychologicial_gameState extends State<Psychologicial_game> {
           children: <Widget>[
             //標題
             Pinned.fromPins(
-              Pin(size: 290.0, middle: 0.6),
-              Pin(size: 63.0, start: 11.0),
+              Pin(size: 200.0, middle: 0.5),
+              Pin(size: 63.0, start: 20.0),
               child: Text(
                 '心理小遊戲',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Segoe UI',
-                  fontSize: 47,
+                  fontSize: 40,
                   color: const Color(0xffa0522d),
                 ),
                 softWrap: false,

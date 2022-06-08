@@ -104,13 +104,14 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
         children: <Widget>[
           //標題
           Pinned.fromPins(
-            Pin(size: 188.0, middle: 0.5),
-            Pin(size: 63.0, start: 11.0),
+            Pin(size: 200.0, middle: 0.5),
+            Pin(size: 63.0, start: 20.0),
             child: const Text(
               '歷史紀錄',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 40,
                 color: Color(0xffa0522d),
               ),
               softWrap: false,

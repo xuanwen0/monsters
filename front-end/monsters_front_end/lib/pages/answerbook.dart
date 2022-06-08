@@ -3,7 +3,8 @@
 import 'package:adobe_xd/adobe_xd.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:monsters_front_end/pages/answerbook_forAns.dart';
+import 'package:monsters_front_end/model/answerbookModel.dart';
+import 'package:monsters_front_end/repository/answerBookRepo.dart';
 
 import 'interaction.dart';
 
@@ -13,26 +14,38 @@ class AnswerbookPage extends StatefulWidget {
 }
 
 class _AnswerbookPageState extends State<AnswerbookPage> {
+  final AnswerbookRepository answerbookRepository = AnswerbookRepository();
+  String answer = '歡迎來到解答之書，請\n閉上眼睛並深呼吸，心\n中想著現在的煩惱或疑\n問，準備好就可以按下\n解答的按鈕獲得答案。';
+  bool pressed = false;
+  Future<Answerbook> getAnswer() {
+    Future<Answerbook> answers = answerbookRepository
+        .searchAnswerbook()
+        .then((value) => Answerbook.fromMap(value));
+    return answers;
+  }
+
   @override
   Widget build(BuildContext context) {
+    getAnswer().then((value) => answer = value.content);
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       body: Stack(
         children: <Widget>[
           Pinned.fromPins(
-            Pin(size: 188.0, middle: 0.5),
-            Pin(size: 63.0, start: 9.0),
+            Pin(size: 200.0, middle: 0.5),
+            Pin(size: 63.0, start: 20.0),
             child: Text(
               '解答之書',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 30,
+                fontSize: 40,
                 color: const Color(0xffa0522d),
               ),
               softWrap: false,
             ),
           ),
+          //背景
           Pinned.fromPins(
             Pin(size: 41.0, end: 15.0),
             Pin(size: 36.0, start: 25.0),
@@ -148,27 +161,34 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
                   ],
                 ),
                 Pinned.fromPins(
-                  Pin(size: 100.0, middle: 0.5),
-                  Pin(start: 6.0, end: 4.0),
-                  child: PageLink(
-                    links: [
-                      PageLinkInfo(
-                        transition: LinkTransition.Fade,
-                        ease: Curves.easeOut,
-                        duration: 0.3,
-                        pageBuilder: () => AnswerbookforAnsPage(),
-                      ),
-                    ],
-                    child: Text(
-                      '解答',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 23,
-                        color: const Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
+                  Pin(size: 136.0, middle: 0.5),
+                  Pin(size: 64.0, end: 73.0),
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(9999.0)),
+                    onPressed: () {
+                      pressed = true;
+                      setState(() {
+                        Future<Answerbook> answers = getAnswer();
+                        answers.then((value) => answer = value.content);
+                      });
+                    },
+                    child: pressed == false
+                        ? Text(
+                            '解答',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 30,
+                              color: const Color(0xffa0522d),
+                            ),
+                            softWrap: false,
+                          )
+                        : Text('再一次',
+                            style: TextStyle(
+                                fontFamily: 'Segoe UI',
+                                fontSize: 30,
+                                color: Color(0xffa0522d))),
                   ),
                 ),
               ],
@@ -181,19 +201,31 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
               color: const Color(0xc9ffffff),
             ),
           ),
-          Pinned.fromPins(
-            Pin(start: 52.0, end: 52.0),
-            Pin(size: 185.0, middle: 0.3659),
-            child: Text(
-              '歡迎來到解答之書，請閉上\n眼睛並深呼吸，心中想著現\n在的煩惱或疑問，準備好了\n就可以按下解答的按鈕獲得\n答案。',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 20,
-                color: Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
+          pressed == false
+              ? Pinned.fromPins(
+                  Pin(start: 52.0, end: 52.0), Pin(size: 185.0, middle: 0.3659),
+                  child: Text(
+                    answer,
+                    style: TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 25,
+                      color: Color(0xffa0522d),
+                    ),
+                    softWrap: false,
+                  ))
+              : Pinned.fromPins(
+                  Pin(start: 50.0, end: 50.0), Pin(size: 50.0, middle: 0.4),
+                  child: Center(
+                    child: Text(
+                      answer,
+                      style: const TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 27,
+                        color: Color.fromARGB(255, 185, 40, 83),
+                      ),
+                      softWrap: false,
+                    ),
+                  )),
           Pinned.fromPins(
             Pin(start: 64.0, end: 64.0),
             Pin(size: 154.0, middle: 0.726),

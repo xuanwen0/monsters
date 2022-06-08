@@ -2,10 +2,10 @@
     package="com.example.monsters_front_end">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="monsters_front_end"
+        android:label="貘nsters"
         android:usesCleartextTraffic="true"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

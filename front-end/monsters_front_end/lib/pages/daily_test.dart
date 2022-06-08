@@ -20,8 +20,8 @@ class _Daily_testState extends State<Daily_test> {
         children: <Widget>[
           //標題
           Pinned.fromPins(
-            Pin(size: 188.0, middle: 0.5),
-            Pin(size: 63.0, start: 11.0),
+            Pin(size: 200.0, middle: 0.5),
+            Pin(size: 63.0, start: 20.0),
             child: const Text(
               '每日測驗',
               textAlign: TextAlign.center,
@@ -97,7 +97,7 @@ class _Daily_testState extends State<Daily_test> {
                 runSpacing: 20,
                 children: [
                   SizedBox(
-                    width: 357.0,
+                    width: 400.0,
                     height: 86.0,
                     child: Stack(
                       children: <Widget>[
@@ -123,7 +123,7 @@ class _Daily_testState extends State<Daily_test> {
                                 Align(
                                   alignment: Alignment.center,
                                   child: SizedBox(
-                                    width: 101.0,
+                                    width: 120.0,
                                     height: 37.0,
                                     child: Text(
                                       '700個月',

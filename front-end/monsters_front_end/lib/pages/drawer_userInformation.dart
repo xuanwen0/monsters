@@ -42,13 +42,14 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                 },
               )),
           Pinned.fromPins(
-            Pin(size: 188.0, middle: 0.5),
-            Pin(size: 63.0, start: 11.0),
+            Pin(size: 200.0, middle: 0.5),
+            Pin(size: 63.0, start: 20.0),
             child: Text(
               '個人資料',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 40,
                 color: const Color(0xffa0522d),
               ),
               softWrap: false,
@@ -110,7 +111,7 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
           ),
           Pinned.fromPins(
             Pin(size: 257.0, middle: 0.5),
-            Pin(size: 178.0, start: 105.0),
+            Pin(size: 178.0, start: 120.0),
             child: SizedBox(
               width: 257.0,
               height: 178.0,
@@ -126,7 +127,7 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                   ),
                   //圖
                   Pinned.fromPins(
-                    Pin(size: 122.4, middle: 0.4963),
+                    Pin(size: 140, middle: 0.5),
                     Pin(start: 26.1, end: 26.1),
                     child:
                         // Adobe XD layer: 'baku_chat' (shape)
@@ -146,14 +147,15 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
             ),
           ),
           Pinned.fromPins(
-            Pin(start: 62.0, end: 61.0),
-            Pin(size: 301.0, middle: 0.7547),
-            child: SingleChildScrollView(
+            Pin(start: 50.0, end: 61.0),
+            Pin(size: 301.0, middle: 0.7),
+            child: Center(
+                child: SingleChildScrollView(
               primary: false,
               child: Wrap(
                 alignment: WrapAlignment.center,
                 spacing: 20,
-                runSpacing: 23,
+                runSpacing: 20,
                 children: [
                   {
                     'text': '姓名',
@@ -179,7 +181,7 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                   final text = itemData['text']!;
                   final content = itemData['content']!;
                   return SizedBox(
-                    width: 272.0,
+                    width: 300.0,
                     height: 40.0,
                     child: Stack(
                       children: <Widget>[
@@ -206,10 +208,11 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                           ),
                         ),
                         Pinned.fromPins(
-                          Pin(size: 168.0, end: 0.0),
+                          Pin(size: 200.0, middle: 1.4),
                           Pin(size: 25.0, end: 7.0),
                           child: Text(
                             content,
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               fontFamily: 'Segoe UI',
                               fontSize: 18,
@@ -223,7 +226,7 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                   );
                 }).toList(),
               ),
-            ),
+            )),
           ),
         ],
       ),

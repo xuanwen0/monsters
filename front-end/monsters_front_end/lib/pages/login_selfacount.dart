@@ -26,7 +26,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
           //標題
           Pinned.fromPins(
             Pin(size: 94.0, middle: 0.5),
-            Pin(size: 63.0, start: 70.0),
+            Pin(size: 63.0, start: 100.0),
             child: Text(
               '登入',
               style: TextStyle(

@@ -43,9 +43,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
   @override
   Widget build(BuildContext context) {
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     if (firstSpeaking == true) {
-      response("0");
+      response("first"); //intro
     }
 
     return Scaffold(
@@ -149,11 +148,20 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                   : ListTile(
                       title: Container(
                         child: TextButton(
-                          child: Text(
-                            "怪獸正在工作中",
-                            textAlign: TextAlign.center,
-                            style:
-                                TextStyle(fontSize: 30, color: Colors.orange),
+                          child: Container(
+                            width: 250,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Color.fromARGB(255, 255, 255, 229),
+                                    width: 3),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0))),
+                            child: Text(
+                              "前往歷史紀錄",
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(fontSize: 30, color: Colors.black),
+                            ),
                           ),
                           onPressed: () {
                             annoyanceRepository.createAnnoyance(
@@ -308,9 +316,9 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
           }
           if (chatRound == 5) {
             if (acceptSharingMembers.contains(text)) {
-              if(text == "是"){
+              if (text == "是") {
                 userAnswers.add(emotionGradeMembers.indexOf("1"));
-              }else if(text == "否"){
+              } else if (text == "否") {
                 userAnswers.add(emotionGradeMembers.indexOf("0"));
               }
               lastSpeaking = true;
