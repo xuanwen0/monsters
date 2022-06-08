@@ -33,7 +33,7 @@ public class AllMonsterServiceImpl extends BaseServiceImplement<AllMonsterDAO, A
         AllMonster entity = new AllMonster();
         entity.setId(bean.getId());
         entity.setName(bean.getName());
-        entity.setRerity(bean.getRerity());
+        entity.setRarity(bean.getRarity());
         entity.setGif(bean.getGif());
         return entity;
     }
@@ -43,7 +43,7 @@ public class AllMonsterServiceImpl extends BaseServiceImplement<AllMonsterDAO, A
         AllMonsterBean bean = new AllMonsterBean();
         bean.setId(entity.getId());
         bean.setName(entity.getName());
-        bean.setRerity(entity.getRerity());
+        bean.setRarity(entity.getRarity());
         bean.setGif(entity.getGif());
         return bean;
     }

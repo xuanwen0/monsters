@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.entity.enumerate.AnnoyanceTypeEnum;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,10 +23,10 @@ public class Annoyance {
     private String content;
 
     @Column(name = "`type`", nullable = false)
-    private com.example.demo.entity.enumerate.AnnoyanceTypeEnum type;
+    private AnnoyanceTypeEnum type;
 
     @Column(name = "`monster_id`")
-    private int monsterId;
+    private Integer monsterId;
 
     @Column(name = "`mood`", nullable = false)
     private String mood;
@@ -37,8 +38,8 @@ public class Annoyance {
     private LocalDateTime time;
 
     @Column(name = "`solve`")
-    private int solve;
+    private Integer solve;
 
     @Column(name = "`share`")
-    private int share;
+    private Integer share;
 }

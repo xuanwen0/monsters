@@ -14,5 +14,5 @@ public class Theme {
     private Integer id;
 
     @Column(name = "color_number", nullable = false)
-    private String color_number;
+    private String colorNumber;
 }

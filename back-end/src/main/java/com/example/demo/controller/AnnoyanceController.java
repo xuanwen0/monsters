@@ -30,17 +30,9 @@ public class AnnoyanceController {
         result.putObject("data");
         try {
             annoyanceService.createAndReturnBean(annoyanceBean);
-            System.out.println(annoyanceBean.getAccount());
-            System.out.println(annoyanceBean.getContent());
-            System.out.println(annoyanceBean.getType());
-            System.out.println(annoyanceBean.getMood());
-            System.out.println(annoyanceBean.getIndex());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        result.put("result", true);
-        result.put("errorCode", "");
-        result.put("message", "新增成功");
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
@@ -68,9 +60,6 @@ public class AnnoyanceController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        result.put("result", true);
-        result.put("errorCode", "");
-        result.put("message", "查詢成功");
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 

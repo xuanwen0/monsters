@@ -2,18 +2,18 @@ package com.example.demo.bean;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
-public class PersonalInfoBean extends BaseBean {
+public class PersonalInfoBean extends BaseBean{
     private String account;
     private String password;
-    private Date birthday;
+    private LocalDate birthday;
     private String name;
-    private String nick_name;
-    private Integer gender;
-    private String mall;
+    private String nickName;
+    private int gender;
+    private String mail;
     private String lock;
     private String photo;
-    private Integer theme;
+    private int theme;
 }

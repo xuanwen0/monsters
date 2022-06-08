@@ -52,7 +52,7 @@ class Annoyance {
   String content;
   int type;
   int monsterId;
-  int mood;
+  String mood;
   int index;
   String time;
   int solve;

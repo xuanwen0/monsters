@@ -2,7 +2,7 @@ package com.example.demo.bean;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 public class DiaryBean extends BaseBean {
@@ -10,6 +10,6 @@ public class DiaryBean extends BaseBean {
     private String account;
     private String content;
     private Integer index;
-    private Date update_date;
+    private LocalDateTime updateDate;
     private Integer share;
 }

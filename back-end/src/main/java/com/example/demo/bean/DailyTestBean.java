@@ -6,10 +6,10 @@ import lombok.Data;
 public class DailyTestBean extends BaseBean {
     private Integer id;
     private String question;
-    private String option_one;
-    private String option_two;
-    private String option_three;
-    private String option_four;
+    private String optionOne;
+    private String optionTwo;
+    private String optionThree;
+    private String optionFour;
     private Integer answer;
     private  String learn;
 }

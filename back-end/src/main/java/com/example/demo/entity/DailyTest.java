@@ -16,16 +16,16 @@ public class DailyTest {
     private String question;
 
     @Column(name = "option_one",nullable = false)
-    private String option_one;
+    private String optionOne;
 
     @Column(name = "option_two",nullable = false)
-    private String option_two;
+    private String optionTwo;
 
     @Column(name = "option_three",nullable = false)
-    private String option_three;
+    private String optionThree;
 
     @Column(name = "option_four",nullable = false)
-    private String option_four;
+    private String optionFour;
 
     @Column(name = "answer", nullable = false)
     private Integer answer;

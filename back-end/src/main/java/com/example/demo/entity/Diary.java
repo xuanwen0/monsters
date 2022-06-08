@@ -2,8 +2,11 @@ package com.example.demo.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -24,7 +27,7 @@ public class Diary {
     private Integer index;
 
     @Column(name = "update_date", nullable = false)
-    private Date update_date;
+    private LocalDateTime updateDate;
 
     @Column(name = "share",nullable = false)
     private Integer share;

@@ -13,7 +13,7 @@ public class ReliefMethodSteps {
     private Integer id;
 
     @Column(name = "relief_method_id", nullable = false)
-    private Integer relief_method_id;
+    private Integer reliefMethodId;
 
     @Column(name = "introduce", nullable = false)
     private String introduce;

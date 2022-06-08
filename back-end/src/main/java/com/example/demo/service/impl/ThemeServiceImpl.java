@@ -33,7 +33,7 @@ public class ThemeServiceImpl extends BaseServiceImplement<ThemeDAO, Theme, Them
     protected Theme createVO(ThemeBean bean) {
         Theme entity = new Theme();
         entity.setId(bean.getId());
-        entity.setColor_number(bean.getColor_number());
+        entity.setColorNumber(bean.getColorNumber());
         return entity;
     }
 
@@ -41,7 +41,7 @@ public class ThemeServiceImpl extends BaseServiceImplement<ThemeDAO, Theme, Them
     protected ThemeBean createBean(Theme entity) {
         ThemeBean bean = new ThemeBean();
         bean.setId(entity.getId());
-        bean.setColor_number(entity.getColor_number());
+        bean.setColorNumber(entity.getColorNumber());
         return bean;
     }
 }

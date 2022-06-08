@@ -35,7 +35,7 @@ public class DiaryServiceImpl extends BaseServiceImplement<DiaryDAO, Diary, Diar
         entity.setAccount(bean.getAccount());
         entity.setContent(bean.getContent());
         entity.setIndex(bean.getIndex());
-        entity.setUpdate_date(bean.getUpdate_date());
+        entity.setUpdateDate(bean.getUpdateDate());
         entity.setShare(bean.getShare());
         return entity;
     }
@@ -47,7 +47,7 @@ public class DiaryServiceImpl extends BaseServiceImplement<DiaryDAO, Diary, Diar
         bean.setAccount(entity.getAccount());
         bean.setContent(entity.getContent());
         bean.setIndex(entity.getIndex());
-        bean.setUpdate_date(entity.getUpdate_date());
+        bean.setUpdateDate(entity.getUpdateDate());
         bean.setShare(entity.getShare());
         return bean;
     }

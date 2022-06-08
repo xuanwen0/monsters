@@ -33,7 +33,7 @@ public class ReliefMethodStepsServiceImpl extends BaseServiceImplement<ReliefMet
     protected ReliefMethodSteps createVO(ReliefMethodStepsBean bean) {
         ReliefMethodSteps entity = new ReliefMethodSteps();
         entity.setId(bean.getId());
-        entity.setRelief_method_id(bean.getRelief_method_id());
+        entity.setReliefMethodId(bean.getReliefMethodId());
         entity.setIntroduce(bean.getIntroduce());
         return entity;
     }
@@ -42,7 +42,7 @@ public class ReliefMethodStepsServiceImpl extends BaseServiceImplement<ReliefMet
     protected ReliefMethodStepsBean createBean(ReliefMethodSteps entity) {
         ReliefMethodStepsBean bean = new ReliefMethodStepsBean();
         bean.setId(entity.getId());
-        bean.setRelief_method_id(entity.getRelief_method_id());
+        bean.setReliefMethodId(entity.getReliefMethodId());
         bean.setIntroduce(entity.getIntroduce());
         return bean;
     }

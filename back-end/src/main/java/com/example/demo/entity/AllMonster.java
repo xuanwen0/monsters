@@ -16,9 +16,8 @@ public class AllMonster {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "rerity", nullable = false)
-    private Integer rerity;
-
+    @Column(name = "rarity", nullable = false)
+    private Integer rarity;
     @Column(name = "gif", nullable = false)
     private String gif;
 }

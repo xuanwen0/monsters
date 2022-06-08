@@ -3,7 +3,6 @@ package com.example.demo.service.impl;
 import com.example.demo.bean.BaseBean;
 import com.example.demo.dao.BaseDAO;
 import com.example.demo.service.BaseService;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -14,7 +13,6 @@ public abstract class BaseServiceImplement<D extends BaseDAO<V>, V, B extends Ba
 		super(baseDAO);
 	}
 
-	@Transactional
 	@Override
 	public void update(Serializable pk, B bean) {
 		try {
@@ -32,7 +30,6 @@ public abstract class BaseServiceImplement<D extends BaseDAO<V>, V, B extends Ba
 		}
 	}
 
-	@Transactional
 	@Override
 	public void delete(Serializable pk) {
 		try {
@@ -49,5 +46,5 @@ public abstract class BaseServiceImplement<D extends BaseDAO<V>, V, B extends Ba
 		}
 	}
 
-	
+
 }
