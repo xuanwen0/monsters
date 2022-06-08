@@ -3,6 +3,7 @@
 import 'package:adobe_xd/page_link.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/annoyance.dart';
 import 'package:monsters_front_end/pages/daily_test.dart';
 import 'package:monsters_front_end/pages/destress.dart';
@@ -68,6 +69,9 @@ class _InteractionPageState extends State<InteractionPage>
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    });
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
