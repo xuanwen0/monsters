@@ -19,6 +19,7 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
       backgroundColor: const Color(0xfffffed4),
       body: Stack(
         children: <Widget>[
+          //標題
           Pinned.fromPins(
             Pin(size: 200.0, middle: 0.5),
             Pin(size: 63.0, start: 20.0),
@@ -61,6 +62,7 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
                   ),
                 ],
               )),
+          //箭頭
           Pinned.fromPins(
             Pin(size: 45.6, start: 13.7),
             Pin(size: 41.1, start: 21.9),
@@ -82,6 +84,7 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
               ),
             ),
           ),
+          //答錯框
           Pinned.fromPins(
             Pin(start: 34.0, end: 34.0),
             Pin(size: 112.0, middle: 0.2),
@@ -109,7 +112,7 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
               ],
             ),
           ),
-          //正解
+          //正確選項
           Pinned.fromPins(
             Pin(start: 28.0, end: 27.0),
             Pin(size: 86.0, middle: 0.4),

@@ -18,6 +18,7 @@ class _loginState extends State<LoginPage> {
       backgroundColor: const Color(0xfffffed4),
       body: Stack(
         children: <Widget>[
+          //LOGO圖
           Pinned.fromPins(
             Pin(start: 42.0, end: 42.0),
             Pin(size: 312.0, start: 93.0),
@@ -32,6 +33,7 @@ class _loginState extends State<LoginPage> {
               ),
             ),
           ),
+          //登入
           Align(
             alignment: Alignment(0.005, 0.139),
             child: SizedBox(
@@ -73,6 +75,7 @@ class _loginState extends State<LoginPage> {
               ),
             ),
           ),
+          //註冊
           Align(
             alignment: Alignment(0.005, 0.283),
             child: SizedBox(
@@ -104,6 +107,7 @@ class _loginState extends State<LoginPage> {
               ),
             ),
           ),
+          //Google
           Align(
             alignment: Alignment(0.005, 0.426),
             child: SizedBox(
@@ -150,6 +154,7 @@ class _loginState extends State<LoginPage> {
               ),
             ),
           ),
+          //line
           Align(
             alignment: Alignment(0.005, 0.57),
             child: SizedBox(
@@ -196,6 +201,7 @@ class _loginState extends State<LoginPage> {
               ),
             ),
           ),
+          //fb
           Pinned.fromPins(
             Pin(size: 225.0, middle: 0.5027),
             Pin(size: 39.0, end: 106.0),

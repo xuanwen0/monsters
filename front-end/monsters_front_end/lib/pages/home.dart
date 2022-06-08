@@ -186,6 +186,7 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
+          //歷史紀錄
           Pinned.fromPins(
             Pin(size: 69.0, middle: 0.7347),
             Pin(size: 68.0, end: 5.0),
@@ -236,6 +237,7 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
+          //社群
           Pinned.fromPins(
             Pin(size: 69.0, end: 10.0),
             Pin(size: 68.0, end: 5.0),
@@ -284,6 +286,7 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
+          //互動區
           Pinned.fromPins(
             Pin(size: 69.0, start: 9.0),
             Pin(size: 68.0, end: 5.0),
