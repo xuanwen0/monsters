@@ -14,15 +14,12 @@ import 'package:monsters_front_end/state/drawer.dart';
 import '../model/annoyanceModel.dart';
 import 'annoyanceChat.dart';
 
-List<Annoyance> getAnnoyanceByAccount(String account) {
+Future<Data> getAnnoyanceByAccount(String account) {
   final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
-
   Future<Data> annoyances = annoyanceRepository
       .searchAnnoyanceByAccount(account)
       .then((value) => Data.fromJson(value!));
-  List<Annoyance> localAnnoyance = [];
-  annoyances.then((value) => localAnnoyance = value.data);
-  return localAnnoyance;
+  return annoyances;
 }
 
 class History extends StatefulWidget {
@@ -77,6 +74,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    getAnnoyanceByAccount('Lin');
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     const int historyCount = 6;
     const List<String> historyContents = [

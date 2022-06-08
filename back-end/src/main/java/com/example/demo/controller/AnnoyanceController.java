@@ -51,12 +51,15 @@ public class AnnoyanceController {
                 annoyanceNode.put("content", annoyanceBean.getContent());
                 annoyanceNode.put("type", annoyanceBean.getType().getId());
                 annoyanceNode.put("monsterId", annoyanceBean.getMonsterId());
-                annoyanceNode.put("mood", annoyanceBean.getIndex());
+                annoyanceNode.put("mood", annoyanceBean.getMood());
                 annoyanceNode.put("index", annoyanceBean.getIndex());
                 annoyanceNode.put("time", annoyanceBean.getTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss")));
                 annoyanceNode.put("solve", annoyanceBean.getSolve());
                 annoyanceNode.put("share", annoyanceBean.getShare());
             }
+            result.put("result", true);
+            result.put("errorCode", "");
+            result.put("message", "查詢成功");
         } catch (Exception e) {
             e.printStackTrace();
         }

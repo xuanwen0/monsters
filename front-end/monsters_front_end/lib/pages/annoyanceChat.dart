@@ -165,12 +165,14 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                           onPressed: () {
                             annoyanceRepository.createAnnoyance(
                               Annoyance(
+                                  id: 0,
                                   account: 'Lin',
                                   content: userAnswers[1],
                                   monsterId: 1,
                                   type: userAnswers[0],
                                   mood: userAnswers[2],
                                   index: userAnswers[3],
+                                  time: '',
                                   solve: 0,
                                   share: 0),
                             );
