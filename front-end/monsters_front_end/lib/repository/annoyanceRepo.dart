@@ -28,7 +28,7 @@ class AnnoyanceRepository implements AnnoyanceApiDataSource {
     try {
       final request = await client.post(url,
           headers: {'Content-type': 'application/json'},
-          body: annoyance.toJson());
+          body: json.encode(annoyance));
       if (request.statusCode == 200) {
         log(
           request.body,

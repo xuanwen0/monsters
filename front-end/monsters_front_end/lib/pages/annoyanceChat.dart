@@ -1,7 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors, unnecessary_string_interpolations, prefer_const_constructors, file_names, avoid_unnecessary_containers, sized_box_for_whitespace, non_constant_identifier_names
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
 
@@ -172,7 +171,6 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                                   type: userAnswers[0],
                                   mood: userAnswers[2],
                                   index: userAnswers[3],
-                                  time: DateTime.now().toIso8601String(),
                                   solve: 0,
                                   share: 0),
                             );

@@ -6,6 +6,8 @@ Data annoyanceFromJson(String str) => Data.fromJson(json.decode(str));
 
 String welcomeToJson(Data data) => json.encode(data.toJson());
 
+String annoyanceToJson(Annoyance annoyance) => json.encode(annoyance.toJson());
+
 class Data {
   Data({
     required this.data,
@@ -43,7 +45,6 @@ class Annoyance {
     required this.monsterId,
     required this.mood,
     required this.index,
-    required this.time,
     required this.solve,
     required this.share,
   });
@@ -54,7 +55,6 @@ class Annoyance {
   int monsterId;
   String mood;
   int index;
-  String time;
   int solve;
   int share;
 
@@ -65,7 +65,6 @@ class Annoyance {
         monsterId: json["monsterId"],
         mood: json["mood"],
         index: json["index"],
-        time: json["time"],
         solve: json["solve"],
         share: json["share"],
       );
@@ -77,7 +76,6 @@ class Annoyance {
         "monsterId": monsterId,
         "mood": mood,
         "index": index,
-        "time": time,
         "solve": solve,
         "share": share,
       };

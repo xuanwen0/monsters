@@ -3,7 +3,6 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/login_selfacount.dart';
 
 class LoginPage extends StatefulWidget {
