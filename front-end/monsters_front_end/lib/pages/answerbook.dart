@@ -31,6 +31,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
       backgroundColor: const Color(0xfffffed4),
       body: Stack(
         children: <Widget>[
+          //標題
           Pinned.fromPins(
             Pin(size: 200.0, middle: 0.5),
             Pin(size: 63.0, start: 20.0),
@@ -45,7 +46,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
               softWrap: false,
             ),
           ),
-          //背景
+          //抽屜
           Pinned.fromPins(
             Pin(size: 41.0, end: 15.0),
             Pin(size: 36.0, start: 25.0),
@@ -84,6 +85,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
               ],
             ),
           ),
+          //箭頭
           Pinned.fromPins(
             Pin(size: 45.6, start: 14.4),
             Pin(size: 41.1, start: 23.4),
@@ -105,6 +107,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
               ),
             ),
           ),
+          //背景(書)
           Pinned.fromPins(
             Pin(start: -8.0, end: -9.0),
             Pin(size: 555.0, end: 105.0),
@@ -122,48 +125,18 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
               ),
             ),
           ),
+          //取得解答紐
           Pinned.fromPins(
             Pin(size: 136.0, middle: 0.5),
             Pin(size: 64.0, end: 73.0),
             child: Stack(
               children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    Pinned.fromPins(
-                      Pin(size: 66.0, middle: 0.5),
-                      Pin(start: 0.0, end: 0.0),
-                      child: Container(
-                        color: const Color(0xffffed97),
-                      ),
-                    ),
-                    Pinned.fromPins(
-                      Pin(size: 70.0, start: 0.0),
-                      Pin(start: 0.0, end: 0.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xffffed97),
-                          borderRadius: BorderRadius.all(
-                              Radius.elliptical(9999.0, 9999.0)),
-                        ),
-                      ),
-                    ),
-                    Pinned.fromPins(
-                      Pin(size: 70.0, end: 0.0),
-                      Pin(start: 0.0, end: 0.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xffffed97),
-                          borderRadius: BorderRadius.all(
-                              Radius.elliptical(9999.0, 9999.0)),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                //解答紐
                 Pinned.fromPins(
                   Pin(size: 136.0, middle: 0.5),
                   Pin(size: 64.0, end: 73.0),
                   child: FlatButton(
+                    color: Color.fromRGBO(255, 237, 151, 1),
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(9999.0)),
                     onPressed: () {
@@ -173,6 +146,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
                         answers.then((value) => answer = value.content);
                       });
                     },
+                    //是否第一次按(按鈕文字)
                     child: pressed == false
                         ? Text(
                             '解答',
@@ -194,6 +168,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
               ],
             ),
           ),
+          //提示框
           Pinned.fromPins(
             Pin(start: 32.0, end: 31.0),
             Pin(size: 251.0, middle: 0.3491),
@@ -201,6 +176,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
               color: const Color(0xc9ffffff),
             ),
           ),
+          //是否第一次按(提示框內容再次取得解答)
           pressed == false
               ? Pinned.fromPins(
                   Pin(start: 52.0, end: 52.0), Pin(size: 185.0, middle: 0.3659),
@@ -226,6 +202,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
                       softWrap: false,
                     ),
                   )),
+          //書圖
           Pinned.fromPins(
             Pin(start: 64.0, end: 64.0),
             Pin(size: 154.0, middle: 0.726),

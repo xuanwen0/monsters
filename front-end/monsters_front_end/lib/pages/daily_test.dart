@@ -85,7 +85,7 @@ class _Daily_testState extends State<Daily_test> {
               ),
             ),
           ),
-          //答案選項白底
+          //答案選項
           Pinned.fromPins(
             Pin(start: 28.0, end: 27.0),
             Pin(size: 409.0, end: 41.0),
@@ -96,6 +96,7 @@ class _Daily_testState extends State<Daily_test> {
                 spacing: 20,
                 runSpacing: 20,
                 children: [
+                  //A
                   SizedBox(
                     width: 400.0,
                     height: 86.0,
@@ -166,6 +167,7 @@ class _Daily_testState extends State<Daily_test> {
                       ],
                     ),
                   ),
+                  //B
                   SizedBox(
                     width: 357.0,
                     height: 86.0,
@@ -237,6 +239,7 @@ class _Daily_testState extends State<Daily_test> {
                       ],
                     ),
                   ),
+                  //C
                   SizedBox(
                     width: 357.0,
                     height: 86.0,
@@ -308,6 +311,7 @@ class _Daily_testState extends State<Daily_test> {
                       ],
                     ),
                   ),
+                  //D
                   SizedBox(
                     width: 357.0,
                     height: 86.0,

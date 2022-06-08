@@ -24,6 +24,7 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
       backgroundColor: const Color(0xfffffed4),
       body: Stack(
         children: <Widget>[
+          //白底
           Pinned.fromPins(
             Pin(start: 0.0, end: 0.0),
             Pin(size: 544.0, start: 103.0),
@@ -31,6 +32,7 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
               color: const Color(0xffffffff),
             ),
           ),
+          //上一頁
           Align(
               alignment: Alignment.topLeft,
               child: IconButton(
@@ -41,6 +43,7 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                   Navigator.of(context).pop();
                 },
               )),
+          //標題
           Pinned.fromPins(
             Pin(size: 200.0, middle: 0.5),
             Pin(size: 63.0, start: 20.0),
@@ -55,11 +58,13 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
               softWrap: false,
             ),
           ),
+          //編輯紐
           Pinned.fromPins(
             Pin(size: 136.0, end: 25.0),
             Pin(size: 64.0, end: 33.0),
             child: Stack(
               children: <Widget>[
+                //編輯底
                 Stack(
                   children: <Widget>[
                     Pinned.fromPins(
@@ -109,6 +114,7 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
               ],
             ),
           ),
+          //頭貼
           Pinned.fromPins(
             Pin(size: 257.0, middle: 0.5),
             Pin(size: 178.0, start: 120.0),
@@ -146,6 +152,7 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
               ),
             ),
           ),
+          //個人資料列
           Pinned.fromPins(
             Pin(start: 50.0, end: 61.0),
             Pin(size: 301.0, middle: 0.7),
@@ -185,6 +192,7 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                     height: 40.0,
                     child: Stack(
                       children: <Widget>[
+                        //標
                         Pinned.fromPins(
                           Pin(size: 60.0, start: 0.0),
                           Pin(start: 0.0, end: 0.0),
@@ -198,6 +206,7 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                             softWrap: false,
                           ),
                         ),
+                        //底線
                         Pinned.fromPins(
                           Pin(size: 168.0, end: 0.0),
                           Pin(size: 1.0, end: 6.0),
@@ -207,6 +216,7 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                             fit: BoxFit.fill,
                           ),
                         ),
+                        //內容
                         Pinned.fromPins(
                           Pin(size: 200.0, middle: 1.4),
                           Pin(size: 25.0, end: 7.0),

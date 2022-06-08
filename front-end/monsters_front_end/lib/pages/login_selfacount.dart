@@ -83,6 +83,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
               obscureText: true,
             ),
           ),
+          //帳號標題
           Pinned.fromPins(
             Pin(size: 60.0, start: 31.0),
             Pin(size: 40.0, middle: 0.3117),
@@ -97,6 +98,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
               softWrap: false,
             ),
           ),
+          //密碼標題
           Pinned.fromPins(
             Pin(size: 60.0, start: 31.0),
             Pin(size: 40.0, middle: 0.4431),
@@ -111,6 +113,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
               softWrap: false,
             ),
           ),
+          //忘記密碼
           const Align(
             alignment: Alignment(0.0, 0.06),
             child: SizedBox(
@@ -175,7 +178,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
               ),
             ),
           ),
-
+          //上一頁
           Pinned.fromPins(
             Pin(size: 45.6, start: 14.4),
             Pin(size: 41.1, start: 23.4),

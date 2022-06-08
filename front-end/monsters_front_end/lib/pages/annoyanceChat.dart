@@ -62,6 +62,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
         color: Color.fromARGB(255, 255, 255, 229),
         child: Column(
           children: <Widget>[
+            //聊天室框
             Flexible(
                 child: ListView.builder(
                     reverse: true,
@@ -72,6 +73,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
             SizedBox(
               height: 10,
             ),
+            //底部功能列
             Container(
               decoration:
                   BoxDecoration(color: Color.fromRGBO(255, 237, 151, 1)),
@@ -80,6 +82,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
               //margin: EdgeInsets.only(bottom: 30),
               child: lastSpeaking == false
                   ? ListTile(
+                      //camera
                       leading: IconButton(
                         alignment: Alignment.centerLeft,
                         icon: Icon(
@@ -89,6 +92,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                         ),
                         onPressed: () {},
                       ),
+                      //輸入框
                       title: Container(
                         height: 35,
                         alignment: Alignment.bottomLeft,
@@ -113,6 +117,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                           onChanged: (value) {},
                         ),
                       ),
+                      //傳送紐
                       trailing: IconButton(
                           icon: Icon(
                             Icons.send,
@@ -144,6 +149,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                             }
                           }),
                     )
+                  //前往歷史紀錄
                   : ListTile(
                       title: Container(
                         child: TextButton(
@@ -192,6 +198,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
     );
   }
 
+  //聊天功能
   Widget chat(String message, int data) {
     return Container(
       padding: EdgeInsets.only(left: 20, right: 20),
@@ -200,6 +207,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
             data == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           data == 0
+              //巴古頭貼
               ? Container(
                   height: 50,
                   width: 50,
@@ -208,6 +216,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                   ),
                 )
               : Container(),
+          //訊息框
           Padding(
             padding: EdgeInsets.all(10.0),
             child: Bubble(
@@ -215,6 +224,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                 color:
                     data == 0 ? Colors.white : Color.fromRGBO(255, 237, 151, 1),
                 elevation: 2.0,
+                //訊息文字格式
                 child: Padding(
                   padding: EdgeInsets.all(2.0),
                   child: Row(
@@ -245,6 +255,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
     );
   }
 
+  //怪獸訊息(請選擇)
   void hint() {
     if (chatRound == 0) {
       reply(hintAnnoyType);
@@ -261,6 +272,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
     }
   }
 
+  //怪獸訊息(聊天式)
   void cannotRead() {
     chatRound--;
     reply(hintCannotRead);
@@ -278,6 +290,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
     }
   }
 
+  //確認是否符合選擇格式
   void response([String? text]) async {
     setState(() {
       if (chatRound < 7) {
@@ -330,6 +343,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
           }
         }
 
+        //進入自動訊息
         if (firstSpeaking == true) {
           firstSpeaking = false;
           int hourNow = DateTime.now().hour.toInt();
