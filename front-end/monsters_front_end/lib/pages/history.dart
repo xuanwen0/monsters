@@ -99,7 +99,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
       index++;
       log("historycontents = " + historyContents.toString()); //除錯
       //執行續搶先時除錯 -> rollback
-      if (beep == false && historyCount == 1) {
+      if (beep == false && historyCount > 0) {
         index--;
         log("BEEP"); //執行續搶先時除錯 -> LOG提示
         historyContents.removeAt(0);
