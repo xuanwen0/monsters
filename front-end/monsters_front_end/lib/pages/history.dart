@@ -1,9 +1,7 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
-// ignore_for_file: avoid_function_literals_in_foreach_calls
 
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
@@ -19,6 +17,8 @@ import 'package:monsters_front_end/state/drawer.dart';
 import '../model/annoyanceModel.dart';
 import 'annoyanceChat.dart';
 
+//全域變數
+bool beep = false;
 var userAccount = 'Lin';
 var tempNum = 0;
 var tempString = [];
@@ -29,12 +29,15 @@ void getMaxIdByAccount(String account) {
       .searchAnnoyanceByAccount(account)
       .then((value) => Data.fromJson(value!));
   annoyances.then((value) => len = value.data.length.toString());
+  annoyances.then((value) => storeMaxId(value.data.length));
 }
 
+//取得最大ID 得到總筆數
 void storeMaxId(int length) {
   len = length;
 }
 
+//資料庫 用帳號抓煩惱
 void getAnnoyanceByAccount(String account, int index) {
   final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
   Future<Data> annoyances = annoyanceRepository
@@ -43,6 +46,7 @@ void getAnnoyanceByAccount(String account, int index) {
   annoyances.then(
     (value) => storeItem(
         value.data.elementAt(index).content,
+        value.data.elementAt(index).time,
         value.data.elementAt(index).type.toString(),
         value.data.elementAt(index).monsterId.toString(),
         value.data.elementAt(index).mood,
@@ -52,9 +56,9 @@ void getAnnoyanceByAccount(String account, int index) {
   );
 }
 
-void storeItem(String content, String type, String monsterId, String mood,
-    String index, String solve, String share) {
-  tempString = [content, type, monsterId, mood, index, solve, share];
+void storeItem(String content, String time, String type, String monsterId,
+    String mood, String index, String solve, String share) {
+  tempString = [content, time, type, monsterId, mood, index, solve, share];
   log("tempString - " + tempString.toString());
 }
 
@@ -75,46 +79,9 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   int selectionTab_solve = 0;
   //煩惱標籤狀態，已解決和未解決標籤 enabled=ture
   bool selectionTab_solve_enabled = false;
-  //計時
+  //控制執行續
   late Timer _timer;
   int curentTimer = 0;
-
-  double getRadiansFromDegree(double degree) {
-    double unitRadian = 57.295779513;
-    return degree / unitRadian;
-  }
-
-  @override
-  void initState() {
-    animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 250));
-    degOneTranslationAnimation = TweenSequence([
-      TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0.0, end: 1.2), weight: 75.0),
-      TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 1.2, end: 1.0), weight: 25.0),
-    ]).animate(animationController);
-    degTwoTranslationAnimation = TweenSequence([
-      TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0.0, end: 1.4), weight: 55.0),
-      TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 1.4, end: 1.0), weight: 45.0),
-    ]).animate(animationController);
-    rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
-        CurvedAnimation(parent: animationController, curve: Curves.easeOut));
-    super.initState();
-    _timer = Timer.periodic(Duration(milliseconds: 350), (timer) {
-      ///自增
-      curentTimer++;
-
-      ///到5秒后停止
-      if (curentTimer > 15) {
-        _timer.cancel();
-      } else {
-        setState(() {});
-      }
-    });
-  }
 
   List<String> historyContents = [];
   List<String> historyTimes = [];
@@ -122,19 +89,31 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
+    int historyCount = historyContents.length < 0 ? 0 : historyContents.length;
     getMaxIdByAccount(userAccount);
+    getAnnoyanceByAccount(userAccount, index);
     try {
-      getAnnoyanceByAccount(userAccount, index);
-      historyContents.insert(index, tempString[0]);
-      historyTimes.insert(index, tempString[0]);
+      int temper = index - 1 < 0 ? 0 : index - 1;
+      historyContents.insert(temper, tempString[0]);
+      historyTimes.insert(temper, tempString[1]);
       index++;
+      log("historycontents = " + historyContents.toString()); //除錯
+      //執行續搶先時除錯 -> rollback
+      if (beep == false && historyCount == 1) {
+        index--;
+        log("BEEP"); //執行續搶先時除錯 -> LOG提示
+        historyContents.removeAt(0);
+        historyTimes.removeAt(0);
+        getAnnoyanceByAccount(userAccount, 0);
+        beep = true;
+      }
     } catch (e) {
       log("BB = " + e.toString());
+      tempString.clear();
     }
 
-    int historyCount = historyContents.length;
     log("historyCount = " + historyCount.toString());
-
+    //畫面呈現
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       key: _scaffoldKEy,
@@ -811,6 +790,45 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
         ],
       ),
     );
+  }
+
+  //介面設計
+  double getRadiansFromDegree(double degree) {
+    double unitRadian = 57.295779513;
+    return degree / unitRadian;
+  }
+
+  //初始化
+  @override
+  void initState() {
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 250));
+    degOneTranslationAnimation = TweenSequence([
+      TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0.0, end: 1.2), weight: 75.0),
+      TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 1.2, end: 1.0), weight: 25.0),
+    ]).animate(animationController);
+    degTwoTranslationAnimation = TweenSequence([
+      TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0.0, end: 1.4), weight: 55.0),
+      TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 1.4, end: 1.0), weight: 45.0),
+    ]).animate(animationController);
+    rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
+        CurvedAnimation(parent: animationController, curve: Curves.easeOut));
+    super.initState();
+    _timer = Timer.periodic(Duration(milliseconds: 400), (timer) {
+      ///自增
+      curentTimer++;
+
+      ///到5秒后停止
+      if (curentTimer > 15) {
+        _timer.cancel();
+      } else {
+        setState(() {});
+      }
+    });
   }
 }
 
