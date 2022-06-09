@@ -821,9 +821,11 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     _timer = Timer.periodic(Duration(milliseconds: 400), (timer) {
       ///自增
       curentTimer++;
+      setState(() {});
 
       ///到5秒后停止
       if (curentTimer > 15) {
+        setState(() {});
         _timer.cancel();
       } else {
         setState(() {});
