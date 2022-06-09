@@ -59,7 +59,6 @@ void getAnnoyanceByAccount(String account, int index) {
 void storeItem(String content, String time, String type, String monsterId,
     String mood, String index, String solve, String share) {
   tempString = [content, time, type, monsterId, mood, index, solve, share];
-  log("tempString - " + tempString.toString());
 }
 
 class History extends StatefulWidget {
@@ -91,28 +90,28 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     int historyCount = historyContents.length < 0 ? 0 : historyContents.length;
     getMaxIdByAccount(userAccount);
-    getAnnoyanceByAccount(userAccount, index);
+    log(historyContents.toString());
     try {
       int temper = index - 1 < 0 ? 0 : index - 1;
       historyContents.insert(temper, tempString[0]);
       historyTimes.insert(temper, tempString[1]);
       index++;
-      log("historycontents = " + historyContents.toString()); //除錯
+      //log("historycontents = " + historyContents.toString()); //除錯
       //執行續搶先時除錯 -> rollback
-      if (beep == false && historyCount > 0) {
-        index--;
+      if (beep == false && historyContents.length > 0) {
         log("BEEP"); //執行續搶先時除錯 -> LOG提示
-        historyContents.removeAt(0);
-        historyTimes.removeAt(0);
+        historyContents.clear();
+        historyTimes.clear();
         getAnnoyanceByAccount(userAccount, 0);
         beep = true;
       }
     } catch (e) {
-      log("BB = " + e.toString());
+      //log("BB = " + e.toString());
       tempString.clear();
     }
 
-    log("historyCount = " + historyCount.toString());
+    getAnnoyanceByAccount(userAccount, index);
+    //log("historyCount = " + historyCount.toString());
     //畫面呈現
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
@@ -802,7 +801,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 250));
+        vsync: this, duration: const Duration(milliseconds: 200));
     degOneTranslationAnimation = TweenSequence([
       TweenSequenceItem<double>(
           tween: Tween<double>(begin: 0.0, end: 1.2), weight: 75.0),
@@ -818,18 +817,20 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
     super.initState();
-    _timer = Timer.periodic(Duration(milliseconds: 400), (timer) {
-      ///自增
-      curentTimer++;
-      setState(() {});
+    Timer(Duration(milliseconds: 300), () {
+      _timer = Timer.periodic(Duration(milliseconds: 350), (timer) {
+        ///自增
+        curentTimer++;
+        setState(() {});
 
-      ///到5秒后停止
-      if (curentTimer > 15) {
-        setState(() {});
-        _timer.cancel();
-      } else {
-        setState(() {});
-      }
+        ///到5秒后停止
+        if (curentTimer > 10) {
+          setState(() {});
+          _timer.cancel();
+        } else {
+          setState(() {});
+        }
+      });
     });
   }
 }

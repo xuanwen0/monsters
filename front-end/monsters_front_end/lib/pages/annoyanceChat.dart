@@ -23,7 +23,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
   List<String> annoyTypeMembers = ["", "課業", "事業", "愛情", "友情", "親情", "其他"];
   List<String> emotionGradeMembers = ["", "1", "2", "3", "4", "5"];
   List<String> acceptDrawingMembers = ["", "是", "否"];
-  List<String> acceptSharingMembers = ["", "是", "否"];
+  int acceptShare = 0;
   String hintAnnoyType = "[請擇一輸入]\n課業 / 事業 / 愛情 \n友情 / 親情 / 其他";
   String hintEmotionGrade = "[請擇一輸入]\n1 / 2 / 3 / 4 / 5";
   String hintAccept = "[請擇一輸入]\n是 / 否";
@@ -180,7 +180,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                                   index: userAnswers[3],
                                   time: '',
                                   solve: 0,
-                                  share: 0),
+                                  share: acceptShare),
                             );
                             Navigator.push(
                                 context,
@@ -328,14 +328,15 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
             }
           }
           if (chatRound == 5) {
-            if (acceptSharingMembers.contains(text)) {
+            if (acceptShare == 0 || acceptShare == 1) {
               if (text == "是") {
                 userAnswers.add(emotionGradeMembers.indexOf("1"));
+                acceptShare = 1;
               } else if (text == "否") {
+                acceptShare = 0;
                 userAnswers.add(emotionGradeMembers.indexOf("0"));
               }
               lastSpeaking = true;
-              userAnswers.add(acceptSharingMembers.indexOf(text!));
               reply("解決煩惱請馬上跟我說！我已經迫不及待想吃飯了！");
             } else {
               cannotRead();
