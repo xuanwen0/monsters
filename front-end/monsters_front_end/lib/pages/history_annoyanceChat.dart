@@ -2,19 +2,26 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:monsters_front_end/model/annoyanceModel.dart';
 import 'package:monsters_front_end/pages/history.dart';
 
 import '../repository/annoyanceRepo.dart';
 
 class historyAnnoyanceChat extends StatefulWidget {
   @override
+  //int getindex;
+  //historyAnnoyanceChat(this.getindex);
+  //_historyAnnoyanceChat createState() => _historyAnnoyanceChat(getindex);
   _historyAnnoyanceChat createState() => _historyAnnoyanceChat();
 }
 
 class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
+  //int choosedId;
+  //_historyAnnoyanceChat(this.choosedId);
+
   final messageInsert = TextEditingController();
   int chatRound = 0;
-  String username = "Sean";
+  String username = "Lin";
   bool firstSpeaking = true;
   bool lastSpeaking = false;
   bool robotSpeakable = false;
@@ -29,23 +36,43 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
   String secHintEmotionGrade = "煩惱指數有多高呢？\n1分是最低的喔！";
   String secHintDrawingAcception = "要不要把你的心情畫下來呢？";
   String secHintSharingAcception = "想分享給別人看看嗎？";
-
+  int finalId = 0;
   int solve = 0;
+  var userAns = [];
   //資料庫 抓annoyance[solve]
-  var userAns = [
-    "annoyance_type[value].toString",
-    "annoyance[content].toString",
-    "annoyance[mood].toString",
-    "annoyance[index].toString",
-    "annoyance[share].toString"
-  ];
+
   //資料庫 抓annoyance_type[value], annoyance[content], annoyance[mood], annoyance[index], annoyance[share]
   //再個別轉成字串存在陣列userAns
+  void storeItem(String content, String time, String type, String monsterId,
+      String mood, String index, String solve, String share) {
+    userAns = [type, content, mood, index, share];
+  }
+
+  void getAnnoyanceByID(int index) {
+    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
+    Future<Data> annoyances = annoyanceRepository
+        .searchAnnoyanceByAccount(userAccount)
+        .then((value) => Data.fromJson(value!));
+    annoyances.then(
+      (value) => storeItem(
+          value.data.elementAt(index).content,
+          value.data.elementAt(index).time,
+          value.data.elementAt(index).type.toString(),
+          value.data.elementAt(index).monsterId.toString(),
+          value.data.elementAt(index).mood,
+          value.data.elementAt(index).index.toString(),
+          value.data.elementAt(index).solve.toString(),
+          value.data.elementAt(index).share.toString()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+    //getAnnoyanceByID(choosedId);
+
     response();
     for (int i = 0; i < 5; i++) {
       insert(userAns[i]);
@@ -185,6 +212,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
   void response([String? text]) async {
     setState(() {
       if (chatRound == 1) {
+        var userAns;
         reply("關於" + userAns[1] + "的煩惱嗎？跟我說發生什麼事了吧！");
       }
       if (chatRound == 2) {

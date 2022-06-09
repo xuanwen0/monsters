@@ -23,6 +23,7 @@ var userAccount = 'Lin';
 var tempNum = 0;
 var tempString = [];
 var len;
+
 void getMaxIdByAccount(String account) {
   final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
   Future<Data> annoyances = annoyanceRepository
@@ -81,16 +82,21 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   //控制執行續
   late Timer _timer;
   int curentTimer = 0;
+  bool reset = false;
 
   List<String> historyContents = [];
   List<String> historyTimes = [];
-  int index = 0;
+  var index;
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     int historyCount = historyContents.length < 0 ? 0 : historyContents.length;
+    if (reset == false) {
+      index = 0;
+      reset = true;
+    }
     getMaxIdByAccount(userAccount);
-    getAnnoyanceByAccount(userAccount, index);
+    getAnnoyanceByAccount(userAccount, index == null ? 0 : index);
     try {
       int temper = index - 1 < 0 ? 0 : index - 1;
       historyContents.insert(temper, tempString[0]);
@@ -100,11 +106,9 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
       //log("historycontents = " + historyContents.toString()); //除錯
       //執行續搶先時除錯 -> rollback
       if (beep == false && historyCount > 0) {
-        index--;
         log("BEEP"); //執行續搶先時除錯 -> LOG提示
-        historyContents.removeAt(0);
-        historyTimes.removeAt(0);
-        getAnnoyanceByAccount(userAccount, 0);
+        historyContents.removeLast();
+        historyTimes.removeLast();
         beep = true;
       }
     } catch (e) {
@@ -818,20 +822,16 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
     super.initState();
-    Timer(Duration(milliseconds: 300), () {
-      _timer = Timer.periodic(Duration(milliseconds: 350), (timer) {
-        ///自增
-        curentTimer++;
-        setState(() {});
 
-        ///到5秒后停止
-        if (curentTimer > 15) {
-          setState(() {});
-          _timer.cancel();
-        } else {
-          setState(() {});
-        }
-      });
+    beep = false;
+    _timer = Timer.periodic(Duration(milliseconds: 350), (timer) {
+      ///取12筆
+      if (index > 12) {
+        setState(() {});
+        _timer.cancel();
+      } else {
+        setState(() {});
+      }
     });
   }
 }

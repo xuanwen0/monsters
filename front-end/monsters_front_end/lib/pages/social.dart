@@ -117,13 +117,10 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
     super.initState();
+    beep = false;
     _timer = Timer.periodic(Duration(milliseconds: 350), (timer) {
-      ///自增
-      curentTimer++;
-      setState(() {});
-
-      ///到5秒后停止
-      if (curentTimer > 15) {
+      ///取12筆
+      if (index > 12) {
         setState(() {});
         _timer.cancel();
       } else {
@@ -145,21 +142,18 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
     getAnnoyanceByAccount(userAccount, index);
     try {
       int temper = index - 1 < 0 ? 0 : index - 1;
-
       nickNames.insert(temper, userAccount);
       socialContents.insert(temper, tempString[0]);
       shareTimes.insert(temper, tempString[1]);
-
       index++;
       log("socialContents = " + socialContents.toString()); //除錯
       //執行續搶先時除錯 -> rollback
+
       if (beep == false && socialCount > 0) {
-        index--;
         log("BEEP"); //執行續搶先時除錯 -> LOG提示
-        socialContents.removeAt(0);
-        shareTimes.removeAt(0);
-        nickNames.removeAt(0);
-        getAnnoyanceByAccount(userAccount, 0);
+        socialContents.removeLast();
+        shareTimes.removeLast();
+        nickNames.removeLast();
         beep = true;
       }
     } catch (e) {
