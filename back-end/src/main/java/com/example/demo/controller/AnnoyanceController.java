@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -44,6 +46,12 @@ public class AnnoyanceController {
         ArrayNode dataNode = result.putArray("data");
         try {
             List<AnnoyanceBean> annoyanceList = annoyanceService.searchAnnoyanceByAccount(account);
+            Collections.sort(annoyanceList, new Comparator<AnnoyanceBean>() {
+                @Override
+                public int compare(AnnoyanceBean o1, AnnoyanceBean o2) {
+                    return o2.getTime().compareTo(o1.getTime());
+                }
+            });
             for (AnnoyanceBean annoyanceBean : annoyanceList){
                 ObjectNode annoyanceNode = dataNode.addObject();
                 annoyanceNode.put("id", annoyanceBean.getId());
@@ -53,7 +61,7 @@ public class AnnoyanceController {
                 annoyanceNode.put("monsterId", annoyanceBean.getMonsterId());
                 annoyanceNode.put("mood", annoyanceBean.getMood());
                 annoyanceNode.put("index", annoyanceBean.getIndex());
-                annoyanceNode.put("time", annoyanceBean.getTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss")));
+                annoyanceNode.put("time", annoyanceBean.getTime().format(DateTimeFormatter.ofPattern("MM/dd")));
                 annoyanceNode.put("solve", annoyanceBean.getSolve());
                 annoyanceNode.put("share", annoyanceBean.getShare());
             }

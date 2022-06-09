@@ -16,5 +16,5 @@ public class AnnoyanceBean extends BaseBean {
     private int index;
     private LocalDateTime time = LocalDateTime.now();
     private int solve = 0;
-    private int share = 0;
+    private int share;
 }
