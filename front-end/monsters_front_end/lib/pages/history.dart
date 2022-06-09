@@ -1,5 +1,8 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
@@ -14,12 +17,20 @@ import 'package:monsters_front_end/state/drawer.dart';
 import '../model/annoyanceModel.dart';
 import 'annoyanceChat.dart';
 
+var newContent;
 Future<Data> getAnnoyanceByAccount(String account) {
   final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
-  Future<Data> annoyances = annoyanceRepository
+  final Future<Data> annoyances = annoyanceRepository
       .searchAnnoyanceByAccount(account)
       .then((value) => Data.fromJson(value!));
+
+  annoyances.then((value) => safer(value.data.last.content));
+
   return annoyances;
+}
+
+safer(String content) {
+  newContent = content;
 }
 
 class History extends StatefulWidget {
@@ -74,17 +85,25 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    getAnnoyanceByAccount('Lin');
+    Timer(Duration(milliseconds: 500), () {
+      getAnnoyanceByAccount('Lin');
+      setState(() {});
+    });
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
-    const int historyCount = 6;
-    const List<String> historyContents = [
-      '馬上就要發表專題了，希望一切順利。',
+    int historyCount = 6;
+    List<String> historyContents = [
+      '專題好難',
       '馬上就要期末考了，希望可以all pass。',
       '馬上就要期中考了，希望一切順利。',
       '感冒了，希望趕快好起來。',
       '跟朋友吵架了，好煩。',
       '又到梅雨季了，不喜歡下雨天。'
     ];
+    try {
+      historyContents.insert(0, newContent);
+    } catch (e) {
+      log(e.toString());
+    }
     const List<String> historyTimes = [
       '08/25',
       '07/21',
