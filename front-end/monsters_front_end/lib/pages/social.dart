@@ -117,7 +117,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
     super.initState();
-    _timer = Timer.periodic(Duration(milliseconds: 300), (timer) {
+    _timer = Timer.periodic(Duration(milliseconds: 350), (timer) {
       ///自增
       curentTimer++;
       setState(() {});
