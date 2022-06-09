@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
+// ignore_for_file: avoid_function_literals_in_foreach_calls
 
 import 'dart:async';
 import 'dart:developer';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
@@ -17,20 +19,43 @@ import 'package:monsters_front_end/state/drawer.dart';
 import '../model/annoyanceModel.dart';
 import 'annoyanceChat.dart';
 
-var newContent;
-Future<Data> getAnnoyanceByAccount(String account) {
+var userAccount = 'Lin';
+var tempNum = 0;
+var tempString = [];
+var len;
+void getMaxIdByAccount(String account) {
   final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
-  final Future<Data> annoyances = annoyanceRepository
+  Future<Data> annoyances = annoyanceRepository
       .searchAnnoyanceByAccount(account)
       .then((value) => Data.fromJson(value!));
-
-  annoyances.then((value) => safer(value.data.last.content));
-
-  return annoyances;
+  annoyances.then((value) => len = value.data.length.toString());
 }
 
-safer(String content) {
-  newContent = content;
+void storeMaxId(int length) {
+  len = length;
+}
+
+void getAnnoyanceByAccount(String account, int index) {
+  final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
+  Future<Data> annoyances = annoyanceRepository
+      .searchAnnoyanceByAccount(account)
+      .then((value) => Data.fromJson(value!));
+  annoyances.then(
+    (value) => storeItem(
+        value.data.elementAt(index).content,
+        value.data.elementAt(index).type.toString(),
+        value.data.elementAt(index).monsterId.toString(),
+        value.data.elementAt(index).mood,
+        value.data.elementAt(index).index.toString(),
+        value.data.elementAt(index).solve.toString(),
+        value.data.elementAt(index).share.toString()),
+  );
+}
+
+void storeItem(String content, String type, String monsterId, String mood,
+    String index, String solve, String share) {
+  tempString = [content, type, monsterId, mood, index, solve, share];
+  log("tempString - " + tempString.toString());
 }
 
 class History extends StatefulWidget {
@@ -45,18 +70,18 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
+  //預設標籤
   int selectionTab_type = 1;
   int selectionTab_solve = 0;
+  //煩惱標籤狀態，已解決和未解決標籤 enabled=ture
   bool selectionTab_solve_enabled = false;
+  //計時
+  late Timer _timer;
+  int curentTimer = 0;
+
   double getRadiansFromDegree(double degree) {
     double unitRadian = 57.295779513;
     return degree / unitRadian;
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
   }
 
   @override
@@ -78,40 +103,37 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
     super.initState();
-    animationController.addListener(() {
-      setState(() {});
+    _timer = Timer.periodic(Duration(milliseconds: 350), (timer) {
+      ///自增
+      curentTimer++;
+
+      ///到5秒后停止
+      if (curentTimer > 15) {
+        _timer.cancel();
+      } else {
+        setState(() {});
+      }
     });
   }
 
+  List<String> historyContents = [];
+  List<String> historyTimes = [];
+  int index = 0;
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(milliseconds: 500), () {
-      getAnnoyanceByAccount('Lin');
-      setState(() {});
-    });
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
-    int historyCount = 6;
-    List<String> historyContents = [
-      '專題好難',
-      '馬上就要期末考了，希望可以all pass。',
-      '馬上就要期中考了，希望一切順利。',
-      '感冒了，希望趕快好起來。',
-      '跟朋友吵架了，好煩。',
-      '又到梅雨季了，不喜歡下雨天。'
-    ];
+    getMaxIdByAccount(userAccount);
     try {
-      historyContents.insert(0, newContent);
+      getAnnoyanceByAccount(userAccount, index);
+      historyContents.insert(index, tempString[0]);
+      historyTimes.insert(index, tempString[0]);
+      index++;
     } catch (e) {
-      log(e.toString());
+      log("BB = " + e.toString());
     }
-    const List<String> historyTimes = [
-      '08/25',
-      '07/21',
-      '05/25',
-      '05/09',
-      '05/02',
-      '04/25'
-    ];
+
+    int historyCount = historyContents.length;
+    log("historyCount = " + historyCount.toString());
 
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
