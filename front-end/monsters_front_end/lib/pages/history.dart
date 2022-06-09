@@ -90,18 +90,20 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     int historyCount = historyContents.length < 0 ? 0 : historyContents.length;
     getMaxIdByAccount(userAccount);
-    log(historyContents.toString());
+    getAnnoyanceByAccount(userAccount, index);
     try {
       int temper = index - 1 < 0 ? 0 : index - 1;
       historyContents.insert(temper, tempString[0]);
       historyTimes.insert(temper, tempString[1]);
       index++;
+      log(historyContents.toString());
       //log("historycontents = " + historyContents.toString()); //除錯
       //執行續搶先時除錯 -> rollback
-      if (beep == false && historyContents.length > 0) {
+      if (beep == false && historyCount > 0) {
+        index--;
         log("BEEP"); //執行續搶先時除錯 -> LOG提示
-        historyContents.clear();
-        historyTimes.clear();
+        historyContents.removeAt(0);
+        historyTimes.removeAt(0);
         getAnnoyanceByAccount(userAccount, 0);
         beep = true;
       }
@@ -110,7 +112,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
       tempString.clear();
     }
 
-    getAnnoyanceByAccount(userAccount, index);
     //log("historyCount = " + historyCount.toString());
     //畫面呈現
     return Scaffold(
@@ -428,7 +429,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                               ),
                               //內容
                               Pinned.fromPins(
-                                Pin(size: 160.0, start: 105.0),
+                                Pin(size: 170.0, start: 105.0),
                                 Pin(size: 81.0, end: 10.0),
                                 child: Text(
                                   historyContents[index],
@@ -442,8 +443,8 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                               ),
                               //時間
                               Pinned.fromPins(
-                                Pin(size: 41.0, end: 17.0),
-                                Pin(size: 21.0, middle: 0.2262),
+                                Pin(size: 45.0, end: 20.0),
+                                Pin(size: 21.0, middle: 0.8),
                                 child: Text(
                                   historyTimes[index],
                                   style: const TextStyle(
@@ -824,7 +825,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
         setState(() {});
 
         ///到5秒后停止
-        if (curentTimer > 10) {
+        if (curentTimer > 15) {
           setState(() {});
           _timer.cancel();
         } else {
