@@ -395,6 +395,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         width: 365.0,
                         height: 105.0,
                         child: PageLink(
+                          /*
                           links: [
                             PageLinkInfo(
                               transition: LinkTransition.Fade,
@@ -402,7 +403,9 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                               duration: 0.3,
                               pageBuilder: () => historyAnnoyanceChat(),
                             ),
-                          ],
+                          ],*/
+
+                          links: [],
                           child: Stack(
                             children: <Widget>[
                               //底
@@ -824,14 +827,17 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     super.initState();
 
     beep = false;
-    _timer = Timer.periodic(Duration(milliseconds: 350), (timer) {
-      ///取12筆
-      if (index > 12) {
-        setState(() {});
-        _timer.cancel();
-      } else {
-        setState(() {});
-      }
+
+    Timer(Duration(milliseconds: 800), () {
+      _timer = Timer.periodic(Duration(milliseconds: 350), (timer) {
+        ///取12筆
+        if (index > 12) {
+          setState(() {});
+          _timer.cancel();
+        } else {
+          setState(() {});
+        }
+      });
     });
   }
 }
