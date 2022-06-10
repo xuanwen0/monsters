@@ -1,10 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/main.dart';
+import 'package:monsters_front_end/model/annoyanceModel.dart';
 import 'package:monsters_front_end/pages/annoyance.dart';
 import 'package:monsters_front_end/pages/drawer_setting.dart';
 import 'package:monsters_front_end/pages/drawer_userInformation.dart';
@@ -12,9 +16,57 @@ import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/manual.dart';
+import 'package:monsters_front_end/repository/annoyanceRepo.dart';
 import 'package:monsters_front_end/state/drawer.dart';
 
 import 'annoyanceChat.dart';
+
+//全域變數
+bool beep = false;
+var userAccount = 'Lin';
+var tempNum = 0;
+var tempString = [];
+var len;
+void getMaxIdByAccount(String account) {
+  final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
+  Future<Data> annoyances = annoyanceRepository
+      .searchAnnoyanceByAccount(account)
+      .then((value) => Data.fromJson(value!));
+  annoyances.then((value) => len = value.data.length.toString());
+  annoyances.then((value) => storeMaxId(value.data.length));
+}
+
+//取得最大ID 得到總筆數
+void storeMaxId(int length) {
+  len = length;
+}
+
+//資料庫 用帳號抓煩惱
+void getAnnoyanceByAccount(String account, int index) {
+  final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
+  Future<Data> annoyances = annoyanceRepository
+      .searchAnnoyanceByAccount(account)
+      .then((value) => Data.fromJson(value!));
+  annoyances.then(
+    (value) => storeItem(
+        value.data.elementAt(index).content,
+        value.data.elementAt(index).time,
+        value.data.elementAt(index).type.toString(),
+        value.data.elementAt(index).monsterId.toString(),
+        value.data.elementAt(index).mood,
+        value.data.elementAt(index).index.toString(),
+        value.data.elementAt(index).solve.toString(),
+        value.data.elementAt(index).share.toString()),
+  );
+}
+
+void storeItem(String content, String time, String type, String monsterId,
+    String mood, String index, String solve, String share) {
+  tempString = [content, time, type, monsterId, mood, index, solve, share];
+  //人名userAccount
+  //內容0
+  //時間1
+}
 
 class Social extends StatefulWidget {
   const Social({Key? key}) : super(key: key);
@@ -28,7 +80,13 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
+
+  //控制執行續
+  late Timer _timer;
+  int curentTimer = 0;
+  //控制標籤
   int selectionTab_type = 1;
+
   double getRadiansFromDegree(double degree) {
     double unitRadian = 57.295779513;
     return degree / unitRadian;
@@ -43,7 +101,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 250));
+        vsync: this, duration: const Duration(milliseconds: 200));
     degOneTranslationAnimation = TweenSequence([
       TweenSequenceItem<double>(
           tween: Tween<double>(begin: 0.0, end: 1.2), weight: 75.0),
@@ -59,32 +117,50 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
     super.initState();
-    animationController.addListener(() {
-      setState(() {});
+    beep = false;
+    _timer = Timer.periodic(Duration(milliseconds: 350), (timer) {
+      ///取12筆
+      if (index > 12) {
+        setState(() {});
+        _timer.cancel();
+      } else {
+        setState(() {});
+      }
     });
   }
 
+  List<String> nickNames = [];
+  List<String> socialContents = [];
+  List<String> shareTimes = [];
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
-    const int socialCount = 6;
-    const List<String> nickNames = ['湋峻', 'A', 'B', 'C', 'D', 'E'];
-    const List<String> socialContents = [
-      '馬上就要發表專題了，希望一切順利。',
-      '馬上就要期末考了，希望可以all pass。',
-      '馬上就要期中考了，希望一切順利。',
-      '感冒了，希望趕快好起來。',
-      '跟朋友吵架了，好煩。',
-      '又到梅雨季了，不喜歡下雨天。'
-    ];
-    const List<String> shareTimes = [
-      '11:46',
-      '9:46',
-      '1:46',
-      '8:46',
-      '6:46',
-      '5:46'
-    ];
+    int socialCount = socialContents.length < 0 ? 0 : socialContents.length;
+    tempString.clear;
+    getMaxIdByAccount(userAccount);
+    getAnnoyanceByAccount(userAccount, index);
+    try {
+      int temper = index - 1 < 0 ? 0 : index - 1;
+      nickNames.insert(temper, userAccount);
+      socialContents.insert(temper, tempString[0]);
+      shareTimes.insert(temper, tempString[1]);
+      index++;
+      log("socialContents = " + socialContents.toString()); //除錯
+      //執行續搶先時除錯 -> rollback
+
+      if (beep == false && socialCount > 0) {
+        log("BEEP"); //執行續搶先時除錯 -> LOG提示
+        socialContents.removeLast();
+        shareTimes.removeLast();
+        nickNames.removeLast();
+        beep = true;
+      }
+    } catch (e) {
+      log("BB = " + e.toString());
+      tempString.clear();
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       key: _scaffoldKEy,

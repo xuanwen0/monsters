@@ -23,7 +23,7 @@ class _Annoyance_resolveState extends State<Annoyance_resolve> {
               color: const Color(0xffffffff),
             ),
           ),
-          Pinned.fromPins(
+          /*Pinned.fromPins(
             Pin(size: 45.6, start: 14.4),
             Pin(size: 41.1, start: 23.4),
             child:
@@ -44,6 +44,7 @@ class _Annoyance_resolveState extends State<Annoyance_resolve> {
               ),
             ),
           ),
+          */
           Pinned.fromPins(
             Pin(size: 185.0, end: 11.0),
             Pin(size: 115.0, middle: 0.4223),
