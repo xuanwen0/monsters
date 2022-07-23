@@ -1,5 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/home.dart';
@@ -10,9 +12,29 @@ void main() {
   runApp(Monsters());
 }
 
-class Monsters extends StatelessWidget {
+class Monsters extends StatelessWidget with WidgetsBindingObserver {
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.inactive:
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+        break;
+      case AppLifecycleState.paused:
+        log(state.toString());
+        break;
+      case AppLifecycleState.resumed:
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+        log(state.toString());
+        break;
+      case AppLifecycleState.detached:
+        log(state.toString());
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addObserver(this);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     return MaterialApp(
       title: '貘nsters',
