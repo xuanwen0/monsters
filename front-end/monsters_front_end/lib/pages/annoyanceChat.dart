@@ -1,9 +1,12 @@
 // ignore_for_file: use_key_in_widget_constructors, unnecessary_string_interpolations, prefer_const_constructors, file_names, avoid_unnecessary_containers, sized_box_for_whitespace, non_constant_identifier_names
+import 'dart:developer';
+import 'dart:io';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
-
 import '../model/annoyanceModel.dart';
 import '../repository/annoyanceRepo.dart';
 
@@ -12,14 +15,14 @@ class AnnoyanceChat extends StatefulWidget {
   _AnnoyanceChat createState() => _AnnoyanceChat();
 }
 
-class _AnnoyanceChat extends State<AnnoyanceChat> {
+class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   final messageInsert = TextEditingController();
   int chatRound = 0;
   String username = "Sean";
   bool firstSpeaking = true;
   bool lastSpeaking = false;
   bool robotSpeakable = false;
-  List<Map> messsages = [];
+  List<Map> messages = [];
   List<String> annoyTypeMembers = ["", "課業", "事業", "愛情", "友情", "親情", "其他"];
   List<String> emotionGradeMembers = ["", "1", "2", "3", "4", "5"];
   List<String> acceptDrawingMembers = ["", "是", "否"];
@@ -37,7 +40,21 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
   String predictAns_annoyType = "";
   String predictAns_emotionGrade = "";
   String predictAns_accept = "";
+  File? _image;
   var userAnswers = [];
+
+  Future getMediaByCamera() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (image == null) return;
+    final imageTemporary = File(image.path);
+
+    this._image = imageTemporary;
+    if (_image != null) {
+      messages.insert(0, {"data": 2, "image": _image});
+      response();
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +83,22 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
             Flexible(
                 child: ListView.builder(
                     reverse: true,
-                    itemCount: messsages.length,
+                    itemCount: messages.length,
+                    //只要回傳直是一個container裡面放照片就好
                     itemBuilder: (context, index) => chat(
-                        messsages[index]["message"].toString(),
-                        messsages[index]["data"]))),
+                          messages[index]["message"].toString(),
+                          messages[index]["data"],
+                          /*
+                          data type list
+                          0 : robot message text 
+                          1 : user message text
+                          2 : user message image from Camera 
+                          3 : user message image from Gallery
+                          4 : user message video from Camera  
+                          5 : user message video from Gallery
+                          6 : user message voice from Recording 
+                          */
+                        ))),
             SizedBox(
               height: 10,
             ),
@@ -80,6 +109,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
               alignment: Alignment.bottomCenter,
               height: 60,
               //margin: EdgeInsets.only(bottom: 30),
+
               child: lastSpeaking == false
                   ? ListTile(
                       //camera
@@ -90,7 +120,18 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                           color: Color.fromARGB(255, 164, 78, 38),
                           size: 28,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          getMediaByCamera();
+                          /*
+                          idea
+
+                          改成多媒體按鈕(迴紋針)
+                          點選迴紋針後可選擇錄影、錄音、照相、相簿
+                          在做對應的功能
+                          多媒體
+                          顯示在聊天室頂部
+                          */
+                        },
                       ),
                       //輸入框
                       title: Container(
@@ -129,7 +170,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                             } else {
                               setState(() {
                                 robotSpeakable = true;
-                                messsages.insert(0,
+                                messages.insert(0,
                                     {"data": 1, "message": messageInsert.text});
                               });
                               response(messageInsert.text);
@@ -200,59 +241,71 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
 
   //聊天功能
   Widget chat(String message, int data) {
-    return Container(
-      padding: EdgeInsets.only(left: 20, right: 20),
-      child: Row(
-        mainAxisAlignment:
-            data == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
-        children: [
-          data == 0
-              //巴古頭貼
-              ? Container(
-                  height: 50,
-                  width: 50,
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/image/Baku.png'),
-                  ),
-                )
-              : Container(),
-          //訊息框
-          Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Bubble(
-                radius: Radius.circular(15.0),
-                color:
-                    data == 0 ? Colors.white : Color.fromRGBO(255, 237, 151, 1),
-                elevation: 2.0,
-                //訊息文字格式
-                child: Padding(
-                  padding: EdgeInsets.all(2.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 3.0,
-                      ),
-                      Flexible(
-                          child: Container(
-                        constraints: BoxConstraints(maxWidth: 200),
-                        child: Text(
-                          message,
-                          style: TextStyle(
-                              color: data == 0
-                                  ? Color.fromRGBO(160, 82, 45, 1)
-                                  : Colors.black,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 17),
+    Container userChatContainer = Container();
+    if (data == 2) {
+      //回傳一個container裡面放照片
+      userChatContainer = Container(
+          alignment: Alignment.centerRight,
+          child: Image.file(_image!,
+              width: 200, height: 200, filterQuality: FilterQuality.medium));
+    } else {
+      userChatContainer = Container(
+        padding: EdgeInsets.only(left: 20, right: 20),
+        child: Row(
+          mainAxisAlignment:
+              data == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
+          children: [
+            data == 0
+                //巴古頭貼
+                ? Container(
+                    height: 50,
+                    width: 50,
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('assets/image/Baku.png'),
+                    ),
+                  )
+                : Container(),
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: data == 0
+                      ? Colors.white
+                      : Color.fromRGBO(255, 237, 151, 1),
+                  elevation: 2.0,
+                  //訊息文字格式
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
                         ),
-                      ))
-                    ],
-                  ),
-                )),
-          ),
-        ],
-      ),
-    );
+                        Flexible(
+                            child: Container(
+                          constraints: BoxConstraints(maxWidth: 200),
+                          child: Text(
+                            message,
+                            style: TextStyle(
+                                color: data == 0
+                                    ? Color.fromRGBO(160, 82, 45, 1)
+                                    : Colors.black,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 17),
+                          ),
+                        ))
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return userChatContainer;
   }
 
   //怪獸訊息(請選擇)
@@ -291,7 +344,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
   }
 
   //確認是否符合選擇格式
-  void response([String? text]) async {
+  void response([String? text]) {
     setState(() {
       if (chatRound < 7) {
         if (robotSpeakable == true) {
@@ -337,6 +390,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
                 userAnswers.add(emotionGradeMembers.indexOf("0"));
               }
               lastSpeaking = true;
+
               reply("解決煩惱請馬上跟我說！我已經迫不及待想吃飯了！");
             } else {
               cannotRead();
@@ -367,6 +421,6 @@ class _AnnoyanceChat extends State<AnnoyanceChat> {
   }
 
   void reply(String text) {
-    messsages.insert(0, {"data": 0, "message": text});
+    messages.insert(0, {"data": 0, "message": text});
   }
 }
