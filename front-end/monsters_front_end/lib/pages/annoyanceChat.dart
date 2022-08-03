@@ -42,6 +42,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   String predictAns_accept = "";
   File? _image;
   var userAnswers = [];
+  //增
+  File? _paint;
 
   Future getMediaByCamera() async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -97,6 +99,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                           4 : user message video from Camera  
                           5 : user message video from Gallery
                           6 : user message voice from Recording 
+                          增
+                          7 : user message image from Draw_paint() 
                           */
                         ))),
             SizedBox(
@@ -248,6 +252,13 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
           alignment: Alignment.centerRight,
           child: Image.file(_image!,
               width: 200, height: 200, filterQuality: FilterQuality.medium));
+    }
+    //增加7，回傳圖畫
+    if (data == 7) {
+      userChatContainer = Container(
+          alignment: Alignment.centerRight,
+          child: Image.file(_paint!,
+              width: 200, height: 200, filterQuality: FilterQuality.medium));
     } else {
       userChatContainer = Container(
         padding: EdgeInsets.only(left: 20, right: 20),
@@ -363,8 +374,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
           if (chatRound == 3) {
             if (acceptDrawingMembers.contains(text)) {
               if (text == "是") {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Drawing_colors()));
+                //改
+                _navigateAndDisplayPaint(context);
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => Draw_mood()));
               }
               userAnswers.add(text!);
               reply("給煩惱程度打一個分數～\n5分是最煩惱的喔！");
@@ -422,5 +435,20 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
   void reply(String text) {
     messages.insert(0, {"data": 0, "message": text});
+  }
+
+  //增
+  Future<void> _navigateAndDisplayPaint(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Draw_mood()),
+    );
+    if (result == null) return;
+    if (result != null) {
+      this._paint = result;
+      messages.insert(0, {"data": 7, "image": _paint});
+      response();
+    }
+    setState(() {});
   }
 }

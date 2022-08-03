@@ -44,6 +44,10 @@ dependencies:
   adobe_xd: ^2.0.1
   bubble: ^1.2.1
   image_picker: ^0.8.5+3
+  flutter_colorpicker: ^1.0.3
+  image_gallery_saver: ^1.7.1
+  painter: ^2.0.0
+  screenshot: ^1.2.3
 
 dev_dependencies:
   flutter_test:
