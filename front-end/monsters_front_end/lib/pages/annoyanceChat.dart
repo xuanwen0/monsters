@@ -17,7 +17,7 @@ class AnnoyanceChat extends StatefulWidget {
 
 class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   final messageInsert = TextEditingController();
-  int chatRound = 0;
+  int chatRound = 1; //測試待修改
   String username = "Sean";
   bool firstSpeaking = true;
   bool lastSpeaking = false;
@@ -47,15 +47,34 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   late final VideoPlayerController _videoPlayerController;
   File? _media;
 
+  //增
+  Paint() async {
+    final media = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Draw_mood()),
+    );
+    log("media : " + media.toString());
+    if (media == null) return;
+    final imageTemporary = File(media.path);
+    this._media = imageTemporary;
+
+    if (_media != null) {
+      this._paint = media;
+      messages.insert(0, {"data": 2, "image": _media});
+      response();
+    }
+    setState(() {});
+  }
+
   takePhoto() async {
     final media = await ImagePicker().pickImage(source: ImageSource.camera);
     if (media == null) return;
     final imageTemporary = File(media.path);
-
     this._media = imageTemporary;
     if (_media != null) {
       messages.insert(0, {"data": 2, "image": _media});
       response();
+      log("_media: " + _media.toString());
     }
     setState(() {});
   }
@@ -323,20 +342,9 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   //聊天功能
   Widget chat(String message, int data) {
     Container userChatContainer = Container();
-    if (data == 2) {
-      //回傳一個container裡面放照片
-      userChatContainer = Container(
-          alignment: Alignment.centerRight,
-          child: Image.file(_image!,
-              width: 200, height: 200, filterQuality: FilterQuality.medium));
-    }
-    //增加7，回傳圖畫
-    if (data == 7) {
-      userChatContainer = Container(
-          alignment: Alignment.centerRight,
-          child: Image.file(_paint!,
-              width: 200, height: 200, filterQuality: FilterQuality.medium));
-    } else {
+
+    //text chat container
+    if (data < 2) {
       userChatContainer = Container(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: Row(
@@ -439,6 +447,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
         ),
       );
     }
+
     //video chat container
     if (data == 3) {
       userChatContainer = Container(
@@ -499,6 +508,14 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
           ],
         ),
       );
+    }
+
+    //增加7，回傳圖畫
+    if (data == 7) {
+      userChatContainer = Container(
+          alignment: Alignment.centerRight,
+          child: Image.file(_paint!,
+              width: 200, height: 200, filterQuality: FilterQuality.medium));
     }
 
     return userChatContainer;
@@ -563,7 +580,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
             if (acceptDrawingMembers.contains(text)) {
               if (text == "是") {
                 //改
-                _navigateAndDisplayPaint(context);
+                Paint();
                 // Navigator.push(context,
                 //     MaterialPageRoute(builder: (context) => Draw_mood()));
               }
@@ -623,21 +640,6 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   //怪獸回覆
   void reply(String text) {
     messages.insert(0, {"data": 0, "message": text});
-  }
-
-  //增
-  Future<void> _navigateAndDisplayPaint(BuildContext context) async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Draw_mood()),
-    );
-    if (result == null) return;
-    if (result != null) {
-      this._paint = result;
-      messages.insert(0, {"data": 7, "image": _paint});
-      response();
-    }
-    setState(() {});
   }
 }
 
