@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
+import 'package:video_player/video_player.dart';
 import '../model/annoyanceModel.dart';
 import '../repository/annoyanceRepo.dart';
 
@@ -22,6 +22,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   bool firstSpeaking = true;
   bool lastSpeaking = false;
   bool robotSpeakable = false;
+  bool pickable = false;
   List<Map> messages = [];
   List<String> annoyTypeMembers = ["", "課業", "事業", "愛情", "友情", "親情", "其他"];
   List<String> emotionGradeMembers = ["", "1", "2", "3", "4", "5"];
@@ -30,9 +31,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   String hintAnnoyType = "[請擇一輸入]\n課業 / 事業 / 愛情 \n友情 / 親情 / 其他";
   String hintEmotionGrade = "[請擇一輸入]\n1 / 2 / 3 / 4 / 5";
   String hintAccept = "[請擇一輸入]\n是 / 否";
-  String hintAnnoyMethod =
-      "請選擇以下幾種方式開始記錄：\n★以文字記錄煩惱\n★按麥克風開始錄音\n★按相簿從手機存取\n★按相機開始照相或錄影";
-  String hintCannotRead = "員工手冊上沒有這個選項耶...麻煩你確認一下答案好嗎？";
+  String hintAnnoyMethod = "請用以下幾種方式記錄：\n★以文字記錄煩惱\n★點選左下角圖示新增";
+  String hintCannotRead = "員工手冊上沒有這個選項耶...麻煩確認一下答案好嗎？";
   String secHintAnnoyType = "煩惱是關於什麼的呢？";
   String secHintEmotionGrade = "煩惱指數有多高呢？\n1分是最低的喔！";
   String secHintDrawingAcception = "要不要把你的心情畫下來呢？";
@@ -40,21 +40,66 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   String predictAns_annoyType = "";
   String predictAns_emotionGrade = "";
   String predictAns_accept = "";
-  File? _image;
   var userAnswers = [];
   //增
   File? _paint;
 
-  Future getMediaByCamera() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
-    if (image == null) return;
-    final imageTemporary = File(image.path);
+  late final VideoPlayerController _videoPlayerController;
+  File? _media;
 
-    this._image = imageTemporary;
-    if (_image != null) {
-      messages.insert(0, {"data": 2, "image": _image});
+  takePhoto() async {
+    final media = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (media == null) return;
+    final imageTemporary = File(media.path);
+
+    this._media = imageTemporary;
+    if (_media != null) {
+      messages.insert(0, {"data": 2, "image": _media});
       response();
     }
+    setState(() {});
+  }
+
+  recordVideo() async {
+    XFile? recordedVideo = await ImagePicker().pickVideo(
+        source: ImageSource.camera, maxDuration: Duration(seconds: 15));
+    if (recordedVideo == null) return;
+    _media = File(recordedVideo.path);
+    _videoPlayerController = VideoPlayerController.file(_media!)
+      ..initialize().then((_) {
+        messages.insert(0, {"data": 3, "video": _media});
+        _videoPlayerController.play();
+        response();
+      });
+    setState(() {});
+  }
+
+  pickPhoto() async {
+    final media = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (media == null) return;
+    final imageTemporary = File(media.path);
+
+    this._media = imageTemporary;
+    if (_media != null) {
+      messages.insert(0, {"data": 2, "image": _media});
+      response();
+    }
+    setState(() {});
+  }
+
+  pickVideo() async {
+    XFile? pickedVideo =
+        await ImagePicker().pickVideo(source: ImageSource.gallery);
+    if (pickedVideo == null) return;
+    _media = File(pickedVideo.path);
+    _videoPlayerController = VideoPlayerController.file(_media!)
+      ..initialize().then((_) {
+        messages.insert(0, {"data": 3, "video": _media});
+        _videoPlayerController.play();
+
+        log("SIZE:  " + MediaQuery.of(context).size.width.toString());
+        response();
+      });
     setState(() {});
   }
 
@@ -113,30 +158,62 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
               alignment: Alignment.bottomCenter,
               height: 60,
               //margin: EdgeInsets.only(bottom: 30),
-
               child: lastSpeaking == false
+                  //彈出選單(選擇照相、錄影、錄音、相簿)
                   ? ListTile(
-                      //camera
-                      leading: IconButton(
-                        alignment: Alignment.centerLeft,
-                        icon: Icon(
-                          Icons.camera_alt,
-                          color: Color.fromARGB(255, 164, 78, 38),
-                          size: 28,
-                        ),
-                        onPressed: () {
-                          getMediaByCamera();
-                          /*
-                          idea
-
-                          改成多媒體按鈕(迴紋針)
-                          點選迴紋針後可選擇錄影、錄音、照相、相簿
-                          在做對應的功能
-                          多媒體
-                          顯示在聊天室頂部
-                          */
-                        },
-                      ),
+                      leading: (pickable == true)
+                          ? PopUpMen(
+                              icon: Icon(
+                                Icons.drive_folder_upload,
+                                color: Color.fromARGB(255, 164, 78, 38),
+                                size: 28,
+                              ),
+                              menuList: [
+                                PopupMenuItem(
+                                  child: ListTile(
+                                      leading: Icon(Icons.camera_alt_rounded),
+                                      title: Text("照相"),
+                                      onTap: () => {
+                                            takePhoto(),
+                                            Navigator.pop(context)
+                                          }),
+                                ),
+                                PopupMenuItem(
+                                  child: ListTile(
+                                      leading: Icon(
+                                          Icons.video_camera_front_rounded),
+                                      title: Text("錄影"),
+                                      onTap: () => {
+                                            recordVideo(),
+                                            Navigator.pop(context)
+                                          }),
+                                ),
+                                PopupMenuItem(
+                                  child: ListTile(
+                                      leading:
+                                          Icon(Icons.keyboard_voice_rounded),
+                                      title: Text("錄音"),
+                                      onTap: () => null),
+                                ),
+                                PopupMenuItem(
+                                    child: ListTile(
+                                        leading: Icon(Icons.image_rounded),
+                                        title: Text("從相簿匯入圖片"),
+                                        onTap: () => {
+                                              pickPhoto(),
+                                              Navigator.pop(context)
+                                            })),
+                                PopupMenuItem(
+                                    child: ListTile(
+                                        leading: Icon(Icons.video_collection),
+                                        title: Text("從相簿匯入影片"),
+                                        onTap: () => {
+                                              pickVideo(),
+                                              Navigator.pop(context)
+                                            })),
+                              ],
+                            )
+                          : null,
                       //輸入框
                       title: Container(
                         height: 35,
@@ -316,6 +393,114 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       );
     }
 
+    //picture chat container
+    if (data == 2) {
+      userChatContainer = Container(
+        padding: EdgeInsets.only(left: 10, right: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: Color.fromRGBO(255, 237, 151, 1),
+                  elevation: 2.0,
+                  //訊息文字格式
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                        Flexible(
+                            child: Container(
+                                child: Image.file(_media!,
+                                    width: (MediaQuery.of(context).size.width >
+                                            MediaQuery.of(context).size.height)
+                                        ? 288
+                                        : 162,
+                                    height: (MediaQuery.of(context).size.width <
+                                            MediaQuery.of(context).size.height)
+                                        ? 240
+                                        : 162,
+                                    filterQuality: FilterQuality.medium))),
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+    //video chat container
+    if (data == 3) {
+      userChatContainer = Container(
+        padding: EdgeInsets.only(left: 10, right: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: Color.fromRGBO(255, 237, 151, 1),
+                  elevation: 2.0,
+                  //訊息文字格式
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                        Flexible(
+                            child: Container(
+                                width:
+                                    (_videoPlayerController.value.size.width >
+                                            _videoPlayerController
+                                                .value.size.height)
+                                        ? 288
+                                        : 162,
+                                height:
+                                    (_videoPlayerController.value.size.width >
+                                            _videoPlayerController
+                                                .value.size.height)
+                                        ? 162
+                                        : 288,
+                                alignment: Alignment.centerRight,
+                                child: AspectRatio(
+                                  aspectRatio:
+                                      (_videoPlayerController.value.size.width >
+                                              _videoPlayerController
+                                                  .value.size.height)
+                                          ? 16 / 9
+                                          : 9 / 16,
+                                  child:
+                                      _videoPlayerController.value.isInitialized
+                                          ? VideoPlayer(_videoPlayerController)
+                                          : Container(),
+                                ))),
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+
     return userChatContainer;
   }
 
@@ -324,8 +509,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     if (chatRound == 0) {
       reply(hintAnnoyType);
     } else if (chatRound == 1) {
+      pickable = true;
       reply(hintAnnoyMethod);
     } else if (chatRound == 2) {
+      pickable = false;
       reply(hintAccept);
     } else if (chatRound == 3) {
       reply(hintEmotionGrade);
@@ -336,7 +523,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     }
   }
 
-  //怪獸訊息(聊天式)
+  //提示使用者回覆格式錯誤
   void cannotRead() {
     chatRound--;
     reply(hintCannotRead);
@@ -354,7 +541,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     }
   }
 
-  //確認是否符合選擇格式
+  //確認是否符合選擇格式，符合->回覆 不符合->提示再次輸入
   void response([String? text]) {
     setState(() {
       if (chatRound < 7) {
@@ -367,7 +554,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
               cannotRead();
             }
           }
-          if (chatRound == 2) {
+          if (chatRound == 2 || text == "說完了") {
+            //可以優化
             userAnswers.add(text);
             reply("真是辛苦你了，想做一幅畫表達你的感受嗎？");
           }
@@ -403,7 +591,6 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                 userAnswers.add(emotionGradeMembers.indexOf("0"));
               }
               lastSpeaking = true;
-
               reply("解決煩惱請馬上跟我說！我已經迫不及待想吃飯了！");
             } else {
               cannotRead();
@@ -433,6 +620,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     });
   }
 
+  //怪獸回覆
   void reply(String text) {
     messages.insert(0, {"data": 0, "message": text});
   }
@@ -450,5 +638,22 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       response();
     }
     setState(() {});
+  }
+}
+
+//彈出選單設置
+class PopUpMen extends StatelessWidget {
+  final List<PopupMenuEntry> menuList;
+  final Widget? icon;
+
+  const PopUpMen({Key? key, required this.menuList, this.icon})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton(
+      itemBuilder: ((context) => menuList),
+      icon: icon,
+    );
   }
 }

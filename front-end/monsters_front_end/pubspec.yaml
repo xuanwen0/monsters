@@ -48,6 +48,8 @@ dependencies:
   image_gallery_saver: ^1.7.1
   painter: ^2.0.0
   screenshot: ^1.2.3
+  video_player: ^2.4.5
+  chewie: ^1.3.4
 
 dev_dependencies:
   flutter_test:
