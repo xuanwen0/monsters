@@ -41,35 +41,18 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   String predictAns_emotionGrade = "";
   String predictAns_accept = "";
   var userAnswers = [];
-  //增
+
   File? _paint;
-
-  late final VideoPlayerController _videoPlayerController;
   File? _media;
+  late final VideoPlayerController _videoPlayerController;
+  //final recorder = FlutterSoundRecorder();
 
-  //增
-  Paint() async {
-    final media = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Draw_mood()),
-    );
-    log("media : " + media.toString());
-    if (media == null) return;
-    final imageTemporary = File(media.path);
-    this._media = imageTemporary;
-
-    if (_media != null) {
-      this._paint = media;
-      messages.insert(0, {"data": 2, "image": _media});
-      response();
-    }
-    setState(() {});
-  }
-
+  //新增煩惱-照相
   takePhoto() async {
     final media = await ImagePicker().pickImage(source: ImageSource.camera);
     if (media == null) return;
     final imageTemporary = File(media.path);
+
     this._media = imageTemporary;
     if (_media != null) {
       messages.insert(0, {"data": 2, "image": _media});
@@ -79,6 +62,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     setState(() {});
   }
 
+  //新增煩惱-錄影
   recordVideo() async {
     XFile? recordedVideo = await ImagePicker().pickVideo(
         source: ImageSource.camera, maxDuration: Duration(seconds: 15));
@@ -93,6 +77,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     setState(() {});
   }
 
+  //新增煩惱-相簿匯入照片
   pickPhoto() async {
     final media = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (media == null) return;
@@ -106,6 +91,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     setState(() {});
   }
 
+  //新增煩惱-相簿匯入影片
   pickVideo() async {
     XFile? pickedVideo =
         await ImagePicker().pickVideo(source: ImageSource.gallery);
@@ -122,11 +108,28 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     setState(() {});
   }
 
+  //畫心情功能
+  Future<void> _navigateAndDisplayPaint(BuildContext context) async {
+    final media = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Draw_mood()),
+    );
+    log("media: " + media.toString());
+    if (media == null) return;
+    final imageTemporary = File(media.path);
+    this._media = imageTemporary;
+    if (_media != null) {
+      messages.insert(0, {"data": 5, "image": _media});
+      log("_media: " + _media.toString());
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     if (firstSpeaking == true) {
-      response("first"); //intro
+      response(); //intro
     }
 
     return Scaffold(
@@ -158,13 +161,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                           data type list
                           0 : robot message text 
                           1 : user message text
-                          2 : user message image from Camera 
-                          3 : user message image from Gallery
-                          4 : user message video from Camera  
-                          5 : user message video from Gallery
-                          6 : user message voice from Recording 
-                          增
-                          7 : user message image from Draw_paint() 
+                          2 : user message image 
+                          3 : user message video 
+                          4 : user message audio from Recording 
+                          5 : user message image from Draw_paint() 
                           */
                         ))),
             SizedBox(
@@ -185,7 +185,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                               icon: Icon(
                                 Icons.drive_folder_upload,
                                 color: Color.fromARGB(255, 164, 78, 38),
-                                size: 28,
+                                size: 30,
                               ),
                               menuList: [
                                 PopupMenuItem(
@@ -193,6 +193,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                                       leading: Icon(Icons.camera_alt_rounded),
                                       title: Text("照相"),
                                       onTap: () => {
+                                            ////照相選項
                                             takePhoto(),
                                             Navigator.pop(context)
                                           }),
@@ -203,6 +204,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                                           Icons.video_camera_front_rounded),
                                       title: Text("錄影"),
                                       onTap: () => {
+                                            //錄影選項
                                             recordVideo(),
                                             Navigator.pop(context)
                                           }),
@@ -212,13 +214,14 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                                       leading:
                                           Icon(Icons.keyboard_voice_rounded),
                                       title: Text("錄音"),
-                                      onTap: () => null),
+                                      onTap: () => null), //錄音選項
                                 ),
                                 PopupMenuItem(
                                     child: ListTile(
                                         leading: Icon(Icons.image_rounded),
                                         title: Text("從相簿匯入圖片"),
                                         onTap: () => {
+                                              //匯入圖片
                                               pickPhoto(),
                                               Navigator.pop(context)
                                             })),
@@ -227,6 +230,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                                         leading: Icon(Icons.video_collection),
                                         title: Text("從相簿匯入影片"),
                                         onTap: () => {
+                                              //匯入影片
                                               pickVideo(),
                                               Navigator.pop(context)
                                             })),
@@ -342,8 +346,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   //聊天功能
   Widget chat(String message, int data) {
     Container userChatContainer = Container();
-
-    //text chat container
+    //text container
     if (data < 2) {
       userChatContainer = Container(
         padding: EdgeInsets.only(left: 20, right: 20),
@@ -401,7 +404,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       );
     }
 
-    //picture chat container
+    //picture container
     if (data == 2) {
       userChatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
@@ -448,7 +451,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       );
     }
 
-    //video chat container
+    //video container
     if (data == 3) {
       userChatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
@@ -510,12 +513,45 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       );
     }
 
-    //增加7，回傳圖畫
-    if (data == 7) {
+    //painting container
+    if (data == 5) {
       userChatContainer = Container(
-          alignment: Alignment.centerRight,
-          child: Image.file(_paint!,
-              width: 200, height: 200, filterQuality: FilterQuality.medium));
+        padding: EdgeInsets.only(left: 10, right: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: Color.fromRGBO(255, 237, 151, 1),
+                  elevation: 2.0,
+                  //訊息文字格式
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                        Flexible(
+                            child: Container(
+                                child: Image.file(_media!,
+                                    width: 200,
+                                    height: 200,
+                                    filterQuality: FilterQuality.medium))),
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
     }
 
     return userChatContainer;
@@ -580,7 +616,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
             if (acceptDrawingMembers.contains(text)) {
               if (text == "是") {
                 //改
-                Paint();
+                _navigateAndDisplayPaint(context);
                 // Navigator.push(context,
                 //     MaterialPageRoute(builder: (context) => Draw_mood()));
               }
