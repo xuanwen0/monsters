@@ -35,18 +35,6 @@ class _Draw_moodState extends State<Draw_mood> {
   @override
   Widget build(BuildContext context) {
     List<Widget> actions;
-    // if (_finished) {
-    //   actions = <Widget>[
-    //     IconButton(
-    //       icon: const Icon(Icons.content_copy),
-    //       tooltip: '新畫板',
-    //       onPressed: () => setState(() {
-    //         _finished = false;
-    //         _controller = _newController();
-    //       }),
-    //     ),
-    //   ];
-    // } else {
     actions = <Widget>[
       IconButton(
           icon: const Icon(
@@ -69,21 +57,15 @@ class _Draw_moodState extends State<Draw_mood> {
       IconButton(
         icon: const Icon(Icons.check),
         tooltip: '完成',
-        //onPressed: () => _show(_controller.finish(), context)),
         onPressed: () {
-          screenshotController
-              .capture(delay: Duration(milliseconds: 10))
-              .then((capturedImage) async {
-            //ShowCapturedWidget(context, capturedImage!);
-            _saved(capturedImage);
-            Navigator.pop(context, _paint);
+          screenshotController.capture().then((capturedImage) async {
+            _savedAndPush(capturedImage);
           }).catchError((onError) {
             print(onError);
           });
         },
       )
     ];
-    // }
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 255, 254, 195),
       appBar: AppBar(
@@ -115,51 +97,7 @@ class _Draw_moodState extends State<Draw_mood> {
     );
   }
 
-  // Future<dynamic> ShowCapturedWidget(
-  //     BuildContext context, Uint8List capturedImage) {
-  //   setState(() {
-  //     _finished = true;
-  //   });
-  //   return showDialog(
-  //     useSafeArea: false,
-  //     context: context,
-  //     builder: (context) => Scaffold(
-  //       appBar: AppBar(
-  //         backgroundColor: Color.fromRGBO(160, 82, 45, 1),
-  //         centerTitle: true,
-  //         title: Text("心情圖畫", style: TextStyle(fontSize: 30.0)),
-  //         leading: IconButton(
-  //           icon: Icon(Icons.arrow_back_rounded),
-  //           tooltip: '重新畫',
-  //           color: Colors.white,
-  //           iconSize: 35.0,
-  //           onPressed: () {
-  //             Navigator.of(context).pop();
-  //           },
-  //         ),
-  //         actions: [
-  //           IconButton(
-  //             icon: const Icon(Icons.check_circle_rounded),
-  //             tooltip: '完成',
-  //             iconSize: 35.0,
-  //             onPressed: () {
-  //               _saved(capturedImage);
-  //               Navigator.of(context).pop(_paint);
-  //               // Navigator.push(context,
-  //               //     MaterialPageRoute(builder: (context) => AnnoyanceChat()));
-  //             },
-  //           )
-  //         ],
-  //       ),
-  //       body: Center(
-  //           child: capturedImage != null
-  //               ? Image.memory(capturedImage)
-  //               : Container()),
-  //     ),
-  //   );
-  // }
-
-  _saved(image) async {
+  _savedAndPush(image) async {
     final directory = (await getApplicationDocumentsDirectory()).path;
     String datetime = DateTime.now().toIso8601String() + '_MoodPaint';
     _paint = File('$directory/$datetime.png');
@@ -172,6 +110,8 @@ class _Draw_moodState extends State<Draw_mood> {
       name: DateTime.now().toIso8601String() + ".png",
     );
     print("儲存至相簿");
+
+    Navigator.pop(context, _paint);
   }
 }
 

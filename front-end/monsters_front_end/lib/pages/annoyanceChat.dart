@@ -327,15 +327,54 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       //回傳一個container裡面放照片
       userChatContainer = Container(
           alignment: Alignment.centerRight,
-          child: Image.file(_image!,
+          child: Image.file(_media!,
               width: 200, height: 200, filterQuality: FilterQuality.medium));
     }
-    //增加7，回傳圖畫
+    //paint chat container
     if (data == 7) {
       userChatContainer = Container(
-          alignment: Alignment.centerRight,
-          child: Image.file(_paint!,
-              width: 200, height: 200, filterQuality: FilterQuality.medium));
+        padding: EdgeInsets.only(left: 10, right: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: Color.fromRGBO(255, 237, 151, 1),
+                  elevation: 2.0,
+                  //訊息文字格式
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                        Flexible(
+                            child: Container(
+                                child: Image.file(_paint!,
+                                    width: (MediaQuery.of(context).size.width >
+                                            MediaQuery.of(context).size.height)
+                                        ? 288
+                                        : 162,
+                                    height: (MediaQuery.of(context).size.width <
+                                            MediaQuery.of(context).size.height)
+                                        ? 240
+                                        : 162,
+                                    filterQuality: FilterQuality.medium))),
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
     } else {
       userChatContainer = Container(
         padding: EdgeInsets.only(left: 20, right: 20),
@@ -515,8 +554,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       pickable = false;
       reply(hintAccept);
     } else if (chatRound == 3) {
-      reply(hintEmotionGrade);
+      null;
     } else if (chatRound == 4) {
+      reply(hintEmotionGrade);
+    } else if (chatRound == 5) {
       reply(hintAccept);
     } else {
       reply("還想新增更多煩惱嗎，再找下一位同伴來幫忙吧！");
@@ -533,10 +574,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     if (chatRound == 2) {
       reply(secHintDrawingAcception);
     }
-    if (chatRound == 3) {
+    if (chatRound == 4) {
       reply(secHintEmotionGrade);
     }
-    if (chatRound == 4) {
+    if (chatRound == 5) {
       reply(secHintSharingAcception);
     }
   }
@@ -559,21 +600,22 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
             userAnswers.add(text);
             reply("真是辛苦你了，想做一幅畫表達你的感受嗎？");
           }
+          //改多一步回傳圖畫
           if (chatRound == 3) {
             if (acceptDrawingMembers.contains(text)) {
               if (text == "是") {
-                //改
                 _navigateAndDisplayPaint(context);
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => Draw_mood()));
               }
               userAnswers.add(text!);
-              reply("給煩惱程度打一個分數～\n5分是最煩惱的喔！");
             } else {
               cannotRead();
             }
           }
           if (chatRound == 4) {
+            //回傳完圖畫才問煩惱指數
+            reply("給煩惱程度打一個分數～\n5分是最煩惱的喔！");
+          }
+          if (chatRound == 5) {
             if (emotionGradeMembers.contains(text)) {
               userAnswers.add(emotionGradeMembers.indexOf(text!));
               reply("想不想把這件事分享給別人呢？");
@@ -581,7 +623,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
               cannotRead();
             }
           }
-          if (chatRound == 5) {
+          if (chatRound == 6) {
             if (acceptShare == 0 || acceptShare == 1) {
               if (text == "是") {
                 userAnswers.add(emotionGradeMembers.indexOf("1"));
