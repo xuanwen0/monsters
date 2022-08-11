@@ -233,8 +233,9 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                                       leading:
                                           Icon(Icons.keyboard_voice_rounded),
                                       title: Text("錄音"),
-                                      onTap: () => //錄音選項
-                                          recordAudio(context)), //錄音選項
+                                      onTap: () =>
+                                          //錄音選項
+                                          recordAudio(context)),
                                 ),
                                 PopupMenuItem(
                                     child: ListTile(
@@ -282,6 +283,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                           onChanged: (value) {},
                         ),
                       ),
+
                       //傳送紐
                       trailing: IconButton(
                           icon: Icon(
@@ -356,7 +358,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                       ),
                     ),
             ),
-            Container(color: Color.fromRGBO(255, 237, 151, 1), height: 10),
+//            Container(color: Color.fromRGBO(255, 237, 151, 1), height: 10),
           ],
         ),
       ),
