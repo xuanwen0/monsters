@@ -9,6 +9,7 @@ import 'package:monsters_front_end/pages/history.dart';
 import 'package:video_player/video_player.dart';
 import '../model/annoyanceModel.dart';
 import '../repository/annoyanceRepo.dart';
+import 'package:monsters_front_end/pages/audio_main.dart';
 
 class AnnoyanceChat extends StatefulWidget {
   @override
@@ -125,6 +126,24 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     setState(() {});
   }
 
+  //錄音功能
+  recordAudio(BuildContext context) async {
+    final media = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AudioMainPage()),
+    );
+
+    log("media: " + media.toString());
+    if (media == null) return;
+    final imageTemporary = File(media.path);
+    this._media = imageTemporary;
+    if (_media != null) {
+      messages.insert(0, {"data": 4, "image": _media});
+      log("_media: " + _media.toString());
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
@@ -214,7 +233,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                                       leading:
                                           Icon(Icons.keyboard_voice_rounded),
                                       title: Text("錄音"),
-                                      onTap: () => null), //錄音選項
+                                      onTap: () => //錄音選項
+                                          recordAudio(context)), //錄音選項
                                 ),
                                 PopupMenuItem(
                                     child: ListTile(
@@ -501,6 +521,51 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                                           ? VideoPlayer(_videoPlayerController)
                                           : Container(),
                                 ))),
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+
+    //audio container
+    if (data == 4) {
+      userChatContainer = Container(
+        padding: EdgeInsets.only(left: 10, right: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: Color.fromRGBO(255, 237, 151, 1),
+                  elevation: 2.0,
+                  //訊息文字格式
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                        /*
+                        Flexible(
+                            child: Container(
+                                child: Sound.file(_media!,
+                                    width: 200,
+                                    height: 200,
+                                    filterQuality: FilterQuality.medium))),
+
+
+                                    */
                         SizedBox(
                           width: 3.0,
                         ),
