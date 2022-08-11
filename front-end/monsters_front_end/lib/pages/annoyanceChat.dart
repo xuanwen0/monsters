@@ -42,7 +42,6 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   String predictAns_accept = "";
   var userAnswers = [];
 
-  File? _paint;
   File? _media;
   late final VideoPlayerController _videoPlayerController;
   //final recorder = FlutterSoundRecorder();
@@ -120,6 +119,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     this._media = imageTemporary;
     if (_media != null) {
       messages.insert(0, {"data": 5, "image": _media});
+      response();
       log("_media: " + _media.toString());
     }
     setState(() {});
@@ -588,10 +588,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     if (chatRound == 2) {
       reply(secHintDrawingAcception);
     }
-    if (chatRound == 4) {
+    if (chatRound == 3) {
       reply(secHintEmotionGrade);
     }
-    if (chatRound == 5) {
+    if (chatRound == 4) {
       reply(secHintSharingAcception);
     }
   }
@@ -614,11 +614,13 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
             userAnswers.add(text);
             reply("真是辛苦你了，想做一幅畫表達你的感受嗎？");
           }
-          //改多一步回傳圖畫
           if (chatRound == 3) {
             if (acceptDrawingMembers.contains(text)) {
               if (text == "是") {
                 _navigateAndDisplayPaint(context);
+              }
+              if (text == "否") {
+                chatRound = 4;
               }
               userAnswers.add(text!);
             } else {
@@ -626,7 +628,6 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
             }
           }
           if (chatRound == 4) {
-            //回傳完圖畫才問煩惱指數
             reply("給煩惱程度打一個分數～\n5分是最煩惱的喔！");
           }
           if (chatRound == 5) {
