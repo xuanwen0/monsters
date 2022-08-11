@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -101,17 +102,16 @@ class _Draw_moodState extends State<Draw_mood> {
     final directory = (await getApplicationDocumentsDirectory()).path;
     String datetime = DateTime.now().toIso8601String() + '_MoodPaint';
     _paint = File('$directory/$datetime.png');
-    print(_paint);
     _paint?.writeAsBytes(image);
-    print("儲存至File");
+    log("儲存至File");
+    log("_paint = " + _paint.toString());
 
+    Navigator.pop(context, _paint);
     final result = await ImageGallerySaver.saveImage(
       image,
       name: DateTime.now().toIso8601String() + ".png",
     );
-    print("儲存至相簿");
-
-    Navigator.pop(context, _paint);
+    log("儲存至相簿");
   }
 }
 
