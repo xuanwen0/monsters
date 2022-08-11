@@ -43,7 +43,6 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   String predictAns_accept = "";
   var userAnswers = [];
 
-  File? _paint;
   File? _media;
   late final VideoPlayerController _videoPlayerController;
   //final recorder = FlutterSoundRecorder();
@@ -121,6 +120,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     this._media = imageTemporary;
     if (_media != null) {
       messages.insert(0, {"data": 5, "image": _media});
+      response();
       log("_media: " + _media.toString());
     }
     setState(() {});
@@ -635,8 +635,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       pickable = false;
       reply(hintAccept);
     } else if (chatRound == 3) {
-      reply(hintEmotionGrade);
+      null;
     } else if (chatRound == 4) {
+      reply(hintEmotionGrade);
+    } else if (chatRound == 5) {
       reply(hintAccept);
     } else {
       reply("還想新增更多煩惱嗎，再找下一位同伴來幫忙吧！");
@@ -682,18 +684,20 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
           if (chatRound == 3) {
             if (acceptDrawingMembers.contains(text)) {
               if (text == "是") {
-                //改
                 _navigateAndDisplayPaint(context);
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => Draw_mood()));
+              }
+              if (text == "否") {
+                chatRound = 4;
               }
               userAnswers.add(text!);
-              reply("給煩惱程度打一個分數～\n5分是最煩惱的喔！");
             } else {
               cannotRead();
             }
           }
           if (chatRound == 4) {
+            reply("給煩惱程度打一個分數～\n5分是最煩惱的喔！");
+          }
+          if (chatRound == 5) {
             if (emotionGradeMembers.contains(text)) {
               userAnswers.add(emotionGradeMembers.indexOf(text!));
               reply("想不想把這件事分享給別人呢？");
@@ -701,7 +705,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
               cannotRead();
             }
           }
-          if (chatRound == 5) {
+          if (chatRound == 6) {
             if (acceptShare == 0 || acceptShare == 1) {
               if (text == "是") {
                 userAnswers.add(emotionGradeMembers.indexOf("1"));
