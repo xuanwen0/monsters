@@ -4,9 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound_lite/public/flutter_sound_player.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
+import 'package:monsters_front_end/pages/audio_main.dart';
 import 'package:path_provider/path_provider.dart';
-
-const pathToReadAudio = 'audio_example.aac';
 
 class AudioPlayer {
   FlutterSoundPlayer? _audioPlayer;
@@ -30,7 +29,6 @@ class AudioPlayer {
         .startPlayer(fromURI: pathToReadAudio, whenFinished: whenFinished);
 
     final directory = (await getApplicationDocumentsDirectory()).path;
-    log(directory.toString());
   }
 
   Future _stop() async {
@@ -39,9 +37,17 @@ class AudioPlayer {
 
   Future togglePlaying({required VoidCallback whenFinished}) async {
     if (_audioPlayer!.isStopped) {
+      timerController.startTimer();
+      log("-------------");
+      log("audio player");
+      log("start dir:  " + pathToReadAudio.toString());
       await _play(whenFinished);
     } else {
       await _stop();
+      timerController.stopTimer();
+      log("-------------");
+      log("audio player");
+      log("stop dir:  " + pathToReadAudio.toString());
     }
   }
 }
