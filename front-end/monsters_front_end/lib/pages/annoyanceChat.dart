@@ -115,7 +115,11 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       MaterialPageRoute(builder: (context) => Draw_mood()),
     );
     log("media: " + media.toString());
-    if (media == null) return;
+    if (media == null) {
+      chatRound = 4;
+      response();
+    }
+    ;
     final imageTemporary = File(media.path);
     this._media = imageTemporary;
     if (_media != null) {
