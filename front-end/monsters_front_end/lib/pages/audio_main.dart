@@ -44,9 +44,11 @@ class _AudioMainPage extends State<AudioMainPage> {
     String datetime = DateTime.now().toIso8601String() + '_AudioRecord';
     _audio = File('$directory/$datetime.aac');
 
-    Navigator.pop(context, _audio);
+    log("-------------");
+    log("audio main");
+    log("_audio:" + _audio.toString());
 
-    log(_audio.toString());
+    Navigator.pop(context, _audio);
   }
 
   @override

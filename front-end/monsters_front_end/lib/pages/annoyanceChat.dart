@@ -1,11 +1,13 @@
-// ignore_for_file: use_key_in_widget_constructors, unnecessary_string_interpolations, prefer_const_constructors, file_names, avoid_unnecessary_containers, sized_box_for_whitespace, non_constant_identifier_names
+// ignore_for_file: use_key_in_widget_constructors, unnecessary_string_interpolations, prefer_const_constructors, file_names, avoid_unnecessary_containers, sized_box_for_whitespace, non_constant_identifier_names, prefer_const_literals_to_create_immutables
 import 'dart:developer';
 import 'dart:io';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
+import 'package:open_file/open_file.dart';
 import 'package:video_player/video_player.dart';
 import '../model/annoyanceModel.dart';
 import '../repository/annoyanceRepo.dart';
@@ -45,7 +47,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
   File? _media;
   late final VideoPlayerController _videoPlayerController;
-  //final recorder = FlutterSoundRecorder();
+  final audioPlayer = AudioPlayer();
+  bool isPlaying = false;
+  Duration duration = Duration.zero;
+  Duration position = Duration.zero;
 
   //新增煩惱-照相
   takePhoto() async {
@@ -114,12 +119,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       context,
       MaterialPageRoute(builder: (context) => Draw_mood()),
     );
-    log("media: " + media.toString());
-    if (media == null) {
-      chatRound = 4;
-      response();
-    }
-    ;
+    
+    if (media == null) return;
+
+
     final imageTemporary = File(media.path);
     this._media = imageTemporary;
     if (_media != null) {
@@ -131,21 +134,42 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   }
 
   //錄音功能
-  recordAudio(BuildContext context) async {
+  Future<void> recordAudio(BuildContext context) async {
     final media = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AudioMainPage()),
     );
+    _media = File(media.path);
 
+    log("-------------");
+    log("chat");
+    log("_media: " + _media.toString());
     log("media: " + media.toString());
-    if (media == null) return;
-    final imageTemporary = File(media.path);
-    this._media = imageTemporary;
-    if (_media != null) {
-      messages.insert(0, {"data": 4, "image": _media});
-      log("_media: " + _media.toString());
-    }
+    messages.insert(0, {"data": 4, "audio": media.path});
+
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    audioPlayer.onPlayerStateChanged.listen((state) {
+      setState(() {
+        isPlaying = state == PlayerState.PLAYING;
+      });
+    });
+
+    audioPlayer.onDurationChanged.listen((newDuration) {
+      setState(() {
+        duration = newDuration;
+      });
+    });
+
+    audioPlayer.onAudioPositionChanged.listen((newPosition) {
+      setState(() {
+        position = newPosition;
+      });
+    });
   }
 
   @override
@@ -362,7 +386,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                       ),
                     ),
             ),
-//            Container(color: Color.fromRGBO(255, 237, 151, 1), height: 10),
+            Container(color: Color.fromRGBO(255, 237, 151, 1), height: 10),
           ],
         ),
       ),
@@ -539,7 +563,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       );
     }
 
-    //audio container
+    //audio container try out
+    /*
     if (data == 4) {
       userChatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
@@ -562,16 +587,128 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                         SizedBox(
                           width: 3.0,
                         ),
-                        /*
                         Flexible(
                             child: Container(
-                                child: Sound.file(_media!,
-                                    width: 200,
-                                    height: 200,
-                                    filterQuality: FilterQuality.medium))),
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'The Audio',
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 20),
+                              Slider(
+                                min: 0,
+                                max: duration.inSeconds.toDouble(),
+                                value: position.inSeconds.toDouble(),
+                                onChanged: (value) async {},
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(formatTime(position)),
+                                    Text(formatTime(duration - position)),
+                                  ],
+                                ),
+                              ),
+                              CircleAvatar(
+                                radius: 35,
+                                child: IconButton(
+                                  icon: Icon(isPlaying
+                                      ? Icons.pause
+                                      : Icons.play_arrow),
+                                  iconSize: 30,
+                                  onPressed: () async {
+                                    if (isPlaying) {
+                                      await audioPlayer.pause();
 
+                                      log("-------------");
+                                      log("chat");
+                                      log("MESSAGE:::" + message);
+                                    } else {
+                                      log("-------------");
+                                      log("chat");
+                                      log("_media!.path.toString() " +
+                                          _media!.path.toString());
+                                      await audioPlayer.play(
+                                          _media!.path.toString(),
+                                          isLocal: true);
+                                    }
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                        )),
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+    */
 
-                                    */
+    //audio container testing
+    if (data == 4) {
+      userChatContainer = Container(
+        padding: EdgeInsets.only(left: 10, right: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: Color.fromRGBO(255, 237, 151, 1),
+                  elevation: 2.0,
+                  //訊息文字格式
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                        Flexible(
+                            child: Container(
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'The Audio',
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 20),
+                              CircleAvatar(
+                                radius: 35,
+                                child: IconButton(
+                                  icon: Icon(Icons.play_arrow),
+                                  iconSize: 30,
+                                  onPressed: () async {
+                                    openFile(
+                                      path: _media.toString(),
+                                    );
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                        )),
                         SizedBox(
                           width: 3.0,
                         ),
@@ -752,6 +889,24 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   void reply(String text) {
     messages.insert(0, {"data": 0, "message": text});
   }
+
+  void openFile({required String path}) {
+    log("-------------");
+    log("openFile: " + pathToReadAudio);
+    log("path: " + path);
+    OpenFile.open(pathToReadAudio);
+  }
+}
+
+String formatTime(Duration duration) {
+  String twoDigits(int n) => n.toString().padLeft(2, '0');
+  final minutes = twoDigits(duration.inMinutes.remainder(60));
+  final seconds = twoDigits(duration.inSeconds.remainder(60));
+
+  return [
+    if (duration.inMinutes > 0) minutes,
+    seconds,
+  ].join(':');
 }
 
 //彈出選單設置
