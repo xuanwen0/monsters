@@ -1,13 +1,13 @@
-// ignore_for_file: use_key_in_widget_constructors, unnecessary_string_interpolations, prefer_const_constructors, file_names, avoid_unnecessary_containers, sized_box_for_whitespace, non_constant_identifier_names, prefer_const_literals_to_create_immutables
+// ignore_for_file: use_key_in_widget_constructors, unnecessary_string_interpolations, prefer_const_constructors, file_names, avoid_unnecessary_containers, sized_box_for_whitespace, non_constant_identifier_names
 import 'dart:developer';
 import 'dart:io';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:monsters_front_end/API/audio_player.dart';
+import 'package:monsters_front_end/pages/Timer_Widget.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
-import 'package:open_file/open_file.dart';
 import 'package:video_player/video_player.dart';
 import '../model/annoyanceModel.dart';
 import '../repository/annoyanceRepo.dart';
@@ -20,12 +20,14 @@ class AnnoyanceChat extends StatefulWidget {
 
 class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   final messageInsert = TextEditingController();
-  int chatRound = 1; //測試待修改
+  final player = AudioPlayer();
+  final timerController = TimerController();
+  int chatRound = 0;
   String username = "Sean";
-  bool firstSpeaking = true;
   bool lastSpeaking = false;
-  bool robotSpeakable = false;
+  bool robotSpeakable = true;
   bool pickable = false;
+
   List<Map> messages = [];
   List<String> annoyTypeMembers = ["", "課業", "事業", "愛情", "友情", "親情", "其他"];
   List<String> emotionGradeMembers = ["", "1", "2", "3", "4", "5"];
@@ -46,11 +48,9 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   var userAnswers = [];
 
   File? _media;
+  File? _moodImage;
   late final VideoPlayerController _videoPlayerController;
-  final audioPlayer = AudioPlayer();
-  bool isPlaying = false;
-  Duration duration = Duration.zero;
-  Duration position = Duration.zero;
+  //final recorder = FlutterSoundRecorder();
 
   //新增煩惱-照相
   takePhoto() async {
@@ -61,8 +61,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     this._media = imageTemporary;
     if (_media != null) {
       messages.insert(0, {"data": 2, "image": _media});
-      response();
-      log("_media: " + _media.toString());
+      response(null, _media);
     }
     setState(() {});
   }
@@ -77,7 +76,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       ..initialize().then((_) {
         messages.insert(0, {"data": 3, "video": _media});
         _videoPlayerController.play();
-        response();
+        response(null, _media);
       });
     setState(() {});
   }
@@ -91,7 +90,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     this._media = imageTemporary;
     if (_media != null) {
       messages.insert(0, {"data": 2, "image": _media});
-      response();
+      response(null, _media);
     }
     setState(() {});
   }
@@ -106,77 +105,50 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       ..initialize().then((_) {
         messages.insert(0, {"data": 3, "video": _media});
         _videoPlayerController.play();
-
-        log("SIZE:  " + MediaQuery.of(context).size.width.toString());
-        response();
+        response(null, _media);
       });
-    setState(() {});
-  }
-
-  //畫心情功能
-  Future<void> _navigateAndDisplayPaint(BuildContext context) async {
-    final media = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Draw_mood()),
-    );
-    
-    if (media == null) return;
-
-
-    final imageTemporary = File(media.path);
-    this._media = imageTemporary;
-    if (_media != null) {
-      messages.insert(0, {"data": 5, "image": _media});
-      response();
-      log("_media: " + _media.toString());
-    }
     setState(() {});
   }
 
   //錄音功能
-  Future<void> recordAudio(BuildContext context) async {
+  recordAudio(BuildContext context) async {
     final media = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AudioMainPage()),
     );
-    _media = File(media.path);
 
-    log("-------------");
-    log("chat");
-    log("_media: " + _media.toString());
-    log("media: " + media.toString());
-    messages.insert(0, {"data": 4, "audio": media.path});
-
+    if (media == null) return;
+    final audioTemporary = File(media);
+    this._media = audioTemporary;
+    if (_media != null) {
+      messages.insert(0, {"data": 4, "audio": _media});
+      response(null, _media);
+    }
     setState(() {});
   }
 
-  @override
-  void initState() {
-    super.initState();
-    audioPlayer.onPlayerStateChanged.listen((state) {
-      setState(() {
-        isPlaying = state == PlayerState.PLAYING;
-      });
-    });
+  //畫心情功能
+  _navigateAndDisplayPaint(BuildContext context) async {
+    final moodImage = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Draw_mood()),
+    );
+    if (moodImage == null) {
+      reply("畫心情失敗，請通知官方平台");
+    } else {
+      final imageTemporary = File(moodImage.path);
+      this._moodImage = imageTemporary;
+      messages.insert(0, {"data": 5, "image": _moodImage});
+    }
 
-    audioPlayer.onDurationChanged.listen((newDuration) {
-      setState(() {
-        duration = newDuration;
-      });
-    });
-
-    audioPlayer.onAudioPositionChanged.listen((newPosition) {
-      setState(() {
-        position = newPosition;
-      });
-    });
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
-    if (firstSpeaking == true) {
-      response(); //intro
+    if (chatRound == 0) {
+      response("get intro"); //intro
     }
 
     return Scaffold(
@@ -261,9 +233,11 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                                       leading:
                                           Icon(Icons.keyboard_voice_rounded),
                                       title: Text("錄音"),
-                                      onTap: () =>
-                                          //錄音選項
-                                          recordAudio(context)),
+                                      onTap: () => {
+                                            //錄音選項
+                                            Navigator.pop(context),
+                                            recordAudio(context),
+                                          }),
                                 ),
                                 PopupMenuItem(
                                     child: ListTile(
@@ -322,12 +296,11 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                           onPressed: () {
                             if (messageInsert.text.isEmpty) {
                             } else {
-                              setState(() {
-                                robotSpeakable = true;
-                                messages.insert(0,
-                                    {"data": 1, "message": messageInsert.text});
-                              });
+                              robotSpeakable = true;
+                              messages.insert(0,
+                                  {"data": 1, "message": messageInsert.text});
                               response(messageInsert.text);
+                              setState(() {});
 
                               if (lastSpeaking == true) {
                                 Container(
@@ -364,6 +337,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                             ),
                           ),
                           onPressed: () {
+                            log(userAnswers.toString());
+/* 新增煩惱
                             annoyanceRepository.createAnnoyance(
                               Annoyance(
                                   id: 0,
@@ -377,10 +352,14 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                                   solve: 0,
                                   share: acceptShare),
                             );
+*/
+/* 前往歷史紀錄                           
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => History()));
+                          
+*/
                           },
                         ),
                       ),
@@ -563,103 +542,6 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       );
     }
 
-    //audio container try out
-    /*
-    if (data == 4) {
-      userChatContainer = Container(
-        padding: EdgeInsets.only(left: 10, right: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            //訊息框
-            Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Bubble(
-                  radius: Radius.circular(15.0),
-                  color: Color.fromRGBO(255, 237, 151, 1),
-                  elevation: 2.0,
-                  //訊息文字格式
-                  child: Padding(
-                    padding: EdgeInsets.all(2.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 3.0,
-                        ),
-                        Flexible(
-                            child: Container(
-                          padding: EdgeInsets.all(20),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'The Audio',
-                                style: TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 20),
-                              Slider(
-                                min: 0,
-                                max: duration.inSeconds.toDouble(),
-                                value: position.inSeconds.toDouble(),
-                                onChanged: (value) async {},
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(formatTime(position)),
-                                    Text(formatTime(duration - position)),
-                                  ],
-                                ),
-                              ),
-                              CircleAvatar(
-                                radius: 35,
-                                child: IconButton(
-                                  icon: Icon(isPlaying
-                                      ? Icons.pause
-                                      : Icons.play_arrow),
-                                  iconSize: 30,
-                                  onPressed: () async {
-                                    if (isPlaying) {
-                                      await audioPlayer.pause();
-
-                                      log("-------------");
-                                      log("chat");
-                                      log("MESSAGE:::" + message);
-                                    } else {
-                                      log("-------------");
-                                      log("chat");
-                                      log("_media!.path.toString() " +
-                                          _media!.path.toString());
-                                      await audioPlayer.play(
-                                          _media!.path.toString(),
-                                          isLocal: true);
-                                    }
-                                  },
-                                ),
-                              )
-                            ],
-                          ),
-                        )),
-                        SizedBox(
-                          width: 3.0,
-                        ),
-                      ],
-                    ),
-                  )),
-            ),
-          ],
-        ),
-      );
-    }
-    */
-
-    //audio container testing
     if (data == 4) {
       userChatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
@@ -697,12 +579,11 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                               CircleAvatar(
                                 radius: 35,
                                 child: IconButton(
-                                  icon: Icon(Icons.play_arrow),
+                                  icon: Icon(Icons.play_circle_fill),
                                   iconSize: 30,
                                   onPressed: () async {
-                                    openFile(
-                                      path: _media.toString(),
-                                    );
+                                    await player.togglePlaying(
+                                        whenFinished: () => {setState(() {})});
                                   },
                                 ),
                               )
@@ -746,7 +627,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                         ),
                         Flexible(
                             child: Container(
-                                child: Image.file(_media!,
+                                child: Image.file(_moodImage!,
                                     width: 200,
                                     height: 200,
                                     filterQuality: FilterQuality.medium))),
@@ -765,7 +646,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     return userChatContainer;
   }
 
-  //怪獸訊息(請選擇)
+  //怪獸訊息(提示輸入格式)
   void hint() {
     if (chatRound == 0) {
       reply(hintAnnoyType);
@@ -776,17 +657,15 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       pickable = false;
       reply(hintAccept);
     } else if (chatRound == 3) {
-      null;
-    } else if (chatRound == 4) {
       reply(hintEmotionGrade);
-    } else if (chatRound == 5) {
+    } else if (chatRound == 4) {
       reply(hintAccept);
     } else {
       reply("還想新增更多煩惱嗎，再找下一位同伴來幫忙吧！");
     }
   }
 
-  //提示使用者回覆格式錯誤
+  //提示輸入格式錯誤
   void cannotRead() {
     chatRound--;
     reply(hintCannotRead);
@@ -805,108 +684,97 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   }
 
   //確認是否符合選擇格式，符合->回覆 不符合->提示再次輸入
-  void response([String? text]) {
-    setState(() {
-      if (chatRound < 7) {
-        if (robotSpeakable == true) {
-          if (chatRound == 1) {
-            if (annoyTypeMembers.contains(text)) {
-              userAnswers.add(annoyTypeMembers.indexOf(text!));
-              reply("關於" + text + "的煩惱嗎？跟我說發生什麼事了吧！");
-            } else {
-              cannotRead();
-            }
-          }
-          if (chatRound == 2 || text == "說完了") {
-            //可以優化
-            userAnswers.add(text);
-            reply("真是辛苦你了，想做一幅畫表達你的感受嗎？");
-          }
-          if (chatRound == 3) {
-            if (acceptDrawingMembers.contains(text)) {
-              if (text == "是") {
-                _navigateAndDisplayPaint(context);
-              }
-              if (text == "否") {
-                chatRound = 4;
-              }
-              userAnswers.add(text!);
-            } else {
-              cannotRead();
-            }
-          }
-          if (chatRound == 4) {
-            reply("給煩惱程度打一個分數～\n5分是最煩惱的喔！");
-          }
-          if (chatRound == 5) {
-            if (emotionGradeMembers.contains(text)) {
-              userAnswers.add(emotionGradeMembers.indexOf(text!));
-              reply("想不想把這件事分享給別人呢？");
-            } else {
-              cannotRead();
-            }
-          }
-          if (chatRound == 6) {
-            if (acceptShare == 0 || acceptShare == 1) {
-              if (text == "是") {
-                userAnswers.add(emotionGradeMembers.indexOf("1"));
-                acceptShare = 1;
-              } else if (text == "否") {
-                acceptShare = 0;
-                userAnswers.add(emotionGradeMembers.indexOf("0"));
-              }
-              lastSpeaking = true;
-              reply("解決煩惱請馬上跟我說！我已經迫不及待想吃飯了！");
-            } else {
-              cannotRead();
-            }
-          }
-        }
-
-        //進入自動訊息
-        if (firstSpeaking == true) {
-          firstSpeaking = false;
-          int hourNow = DateTime.now().hour.toInt();
-          if (hourNow < 5) {
-            reply("凌晨睡不好嗎？\n有甚麼煩惱都可以跟我說"); //0~5點
-          } else if (hourNow < 12) {
-            reply("早上好啊！\n發生甚麼事情都可以跟我說"); //5~12點
-          } else if (hourNow < 14) {
-            reply("中午好啊！\n午餐吃了嗎？發生任何事都可以找我聊聊"); //12~14點
-          } else {
-            reply("下午好，今天過得如何呀！正在煩惱什麼事情嗎?"); //14~24點
-          }
-          reply("什麼樣子的煩惱呢？");
-        }
-
-        hint();
-        chatRound++;
+  Future<void> response([String? text, File? media]) async {
+    //進入時自動訊息問安
+    if (chatRound == 0) {
+      int hourNow = DateTime.now().hour.toInt();
+      if (hourNow < 5) {
+        reply("凌晨睡不好嗎？\n有甚麼煩惱都可以跟我說"); //0~5點
+      } else if (hourNow < 12) {
+        reply("早上好啊！\n發生甚麼事情都可以跟我說"); //5~12點
+      } else if (hourNow < 14) {
+        reply("中午好啊！\n午餐吃了嗎？發生任何事都可以找我聊聊"); //12~14點
+      } else {
+        reply("下午好，今天過得如何呀！正在煩惱什麼事情嗎?"); //14~24點
       }
-    });
+      reply("什麼樣子的煩惱呢？");
+    }
+
+    if (chatRound < 7) {
+      if (robotSpeakable == true) {
+        //取得類別
+        if (chatRound == 1) {
+          if (annoyTypeMembers.contains(text)) {
+            userAnswers.add(annoyTypeMembers.indexOf(text!));
+            reply("關於" + text + "的煩惱嗎？跟我說發生什麼事了吧！");
+          } else {
+            cannotRead();
+          }
+        }
+        //取得內容
+        if (chatRound == 2) {
+          log("--完成類別");
+          if (text != null) {
+            userAnswers.add(text);
+          }
+          if (media != null) {
+            userAnswers.add(media);
+          }
+          reply("真是辛苦你了，想做一幅畫表達你的感受嗎？");
+        }
+        //取得是否畫心情
+        if (chatRound == 3) {
+          log("--完成內容");
+          if (acceptDrawingMembers.contains(text)) {
+            if (text == "是") {
+              await _navigateAndDisplayPaint(context);
+            }
+            userAnswers.add(text);
+            //提示輸入煩惱程度
+            reply("給煩惱程度打一個分數～\n5分是最煩惱的喔！");
+          } else {
+            cannotRead();
+          }
+        }
+        //取得心情分數
+        if (chatRound == 4) {
+          log("--完成畫心情");
+          if (emotionGradeMembers.contains(text)) {
+            userAnswers.add(emotionGradeMembers.indexOf(text!));
+            reply("想不想把這件事分享給別人呢？");
+          } else {
+            cannotRead();
+          }
+        }
+        //取得是否分享
+        if (chatRound == 5) {
+          log("--完成心情分數");
+          if (acceptShare == 0 || acceptShare == 1) {
+            if (text == "是") {
+              userAnswers.add(emotionGradeMembers.indexOf("1"));
+              acceptShare = 1;
+            } else if (text == "否") {
+              acceptShare = 0;
+              userAnswers.add(emotionGradeMembers.indexOf("0"));
+            }
+            lastSpeaking = true;
+            reply("解決煩惱請馬上跟我說！我已經迫不及待想吃飯了！");
+          } else {
+            cannotRead();
+          }
+        }
+      }
+    }
+
+    hint();
+    chatRound++;
+    setState(() {});
   }
 
   //怪獸回覆
   void reply(String text) {
     messages.insert(0, {"data": 0, "message": text});
   }
-
-  void openFile({required String path}) {
-    log("-------------");
-    log("openFile: " + pathToReadAudio);
-    log("path: " + path);
-    OpenFile.open(pathToReadAudio);
-  }
-}
-
-String formatTime(Duration duration) {
-  String twoDigits(int n) => n.toString().padLeft(2, '0');
-  final minutes = twoDigits(duration.inMinutes.remainder(60));
-  final seconds = twoDigits(duration.inSeconds.remainder(60));
-
-  return [
-    if (duration.inMinutes > 0) minutes,
-    seconds,
-  ].join(':');
 }
 
 //彈出選單設置

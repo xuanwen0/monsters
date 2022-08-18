@@ -40,15 +40,12 @@ class _AudioMainPage extends State<AudioMainPage> {
   }
 
   void saveAudio() async {
+    /*
     final directory = (await getApplicationDocumentsDirectory()).path;
     String datetime = DateTime.now().toIso8601String() + '_AudioRecord';
     _audio = File('$directory/$datetime.aac');
-
-    log("-------------");
-    log("audio main");
-    log("_audio:" + _audio.toString());
-
-    Navigator.pop(context, _audio);
+    */
+    Navigator.pop(context, pathToReadAudio);
   }
 
   @override
@@ -137,7 +134,15 @@ class _AudioMainPage extends State<AudioMainPage> {
       label: Text(text,
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
       onPressed: () async {
-        await player.togglePlaying(whenFinished: () => setState(() {}));
+        await player.togglePlaying(
+            whenFinished: () => {timerController.stopTimer(), setState(() {})});
+        setState(() {});
+        final isPlaying = player.isPlaying;
+        if (isPlaying) {
+          timerController.startTimer();
+        } else {
+          timerController.stopTimer();
+        }
         setState(() {});
       },
     );
