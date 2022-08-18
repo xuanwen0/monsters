@@ -1,0 +1,5 @@
+註冊 : http://localhost:8080/member/create
+登入 : http://localhost:8080/member/login
+新增煩惱 : http://localhost:8080/annoyance/create
+煩惱查詢 : http://localhost:8080/annoyance/search?account=
+解答之書 : http://localhost:8080/answerbook/search
