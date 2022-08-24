@@ -17,7 +17,7 @@ public class Diary {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "account", nullable = false)
+    @Column(name = "account", nullable = false, length = 45)
     private String account;
 
     @Column(name = "content", nullable = false)

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Table(name = "personal_info")
 public class PersonalInfo {
     @Id
-    @Column(name = "`account`", nullable = false)
+    @Column(name = "`account`", nullable = false, length = 45)
     private String account;
 
     @Column(name = "`password`", nullable = false)
@@ -22,10 +22,10 @@ public class PersonalInfo {
     @Column(name = "`birthday`", nullable = false)
     private LocalDate birthday;
 
-    @Column(name = "`name`", nullable = false)
+    @Column(name = "`name`", nullable = false, length = 15)
     private String name;
 
-    @Column(name = "`nick_name`", nullable = false)
+    @Column(name = "`nick_name`", nullable = false, length = 45)
     private String nickName;
 
     @Column(name = "`gender`", nullable = false)
@@ -34,7 +34,7 @@ public class PersonalInfo {
     @Column(name = "`mail`", nullable = false)
     private String mail;
 
-    @Column(name = "`lock`")
+    @Column(name = "`lock`", length = 4)
     private String lock;
 
     @Column(name = "`photo`")
