@@ -4,6 +4,7 @@ import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/login_selfacount.dart';
+import 'package:monsters_front_end/pages/signUp.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -59,13 +60,13 @@ class _loginState extends State<LoginPage> {
                     Pinned.fromPins(
                       Pin(size: 50.0, middle: 0.5029),
                       Pin(start: 3.0, end: 3.0),
-                      child: Text(
+                      child: const Text(
                         '登入',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Segoe UI',
                           fontSize: 20,
-                          color: const Color(0xffffffff),
+                          color: Color(0xffffffff),
                         ),
                         softWrap: false,
                       ),
@@ -79,33 +80,42 @@ class _loginState extends State<LoginPage> {
           Align(
             alignment: Alignment(0.005, 0.283),
             child: SizedBox(
-              width: 225.0,
-              height: 39.0,
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffd8b963),
-                      borderRadius: BorderRadius.circular(7.0),
+                width: 225.0,
+                height: 39.0,
+                child: PageLink(
+                  links: [
+                    PageLinkInfo(
+                      transition: LinkTransition.Fade,
+                      ease: Curves.easeOut,
+                      duration: 0.3,
+                      pageBuilder: () => SignUp(),
                     ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 50.0, middle: 0.5029),
-                    Pin(start: 3.0, end: 3.0),
-                    child: Text(
-                      '註冊',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 20,
-                        color: const Color(0xffffffff),
+                  ],
+                  child: Stack(
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xffd8b963),
+                          borderRadius: BorderRadius.circular(7.0),
+                        ),
                       ),
-                      softWrap: false,
-                    ),
+                      Pinned.fromPins(
+                        Pin(size: 50.0, middle: 0.5029),
+                        Pin(start: 3.0, end: 3.0),
+                        child: const Text(
+                          '註冊',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 20,
+                            color: Color(0xffffffff),
+                          ),
+                          softWrap: false,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                )),
           ),
           //Google
           Align(
