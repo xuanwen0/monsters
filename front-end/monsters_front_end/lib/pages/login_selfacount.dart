@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
-import 'package:adobe_xd/pinned.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/login.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:monsters_front_end/pages/signUp.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login_selfacount extends StatefulWidget {
   @override
@@ -11,198 +16,215 @@ class Login_selfacount extends StatefulWidget {
 }
 
 class _Login_selfacountState extends State<Login_selfacount> {
+  final TextEditingController _accountController = TextEditingController();
+  final TextEditingController _pwdController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController _accountController = TextEditingController();
-    TextEditingController _pwdController = TextEditingController();
-    GlobalKey _formKey = GlobalKey<FormState>();
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      key: _formKey, //设置globalKey，用于后面获取FormState
       backgroundColor: const Color(0xfffffed4),
-      body: Stack(
-        children: <Widget>[
-          //標題
-          Pinned.fromPins(
-            Pin(size: 94.0, middle: 0.5),
-            Pin(size: 63.0, start: 100.0),
-            child: Text(
-              '登入',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 47,
-                color: Color.fromRGBO(160, 82, 45, 1),
-              ),
-              softWrap: false,
-            ),
-          ),
-          //帳號輸入框
-          Pinned.fromPins(
-              Pin(size: 230.0, end: 31.0), Pin(size: 54.0, middle: 0.308),
-              child: TextFormField(
-                autofocus: false,
-                controller: _accountController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    ///設定邊框四個角的弧度
-                    borderRadius: BorderRadius.all(Radius.circular(90)),
-
-                    ///用來配置邊框的樣式
-                    borderSide: BorderSide(
-                      ///設定邊框的顏色
-                      color: Color.fromRGBO(160, 82, 45, 1),
-                      width: 2.0,
-                    ),
-                  ),
-                  fillColor: Color.fromRGBO(255, 255, 255, 1),
-                  filled: true,
-                ),
-              )),
-          //password輸入框
-          Pinned.fromPins(
-            Pin(size: 230.0, end: 31.0),
-            Pin(size: 54.0, middle: 0.442),
-            child: TextFormField(
-              controller: _pwdController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(
-                  ///設定邊框四個角的弧度
-                  borderRadius: BorderRadius.all(Radius.circular(90)),
-
-                  ///用來配置邊框的樣式
-                  borderSide: BorderSide(
-                    ///設定邊框的顏色
-                    color: Color.fromRGBO(160, 82, 45, 1),
-                    width: 2.0,
-                  ),
-                ),
-                fillColor: Color.fromRGBO(255, 255, 255, 1),
-                filled: true,
-              ),
-              obscureText: true,
-            ),
-          ),
-          //帳號標題
-          Pinned.fromPins(
-            Pin(size: 60.0, start: 31.0),
-            Pin(size: 40.0, middle: 0.3117),
-            child: Text(
-              '帳號',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 30,
-                color: Color.fromRGBO(160, 82, 45, 1),
-              ),
-              softWrap: false,
-            ),
-          ),
-          //密碼標題
-          Pinned.fromPins(
-            Pin(size: 60.0, start: 31.0),
-            Pin(size: 40.0, middle: 0.4431),
-            child: Text(
-              '密碼',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 30,
-                color: Color.fromRGBO(160, 82, 45, 1),
-              ),
-              softWrap: false,
-            ),
-          ),
-          //忘記密碼
-          const Align(
-            alignment: Alignment(0.0, 0.06),
-            child: SizedBox(
-              width: 199.0,
-              height: 27.0,
-              child: Text(
-                '忘記密碼',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Segoe UI',
-                  fontSize: 20,
-                  color: Color.fromRGBO(136, 136, 136, 1),
-                ),
-                softWrap: false,
-              ),
-            ),
-          ),
-          //登入button
-          Align(
-            alignment: const Alignment(0.005, 0.304),
-            child: SizedBox(
-              width: 199.0,
-              height: 60.0,
-              child: Stack(
-                children: <Widget>[
-                  PageLink(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //上一頁
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child:
+                        // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
+                        PageLink(
                       links: [
                         PageLinkInfo(
                           transition: LinkTransition.Fade,
                           ease: Curves.easeOut,
                           duration: 0.3,
-                          pageBuilder: () => MainPage(),
+                          pageBuilder: () => LoginPage(),
                         ),
                       ],
-                      child: Stack(
-                        children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color.fromRGBO(160, 82, 45, 1),
-                              borderRadius: BorderRadius.circular(22.0),
-                            ),
+                      child: SvgPicture.string(
+                        _svg_ryq30,
+                        allowDrawingOutsideViewBox: true,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  //標題
+                  const Text(
+                    '登入',
+                    style: TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 47,
+                      color: Color.fromRGBO(160, 82, 45, 1),
+                    ),
+                  ),
+                  SizedBox(height: 50.0),
+                  //帳號
+                  TextFormField(
+                    autofocus: false,
+                    controller: _accountController,
+                    decoration: const InputDecoration(
+                      labelText: "帳號",
+                      hintText: '請輸入帳號',
+                      prefixIcon: Icon(Icons.person),
+                      border: OutlineInputBorder(
+                        ///設定邊框四個角的弧度
+                        borderRadius: BorderRadius.all(Radius.circular(90)),
+
+                        ///用來配置邊框的樣式
+                        borderSide: BorderSide(
+                          ///設定邊框的顏色
+                          color: Color.fromRGBO(160, 82, 45, 1),
+                          width: 2.0,
+                        ),
+                      ),
+                      fillColor: Color.fromRGBO(255, 255, 255, 1),
+                      filled: true,
+                    ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) {
+                      if (value!.isNotEmpty && value.length > 5) {
+                        return null;
+                      } else if (value.isNotEmpty && value.length < 6) {
+                        return '帳號需至少6數';
+                      } else {
+                        return '帳號不得空白';
+                      }
+                    },
+                  ),
+                  SizedBox(height: 10.0),
+                  //密碼
+                  TextFormField(
+                      controller: _pwdController,
+                      decoration: const InputDecoration(
+                        labelText: "密碼",
+                        hintText: '請輸入密碼',
+                        prefixIcon: Icon(Icons.password),
+                        border: OutlineInputBorder(
+                          ///設定邊框四個角的弧度
+                          borderRadius: BorderRadius.all(Radius.circular(90)),
+
+                          ///用來配置邊框的樣式
+                          borderSide: BorderSide(
+                            ///設定邊框的顏色
+                            color: Color.fromRGBO(160, 82, 45, 1),
+                            width: 2.0,
                           ),
-                          const Align(
-                            alignment: Alignment(0.0, 0.0),
-                            child: SizedBox(
-                              width: 60.0,
-                              height: 40.0,
-                              child: Text(
-                                '登入',
-                                style: TextStyle(
-                                  fontFamily: 'Segoe UI',
-                                  fontSize: 30,
-                                  color: Color.fromRGBO(255, 255, 255, 1),
-                                ),
-                                softWrap: false,
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
+                        fillColor: Color.fromRGBO(255, 255, 255, 1),
+                        filled: true,
+                      ),
+                      obscureText: true,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.isNotEmpty && value.length > 5) {
+                          return null;
+                        } else if (value.isNotEmpty && value.length < 6) {
+                          return '密碼需至少6數';
+                        } else {
+                          return '密碼不得空白';
+                        }
+                      }),
+                  SizedBox(height: 50.0),
+                  //忘記密碼
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        '忘記密碼',
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 20,
+                          color: Color.fromRGBO(160, 82, 45, 1),
+                        ),
                       )),
+                  SizedBox(height: 20.0),
+                  //登入
+                  SizedBox(
+                    width: 200.0,
+                    height: 60.0,
+                    child: RaisedButton(
+                      color: Color.fromRGBO(160, 82, 45, 1),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(22.0)),
+                      child: const Text(
+                        '登入',
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 30,
+                          color: Color.fromRGBO(255, 255, 255, 1),
+                        ),
+                        softWrap: false,
+                      ),
+                      onPressed: () {
+                        final isValidForm = _formKey.currentState!.validate();
+                        if (isValidForm) {
+                          pageRoute("User account");
+                          //login();
+                        }
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 20.0),
+                  //註冊
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: TextButton(
+                      child: Text(
+                        "沒有帳號嗎?  註冊",
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 20,
+                          color: Color.fromRGBO(160, 82, 45, 1),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => SignUp()));
+                      },
+                    ),
+                  )
                 ],
               ),
             ),
           ),
-          //上一頁
-          Pinned.fromPins(
-            Pin(size: 45.6, start: 14.4),
-            Pin(size: 41.1, start: 23.4),
-            child:
-                // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => LoginPage(),
-                ),
-              ],
-              child: SvgPicture.string(
-                _svg_ryq30,
-                allowDrawingOutsideViewBox: true,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
+  }
+
+  void login() async {
+    //登入功能 !!尚未完成!!
+    var response = await http.post(
+        Uri.parse("http://localhost:8080/member/login"),
+        body: ({
+          "account": _accountController.text,
+          "password": _pwdController.text
+        }));
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Account : ${body["account"]}")));
+      pageRoute(body["account"]);
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("查無此帳號")));
+    }
+  }
+
+  void pageRoute(String account) async {
+    //儲存account shared preferences (後用來判斷此裝置是否登入過)
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString("login", account);
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("${pref.getString("login")}")));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MainPage()));
   }
 }
 
