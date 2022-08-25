@@ -31,7 +31,6 @@ public class AnswerBookController {
             int index = (int) (Math.random() * answerBooksList.size());
             result.put("id", answerBooksList.get(index).getId());
             result.put("content", answerBooksList.get(index).getContent());
-//            System.out.println(answerBooksList.get(index).getId());
         } catch (Exception e) {
             e.printStackTrace();
         }

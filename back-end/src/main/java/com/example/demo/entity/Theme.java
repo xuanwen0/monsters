@@ -13,6 +13,6 @@ public class Theme {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "color_number", nullable = false)
+    @Column(name = "color_number", nullable = false, length = 10)
     private String colorNumber;
 }

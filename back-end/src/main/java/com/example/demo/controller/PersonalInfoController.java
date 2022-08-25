@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(value = "/personalInfo")
+@RequestMapping(value = "/member")
 public class PersonalInfoController {
     private final PersonalInfoService personalInfoService;
     private final PasswordEncoder passwordEncoder;

@@ -18,6 +18,7 @@ public class AllMonster {
 
     @Column(name = "rarity", nullable = false)
     private Integer rarity;
+
     @Column(name = "gif", nullable = false)
     private String gif;
 }
