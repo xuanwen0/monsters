@@ -1,24 +1,17 @@
-import 'dart:convert';
-
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
-import 'package:monsters_front_end/pages/forget_psw_auth.dart';
-import 'package:monsters_front_end/pages/home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/login.dart';
+import 'package:monsters_front_end/pages/login_selfacount.dart';
 
-import 'package:http/http.dart' as http;
-import 'package:monsters_front_end/pages/signUp.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-class Login_selfacount extends StatefulWidget {
+class Reset_Password extends StatefulWidget {
   @override
-  _Login_selfacountState createState() => _Login_selfacountState();
+  _Reset_PasswordState createState() => _Reset_PasswordState();
 }
 
-class _Login_selfacountState extends State<Login_selfacount> {
-  final TextEditingController _accountController = TextEditingController();
+class _Reset_PasswordState extends State<Reset_Password> {
   final TextEditingController _pwdController = TextEditingController();
+  final TextEditingController _checkpwdController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -58,7 +51,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                   ),
                   //標題
                   const Text(
-                    '登入',
+                    '重新設密碼',
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
                       fontSize: 47,
@@ -66,14 +59,14 @@ class _Login_selfacountState extends State<Login_selfacount> {
                     ),
                   ),
                   SizedBox(height: 50.0),
-                  //帳號
+                  //密碼
                   TextFormField(
                     autofocus: false,
-                    controller: _accountController,
+                    controller: _pwdController,
                     decoration: const InputDecoration(
-                      labelText: "帳號",
-                      hintText: '請輸入帳號',
-                      prefixIcon: Icon(Icons.person),
+                      labelText: "密碼",
+                      hintText: '請輸入新的密碼',
+                      prefixIcon: Icon(Icons.password),
                       border: OutlineInputBorder(
                         ///設定邊框四個角的弧度
                         borderRadius: BorderRadius.all(Radius.circular(90)),
@@ -88,24 +81,25 @@ class _Login_selfacountState extends State<Login_selfacount> {
                       fillColor: Color.fromRGBO(255, 255, 255, 1),
                       filled: true,
                     ),
+                    obscureText: true,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value!.isNotEmpty && value.length > 5) {
                         return null;
                       } else if (value.isNotEmpty && value.length < 6) {
-                        return '帳號需至少6數';
+                        return '密碼需至少6數';
                       } else {
-                        return '帳號不得空白';
+                        return '密碼不得空白';
                       }
                     },
                   ),
                   SizedBox(height: 10.0),
-                  //密碼
+                  //確認密碼
                   TextFormField(
-                      controller: _pwdController,
+                      controller: _checkpwdController,
                       decoration: const InputDecoration(
-                        labelText: "密碼",
-                        hintText: '請輸入密碼',
+                        labelText: "確認密碼",
+                        hintText: '請再次輸入密碼',
                         prefixIcon: Icon(Icons.password),
                         border: OutlineInputBorder(
                           ///設定邊框四個角的弧度
@@ -124,33 +118,18 @@ class _Login_selfacountState extends State<Login_selfacount> {
                       obscureText: true,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
-                        if (value!.isNotEmpty && value.length > 5) {
-                          return null;
+                        if (value!.isEmpty) {
+                          return '確認密碼不得空白';
                         } else if (value.isNotEmpty && value.length < 6) {
-                          return '密碼需至少6數';
+                          return '確認密碼需至少6數';
+                        } else if (value == _pwdController.text) {
+                          return null;
                         } else {
-                          return '密碼不得空白';
+                          return '與密碼不一致';
                         }
                       }),
                   SizedBox(height: 50.0),
-                  //忘記密碼
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Forget_password_Auth()));
-                      },
-                      child: const Text(
-                        '忘記密碼',
-                        style: TextStyle(
-                          fontFamily: 'Segoe UI',
-                          fontSize: 20,
-                          color: Color.fromRGBO(160, 82, 45, 1),
-                        ),
-                      )),
-                  SizedBox(height: 20.0),
-                  //登入
+                  //確認
                   SizedBox(
                     width: 200.0,
                     height: 60.0,
@@ -159,7 +138,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(22.0)),
                       child: const Text(
-                        '登入',
+                        '確認',
                         style: TextStyle(
                           fontFamily: 'Segoe UI',
                           fontSize: 30,
@@ -170,31 +149,14 @@ class _Login_selfacountState extends State<Login_selfacount> {
                       onPressed: () {
                         final isValidForm = _formKey.currentState!.validate();
                         if (isValidForm) {
-                          pageRoute("User account");
-                          //login();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Login_selfacount()));
                         }
                       },
                     ),
                   ),
-                  SizedBox(height: 20.0),
-                  //註冊
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: TextButton(
-                      child: Text(
-                        "沒有帳號嗎?  註冊",
-                        style: TextStyle(
-                          fontFamily: 'Segoe UI',
-                          fontSize: 20,
-                          color: Color.fromRGBO(160, 82, 45, 1),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => SignUp()));
-                      },
-                    ),
-                  )
                 ],
               ),
             ),
@@ -202,35 +164,6 @@ class _Login_selfacountState extends State<Login_selfacount> {
         ),
       ),
     );
-  }
-
-  void login() async {
-    //登入功能 !!尚未完成!!
-    var response = await http.post(
-        Uri.parse("http://localhost:8080/member/login"),
-        body: ({
-          "account": _accountController.text,
-          "password": _pwdController.text
-        }));
-    if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Account : ${body["account"]}")));
-      pageRoute(body["account"]);
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("查無此帳號")));
-    }
-  }
-
-  void pageRoute(String account) async {
-    //儲存account shared preferences (後用來判斷此裝置是否登入過)
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString("login", account);
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("${pref.getString("login")}")));
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => MainPage()));
   }
 }
 
