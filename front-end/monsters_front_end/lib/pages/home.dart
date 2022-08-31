@@ -3,8 +3,8 @@ import 'package:adobe_xd/page_link.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
-import 'package:monsters_front_end/pages/annoyance.dart';
 import 'package:monsters_front_end/pages/annoyanceChat.dart';
+import 'package:monsters_front_end/pages/diaryChat.dart';
 import 'package:monsters_front_end/pages/drawer_setting.dart';
 import 'package:monsters_front_end/pages/drawer_userInformation.dart';
 import 'package:monsters_front_end/pages/history.dart';
@@ -423,6 +423,10 @@ class _MainPageState extends State<MainPage>
                           ),
                           onClick: () {
                             animationController.reverse();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => diaryChat()));
                           },
                         ),
                       ),
