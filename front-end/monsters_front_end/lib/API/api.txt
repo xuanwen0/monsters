@@ -3,3 +3,17 @@
 新增煩惱 : http://localhost:8080/annoyance/create
 煩惱查詢 : http://localhost:8080/annoyance/search?account=
 解答之書 : http://localhost:8080/answerbook/search
+
+社群:
+http://localhost:8080/social/search
+
+歷史:
+http://localhost:8080/annoyance/search?account=
+
+圖鑑:
+http://localhost:8080/monsters/search?account=
+
+解決煩惱:
+http://localhost:8080/annoyance/solved
+
+
