@@ -1,6 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:monsters_front_end/API/google_sign_in_API.dart';
 import 'package:monsters_front_end/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -74,6 +75,7 @@ Widget GetDrawer(BuildContext context) {
               onTap: () async {
                 SharedPreferences pref = await SharedPreferences.getInstance();
                 await pref.clear();
+                await GoogleSignInApi.signout();
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text("登出!!")));
                 Navigator.push(context,
