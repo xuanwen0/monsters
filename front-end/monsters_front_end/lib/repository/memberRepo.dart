@@ -16,7 +16,7 @@ class MemberRepository implements MemberApiDataSource {
   }
 
   @override
-  Future<Map<String, dynamic>?> login(Member member) {
+  Future<String> login(Member member) {
     return _login(Uri.parse('$domain/member/login'), member);
   }
 
@@ -43,23 +43,26 @@ class MemberRepository implements MemberApiDataSource {
     }
   }
 
-  Future<Map<String, dynamic>?> _login(
+  Future<String> _login(
     Uri url,
     Member member,
   ) async {
     try {
-      final request =
-          await client.get(url, headers: {'Content-type': 'application/json'});
+      final request = await client.post(url,
+          headers: {'Content-type': 'application/json'},
+          body: json.encode(member));
       if (request.statusCode == 200) {
-        Map<String, dynamic> member = jsonDecode(request.body);
-        return Future.value(member);
+        log(
+          request.body,
+          name: request.statusCode.toString(),
+        );
+        return request.body;
       } else {
-        Map<String, dynamic> member = jsonDecode(request.body);
-        return member;
+        return request.body;
       }
     } catch (e) {
-      print(e.toString());
-      return null;
+      print(e);
+      return e.toString();
     }
   }
 }

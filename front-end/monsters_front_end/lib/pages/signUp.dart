@@ -396,34 +396,6 @@ class _SignUpState extends State<SignUp> {
                               Color.fromRGBO(160, 82, 45, 1), // 指定選中時勾選框的顏色
                         ),
                       ),
-                      // Expanded(
-                      //   child: RadioListTile<int>(
-                      //     contentPadding: EdgeInsets.all(0.0),
-                      //     shape: RoundedRectangleBorder(
-                      //         borderRadius:
-                      //             BorderRadius.circular(5.0)),
-                      //     value: 2,
-                      //     groupValue: groupValue,
-                      //     tileColor: Colors.grey[200],
-                      //     onChanged: (value) {
-                      //       setState(() {
-                      //         groupValue = value!;
-                      //       });
-                      //     },
-                      //     title: const Text(
-                      //       "其他",
-                      //       style: TextStyle(
-                      //         fontFamily: 'Segoe UI',
-                      //         fontSize: 18,
-                      //         color: Color.fromRGBO(160, 82, 45, 1),
-                      //       ),
-                      //       softWrap: false,
-                      //     ),
-                      //     dense: true,
-                      //     activeColor: Color.fromRGBO(
-                      //         160, 82, 45, 1), // 指定選中時勾選框的顏色
-                      //   ),
-                      // )
                     ]),
                     SizedBox(height: 10.0),
                     //使用條款與隱私權政策
@@ -447,7 +419,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                         TextButton(
                             onPressed: () {},
-                            child: Text(
+                            child: const Text(
                               '使用條款',
                               style: TextStyle(
                                 fontFamily: 'Segoe UI',
@@ -514,28 +486,17 @@ class _SignUpState extends State<SignUp> {
   void signUp() async {
     //註冊功能 !!尚未完成!!
     if (isCheck == true) {
-      /*
-      var response =
-          await http.post(Uri.parse("http://localhost:8080/member/create"),
-              body: ({
-                "account": _accountController.text,
-                "password": _pwdController.text,
-                "mail": _mailController.text,
-                "name": _fullnameController.text,
-                "nick_name": _nicknameController.text,
-                "birthday": date.toString(),
-                "gender": groupValue.toString(),
-              }));
-      var data = json.decode(response.body);
-      if (data == 'Error') {
-        final body = jsonDecode(response.body);
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("此帳號已經存在")));
-      } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("註冊成功 ${data}")));
-      }
-*/
+      memberRepository.createMember(
+        Member(
+          account: _accountController.text,
+          birthday: date.toString(),
+          gender: groupValue,
+          mail: _mailController.text,
+          name: _fullnameController.text,
+          nick_name: _nicknameController.text,
+          password: _pwdController.text,
+        ),
+      );
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => Login_selfacount()));
     } else {
