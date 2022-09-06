@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
+import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/services.dart';
-import 'package:monsters_front_end/pages/home.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/login_selfacount.dart';
 import 'package:monsters_front_end/pages/signUp.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-
-import '../API/google_sign_in_API.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -43,100 +40,33 @@ class _loginState extends State<LoginPage> {
             child: SizedBox(
               width: 225.0,
               height: 39.0,
-              child: RaisedButton(
-                  color: Color.fromRGBO(216, 185, 99, 1),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7.0)),
-                  child: const Text(
-                    '登入',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                    ),
-                    softWrap: false,
+              child: PageLink(
+                links: [
+                  PageLinkInfo(
+                    transition: LinkTransition.Fade,
+                    ease: Curves.easeOut,
+                    duration: 0.3,
+                    pageBuilder: () => Login_selfacount(),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Login_selfacount()));
-                  }),
-            ),
-          ),
-          //註冊
-          Align(
-            alignment: Alignment(0.005, 0.283),
-            child: SizedBox(
-              width: 225.0,
-              height: 39.0,
-              child: RaisedButton(
-                  color: Color.fromRGBO(216, 185, 99, 1),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7.0)),
-                  child: const Text(
-                    '註冊',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                    ),
-                    softWrap: false,
-                  ),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SignUp()));
-                  }),
-            ),
-          ),
-          //Google
-          Align(
-            alignment: Alignment(0.005, 0.426),
-            child: SizedBox(
-                width: 225.0,
-                height: 39.0,
-                child: SignInButton(
-                  Buttons.Google,
-                  text: "從 Google 登入",
-                  onPressed: signIn,
-                )),
-          ),
-          //line
-          Align(
-            alignment: Alignment(0.005, 0.57),
-            child: SizedBox(
-              width: 225.0,
-              height: 39.0,
-              child: ColoredBox(
-                color: Color.fromARGB(255, 74, 163, 77),
+                ],
                 child: Stack(
                   children: <Widget>[
-                    Pinned.fromPins(
-                      Pin(size: 30.0, start: 10.0),
-                      Pin(start: 5.0, end: 4.0),
-                      child:
-                          // Adobe XD layer: 'appicon_01_f9ed1cf0…' (shape)
-                          Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image:
-                                const AssetImage('assets/image/icon_line.jpg'),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xffd8b963),
+                        borderRadius: BorderRadius.circular(7.0),
                       ),
                     ),
                     Pinned.fromPins(
-                      Pin(size: 110.0, middle: 0.27),
-                      Pin(start: 8.0, end: 4.0),
-                      child: Text(
-                        '從LINE登入',
+                      Pin(size: 50.0, middle: 0.5029),
+                      Pin(start: 3.0, end: 3.0),
+                      child: const Text(
+                        '登入',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Segoe UI',
-                          fontSize: 15,
-                          color: Colors.white,
+                          fontSize: 20,
+                          color: Color(0xffffffff),
                         ),
                         softWrap: false,
                       ),
@@ -146,33 +76,190 @@ class _loginState extends State<LoginPage> {
               ),
             ),
           ),
+          //註冊
+          Align(
+            alignment: Alignment(0.005, 0.283),
+            child: SizedBox(
+                width: 225.0,
+                height: 39.0,
+                child: PageLink(
+                  links: [
+                    PageLinkInfo(
+                      transition: LinkTransition.Fade,
+                      ease: Curves.easeOut,
+                      duration: 0.3,
+                      pageBuilder: () => SignUp(),
+                    ),
+                  ],
+                  child: Stack(
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xffd8b963),
+                          borderRadius: BorderRadius.circular(7.0),
+                        ),
+                      ),
+                      Pinned.fromPins(
+                        Pin(size: 50.0, middle: 0.5029),
+                        Pin(start: 3.0, end: 3.0),
+                        child: const Text(
+                          '註冊',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 20,
+                            color: Color(0xffffffff),
+                          ),
+                          softWrap: false,
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
+          ),
+          //Google
+          Align(
+            alignment: Alignment(0.005, 0.426),
+            child: SizedBox(
+              width: 225.0,
+              height: 39.0,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xffffffff),
+                      borderRadius: BorderRadius.circular(7.0),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 30.0, start: 15.0),
+                    Pin(start: 5.0, end: 4.0),
+                    child:
+                        // Adobe XD layer: '2824095' (shape)
+                        Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image:
+                              const AssetImage('assets/image/icon_google.jpg'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 137.0, end: 23.0),
+                    Pin(start: 5.0, end: 4.0),
+                    child: Text(
+                      '從Google登入',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 16,
+                        color: const Color(0xffa0522d),
+                      ),
+                      softWrap: false,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          //line
+          Align(
+            alignment: Alignment(0.005, 0.57),
+            child: SizedBox(
+              width: 225.0,
+              height: 39.0,
+              child: Stack(
+                children: <Widget>[
+                  SizedBox.expand(
+                      child: SvgPicture.string(
+                    _svg_xppp1q,
+                    allowDrawingOutsideViewBox: true,
+                    fit: BoxFit.fill,
+                  )),
+                  Pinned.fromPins(
+                    Pin(size: 30.0, start: 15.0),
+                    Pin(start: 5.0, end: 4.0),
+                    child:
+                        // Adobe XD layer: 'appicon_01_f9ed1cf0…' (shape)
+                        Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: const AssetImage('assets/image/icon_line.jpg'),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 110.0, middle: 0.687),
+                    Pin(start: 5.0, end: 4.0),
+                    child: Text(
+                      '從LINE登入',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 16,
+                        color: const Color(0xffa0522d),
+                      ),
+                      softWrap: false,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           //fb
           Pinned.fromPins(
             Pin(size: 225.0, middle: 0.5027),
             Pin(size: 39.0, end: 106.0),
-            child: SignInButton(
-              Buttons.FacebookNew,
-              text: "從 Facebook 登入",
-              onPressed: () {},
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xffffffff),
+                    borderRadius: BorderRadius.circular(7.0),
+                  ),
+                ),
+                Pinned.fromPins(
+                  Pin(size: 30.0, start: 15.0),
+                  Pin(start: 5.0, end: 4.0),
+                  child:
+                      // Adobe XD layer: 'Facebook-logo-2021' (shape)
+                      Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image:
+                            const AssetImage('assets/image/icon_facebook.png'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                Pinned.fromPins(
+                  Pin(size: 165.0, end: 9.0),
+                  Pin(start: 5.0, end: 4.0),
+                  child: Text(
+                    '從Facebook登入',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 16,
+                      color: const Color(0xffa0522d),
+                    ),
+                    softWrap: false,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
       ),
     );
   }
-
-  Future<GoogleSignInAccount?> signIn() async {
-    final user = await GoogleSignInApi.signin();
-    if (user == null) {
-      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      //   content: Text('sign in Google failed'),
-      // ));
-    } else {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainPage()));
-      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      //   content: Text('sign in Google Account'),
-      // ));
-    }
-  }
 }
+
+const String _svg_xppp1q =
+    '<svg viewBox="94.0 580.0 225.0 39.0" ><path transform="translate(94.0, 580.0)" d="M 7 0 L 218 0 C 221.8659973144531 0 225 3.134006500244141 225 7 L 225 32 C 225 35.86599349975586 221.8659973144531 39 218 39 L 7 39 C 3.134006500244141 39 0 35.86599349975586 0 32 L 0 7 C 0 3.134006500244141 3.134006500244141 0 7 0 Z" fill="#ffffff" stroke="none" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';
