@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monsters_front_end/main.dart';
-import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/manual.dart';
@@ -26,7 +24,7 @@ var len;
 
 void getMaxIdByAccount(String account) {
   final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
-  Future<Data> annoyances = annoyanceRepository
+  final Future<Data> annoyances = annoyanceRepository
       .searchAnnoyanceByAccount(account)
       .then((value) => Data.fromJson(value!));
   annoyances.then((value) => len = value.data.length.toString());
@@ -74,10 +72,8 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
-  //預設標籤
   int selectionTab_type = 1;
   int selectionTab_solve = 0;
-  //煩惱標籤狀態，已解決和未解決標籤 enabled=ture
   bool selectionTab_solve_enabled = false;
   //控制執行續
   late Timer _timer;
@@ -89,6 +85,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   var index;
   @override
   Widget build(BuildContext context) {
+    getMaxIdByAccount('Lin');
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     int historyCount = historyContents.length < 0 ? 0 : historyContents.length;
     if (reset == false) {
