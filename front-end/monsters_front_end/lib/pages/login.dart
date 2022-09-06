@@ -3,6 +3,7 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monsters_front_end/pages/FacebookLogin.dart';
 import 'package:monsters_front_end/pages/login_selfacount.dart';
 import 'package:monsters_front_end/pages/signUp.dart';
 
@@ -213,46 +214,53 @@ class _loginState extends State<LoginPage> {
           ),
           //fb
           Pinned.fromPins(
-            Pin(size: 225.0, middle: 0.5027),
+            Pin(size: 255.0, middle: 0.5),
             Pin(size: 39.0, end: 106.0),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(7.0),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 30.0, start: 15.0),
-                  Pin(start: 5.0, end: 4.0),
-                  child:
-                      // Adobe XD layer: 'Facebook-logo-2021' (shape)
-                      Container(
+            child: FlatButton(
+              onLongPress: null,
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FacebookLogin()),
+              ),
+              child: Stack(
+                children: <Widget>[
+                  Container(
                     decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image:
-                            const AssetImage('assets/image/icon_facebook.png'),
-                        fit: BoxFit.cover,
+                      color: const Color(0xffffffff),
+                      borderRadius: BorderRadius.circular(7.0),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 30.0, start: 15.0),
+                    Pin(start: 5.0, end: 4.0),
+                    child:
+                        // Adobe XD layer: 'Facebook-logo-2021' (shape)
+                        Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: const AssetImage(
+                              'assets/image/icon_facebook.png'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 165.0, end: 9.0),
-                  Pin(start: 5.0, end: 4.0),
-                  child: Text(
-                    '從Facebook登入',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 16,
-                      color: const Color(0xffa0522d),
+                  Pinned.fromPins(
+                    Pin(size: 165.0, end: 9.0),
+                    Pin(start: 5.0, end: 4.0),
+                    child: Text(
+                      '從Facebook登入',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 16,
+                        color: const Color(0xffa0522d),
+                      ),
+                      softWrap: false,
                     ),
-                    softWrap: false,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
