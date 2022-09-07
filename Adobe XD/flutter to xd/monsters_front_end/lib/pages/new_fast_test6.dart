@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+//與動物相處
 class new_fastTest6 extends StatelessWidget {
   new_fastTest6({
     Key? key,

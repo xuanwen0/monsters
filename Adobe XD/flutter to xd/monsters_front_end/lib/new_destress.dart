@@ -11,14 +11,14 @@ class new_destress extends StatelessWidget {
   final VoidCallback warmbath;
   final VoidCallback gotothetrip;
   new_destress({
-    Key key,
-    this.exercise,
-    this.handmassage,
-    this.animaltogether,
-    this.drinktea,
-    this.deepthought,
-    this.warmbath,
-    this.gotothetrip,
+    Key? key,
+    required this.exercise,
+    required this.handmassage,
+    required this.animaltogether,
+    required this.drinktea,
+    required this.deepthought,
+    required this.warmbath,
+    required this.gotothetrip,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

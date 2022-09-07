@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class new_fastTest7 extends StatelessWidget {
   new_fastTest7({
-    Key key,
+    Key? key,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

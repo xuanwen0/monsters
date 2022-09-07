@@ -88,6 +88,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/image/
+    - assets/fast_item/
     - assets/launcher/
   # To add assets to your application, add an assets section, like this:
   # assets:

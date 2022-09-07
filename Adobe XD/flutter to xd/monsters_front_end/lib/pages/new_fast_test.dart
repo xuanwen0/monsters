@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class new_fastTest1 extends StatelessWidget {
-  new_fastTest1({
+//旅行
+class new_fastTest extends StatelessWidget {
+  new_fastTest({
     Key? key,
   }) : super(key: key);
   @override
@@ -137,6 +138,7 @@ class new_fastTest1 extends StatelessWidget {
             child:
                 // Adobe XD layer: 'travel_happy_young_…' (shape)
                 Container(
+                    /*
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: const AssetImage('assetstemp/go to the trip2.png'),
@@ -145,7 +147,8 @@ class new_fastTest1 extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 border: Border.all(width: 2.5, color: const Color(0xffa0522d)),
               ),
-            ),
+              */
+                    ),
           ),
         ],
       ),
