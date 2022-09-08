@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class new_fastTest8 extends StatelessWidget {
-  new_fastTest8({
+//喝花草茶
+class new_fastTest5 extends StatelessWidget {
+  new_fastTest5({
     Key? key,
   }) : super(key: key);
   @override
@@ -13,10 +14,10 @@ class new_fastTest8 extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           Pinned.fromPins(
-            Pin(size: 94.0, middle: 0.5),
+            Pin(size: 188.0, middle: 0.5),
             Pin(size: 63.0, start: 11.0),
             child: Text(
-              '運動',
+              '喝花草茶',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
                 fontSize: 47,
@@ -38,22 +39,19 @@ class new_fastTest8 extends StatelessWidget {
           ),
           Pinned.fromPins(
             Pin(start: 25.0, end: 24.0),
-            Pin(size: 974.0, start: 90.0),
-            child: SingleChildScrollView(
-              primary: false,
-              child: Text(
-                '運動是極好的紓壓方式，根據哈佛醫學院的研究，放鬆心靈前必須先放鬆身體，藉由放鬆\n肢體以減少緊張的情緒。且到戶外呼吸新鮮空氣，有助放鬆、減輕壓力。\n\n激烈的運動，例如跑步、游泳、爬山、球類運動，會讓血液循環加快、胸喘、心跳加速、汗流\n浹背、身體痠痛等，增加心肺功能，且腦部會分泌腦內嗎啡，從而紓解壓力。緩慢的運動，如瑜伽、太極拳、八段錦，一般是由強度小、節奏較慢動作組合而成，這種可將身體和精神集中於一體的伸展運動，有利於促進血液循環，針對關節、肌肉、內臟、思維都有鍛鍊作用。達到身體和心靈的放鬆，讓人學會呼吸，學會思考。\n\n無論進行哪種運動，前提是要有興趣，否則也不會讓你開心。\n\n以下推薦【紓壓瑜珈】體位法',
-                style: TextStyle(
-                  fontFamily: 'Segoe UI',
-                  fontSize: 27,
-                  color: const Color(0xffa0522d),
-                ),
+            Pin(size: 444.0, start: 90.0),
+            child: Text(
+              '植物醫學教授說，花草茶是很棒的減壓劑，不妨試試貓薄荷、檸檬香蜂草、西番蓮花、啤酒花、洋甘菊。\n花草茶種類繁多，對人體的裨益更有不同，不是所有人都適合飲用，建議選購前先向醫師諮詢確認，且購買時應以包裝完整、標示清楚、無化學藥劑異味為原則，飲用時則應先把用熱水沖泡的第一泡倒掉，從第二泡開始飲用。',
+              style: TextStyle(
+                fontFamily: 'Segoe UI',
+                fontSize: 27,
+                color: const Color(0xffa0522d),
               ),
             ),
           ),
           Pinned.fromPins(
-            Pin(size: 297.0, start: 25.0),
-            Pin(size: 43.0, middle: 0.2308),
+            Pin(size: 146.0, start: 25.0),
+            Pin(size: 43.0, middle: 0.2025),
             child: Text.rich(
               TextSpan(
                 style: TextStyle(
@@ -63,7 +61,7 @@ class new_fastTest8 extends StatelessWidget {
                 ),
                 children: [
                   TextSpan(
-                    text: '嬰兒式(Child\'s Pose)',
+                    text: '· 玫瑰花茶',
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.w700,
@@ -77,8 +75,8 @@ class new_fastTest8 extends StatelessWidget {
             ),
           ),
           Pinned.fromPins(
-            Pin(size: 322.0, start: 25.0),
-            Pin(size: 43.0, middle: 0.3905),
+            Pin(size: 146.0, start: 25.0),
+            Pin(size: 43.0, middle: 0.4224),
             child: Text.rich(
               TextSpan(
                 style: TextStyle(
@@ -88,7 +86,7 @@ class new_fastTest8 extends StatelessWidget {
                 ),
                 children: [
                   TextSpan(
-                    text: '貓牛式(Cat Cow Pose)',
+                    text: '· 薰衣草茶',
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.w700,
@@ -102,8 +100,8 @@ class new_fastTest8 extends StatelessWidget {
             ),
           ),
           Pinned.fromPins(
-            Pin(size: 239.0, start: 25.0),
-            Pin(size: 43.0, middle: 0.5711),
+            Pin(size: 114.0, start: 25.0),
+            Pin(size: 43.0, middle: 0.6371),
             child: Text.rich(
               TextSpan(
                 style: TextStyle(
@@ -113,7 +111,32 @@ class new_fastTest8 extends StatelessWidget {
                 ),
                 children: [
                   TextSpan(
-                    text: '樹式 (Tree Pose)',
+                    text: '· 茉莉花',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+              textHeightBehavior:
+                  TextHeightBehavior(applyHeightToFirstAscent: false),
+              softWrap: false,
+            ),
+          ),
+          Pinned.fromPins(
+            Pin(size: 114.0, start: 25.0),
+            Pin(size: 43.0, end: 451.0),
+            child: Text.rich(
+              TextSpan(
+                style: TextStyle(
+                  fontFamily: 'Segoe UI',
+                  fontSize: 27,
+                  color: const Color(0xffa0522d),
+                ),
+                children: [
+                  TextSpan(
+                    text: '· 馬鞭草',
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.w700,
@@ -128,7 +151,7 @@ class new_fastTest8 extends StatelessWidget {
           ),
           Pinned.fromPins(
             Pin(start: 25.0, end: 24.0),
-            Pin(size: 98.0, middle: 0.6999),
+            Pin(size: 313.0, middle: 0.336),
             child: Text.rich(
               TextSpan(
                 style: TextStyle(
@@ -138,10 +161,23 @@ class new_fastTest8 extends StatelessWidget {
                 ),
                 children: [
                   TextSpan(
-                    text: '仰臥脊骨扭轉 \n(Lying Spinal Twist)',
+                    text: '除可消除疲勞之外，還可降火氣、調理血氣、促進血液循環、保護肝臟和腸胃，同時還有養顏美容的功能。\n',
+                  ),
+                  TextSpan(
+                    text:
+                        '＊若與茉莉花相互搭配，更可緩和緊張的情緒、消減體內脂肪；與洋甘菊搭配泡製，可防止肌膚老化、增強肌膚抵抗力和修復能力。若搭配薄荷使用，可提神醒腦、強化中樞神經、促進血液循環，適合腦力',
                     style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                      color: const Color(0xff946955),
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  TextSpan(
+                    text: '勞動者飲用。',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: const Color(0xff9b5b3d),
+                      fontWeight: FontWeight.w300,
                     ),
                   ),
                 ],
@@ -152,7 +188,19 @@ class new_fastTest8 extends StatelessWidget {
           ),
           Pinned.fromPins(
             Pin(start: 25.0, end: 24.0),
-            Pin(size: 98.0, end: 616.0),
+            Pin(size: 299.0, middle: 0.5771),
+            child: Text(
+              '可以鎮定心神，解除緊張焦慮，抒解壓力，鬆弛神經，幫助入眠，安定消化系統，改善初期感冒、咳嗽和偏頭痛。不過，服用時應避免過量，尤其是孕婦，以免過度刺激平滑肌收縮，導致初期流產或晚期早產。',
+              style: TextStyle(
+                fontFamily: 'Segoe UI',
+                fontSize: 27,
+                color: const Color(0xffa0522d),
+              ),
+            ),
+          ),
+          Pinned.fromPins(
+            Pin(start: 25.0, end: 24.0),
+            Pin(size: 246.0, middle: 0.7971),
             child: Text.rich(
               TextSpan(
                 style: TextStyle(
@@ -162,10 +210,15 @@ class new_fastTest8 extends StatelessWidget {
                 ),
                 children: [
                   TextSpan(
-                    text: '靠牆抬腿式\n (Legs Up the Wall)',
+                    text:
+                        '可安定情緒、舒解鬱悶，改善昏睡和焦慮，提振精神卻不使人過於興奮。此外對胃弱、慢性病支氣管炎、便秘、腹痛和頭痛患者也有幫助。\n',
+                  ),
+                  TextSpan(
+                    text: '＊若將茉莉花與柑橙花苞混搭泡飲，於晚間飲用，有助於放鬆心情，幫助睡眠。',
                     style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                      color: const Color(0xff946955),
+                      fontWeight: FontWeight.w300,
                     ),
                   ),
                 ],
@@ -175,26 +228,10 @@ class new_fastTest8 extends StatelessWidget {
             ),
           ),
           Pinned.fromPins(
-            Pin(start: 41.0, end: 41.0),
-            Pin(size: 180.0, middle: 0.2528),
-            child:
-                // Adobe XD layer: '36113884' (shape)
-                Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage('assetstemp/child pose.jpg'),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(width: 2.0, color: const Color(0xffa0522d)),
-              ),
-            ),
-          ),
-          Pinned.fromPins(
             Pin(start: 25.0, end: 24.0),
-            Pin(size: 440.0, middle: 0.3169),
+            Pin(size: 195.0, end: 31.0),
             child: Text(
-              ' 1．膝蓋跪在墊子上，臀部緊靠著腿。雙手掌心向下向前延伸，上身慢慢彎下直到額頭貼地，讓身體從臀部至指尖完整延展。\n2．伸展的同時，平穩呼吸，呼氣時不妨嘗試從尾骨慢慢拉長身體，感受從脊椎、肩膀到脖子都完全伸展開來。\n3．手臂可放在腿旁邊，想加深伸展可以嘗試將手臂向前方伸出。',
+              '可強化神經系統，幫助提神，消除噁心感且促進腸道淨化。此外，馬鞭草還具有活血通經、改善經痛的作用，不過孕婦不宜使用。',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
                 fontSize: 27,
@@ -203,116 +240,66 @@ class new_fastTest8 extends StatelessWidget {
             ),
           ),
           Pinned.fromPins(
-            Pin(start: 25.0, end: 24.0),
-            Pin(size: 482.0, middle: 0.5112),
-            child: Text(
-              '1．貓式：四足跪姿，確保膝蓋在臀部下方，手腕在肩膀下方。背部放平，深吸一口氣。呼氣時，將脊椎往上拱起到天花板，下巴朝向胸部，讓脖子鬆開。\n2．牛式：吸氣時將頭和尾骨向天空抬起，注意不要在脖子上施加任何壓力。\n3．繼續從“貓式”到“牛式”來回流動，並將呼吸與每次運動連接起來-吸入“牛式”，然後呼出“貓式”，重複10次。',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 27,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-          ),
-          Pinned.fromPins(
-            Pin(start: 82.0, end: 82.0),
-            Pin(size: 252.0, middle: 0.4229),
+            Pin(start: 41.0, end: 40.0),
+            Pin(size: 205.0, middle: 0.2364),
             child:
-                // Adobe XD layer: 'cat-cow-yoga-pose-w…' (shape)
+                // Adobe XD layer: 'istockphoto-5341134…' (shape)
                 Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: const AssetImage('assetstemp/cat cow pse.png'),
+                  image: const AssetImage('assetstemp/rose tea.jpg'),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(width: 2.0, color: const Color(0xffa0522d)),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment(-0.123, 0.217),
-            child:
-                // Adobe XD layer: 'istockphoto-1255062…' (shape)
-                Container(
-              width: 225.0,
-              height: 225.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage('assetstemp/tree pose.jpg'),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(width: 2.0, color: const Color(0xffa0522d)),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment(-0.123, 0.493),
-            child:
-                // Adobe XD layer: '34041281' (shape)
-                Container(
-              width: 225.0,
-              height: 225.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage('assetstemp/lying spinal twist.jpg'),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(width: 2.0, color: const Color(0xffa0522d)),
+                border: Border.all(width: 2.5, color: const Color(0xffa0522d)),
               ),
             ),
           ),
           Pinned.fromPins(
-            Pin(size: 225.0, middle: 0.4385),
-            Pin(size: 225.0, end: 374.0),
+            Pin(start: 41.0, end: 40.0),
+            Pin(size: 205.0, middle: 0.4705),
             child:
-                // Adobe XD layer: '25429790' (shape)
+                // Adobe XD layer: 'istockphoto-1260552…' (shape)
                 Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: const AssetImage('assetstemp/legs up the wall.jpg'),
+                  image: const AssetImage('assetstemp/lavender tea.jpg'),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(width: 2.0, color: const Color(0xffa0522d)),
+                border: Border.all(width: 2.5, color: const Color(0xffa0522d)),
               ),
             ),
           ),
           Pinned.fromPins(
-            Pin(start: 25.0, end: 24.0),
-            Pin(size: 233.0, middle: 0.6645),
-            child: Text(
-              '1．雙腳踩穩在瑜伽墊上，接著吸氣將右腳抬離地面，將右腳腳板放在左大腿的內側。\n2．雙手合十擺在胸口位置，或將手臂舉到空中，向前凝視，停留3-5個呼吸後換邊。',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 27,
-                color: const Color(0xffa0522d),
+            Pin(start: 41.0, end: 40.0),
+            Pin(size: 205.0, middle: 0.699),
+            child:
+                // Adobe XD layer: 'istockphoto-9562926…' (shape)
+                Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: const AssetImage('assetstemp/jasmine tea.jpg'),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(width: 2.5, color: const Color(0xffa0522d)),
               ),
             ),
           ),
           Pinned.fromPins(
-            Pin(start: 25.0, end: 24.0),
-            Pin(size: 369.0, middle: 0.8283),
-            child: Text(
-              '1．平躺在瑜珈墊上，將膝蓋往上彎曲到胸部，接著將兩手手臂向外伸出到T字型。\n2．將雙腿放回地面，接著將兩腿膝蓋一齊往右側倒，此時，兩側的肩胛骨都應該碰到地面，然後將頭向左轉，看向左邊。\n3．在這裡停五個呼吸，然後換另一側進行同樣的動作。',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 27,
-                color: const Color(0xffa0522d),
-              ),
-            ),
-          ),
-          Pinned.fromPins(
-            Pin(start: 25.0, end: 24.0),
-            Pin(size: 333.0, end: 24.0),
-            child: Text(
-              '1．盡可能靠近牆壁坐下，上半身平躺在地板上，將腳平放在牆上。\n2．伸直腳，使腳後跟擱在牆上，如果要伸展肩膀可以讓手臂平行打開。\n3．閉上眼睛，讓整個身體放鬆，維持五個呼吸五次或更多次。',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 27,
-                color: const Color(0xffa0522d),
+            Pin(start: 41.0, end: 40.0),
+            Pin(size: 205.0, end: 236.0),
+            child:
+                // Adobe XD layer: '00392654-Vervain-te…' (shape)
+                Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: const AssetImage('assetstemp/verbena tea.jpg'),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(width: 2.5, color: const Color(0xffa0522d)),
               ),
             ),
           ),

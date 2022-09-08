@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class new_destress11 extends StatelessWidget {
+class new_destress extends StatelessWidget {
   final VoidCallback exercise;
   final VoidCallback handmassage;
   final VoidCallback animaltogether;
@@ -10,7 +10,7 @@ class new_destress11 extends StatelessWidget {
   final VoidCallback deepthought;
   final VoidCallback warmbath;
   final VoidCallback gotothetrip;
-  new_destress11({
+  new_destress({
     Key? key,
     required this.exercise,
     required this.handmassage,
@@ -225,7 +225,7 @@ class new_destress11 extends StatelessWidget {
             child:
                 // Adobe XD layer: 'exercise' (group)
                 GestureDetector(
-              onTap: () => exercise?.call(),
+              onTap: () => exercise.call(),
               child: Stack(
                 children: <Widget>[
                   Pinned.fromPins(
@@ -312,7 +312,7 @@ class new_destress11 extends StatelessWidget {
             child:
                 // Adobe XD layer: 'hand' (group)
                 GestureDetector(
-              onTap: () => handmassage?.call(),
+              onTap: () => handmassage.call(),
               child: Stack(
                 children: <Widget>[
                   Pinned.fromPins(

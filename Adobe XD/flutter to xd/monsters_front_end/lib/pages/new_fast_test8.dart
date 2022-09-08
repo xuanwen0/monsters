@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+//運動
 class new_fastTest8 extends StatelessWidget {
   new_fastTest8({
     Key? key,

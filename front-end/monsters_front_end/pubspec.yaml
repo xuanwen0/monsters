@@ -57,6 +57,9 @@ dependencies:
   email_validator: ^2.1.17
   email_auth: ^1.0.0  
   flutter_facebook_auth: ^4.4.1
+  google_sign_in: ^5.4.1
+  flutter_signin_button: ^2.0.0
+  google_sign_in_web: ^0.10.2
 
 dev_dependencies:
   flutter_test:
@@ -85,6 +88,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/image/
+    - assets/fast_item/
     - assets/launcher/
   # To add assets to your application, add an assets section, like this:
   # assets:

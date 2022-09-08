@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/home.dart';
+import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/login.dart';
 import 'package:monsters_front_end/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,15 +48,15 @@ class Monsters extends StatelessWidget with WidgetsBindingObserver {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
-        GitmeRebornRoutes.login: (context) => MainPage(),
-        GitmeRebornRoutes.home: (context) => MainPage(),
+        GitmeRebornRoutes.login: (context) => InteractionPage(),
+        GitmeRebornRoutes.home: (context) => InteractionPage(),
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case GitmeRebornRoutes.root:
-            return MaterialPageRoute(builder: (context) => MainPage());
+            return MaterialPageRoute(builder: (context) => InteractionPage());
           default:
-            return MaterialPageRoute(builder: (context) => MainPage());
+            return MaterialPageRoute(builder: (context) => InteractionPage());
         }
       },
       debugShowCheckedModeBanner: false,
