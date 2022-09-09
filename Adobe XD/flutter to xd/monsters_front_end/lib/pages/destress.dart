@@ -2,7 +2,9 @@ import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monsters_front_end/new_fast_test.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
+import 'package:url_launcher/link.dart';
 
 class Destress extends StatefulWidget {
   @override
@@ -10,11 +12,176 @@ class Destress extends StatefulWidget {
 }
 
 class _DestressState extends State<Destress> {
+  Row buildButton(String name, var page) {
+    return Row(
+      verticalDirection: VerticalDirection.up,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(height: 50),
+        Container(
+          alignment: Alignment.center,
+          child: TextButton(
+              child: Text(name, style: TextStyle(fontSize: 14)),
+              style: ButtonStyle(
+                  alignment: Alignment.center,
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Color(0xffa0522d)),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                  padding:
+                      MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Color(0xffa0522d))))),
+              onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => page),
+                  )),
+        )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xfffffed4),
+        backgroundColor: const Color(0xfffffed4),
+        //標題
+        appBar: AppBar(
+          backgroundColor: const Color(0xfffffed4),
+          toolbarHeight: 80,
+          //箭頭
+          leading: PageLink(
+            links: [
+              PageLinkInfo(
+                transition: LinkTransition.Fade,
+                ease: Curves.easeOut,
+                duration: 0.3,
+                pageBuilder: () => InteractionPage(),
+              ),
+            ],
+            child: SvgPicture.string(
+              _svg_ryq30,
+              height: 50,
+              width: 50,
+              alignment: Alignment.center,
+              allowDrawingOutsideViewBox: true,
+              fit: BoxFit.scaleDown,
+            ),
+          ),
+          //標題文字
+          titleSpacing: 30,
+          title: Text(
+            '紓壓方法',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Segoe UI',
+              fontSize: 40,
+              color: Color(0xffa0522d),
+            ),
+          ),
+        ),
+        //按鈕布局
+        body: Column(
+          children: [
+            Row(
+              verticalDirection: VerticalDirection.up,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 100),
+                Container(
+                  alignment: Alignment.center,
+                  child: TextButton(
+                      child: Text("LINK 1", style: TextStyle(fontSize: 14)),
+                      style: ButtonStyle(
+                          alignment: Alignment.center,
+                          foregroundColor: MaterialStateProperty.all<Color>(
+                              Color(0xffa0522d)),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          padding: MaterialStateProperty.all<EdgeInsets>(
+                              EdgeInsets.all(15)),
+                          shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                  side: BorderSide(color: Color(0xffa0522d))))),
+                      onPressed: () => null),
+                )
+              ],
+            ),
+            Row(
+              verticalDirection: VerticalDirection.up,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 50),
+                Container(
+                  alignment: Alignment.center,
+                  child: TextButton(
+                      child: Text("LINK 1", style: TextStyle(fontSize: 14)),
+                      style: ButtonStyle(
+                          alignment: Alignment.center,
+                          foregroundColor: MaterialStateProperty.all<Color>(
+                              Color(0xffa0522d)),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          padding: MaterialStateProperty.all<EdgeInsets>(
+                              EdgeInsets.all(15)),
+                          shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                  side: BorderSide(color: Color(0xffa0522d))))),
+                      onPressed: () => null),
+                )
+              ],
+            ),
+            buildButton("123", new_fastTest()),
+          ],
+        )
+
+/*
+      
       body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child:
+                // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
+                PageLink(
+              links: [
+                PageLinkInfo(
+                  transition: LinkTransition.Fade,
+                  ease: Curves.easeOut,
+                  duration: 0.3,
+                  pageBuilder: () => InteractionPage(),
+                ),
+              ],
+              child: SvgPicture.string(
+                _svg_ryq30,
+                allowDrawingOutsideViewBox: true,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Text(
+              '紓壓方法',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: 'Segoe UI',
+                fontSize: 47,
+                color: Color(0xffa0522d),
+              ),
+              softWrap: false,
+            ),
+          ),
+        ],
+        
+
+        /*
         children: <Widget>[
           //標題
           Pinned.fromPins(
@@ -35,27 +202,22 @@ class _DestressState extends State<Destress> {
           Pinned.fromPins(
             Pin(size: 45.6, start: 14.4),
             Pin(size: 41.1, start: 23.4),
-            child:
-                // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => InteractionPage(),
-                ),
-              ],
-              child: SvgPicture.string(
-                _svg_ryq30,
-                allowDrawingOutsideViewBox: true,
-                fit: BoxFit.fill,
-              ),
+            
+
+          Container(
+            child: FlatButton(
+              onPressed: () {},
+              child: Text("button1"),
             ),
-          ),
+          )
         ],
+//
+        */
       ),
-    );
+    
+    */
+
+        );
   }
 }
 

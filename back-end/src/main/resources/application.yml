@@ -10,9 +10,9 @@ spring:
   main:
     allow-bean-definition-overriding: true
   datasource:
-    url: jdbc:mysql://140.131.114.242 :3306/111- monsters?useSSL=false&serverTimezone=Asia/Taipei
+    url: jdbc:mysql://140.131.114.242:3306/111- monsters?useSSL=false&serverTimezone=Asia/Taipei
     username: monsters
-    password: MONster@108
+    password: MONsters@ntub108
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect

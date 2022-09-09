@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/services.dart';
+import 'package:monsters_front_end/pages/FacebookLogin.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/login_selfacount.dart';
 import 'package:monsters_front_end/pages/signUp.dart';
@@ -153,7 +154,10 @@ class _loginState extends State<LoginPage> {
             child: SignInButton(
               Buttons.FacebookNew,
               text: "從 Facebook 登入",
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => FacebookLogin()));
+              },
             ),
           ),
         ],
