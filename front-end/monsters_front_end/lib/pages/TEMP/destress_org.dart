@@ -2,7 +2,7 @@ import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monsters_front_end/pages/Fast_test_Pages/new_fast_test.dart';
+import 'package:monsters_front_end/pages/TEMP/detail01.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:url_launcher/link.dart';
 
@@ -137,7 +137,7 @@ class _DestressState extends State<Destress> {
                 )
               ],
             ),
-            buildButton("123", new_fastTest()),
+            buildButton("123", destress_detail1()),
           ],
         )
 

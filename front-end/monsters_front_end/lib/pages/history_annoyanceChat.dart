@@ -8,6 +8,9 @@ import 'package:monsters_front_end/pages/history.dart';
 import '../repository/annoyanceRepo.dart';
 
 class historyAnnoyanceChat extends StatefulWidget {
+  int annoyanceID;
+  historyAnnoyanceChat(this.annoyanceID);
+
   @override
   //int getindex;
   //historyAnnoyanceChat(this.getindex);

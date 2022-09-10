@@ -5,7 +5,8 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/daily_test.dart';
-import 'package:monsters_front_end/pages/destress.dart';
+import 'package:monsters_front_end/pages/TEMP/destress_org.dart';
+import 'package:monsters_front_end/pages/destressWays_list/destressWays_list.dart';
 import 'package:monsters_front_end/pages/drawer_setting.dart';
 import 'package:monsters_front_end/pages/drawer_userInformation.dart';
 import 'package:monsters_front_end/pages/history.dart';
@@ -288,7 +289,7 @@ class _InteractionPageState extends State<InteractionPage>
                           transition: LinkTransition.Fade,
                           ease: Curves.easeOut,
                           duration: 0.3,
-                          pageBuilder: () => Destress(),
+                          pageBuilder: () => DestressWaysList(),
                         ),
                       ],
                       child: Stack(

@@ -1,13 +1,18 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:monsters_front_end/pages/destressWay_detail/destressWay_detail.dart';
+import 'package:monsters_front_end/pages/destressWays_list/destressWays_list.dart';
+import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
 import 'package:monsters_front_end/pages/home.dart';
+import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/login.dart';
-import 'package:monsters_front_end/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'pages/style.dart';
+import 'pages/destressWays_list/destressWays_list.dart';
+import 'package:monsters_front_end/routes.dart';
 
 void main() async {
   //開啟APP先判斷
@@ -42,10 +47,7 @@ class Monsters extends StatelessWidget with WidgetsBindingObserver {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     return MaterialApp(
       title: '貘nsters',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      theme: _theme(),
       routes: {
         GitmeRebornRoutes.login: (context) => LoginPage(),
         GitmeRebornRoutes.home: (context) => MainPage(),
@@ -61,6 +63,16 @@ class Monsters extends StatelessWidget with WidgetsBindingObserver {
       debugShowCheckedModeBanner: false,
     );
   }
+}
+
+ThemeData _theme() {
+  return ThemeData(
+    appBarTheme: AppBarTheme(
+        titleTextStyle: AppBarTextStyle, backgroundColor: BackgroundColorWarm),
+    textTheme: TextTheme(subtitle1: TitleTextStyle, bodyText1: Body1TextStyle),
+    primarySwatch: Colors.grey,
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+  );
 }
 
 void checkLogin() async {
