@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:monsters_front_end/pages/style.dart';
 
 class ImageBanner extends StatelessWidget {
   final String _assetsPath;
-  ImageBanner(this._assetsPath);
+  const ImageBanner(this._assetsPath);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        constraints: BoxConstraints.expand(
-          height: 200.0,
-        ),
-        decoration: BoxDecoration(color: BackgroundColorLight),
-        child: Image.asset(
-          _assetsPath,
-          fit: BoxFit.cover,
-        ));
+      padding: const EdgeInsets.fromLTRB(0, 8, 0, 5),
+      constraints: const BoxConstraints.expand(
+        height: 250.0,
+      ),
+      child: Image.asset(
+        _assetsPath,
+        fit: BoxFit.fitHeight,
+      ),
+    );
   }
 }
