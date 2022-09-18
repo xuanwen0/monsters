@@ -16,4 +16,5 @@ public class MonstersApplication {
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
 }
