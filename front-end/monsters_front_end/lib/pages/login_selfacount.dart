@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/forget_psw_auth.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -65,7 +66,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                       color: Color.fromRGBO(160, 82, 45, 1),
                     ),
                   ),
-                  SizedBox(height: 50.0),
+                  const SizedBox(height: 50.0),
                   //帳號
                   TextFormField(
                     autofocus: false,
@@ -89,6 +90,9 @@ class _Login_selfacountState extends State<Login_selfacount> {
                       filled: true,
                     ),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    inputFormatters: [
+                      InputFormatter('[a-zA-Z]|[0-9]'),
+                    ],
                     validator: (value) {
                       if (value!.isNotEmpty && value.length > 5) {
                         return null;
@@ -99,7 +103,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                       }
                     },
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   //密碼
                   TextFormField(
                       controller: _pwdController,
@@ -123,6 +127,9 @@ class _Login_selfacountState extends State<Login_selfacount> {
                       ),
                       obscureText: true,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
+                      inputFormatters: [
+                        InputFormatter('[a-zA-Z]|[0-9]'),
+                      ],
                       validator: (value) {
                         if (value!.isNotEmpty && value.length > 5) {
                           return null;
@@ -132,7 +139,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                           return '密碼不得空白';
                         }
                       }),
-                  SizedBox(height: 50.0),
+                  const SizedBox(height: 50.0),
                   //忘記密碼
                   TextButton(
                       onPressed: () {
@@ -149,13 +156,13 @@ class _Login_selfacountState extends State<Login_selfacount> {
                           color: Color.fromRGBO(160, 82, 45, 1),
                         ),
                       )),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   //登入
                   SizedBox(
                     width: 200.0,
                     height: 60.0,
                     child: RaisedButton(
-                      color: Color.fromRGBO(160, 82, 45, 1),
+                      color: const Color.fromRGBO(160, 82, 45, 1),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(22.0)),
                       child: const Text(
@@ -176,12 +183,12 @@ class _Login_selfacountState extends State<Login_selfacount> {
                       },
                     ),
                   ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   //註冊
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: TextButton(
-                      child: Text(
+                      child: const Text(
                         "沒有帳號嗎?  註冊",
                         style: TextStyle(
                           fontFamily: 'Segoe UI',
@@ -219,7 +226,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
       pageRoute(body["account"]);
     } else {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("查無此帳號")));
+          .showSnackBar(const SnackBar(content: Text("查無此帳號")));
     }
   }
 
@@ -231,6 +238,25 @@ class _Login_selfacountState extends State<Login_selfacount> {
         .showSnackBar(SnackBar(content: Text("${pref.getString("login")}")));
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => MainPage()));
+  }
+}
+
+class InputFormatter extends TextInputFormatter {
+  //只能輸入英文跟數字
+  final String regExp;
+
+  InputFormatter(this.regExp);
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.text.isNotEmpty) {
+      if (RegExp(regExp).firstMatch(newValue.text) != null) {
+        return newValue;
+      }
+      return oldValue;
+    }
+    return newValue;
   }
 }
 
