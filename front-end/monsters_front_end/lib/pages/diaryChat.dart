@@ -21,7 +21,6 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
   final player = AudioPlayer();
   final timerController = TimerController();
   int chatRound = 0;
-  String username = "Sean";
   bool lastSpeaking = false;
   bool robotSpeakable = true;
   bool pickable = false;

@@ -9,10 +9,12 @@ import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'pages/style.dart';
-import 'pages/destressWays_list/destressWays_list.dart';
+import 'package:monsters_front_end/pages/social.dart';
 import 'package:monsters_front_end/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'pages/destressWays_list/destressWays_list.dart';
+import 'pages/style.dart';
 
 void main() async {
   //開啟APP先判斷
