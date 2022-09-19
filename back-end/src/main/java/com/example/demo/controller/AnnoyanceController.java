@@ -73,5 +73,4 @@ public class AnnoyanceController {
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
-
 }

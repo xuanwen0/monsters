@@ -5,7 +5,8 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/daily_test.dart';
-import 'package:monsters_front_end/pages/destress.dart';
+import 'package:monsters_front_end/pages/TEMP/destress_org.dart';
+import 'package:monsters_front_end/pages/destressWays_list/destressWays_list.dart';
 import 'package:monsters_front_end/pages/drawer_setting.dart';
 import 'package:monsters_front_end/pages/drawer_userInformation.dart';
 import 'package:monsters_front_end/pages/history.dart';
@@ -14,6 +15,7 @@ import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/psychologicial_game.dart';
 import 'package:monsters_front_end/pages/psychologicial_test.dart';
 import 'package:monsters_front_end/pages/social.dart';
+import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/state/drawer.dart';
 import 'annoyanceChat.dart';
 import 'answerbook.dart';
@@ -68,12 +70,9 @@ class _InteractionPageState extends State<InteractionPage>
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-    });
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     return Scaffold(
-      backgroundColor: const Color(0xfffffed4),
+      backgroundColor: BackgroundColorLight,
       key: _scaffoldKEy,
       endDrawer: GetDrawer(context),
       body: Stack(
@@ -85,11 +84,7 @@ class _InteractionPageState extends State<InteractionPage>
             child: Text(
               '互動區',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 40,
-                color: const Color(0xffa0522d),
-              ),
+              style: WidgeTitleTextStyle,
               softWrap: false,
             ),
           ),
@@ -288,7 +283,7 @@ class _InteractionPageState extends State<InteractionPage>
                           transition: LinkTransition.Fade,
                           ease: Curves.easeOut,
                           duration: 0.3,
-                          pageBuilder: () => Destress(),
+                          pageBuilder: () => DestressWaysList(),
                         ),
                       ],
                       child: Stack(
@@ -319,6 +314,65 @@ class _InteractionPageState extends State<InteractionPage>
                       )),
                 ),
               ],
+            ),
+          ),
+
+          //互動
+          Pinned.fromPins(
+            Pin(size: 69.0, start: 9.0),
+            Pin(size: 68.0, end: 5.0),
+            child:
+                // Adobe XD layer: 'interactive' (group)
+                PageLink(
+              links: [
+                PageLinkInfo(
+                  transition: LinkTransition.Fade,
+                  ease: Curves.easeOut,
+                  duration: 0.3,
+                  pageBuilder: () => MainPage(),
+                ),
+              ],
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xffffffff),
+                      // color: BackgroundColorWarm,
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 24.0, middle: 0.5111),
+                    Pin(size: 16.0, end: 9.0),
+                    child: Text(
+                      '互動',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 12,
+                        color: const Color(0xffa0522d),
+                        //color: Colors.white,
+                      ),
+                      softWrap: false,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(-0.008, -0.415),
+                    child: SizedBox(
+                      width: 29.0,
+                      height: 29.0,
+                      child:
+                          // Adobe XD layer: 'Icon material-gamep…' (shape)
+                          SvgPicture.string(
+                        _svg_a3julx,
+                        // color:Colors.white,
+                        allowDrawingOutsideViewBox: true,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           //圖鑑
@@ -480,61 +534,6 @@ class _InteractionPageState extends State<InteractionPage>
                       _svg_kzt9m,
                       allowDrawingOutsideViewBox: true,
                       fit: BoxFit.fill,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          //互動
-          Pinned.fromPins(
-            Pin(size: 69.0, start: 9.0),
-            Pin(size: 68.0, end: 5.0),
-            child:
-                // Adobe XD layer: 'interactive' (group)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => MainPage(),
-                ),
-              ],
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffffff),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 24.0, middle: 0.5111),
-                    Pin(size: 16.0, end: 9.0),
-                    child: Text(
-                      '互動',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 12,
-                        color: const Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment(-0.008, -0.415),
-                    child: SizedBox(
-                      width: 29.0,
-                      height: 29.0,
-                      child:
-                          // Adobe XD layer: 'Icon material-gamep…' (shape)
-                          SvgPicture.string(
-                        _svg_a3julx,
-                        allowDrawingOutsideViewBox: true,
-                      ),
                     ),
                   ),
                 ],
