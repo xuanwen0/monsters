@@ -60,6 +60,7 @@ dependencies:
   google_sign_in: ^5.4.1
   flutter_signin_button: ^2.0.0
   google_sign_in_web: ^0.10.2
+  fl_chart: ^0.55.1
 
 dev_dependencies:
   flutter_test:
@@ -89,6 +90,7 @@ flutter:
   assets:
     - assets/image/
     - assets/launcher/
+    - assets/mood/
     - assets/image/destress_item/
   # To add assets to your application, add an assets section, like this:
   # assets:

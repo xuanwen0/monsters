@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/services.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:monsters_front_end/pages/login.dart';
@@ -102,6 +103,9 @@ class _SignUpState extends State<SignUp> {
                         filled: true,
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
+                      inputFormatters: [
+                        InputFormatter('[a-zA-Z]|[0-9]'),
+                      ],
                       validator: (value) {
                         if (value!.isNotEmpty && value.length > 5) {
                           return null;
@@ -136,6 +140,9 @@ class _SignUpState extends State<SignUp> {
                         ),
                         obscureText: true,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                        inputFormatters: [
+                          InputFormatter('[a-zA-Z]|[0-9]'),
+                        ],
                         validator: (value) {
                           if (value!.isNotEmpty && value.length > 5) {
                             return null;
@@ -170,6 +177,9 @@ class _SignUpState extends State<SignUp> {
                         ),
                         obscureText: true,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                        inputFormatters: [
+                          InputFormatter('[a-zA-Z]|[0-9]'),
+                        ],
                         validator: (value) {
                           if (value!.isEmpty) {
                             return '確認密碼不得空白';
@@ -205,6 +215,9 @@ class _SignUpState extends State<SignUp> {
                         filled: true,
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
+                      inputFormatters: [
+                        InputFormatter('[a-zA-Z]|[0-9]'),
+                      ],
                       validator: (email) =>
                           email != null && !EmailValidator.validate(email)
                               ? '請輸入正確的信箱格式'
@@ -503,6 +516,25 @@ class _SignUpState extends State<SignUp> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("請詳細閱讀使用條款，並勾選同意。")));
     }
+  }
+}
+
+class InputFormatter extends TextInputFormatter {
+  //只能輸入英文跟數字
+  final String regExp;
+
+  InputFormatter(this.regExp);
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.text.isNotEmpty) {
+      if (RegExp(regExp).firstMatch(newValue.text) != null) {
+        return newValue;
+      }
+      return oldValue;
+    }
+    return newValue;
   }
 }
 
