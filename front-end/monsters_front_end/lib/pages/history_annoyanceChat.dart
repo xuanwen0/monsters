@@ -8,6 +8,9 @@ import 'package:monsters_front_end/pages/history.dart';
 import '../repository/annoyanceRepo.dart';
 
 class historyAnnoyanceChat extends StatefulWidget {
+  int annoyanceID;
+  historyAnnoyanceChat(this.annoyanceID);
+
   @override
   //int getindex;
   //historyAnnoyanceChat(this.getindex);
@@ -50,6 +53,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
 
   void getAnnoyanceByID(int index) {
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
+    String userAccount = 'Lin';
     Future<Data> annoyances = annoyanceRepository
         .searchAnnoyanceByAccount(userAccount)
         .then((value) => Data.fromJson(value!));

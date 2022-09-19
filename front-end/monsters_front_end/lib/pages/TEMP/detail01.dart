@@ -5,8 +5,8 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 //旅行
-class new_fastTest extends StatelessWidget {
-  new_fastTest({
+class destress_detail1 extends StatelessWidget {
+  destress_detail1({
     Key? key,
   }) : super(key: key);
   @override

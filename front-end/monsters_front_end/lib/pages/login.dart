@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/services.dart';
@@ -18,7 +20,6 @@ class LoginPage extends StatefulWidget {
 class _loginState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       body: Stack(
@@ -154,9 +155,11 @@ class _loginState extends State<LoginPage> {
             child: SignInButton(
               Buttons.FacebookNew,
               text: "從 Facebook 登入",
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FacebookLogin()));
+              onPressed: () async {
+                if (await FacebookLogin().login()) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MainPage()));
+                }
               },
             ),
           ),
