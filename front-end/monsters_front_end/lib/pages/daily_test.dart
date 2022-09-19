@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/dailyTest_correct.dart';
 import 'package:monsters_front_end/pages/dailyTest_wrong.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
+import 'package:monsters_front_end/pages/style.dart';
 
 class Daily_test extends StatefulWidget {
   @override
@@ -15,9 +16,25 @@ class _Daily_testState extends State<Daily_test> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xfffffed4),
+      backgroundColor: BackgroundColorLight,
+
+      // appBar: secondAppBar("每日測驗"),
+
       body: Stack(
         children: <Widget>[
+          /*
+          Container(
+      padding: const EdgeInsets.fromLTRB(0, 8, 0, 5),
+      constraints: const BoxConstraints.expand(
+        height: 250.0,
+      ),
+      child: Image.asset(
+        _assetsPath,
+        fit: BoxFit.fitHeight,
+      ),
+    ),
+    */
+
           //標題
           Pinned.fromPins(
             Pin(size: 200.0, middle: 0.5),
@@ -33,6 +50,29 @@ class _Daily_testState extends State<Daily_test> {
               softWrap: false,
             ),
           ),
+          //箭頭
+          Pinned.fromPins(
+            Pin(size: 45.6, start: 14.4),
+            Pin(size: 41.1, start: 23.4),
+            child:
+                // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
+                PageLink(
+              links: [
+                PageLinkInfo(
+                  transition: LinkTransition.Fade,
+                  ease: Curves.easeOut,
+                  duration: 0.3,
+                  pageBuilder: () => InteractionPage(),
+                ),
+              ],
+              child: SvgPicture.string(
+                _svg_ryq30,
+                allowDrawingOutsideViewBox: true,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+
           //題目
           Pinned.fromPins(
               Pin(start: 34.0, end: 34.0), Pin(size: 195.0, start: 111.0),
@@ -63,28 +103,6 @@ class _Daily_testState extends State<Daily_test> {
                   ),
                 ],
               )),
-          //箭頭
-          Pinned.fromPins(
-            Pin(size: 45.6, start: 14.4),
-            Pin(size: 41.1, start: 23.4),
-            child:
-                // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => InteractionPage(),
-                ),
-              ],
-              child: SvgPicture.string(
-                _svg_ryq30,
-                allowDrawingOutsideViewBox: true,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
           //答案選項
           Pinned.fromPins(
             Pin(start: 28.0, end: 27.0),

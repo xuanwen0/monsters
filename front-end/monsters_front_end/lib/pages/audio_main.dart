@@ -3,10 +3,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_sound_lite/public/flutter_sound_player.dart';
-import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
-import 'package:monsters_front_end/API/audio_recorder.dart';
-import 'package:monsters_front_end/API/audio_player.dart';
+import 'package:monsters_front_end/model/audio_Model/audio_recorder.dart';
+import 'package:monsters_front_end/model/audio_Model/audio_player.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';

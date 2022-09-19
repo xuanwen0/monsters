@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:monsters_front_end/API/audio_player.dart';
+import 'package:monsters_front_end/model/audio_Model/audio_player.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
@@ -23,7 +23,6 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   final player = AudioPlayer();
   final timerController = TimerController();
   int chatRound = 0;
-  String username = "Sean";
   bool lastSpeaking = false;
   bool robotSpeakable = true;
   bool pickable = false;
@@ -31,22 +30,13 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   List<Map> messages = [];
   List<String> annoyTypeMembers = ["", "課業", "事業", "愛情", "友情", "親情", "其他"];
   List<String> emotionGradeMembers = ["", "1", "2", "3", "4", "5"];
-  List<String> acceptDrawingMembers = ["", "是", "否"];
-  int acceptShare = 0;
-  String hintAnnoyType = "[請擇一輸入]\n課業 / 事業 / 愛情 \n友情 / 親情 / 其他";
-  String hintEmotionGrade = "[請擇一輸入]\n1 / 2 / 3 / 4 / 5";
-  String hintAccept = "[請擇一輸入]\n是 / 否";
-  String hintAnnoyMethod = "請用以下幾種方式記錄：\n★以文字記錄煩惱\n★點選左下角圖示新增";
+  List<String> acceptDrawingMembers = ["是", "否"];
   String hintCannotRead = "員工手冊上沒有這個選項耶...麻煩確認一下答案好嗎？";
-  String secHintAnnoyType = "煩惱是關於什麼的呢？";
-  String secHintEmotionGrade = "煩惱指數有多高呢？\n1分是最低的喔！";
-  String secHintDrawingAcception = "要不要把你的心情畫下來呢？";
-  String secHintSharingAcception = "想分享給別人看看嗎？";
-  String predictAns_annoyType = "";
-  String predictAns_emotionGrade = "";
-  String predictAns_accept = "";
+  int acceptShare = 0;
+  //TODO: LEVEL 3
+  ///when user comes after using interactionPage and some feature
+  ///we should ask whether that stuff make it feels better
   var userAnswers = [];
-
   File? _media;
   File? _moodImage;
   late final VideoPlayerController _videoPlayerController;
@@ -111,6 +101,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
   //錄音功能
   recordAudio(BuildContext context) async {
+    //TODO: Level 2
+    ///ADD HERO https://youtu.be/1xipg02Wu8s?t=657
     final media = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AudioMainPage()),
@@ -128,6 +120,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
   //畫心情功能
   _navigateAndDisplayPaint(BuildContext context) async {
+    //TODO: Level 2
+    //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
     final moodImage = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Draw_mood()),
@@ -337,7 +331,6 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                           ),
                           onPressed: () {
                             log(userAnswers.toString());
-/* 新增煩惱
                             annoyanceRepository.createAnnoyance(
                               Annoyance(
                                   id: 0,
@@ -351,9 +344,12 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                                   solve: 0,
                                   share: acceptShare),
                             );
-*/
 /* 前往歷史紀錄                           
+
                             Navigator.push(
+                              
+    //TODO: Level 2
+    //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => History()));
@@ -434,6 +430,9 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
     //picture container
     if (data == 2) {
+      //TODO: Level 2
+      //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
+      ///wrap by something make it clickable
       userChatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: Row(
@@ -481,6 +480,9 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
     //video container
     if (data == 3) {
+      ///TODO: Level 2
+      ///ADD HERO https://youtu.be/1xipg02Wu8s?t=657
+      ///wrap by something make it clickable
       userChatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: Row(
@@ -603,6 +605,9 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
     //painting container
     if (data == 5) {
+      //TODO: Level 2
+      ///ADD HERO https://youtu.be/1xipg02Wu8s?t=657
+      ///wrap by something make it clickable to watch
       userChatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: Row(
@@ -647,6 +652,11 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
   //怪獸訊息(提示輸入格式)
   void hint() {
+    String hintAnnoyType = "[請擇一輸入]\n課業 / 事業 / 愛情 \n友情 / 親情 / 其他";
+    String hintEmotionGrade = "[請擇一輸入]\n1 / 2 / 3 / 4 / 5";
+    String hintAccept = "[請擇一輸入]\n是 / 否";
+    String hintAnnoyMethod = "請用以下幾種方式記錄：\n★以文字記錄煩惱\n★點選左下角圖示新增";
+
     if (chatRound == 0) {
       reply(hintAnnoyType);
     } else if (chatRound == 1) {
@@ -666,6 +676,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
   //提示輸入格式錯誤
   void cannotRead() {
+    String secHintAnnoyType = "煩惱是關於什麼的呢？";
+    String secHintEmotionGrade = "煩惱指數有多高呢？\n1分是最低的喔！";
+    String secHintDrawingAcception = "要不要把你的心情畫下來呢？";
+    String secHintSharingAcception = "想分享給別人看看嗎？";
     chatRound--;
     reply(hintCannotRead);
     if (chatRound == 0) {
@@ -706,24 +720,24 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
           if (annoyTypeMembers.contains(text)) {
             userAnswers.add(annoyTypeMembers.indexOf(text!));
             reply("關於" + text + "的煩惱嗎？跟我說發生什麼事了吧！");
+            log("--完成類別");
           } else {
             cannotRead();
           }
         }
         //取得內容
         if (chatRound == 2) {
-          log("--完成類別");
           if (text != null) {
             userAnswers.add(text);
           }
           if (media != null) {
             userAnswers.add(media);
           }
+          log("--完成內容");
           reply("真是辛苦你了，想做一幅畫表達你的感受嗎？");
         }
         //取得是否畫心情
         if (chatRound == 3) {
-          log("--完成內容");
           if (acceptDrawingMembers.contains(text)) {
             if (text == "是") {
               await _navigateAndDisplayPaint(context);
@@ -731,33 +745,36 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
             userAnswers.add(text);
             //提示輸入煩惱程度
             reply("給煩惱程度打一個分數～\n5分是最煩惱的喔！");
+
+            log("--完成畫心情");
           } else {
             cannotRead();
           }
         }
         //取得心情分數
         if (chatRound == 4) {
-          log("--完成畫心情");
           if (emotionGradeMembers.contains(text)) {
             userAnswers.add(emotionGradeMembers.indexOf(text!));
             reply("想不想把這件事分享給別人呢？");
+
+            log("--完成心情分數");
           } else {
             cannotRead();
           }
         }
         //取得是否分享
         if (chatRound == 5) {
-          log("--完成心情分數");
           if (acceptShare == 0 || acceptShare == 1) {
             if (text == "是") {
-              userAnswers.add(emotionGradeMembers.indexOf("1"));
               acceptShare = 1;
-            } else if (text == "否") {
+            }
+            if (text == "否") {
               acceptShare = 0;
-              userAnswers.add(emotionGradeMembers.indexOf("0"));
             }
             lastSpeaking = true;
             reply("解決煩惱請馬上跟我說！我已經迫不及待想吃飯了！");
+
+            log("--完成分享");
           } else {
             cannotRead();
           }
