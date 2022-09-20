@@ -107,10 +107,8 @@ class _SignUpState extends State<SignUp> {
                         InputFormatter('[a-zA-Z]|[0-9]'),
                       ],
                       validator: (value) {
-                        if (value!.isNotEmpty && value.length > 5) {
+                        if (value!.isNotEmpty) {
                           return null;
-                        } else if (value.isNotEmpty && value.length < 6) {
-                          return '帳號需至少6數';
                         } else {
                           return '帳號不得空白';
                         }
@@ -144,10 +142,8 @@ class _SignUpState extends State<SignUp> {
                           InputFormatter('[a-zA-Z]|[0-9]'),
                         ],
                         validator: (value) {
-                          if (value!.isNotEmpty && value.length > 5) {
+                          if (value!.isNotEmpty) {
                             return null;
-                          } else if (value.isNotEmpty && value.length < 6) {
-                            return '密碼需至少6數';
                           } else {
                             return '密碼不得空白';
                           }
@@ -183,8 +179,6 @@ class _SignUpState extends State<SignUp> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return '確認密碼不得空白';
-                          } else if (value.isNotEmpty && value.length < 6) {
-                            return '確認密碼需至少6數';
                           } else if (value == _pwdController.text) {
                             return null;
                           } else {
@@ -248,10 +242,8 @@ class _SignUpState extends State<SignUp> {
                         ),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
-                          if (value!.isNotEmpty && value.length > 1) {
+                          if (value!.isNotEmpty) {
                             return null;
-                          } else if (value.isNotEmpty && value.length < 2) {
-                            return '請輸入全名';
                           } else {
                             return '全名不得空白';
                           }

@@ -76,7 +76,7 @@ Widget GetDrawer(BuildContext context) {
               onTap: () async {
                 SharedPreferences pref = await SharedPreferences.getInstance();
                 await pref.clear();
-                await GoogleSignInApi.signout();
+                //await GoogleSignInApi.signout();
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text("登出!!")));
                 Navigator.push(context,

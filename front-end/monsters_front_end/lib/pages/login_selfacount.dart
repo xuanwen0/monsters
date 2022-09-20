@@ -94,10 +94,8 @@ class _Login_selfacountState extends State<Login_selfacount> {
                       InputFormatter('[a-zA-Z]|[0-9]'),
                     ],
                     validator: (value) {
-                      if (value!.isNotEmpty && value.length > 5) {
+                      if (value!.isNotEmpty) {
                         return null;
-                      } else if (value.isNotEmpty && value.length < 6) {
-                        return '帳號需至少6數';
                       } else {
                         return '帳號不得空白';
                       }
@@ -131,10 +129,8 @@ class _Login_selfacountState extends State<Login_selfacount> {
                         InputFormatter('[a-zA-Z]|[0-9]'),
                       ],
                       validator: (value) {
-                        if (value!.isNotEmpty && value.length > 5) {
+                        if (value!.isNotEmpty) {
                           return null;
-                        } else if (value.isNotEmpty && value.length < 6) {
-                          return '密碼需至少6數';
                         } else {
                           return '密碼不得空白';
                         }
