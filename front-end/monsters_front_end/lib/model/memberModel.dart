@@ -40,7 +40,7 @@ class Member {
     required this.password,
     required this.birthday,
     required this.name,
-    required this.nick_name,
+    required this.nickName,
     required this.gender,
     required this.mail,
     this.lock,
@@ -52,7 +52,7 @@ class Member {
   String password;
   String birthday;
   String name;
-  String nick_name;
+  String nickName;
   int? gender;
   String mail;
   String? lock;
@@ -64,7 +64,7 @@ class Member {
         password: json["password"],
         birthday: json["birthday"],
         name: json["name"],
-        nick_name: json["nick_name"],
+        nickName: json["nickName"],
         gender: json["gender"],
         mail: json["mail"],
         lock: json["lock"],
@@ -77,7 +77,7 @@ class Member {
         "password": password,
         "birthday": birthday,
         "name": name,
-        "nick_name": nick_name,
+        "nickName": nickName,
         "gender": gender,
         "mail": mail,
         "lock": lock,
