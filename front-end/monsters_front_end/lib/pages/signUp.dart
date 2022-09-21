@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:monsters_front_end/pages/login.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/login_selfacount.dart';
 import 'package:monsters_front_end/repository/memberRepo.dart';
+import 'package:date_format/date_format.dart';
 
 import '../model/memberModel.dart';
 
@@ -494,16 +496,18 @@ class _SignUpState extends State<SignUp> {
       memberRepository.createMember(
         Member(
           account: _accountController.text,
-          birthday: date.toString(),
+          birthday: formatDate(date, [yyyy, '-', mm, '-', dd]).toString(),
           gender: groupValue,
           mail: _mailController.text,
           name: _fullnameController.text,
-          nick_name: _nicknameController.text,
+          nickName: _nicknameController.text,
           password: _pwdController.text,
         ),
       );
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Login_selfacount()));
+      log(formatDate(date, [yyyy, '-', mm, '-', dd]).toString() +
+          _nicknameController.text);
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => Login_selfacount()));
     } else {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("請詳細閱讀使用條款，並勾選同意。")));

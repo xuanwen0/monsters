@@ -171,15 +171,16 @@ class _loginState extends State<LoginPage> {
   Future<GoogleSignInAccount?> signIn() async {
     final user = await GoogleSignInApi.signin();
     if (user == null) {
-      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      //   content: Text('sign in Google failed'),
-      // ));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('sign in Google failed'),
+      ));
     } else {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => MainPage()));
-      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      //   content: Text('sign in Google Account'),
-      // ));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+            'user name: ' + user.displayName! + ' user email: ' + user.email),
+      ));
     }
   }
 }

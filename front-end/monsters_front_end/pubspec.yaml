@@ -61,6 +61,7 @@ dependencies:
   flutter_signin_button: ^2.0.0
   google_sign_in_web: ^0.10.2
   fl_chart: ^0.55.1
+  date_format: ^2.0.6
 
 dev_dependencies:
   flutter_test:
