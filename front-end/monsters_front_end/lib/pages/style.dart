@@ -47,7 +47,7 @@ const MaxTextSize = 40.0;
 const LargeTextSize = 36.0;
 const mediumTextSize = 32.0;
 const BodyTextSize = 24.0;
-const introTextSize = 16.0;
+const contentTextSize = 16.0;
 const String FontNameDefault = "Segoe UI";
 
 //font design

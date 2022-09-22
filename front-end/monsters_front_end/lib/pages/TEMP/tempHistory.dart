@@ -60,14 +60,14 @@ void storeItem(String content, String time, String type, String monsterId,
   tempString = [content, time, type, monsterId, mood, index, solve, share];
 }
 
-class History extends StatefulWidget {
-  const History({Key? key}) : super(key: key);
+class TempHis extends StatefulWidget {
+  const TempHis({Key? key}) : super(key: key);
 
   @override
-  _HistoryState createState() => _HistoryState();
+  _TempHis createState() => _TempHis();
 }
 
-class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
+class _TempHis extends State<TempHis> with SingleTickerProviderStateMixin {
   //新增的浮出按鈕動畫用
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
@@ -83,6 +83,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   List<String> historyContents = [];
   List<String> historyTimes = [];
   var index;
+  
   @override
   Widget build(BuildContext context) {
     getMaxIdByAccount('Lin');
@@ -121,6 +122,105 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
       endDrawer: GetDrawer(context),
       body: Stack(
         children: <Widget>[
+          //煩惱列表
+          Pinned.fromPins(
+            Pin(start: 8.0, end: 8.0),
+            Pin(start: 140.0, end: 85.0),
+            child: ListView.separated(
+              primary: false,
+              itemBuilder: (BuildContext context, int index) {
+                return Center(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: 365.0,
+                        height: 105.0,
+                        child: PageLink(
+                          /*
+                          links: [
+                            PageLinkInfo(
+                              transition: LinkTransition.Fade,
+                              ease: Curves.easeOut,
+                              duration: 0.3,
+                              pageBuilder: () => historyAnnoyanceChat(),
+                            ),
+                          ],*/
+
+                          links: [],
+                          child: Stack(
+                            children: <Widget>[
+                              //底
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: const Color.fromRGBO(255, 255, 255, 1),
+                                  borderRadius: BorderRadius.circular(13.0),
+                                  border: Border.all(
+                                      width: 1.0,
+                                      color: const Color(0xffa0522d)),
+                                ),
+                              ),
+                              //頭貼
+                              Pinned.fromPins(
+                                Pin(size: 69.0, start: 25.0),
+                                Pin(start: 19.0, end: 18.0),
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.elliptical(9999.0, 9999.0)),
+                                    image: DecorationImage(
+                                      image:
+                                          AssetImage('assets/image/baku1.jpg'),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              //內容
+                              Pinned.fromPins(
+                                Pin(size: 170.0, start: 105.0),
+                                Pin(size: 81.0, end: 10.0),
+                                child: Text(
+                                  historyContents[index],
+                                  style: const TextStyle(
+                                    fontFamily: 'Segoe UI',
+                                    fontSize: 20,
+                                    color: Color.fromRGBO(160, 82, 45, 1),
+                                  ),
+                                  softWrap: true,
+                                ),
+                              ),
+                              //時間
+                              Pinned.fromPins(
+                                Pin(size: 45.0, end: 20.0),
+                                Pin(size: 21.0, middle: 0.8),
+                                child: Text(
+                                  historyTimes[index],
+                                  style: const TextStyle(
+                                    fontFamily: 'Segoe UI',
+                                    fontSize: 16,
+                                    color: Color.fromRGBO(97, 48, 24, 1),
+                                  ),
+                                  softWrap: false,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              itemCount: historyCount,
+              separatorBuilder: (BuildContext context, int index) {
+                return const Divider(
+                  height: 10.0,
+                  color: Colors.transparent,
+                );
+              },
+            ),
+          ),
+          
           /*
           //標題
           Pinned.fromPins(
@@ -382,104 +482,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
             ),
           ),
           */
-          //煩惱列表
-          Pinned.fromPins(
-            Pin(start: 8.0, end: 8.0),
-            Pin(start: 140.0, end: 85.0),
-            child: ListView.separated(
-              primary: false,
-              itemBuilder: (BuildContext context, int index) {
-                return Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 365.0,
-                        height: 105.0,
-                        child: PageLink(
-                          /*
-                          links: [
-                            PageLinkInfo(
-                              transition: LinkTransition.Fade,
-                              ease: Curves.easeOut,
-                              duration: 0.3,
-                              pageBuilder: () => historyAnnoyanceChat(),
-                            ),
-                          ],*/
-
-                          links: [],
-                          child: Stack(
-                            children: <Widget>[
-                              //底
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: const Color.fromRGBO(255, 255, 255, 1),
-                                  borderRadius: BorderRadius.circular(13.0),
-                                  border: Border.all(
-                                      width: 1.0,
-                                      color: const Color(0xffa0522d)),
-                                ),
-                              ),
-                              //頭貼
-                              Pinned.fromPins(
-                                Pin(size: 69.0, start: 25.0),
-                                Pin(start: 19.0, end: 18.0),
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.elliptical(9999.0, 9999.0)),
-                                    image: DecorationImage(
-                                      image:
-                                          AssetImage('assets/image/baku1.jpg'),
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              //內容
-                              Pinned.fromPins(
-                                Pin(size: 170.0, start: 105.0),
-                                Pin(size: 81.0, end: 10.0),
-                                child: Text(
-                                  historyContents[index],
-                                  style: const TextStyle(
-                                    fontFamily: 'Segoe UI',
-                                    fontSize: 20,
-                                    color: Color.fromRGBO(160, 82, 45, 1),
-                                  ),
-                                  softWrap: true,
-                                ),
-                              ),
-                              //時間
-                              Pinned.fromPins(
-                                Pin(size: 45.0, end: 20.0),
-                                Pin(size: 21.0, middle: 0.8),
-                                child: Text(
-                                  historyTimes[index],
-                                  style: const TextStyle(
-                                    fontFamily: 'Segoe UI',
-                                    fontSize: 16,
-                                    color: Color.fromRGBO(97, 48, 24, 1),
-                                  ),
-                                  softWrap: false,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-              itemCount: historyCount,
-              separatorBuilder: (BuildContext context, int index) {
-                return const Divider(
-                  height: 10.0,
-                  color: Colors.transparent,
-                );
-              },
-            ),
-          ),
           /*
           //圖鑑
           Pinned.fromPins(

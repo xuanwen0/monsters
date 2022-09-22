@@ -44,63 +44,6 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
               ),
             ),
           ),
-          /*
-          //標題
-          Pinned.fromPins(
-            Pin(size: 200.0, middle: 0.5),
-            Pin(size: 63.0, start: 20.0),
-            child: Text(
-              '解答之書',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 40,
-                color: const Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
-          //箭頭
-          Pinned.fromPins(
-            Pin(size: 45.6, start: 14.4),
-            Pin(size: 41.1, start: 23.4),
-            child:
-                // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => InteractionPage(),
-                ),
-              ],
-              child: SvgPicture.string(
-                _svg_ryq30,
-                allowDrawingOutsideViewBox: true,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-          //背景(書)
-          Pinned.fromPins(
-            Pin(start: -8.0, end: -9.0),
-            Pin(size: 555.0, end: 105.0),
-            child:
-                // Adobe XD layer: '14253' (shape)
-                Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage(
-                      'assets/image/background_answerBook.png'),
-                  fit: BoxFit.fill,
-                  colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.45), BlendMode.dstIn),
-                ),
-              ),
-            ),
-          ),
-          */
           //取得解答紐
           Pinned.fromPins(
             Pin(size: 136.0, middle: 0.5),

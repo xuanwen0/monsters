@@ -18,35 +18,19 @@ class diaryChat extends StatefulWidget {
 
 class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
   final messageInsert = TextEditingController();
-  final player = AudioPlayer();
   final timerController = TimerController();
+  final player = AudioPlayer();
+  late final VideoPlayerController _videoPlayerController;
   int chatRound = 0;
   bool lastSpeaking = false;
   bool robotSpeakable = true;
   bool pickable = false;
-
   List<Map> messages = [];
-  List<String> annoyTypeMembers = ["", "課業", "事業", "愛情", "友情", "親情", "其他"];
-  List<String> emotionGradeMembers = ["", "1", "2", "3", "4", "5"];
-  List<String> acceptDrawingMembers = ["", "是", "否"];
   int acceptShare = 0;
-  String hintAnnoyType = "[請擇一輸入]\n課業 / 事業 / 愛情 \n友情 / 親情 / 其他";
-  String hintEmotionGrade = "[請擇一輸入]\n1 / 2 / 3 / 4 / 5";
-  String hintAccept = "[請擇一輸入]\n是 / 否";
-  String hintAnnoyMethod = "請用以下幾種方式記錄：\n★以文字記錄日記\n★點選左下角圖示新增";
-  String hintCannotRead = "員工手冊上沒有這個選項耶...麻煩確認一下好嗎？";
-  String secHintdiaryType = "來寫一些類型的日記呢？";
-  String secHintEmotionGrade = "心情指數有多高呢？\n1分是最低的喔！";
-  String secHintDrawingAcception = "要不要把你的心情畫下來呢？";
-  String secHintSharingAcception = "想分享日記給別人看看嗎？";
-  String predictAns_annoyType = "";
-  String predictAns_emotionGrade = "";
-  String predictAns_accept = "";
   var userAnswers = [];
 
   File? _media;
   File? _moodImage;
-  late final VideoPlayerController _videoPlayerController;
 
   //新增煩惱-照相
   takePhoto() async {
@@ -338,6 +322,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                           ),
                           onPressed: () {
                             log(userAnswers.toString());
+//後端修改
 /* 新增煩惱
                             annoyanceRepository.createAnnoyance(
                               Annoyance(
@@ -648,11 +633,15 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
 
   //怪獸訊息(提示輸入格式)
   void hint() {
+    String hintDiaryType = "[請擇一輸入]\n課業 / 事業 / 愛情 \n友情 / 親情 / 其他";
+    String hintEmotionGrade = "[請擇一輸入]\n1 / 2 / 3 / 4 / 5";
+    String hintAccept = "[請擇一輸入]\n是 / 否";
+    String hintDiaryMethod = "請用以下幾種方式記錄：\n★以文字記錄日記\n★點選左下角圖示新增";
     if (chatRound == 0) {
-      reply(hintAnnoyType);
+      reply(hintDiaryType);
     } else if (chatRound == 1) {
       pickable = true;
-      reply(hintAnnoyMethod);
+      reply(hintDiaryMethod);
     } else if (chatRound == 2) {
       pickable = false;
       reply(hintAccept);
@@ -667,6 +656,12 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
 
   //提示輸入格式錯誤
   void cannotRead() {
+    String hintCannotRead = "員工手冊上沒有這個選項耶...麻煩確認一下好嗎？";
+
+    String secHintdiaryType = "來寫一些類型的日記呢？";
+    String secHintEmotionGrade = "心情指數有多高呢？\n1分是最低的喔！";
+    String secHintDrawingAcception = "要不要把你的心情畫下來呢？";
+    String secHintSharingAcception = "想分享日記給別人看看嗎？";
     chatRound--;
     reply(hintCannotRead);
     if (chatRound == 0) {
@@ -685,11 +680,14 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
 
   //確認是否符合選擇格式，符合->回覆 不符合->提示再次輸入
   Future<void> response([String? text, File? media]) async {
+    List<String> diaryTypeMembers = ["", "課業", "事業", "愛情", "友情", "親情", "其他"];
+    List<String> emotionGradeMembers = ["", "1", "2", "3", "4", "5"];
+    List<String> acceptDrawingMembers = ["", "是", "否"];
     //進入時自動訊息問安
     if (chatRound == 0) {
       int hourNow = DateTime.now().hour.toInt();
       if (hourNow < 5) {
-        reply("凌晨睡不好嗎？\n正在想甚麼呢？\n來寫個日記舒緩一下吧？"); //0~5點
+        reply("凌晨睡不好嗎？\n正在想甚麼呢？\n來寫個日記舒壓一下吧？"); //0~5點
       } else if (hourNow < 12) {
         reply("早上好啊！\n我願意當一個好聽眾！"); //5~12點
       } else if (hourNow < 14) {
@@ -704,8 +702,8 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
       if (robotSpeakable == true) {
         //取得類別
         if (chatRound == 1) {
-          if (annoyTypeMembers.contains(text)) {
-            userAnswers.add(annoyTypeMembers.indexOf(text!));
+          if (diaryTypeMembers.contains(text)) {
+            userAnswers.add(diaryTypeMembers.indexOf(text!));
             reply("關於" + text + "的日記嗎？我想聽聽你的事情！");
           } else {
             cannotRead();
