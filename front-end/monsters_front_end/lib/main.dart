@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:monsters_front_end/pages/TEMP/tempHistory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:monsters_front_end/pages/TEMP/destress_org.dart';
 import 'package:monsters_front_end/pages/annoyanceChat.dart';
 import 'package:monsters_front_end/pages/destressWay_detail/destressWay_detail.dart';
 import 'package:monsters_front_end/pages/destressWays_list/destressWays_list.dart';
