@@ -37,22 +37,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   //當selectionTab_solve_enabled解鎖後兩個標籤
   bool selectionTab_solve_enabled = false;
 
-  //控制執行續
-  late Timer _timer;
-  int curentTimer = 0;
-  bool reset = false;
-
-  List<String> historyContents = [];
-  List<String> historyTimes = [];
-
+  late Future _future;
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
-    // Future<Data> annoyances = getAnnoyance(userAccount);
-
     //TODO: Level 1
     //計算不同歷史類別的數量
-
     /*
     int itemCounter 
     int annoyanceCounter 
@@ -250,18 +240,75 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   ))),
               //煩惱清單
               //TODO: Level 1
-              //取得怪獸頭貼、煩惱或日記的內容、日期(mm/dd)、指數
+              //取得怪獸頭貼、煩惱/日記的內容、日期(mm/dd)、指數
               Expanded(
                   flex: 75,
                   child: Container(
-                    color: Colors.red,
-                  )
-                  // ListView.builder(
-                  //   itemBuilder: (context, index) {
-                  //     HistoryList();
-                  //   },
-                  // )
-                  ),
+                    child: FutureBuilder<dynamic>(
+                        future: _future,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<dynamic> snapshot) {
+                          if (snapshot.data == null) {
+                            return Container(
+                                child: Center(
+                                    child: Text(
+                              "Loading...",
+                              style: TextStyle(fontSize: 30),
+                            )));
+                          }
+                          return ListView.builder(
+                            itemCount: snapshot.data["itemCounter"],
+                            itemBuilder: (BuildContext context, int index) =>
+                                Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                  width: 1.0,
+                                  color: BackgroundColorWarm,
+                                )),
+                              ),
+                              height: 120,
+                              alignment: Alignment.center,
+                              child: ListTile(
+                                leading: Container(
+                                  height: double.infinity,
+                                  child: CircleAvatar(
+                                    backgroundImage:
+                                        AssetImage('assets/image/Avatar_Baku_JPG.jpg'),
+                                  ),
+                                ),
+                                title: Text(
+                                  snapshot.data["result $index"]["content"],
+                                  style: TextStyle(fontSize: BodyTextSize),
+                                  textAlign: TextAlign.left,
+                                ),
+                                trailing: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Expanded(
+                                      flex: 7,
+                                      child: Text(
+                                          snapshot.data["result $index"]["type"]
+                                              .toString(),
+                                          style: TextStyle(fontSize: 20)),
+                                    ),
+                                    Expanded(
+                                        flex: 3,
+                                        child: Text(
+                                            snapshot.data["result $index"]
+                                                    ["time"]
+                                                .toString(),
+                                            style: TextStyle(fontSize: 14))),
+                                  ],
+                                ),
+                                onTap: () =>
+                                    print(snapshot.data["result $index"]["id"]),
+                              ),
+                            ),
+                          );
+                        }),
+                  )),
               //底部
               Expanded(
                   flex: 10,
@@ -282,7 +329,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => MainPage(),
+                  pageBuilder: () => InteractionPage(),
                 ),
               ],
               child: Stack(
@@ -395,7 +442,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => History(),
+                  pageBuilder: () => MainPage(),
                 ),
               ],
               child:
@@ -593,22 +640,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     );
   }
 
-  //介面設計
-  double getRadiansFromDegree(double degree) {
-    double unitRadian = 57.295779513;
-    return degree / unitRadian;
-  }
-
-/*
-  Future<Data> getAnnoyance(String userAccount) {
-    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
-    Future<Data> annoyances = annoyanceRepository
-        .searchAnnoyanceByAccount(userAccount)
-        .then((value) => Data.fromJson(value!));
-    return annoyances;
-  }
-*/
-
   Future<Map> getHistoryMapByAccount() async {
     Map socialResult = {};
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
@@ -621,12 +652,37 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
         () => value.data.length,
       );
       for (int index = 0; index < min(value.data.length, 20); index++) {
+        String type = "";
+        switch (value.data.elementAt(index).type) {
+          case 1:
+            type = "課業";
+            break;
+          case 2:
+            type = "事業";
+            break;
+          case 3:
+            type = "愛情";
+            break;
+          case 4:
+            type = "友情";
+            break;
+          case 5:
+            type = "親情";
+            break;
+          case 6:
+            type = "其他";
+            break;
+          default:
+            break;
+        }
+
         socialResult.putIfAbsent(
           "result $index",
           () => {
             'id': value.data.elementAt(index).id,
-            'name': value.data.elementAt(index).account,
+            'avatar': value.data.elementAt(index).monsterId,
             'content': value.data.elementAt(index).content,
+            'type': type,
             'time': value.data.elementAt(index).time,
           },
         );
@@ -636,11 +692,17 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     return socialResult;
   }
 
+  //介面設計
+  double getRadiansFromDegree(double degree) {
+    double unitRadian = 57.295779513;
+    return degree / unitRadian;
+  }
+
   //初始化
   @override
   void initState() {
-    animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 200));
+    animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 250));
     degOneTranslationAnimation = TweenSequence([
       TweenSequenceItem<double>(
           tween: Tween<double>(begin: 0.0, end: 1.2), weight: 75.0),
@@ -656,6 +718,16 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
     super.initState();
+    _future = getHistoryMapByAccount();
+    animationController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 }
 

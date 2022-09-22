@@ -20,18 +20,14 @@ class AnnoyanceChat extends StatefulWidget {
 
 class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   final messageInsert = TextEditingController();
-  final player = AudioPlayer();
   final timerController = TimerController();
+  final player = AudioPlayer();
+  late final VideoPlayerController _videoPlayerController;
   int chatRound = 0;
   bool lastSpeaking = false;
   bool robotSpeakable = true;
   bool pickable = false;
-
   List<Map> messages = [];
-  List<String> annoyTypeMembers = ["", "課業", "事業", "愛情", "友情", "親情", "其他"];
-  List<String> emotionGradeMembers = ["", "1", "2", "3", "4", "5"];
-  List<String> acceptDrawingMembers = ["是", "否"];
-  String hintCannotRead = "員工手冊上沒有這個選項耶...麻煩確認一下答案好嗎？";
   int acceptShare = 0;
   //TODO: LEVEL 3
   ///when user comes after using interactionPage and some feature
@@ -39,7 +35,6 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   var userAnswers = [];
   File? _media;
   File? _moodImage;
-  late final VideoPlayerController _videoPlayerController;
 
   //新增煩惱-照相
   takePhoto() async {
@@ -202,7 +197,18 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                               menuList: [
                                 PopupMenuItem(
                                   child: ListTile(
-                                      leading: Icon(Icons.camera_alt_rounded),
+                                      //leading: Icon(Icons.camera_alt_rounded),
+                                      leading: CircleAvatar(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: const AssetImage(
+                                                  'assets/image/camera.png'),
+                                              fit: BoxFit.scaleDown,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                       title: Text("照相"),
                                       onTap: () => {
                                             ////照相選項
@@ -384,7 +390,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                     height: 50,
                     width: 50,
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/image/Baku.png'),
+                      backgroundImage: AssetImage('assets/image/Avatar_Baku_PNG.png'),
                     ),
                   )
                 : Container(),
@@ -676,6 +682,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
   //提示輸入格式錯誤
   void cannotRead() {
+    String hintCannotRead = "員工手冊上沒有這個選項耶...麻煩確認一下答案好嗎？";
     String secHintAnnoyType = "煩惱是關於什麼的呢？";
     String secHintEmotionGrade = "煩惱指數有多高呢？\n1分是最低的喔！";
     String secHintDrawingAcception = "要不要把你的心情畫下來呢？";
@@ -698,6 +705,9 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
   //確認是否符合選擇格式，符合->回覆 不符合->提示再次輸入
   Future<void> response([String? text, File? media]) async {
+    List<String> annoyTypeMembers = ["", "課業", "事業", "愛情", "友情", "親情", "其他"];
+    List<String> emotionGradeMembers = ["", "1", "2", "3", "4", "5"];
+    List<String> acceptDrawingMembers = ["是", "否"];
     //進入時自動訊息問安
     if (chatRound == 0) {
       int hourNow = DateTime.now().hour.toInt();

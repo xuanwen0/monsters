@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/services.dart';
-import 'package:monsters_front_end/pages/FacebookLogin.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/login_selfacount.dart';
 import 'package:monsters_front_end/pages/signUp.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../API/google_sign_in_API.dart';
 
@@ -97,71 +97,15 @@ class _loginState extends State<LoginPage> {
             child: SizedBox(
                 width: 225.0,
                 height: 39.0,
-                child: SignInButton(
-                  Buttons.Google,
-                  text: "從 Google 登入",
-                  onPressed: signIn,
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: SignInButton(
+                    Buttons.Google,
+                    text: "Google 登入",
+                    padding: EdgeInsets.only(left: 20),
+                    onPressed: signIn,
+                  ),
                 )),
-          ),
-          //line
-          Align(
-            alignment: Alignment(0.005, 0.57),
-            child: SizedBox(
-              width: 225.0,
-              height: 39.0,
-              child: ColoredBox(
-                color: Color.fromARGB(255, 74, 163, 77),
-                child: Stack(
-                  children: <Widget>[
-                    Pinned.fromPins(
-                      Pin(size: 30.0, start: 10.0),
-                      Pin(start: 5.0, end: 4.0),
-                      child:
-                          // Adobe XD layer: 'appicon_01_f9ed1cf0…' (shape)
-                          Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image:
-                                const AssetImage('assets/image/icon_line.jpg'),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                    ),
-                    Pinned.fromPins(
-                      Pin(size: 110.0, middle: 0.27),
-                      Pin(start: 8.0, end: 4.0),
-                      child: Text(
-                        '從LINE登入',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Segoe UI',
-                          fontSize: 15,
-                          color: Colors.white,
-                        ),
-                        softWrap: false,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          //fb
-          Pinned.fromPins(
-            Pin(size: 225.0, middle: 0.5027),
-            Pin(size: 39.0, end: 106.0),
-            child: SignInButton(
-              Buttons.FacebookNew,
-              text: "從 Facebook 登入",
-              onPressed: () async {
-                if (await FacebookLogin().login()) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MainPage()));
-                }
-              },
-            ),
           ),
         ],
       ),
@@ -182,5 +126,15 @@ class _loginState extends State<LoginPage> {
             'user name: ' + user.displayName! + ' user email: ' + user.email),
       ));
     }
+  }
+
+  void pageRoute(String account) async {
+    //儲存account shared preferences (後用來判斷此裝置是否登入過)
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString("login", account);
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("${pref.getString("login")}")));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MainPage()));
   }
 }

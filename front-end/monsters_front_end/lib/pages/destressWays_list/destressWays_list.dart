@@ -88,7 +88,7 @@ class DestressWaysList extends StatelessWidget {
                                                           color:
                                                               BackgroundColorWarm,
                                                           fontSize:
-                                                              introTextSize),
+                                                              contentTextSize),
                                                     ))),
                                           ],
                                         ))),
