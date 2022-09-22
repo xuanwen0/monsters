@@ -274,7 +274,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                   height: double.infinity,
                                   child: CircleAvatar(
                                     backgroundImage:
-                                        AssetImage('assets/image/baku1.jpg'),
+                                        AssetImage('assets/image/Avatar_Baku_JPG.jpg'),
                                   ),
                                 ),
                                 title: Text(

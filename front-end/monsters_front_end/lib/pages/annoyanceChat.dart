@@ -197,7 +197,18 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                               menuList: [
                                 PopupMenuItem(
                                   child: ListTile(
-                                      leading: Icon(Icons.camera_alt_rounded),
+                                      //leading: Icon(Icons.camera_alt_rounded),
+                                      leading: CircleAvatar(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: const AssetImage(
+                                                  'assets/image/camera.png'),
+                                              fit: BoxFit.scaleDown,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                       title: Text("照相"),
                                       onTap: () => {
                                             ////照相選項
@@ -379,7 +390,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                     height: 50,
                     width: 50,
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/image/Baku.png'),
+                      backgroundImage: AssetImage('assets/image/Avatar_Baku_PNG.png'),
                     ),
                   )
                 : Container(),

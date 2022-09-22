@@ -104,7 +104,7 @@ class _MainPageState extends State<MainPage>
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: const AssetImage(
-                      'assets/image/monsters_book_monster.png'),
+                      'assets/image/monster_Baku.png'),
                   fit: BoxFit.cover,
                 ),
               ),

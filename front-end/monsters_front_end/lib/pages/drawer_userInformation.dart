@@ -136,13 +136,12 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                     Pin(size: 140, middle: 0.5),
                     Pin(start: 26.1, end: 26.1),
                     child:
-                        // Adobe XD layer: 'baku_chat' (shape)
                         Container(
                       decoration: BoxDecoration(
                         borderRadius:
                             BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                         image: DecorationImage(
-                          image: const AssetImage('assets/image/baku1.jpg'),
+                          image: const AssetImage('assets/image/Avatar_Baku_JPG.jpg'),
                           fit: BoxFit.fill,
                         ),
                       ),

@@ -334,7 +334,6 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                               Pin(size: 40.0, start: 15.0),
                                               Pin(size: 40.0, start: 13.0),
                                               child:
-                                                  // Adobe XD layer: 'baku_chat' (shape)
                                                   Container(
                                                 decoration: BoxDecoration(
                                                   borderRadius:
@@ -343,7 +342,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                               9999.0, 9999.0)),
                                                   image: DecorationImage(
                                                     image: const AssetImage(
-                                                        'assets/image/baku1.jpg'),
+                                                        'assets/image/Avatar_Baku_JPG.jpg'),
                                                     fit: BoxFit.fill,
                                                   ),
                                                 ),

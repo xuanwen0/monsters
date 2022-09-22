@@ -34,7 +34,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
     const int monsterCount = 6; //總共20個，若是未取得顯示問號"?"
     const List<String> monsterNames = ['巴古', '???', '???', '???', '???', '???'];
     const List<String> monsterPics = [
-      'assets/image/monsters_book_monster.png',
+      'assets/image/monster_Baku.png',
       'assets/image/unknow.png',
       'assets/image/unknow.png',
       'assets/image/unknow.png',
@@ -64,7 +64,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //標題 完成
-              Expanded(flex: 10, child: mainAppBarTitleContainer("社群")),
+              Expanded(flex: 10, child: mainAppBarTitleContainer("圖鑑")),
               //標籤
               Expanded(
                   flex: 5,
@@ -157,8 +157,116 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       ],
                     ),
                   ))),
+              ///
+              ///
+              ///
+              Expanded(flex: 75, child: GridView(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, mainAxisSpacing: 30, crossAxisSpacing: 10),
+              children: List.generate(
+                monsterCount,
+                (index) => Container(
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                    width: 160.0,
+                    height: 200.0,
+                    child: PageLink(
+                      links: [
+                        PageLinkInfo(
+                          transition: LinkTransition.Fade,
+                          ease: Curves.easeOut,
+                          duration: 0.3,
+                          pageBuilder: () => Monster_detail(),
+                        ),
+                      ],
+                      child: Stack(
+                        children: <Widget>[
+                          //border
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(255, 255, 255, 1),
+                              borderRadius: BorderRadius.circular(11.0),
+                              border: Border.all(
+                                  width: 1.0, color: const Color(0xffa0522d)),
+                            ),
+                            margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 32.0),
+                          ),
+                          //image
+                          Pinned.fromPins(
+                            Pin(start: 10.0, end: 10.0),
+                            Pin(size: 125.0, start: 5.0),
+                            child:
+                                // Adobe XD layer: 'monster1' (shape)
+                                Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(monsterPics[index]),
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                            ),
+                          ),
+                          //name
+                          Pinned.fromPins(
+                            Pin(size: 80.0, middle: 0.5),
+                            Pin(size: 100.0, middle: 2.1),
+                            child: Text(
+                              monsterNames[index],
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Segoe UI',
+                                fontSize: 32,
+                                color: const Color(0xffa0522d),
+                              ),
+                              softWrap: false,
+                            ),
+                          ),
+                          //stars
+                          Pinned.fromPins(
+                            Pin(size: 30.0, end: 75.0),
+                            Pin(size: 30.0, middle: 0.72),
+                            child:
+                                // Adobe XD layer: 'Icon awesome-star' (shape)
+                                SvgPicture.string(
+                              _svg_bx5ln,
+                              allowDrawingOutsideViewBox: true,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Pinned.fromPins(
+                            Pin(size: 30.0, end: 40.0),
+                            Pin(size: 30.0, middle: 0.72),
+                            child:
+                                // Adobe XD layer: 'Icon awesome-star' (shape)
+                                SvgPicture.string(
+                              _svg_bx5ln,
+                              allowDrawingOutsideViewBox: true,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Pinned.fromPins(
+                            Pin(size: 30.0, end: 5.0),
+                            Pin(size: 30.0, middle: 0.72),
+                            child:
+                                // Adobe XD layer: 'Icon awesome-star' (shape)
+                                SvgPicture.string(
+                              _svg_bx5ln,
+                              allowDrawingOutsideViewBox: true,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
 
-              Expanded(flex: 75, child: Text("content")),
+              ///
+              ///
+              ///
               Expanded(
                 flex: 10,
                 child: Container(
@@ -167,6 +275,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
               )
             ],
           ),
+
           //互動
           Pinned.fromPins(
             Pin(size: 69.0, start: 9.0),

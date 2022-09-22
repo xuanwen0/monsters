@@ -12,6 +12,7 @@ import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/login.dart';
+import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/social.dart';
 import 'package:monsters_front_end/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
