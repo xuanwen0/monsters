@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/login_selfacount.dart';
 import 'package:monsters_front_end/pages/signUp.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -94,18 +93,39 @@ class _loginState extends State<LoginPage> {
           //Google
           Align(
             alignment: Alignment(0.005, 0.426),
-            child: SizedBox(
-                width: 225.0,
-                height: 39.0,
-                child: Container(
-                  alignment: Alignment.centerRight,
-                  child: SignInButton(
-                    Buttons.Google,
-                    text: "Google 登入",
-                    padding: EdgeInsets.only(left: 20),
-                    onPressed: signIn,
+            child: SizedBox.fromSize(
+              size: Size(225, 39),
+              child: Material(
+                color: const Color.fromRGBO(216, 185, 99, 1),
+                borderRadius: BorderRadius.circular(7.0),
+                child: InkWell(
+                  onTap: () => signIn(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        child: Ink.image(
+                          image:
+                              const AssetImage('assets/image/icon_google.png'),
+                          width: 30,
+                          height: 30,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const Text(
+                        "從Google登入",
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 20,
+                          color: Color.fromRGBO(255, 255, 255, 1),
+                        ),
+                      ),
+                    ],
                   ),
-                )),
+                ),
+              ),
+            ),
           ),
         ],
       ),
