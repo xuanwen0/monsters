@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:monsters_front_end/model/memberModel.dart';
 import 'package:monsters_front_end/pages/forget_psw_auth.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +12,8 @@ import 'package:monsters_front_end/pages/login.dart';
 import 'package:http/http.dart' as http;
 import 'package:monsters_front_end/pages/signUp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../repository/memberRepo.dart';
 
 class Login_selfacount extends StatefulWidget {
   @override
@@ -21,6 +24,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
   final TextEditingController _accountController = TextEditingController();
   final TextEditingController _pwdController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final MemberRepository memberRepository = MemberRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -91,11 +95,16 @@ class _Login_selfacountState extends State<Login_selfacount> {
                     ),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     inputFormatters: [
-                      InputFormatter('[a-zA-Z]|[0-9]'),
+                      FilteringTextInputFormatter.allow(
+                          RegExp("[a-zA-Z]|[0-9]")),
                     ],
                     validator: (value) {
-                      if (value!.isNotEmpty) {
+                      if (value!.isNotEmpty &&
+                          value.length > 5 &&
+                          value.length < 9) {
                         return null;
+                      } else if (value.isNotEmpty) {
+                        return '帳號須為6-8位元';
                       } else {
                         return '帳號不得空白';
                       }
@@ -126,13 +135,16 @@ class _Login_selfacountState extends State<Login_selfacount> {
                       obscureText: true,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       inputFormatters: [
-                        InputFormatter('[a-zA-Z]|[0-9]'),
+                        FilteringTextInputFormatter.allow(
+                            RegExp("[a-zA-Z]|[0-9]")),
                       ],
                       validator: (value) {
-                        if (value!.isNotEmpty) {
+                        if (value!.isNotEmpty && value.length == 8) {
                           return null;
-                        } else {
+                        } else if (value.isEmpty) {
                           return '密碼不得空白';
+                        } else {
+                          return '密碼須為8位元';
                         }
                       }),
                   const SizedBox(height: 50.0),
@@ -174,7 +186,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                         final isValidForm = _formKey.currentState!.validate();
                         if (isValidForm) {
                           pageRoute("User account");
-                          //login();
+                          login();
                         }
                       },
                     ),
@@ -209,50 +221,41 @@ class _Login_selfacountState extends State<Login_selfacount> {
 
   void login() async {
     //登入功能 !!尚未完成!!
-    var response = await http.post(
-        Uri.parse("http://localhost:8080/member/login"),
-        body: ({
-          "account": _accountController.text,
-          "password": _pwdController.text
-        }));
-    if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Account : ${body["account"]}")));
-      pageRoute(body["account"]);
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("查無此帳號")));
-    }
+    // var response = await http.post(
+    //     Uri.parse("http://localhost:8080/member/login"),
+    //     body: ({
+    //       "account": _accountController.text,
+    //       "password": _pwdController.text
+    //     }));
+    // if (response.statusCode == 200) {
+    //   final body = jsonDecode(response.body);
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text("Account : ${body["account"]}")));
+    //   pageRoute(body["account"]);
+    // } else {
+    //   ScaffoldMessenger.of(context)
+    //       .showSnackBar(const SnackBar(content: Text("查無此帳號")));
+    // }
+    memberRepository.login(
+      Member(
+          account: _accountController.text,
+          password: _pwdController.text,
+          birthday: '',
+          name: '',
+          nickName: '',
+          gender: 0,
+          mail: ''),
+    );
   }
 
   void pageRoute(String account) async {
     //儲存account shared preferences (後用來判斷此裝置是否登入過)
     SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString("login", account);
+    await pref.setString("loginAccount", account);
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text("${pref.getString("login")}")));
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => MainPage()));
-  }
-}
-
-class InputFormatter extends TextInputFormatter {
-  //只能輸入英文跟數字
-  final String regExp;
-
-  InputFormatter(this.regExp);
-
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    if (newValue.text.isNotEmpty) {
-      if (RegExp(regExp).firstMatch(newValue.text) != null) {
-        return newValue;
-      }
-      return oldValue;
-    }
-    return newValue;
   }
 }
 

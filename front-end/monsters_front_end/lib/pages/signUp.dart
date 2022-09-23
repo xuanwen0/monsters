@@ -25,10 +25,8 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _pwdController = TextEditingController();
   final TextEditingController _checkpwdController = TextEditingController();
   final TextEditingController _mailController = TextEditingController();
-  final TextEditingController _fullnameController = TextEditingController();
   final TextEditingController _nicknameController = TextEditingController();
-  //性別 0:男 1:女
-  int groupValue = 0;
+
   //生日
   DateTime date = DateTime.now();
   //條款
@@ -106,11 +104,16 @@ class _SignUpState extends State<SignUp> {
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       inputFormatters: [
-                        InputFormatter('[a-zA-Z]|[0-9]'),
+                        FilteringTextInputFormatter.allow(
+                            RegExp("[a-zA-Z]|[0-9]")),
                       ],
                       validator: (value) {
-                        if (value!.isNotEmpty) {
+                        if (value!.isNotEmpty &&
+                            value.length > 5 &&
+                            value.length < 9) {
                           return null;
+                        } else if (value.isNotEmpty) {
+                          return '帳號須為6-8位元';
                         } else {
                           return '帳號不得空白';
                         }
@@ -141,13 +144,16 @@ class _SignUpState extends State<SignUp> {
                         obscureText: true,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         inputFormatters: [
-                          InputFormatter('[a-zA-Z]|[0-9]'),
+                          FilteringTextInputFormatter.allow(
+                              RegExp("[a-zA-Z]|[0-9]")),
                         ],
                         validator: (value) {
-                          if (value!.isNotEmpty) {
+                          if (value!.isNotEmpty && value.length == 8) {
                             return null;
-                          } else {
+                          } else if (value.isEmpty) {
                             return '密碼不得空白';
+                          } else {
+                            return '密碼須為8位元';
                           }
                         }),
                     SizedBox(height: 10.0),
@@ -176,7 +182,8 @@ class _SignUpState extends State<SignUp> {
                         obscureText: true,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         inputFormatters: [
-                          InputFormatter('[a-zA-Z]|[0-9]'),
+                          FilteringTextInputFormatter.allow(
+                              RegExp("[a-zA-Z]|[0-9]")),
                         ],
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -212,44 +219,14 @@ class _SignUpState extends State<SignUp> {
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       inputFormatters: [
-                        InputFormatter('[a-zA-Z]|[0-9]'),
+                        FilteringTextInputFormatter.allow(
+                            RegExp("[a-zA-Z]|[0-9]|[@]|[.]")),
                       ],
                       validator: (email) =>
                           email != null && !EmailValidator.validate(email)
                               ? '請輸入正確的信箱格式'
                               : null,
                     ),
-                    SizedBox(height: 10.0),
-                    //全名
-                    TextFormField(
-                        autofocus: false,
-                        controller: _fullnameController,
-                        decoration: const InputDecoration(
-                          labelText: "全名",
-                          hintText: '請輸入全名',
-                          prefixIcon: Icon(Icons.person_outline_rounded),
-                          border: OutlineInputBorder(
-                            ///設定邊框四個角的弧度
-                            borderRadius: BorderRadius.all(Radius.circular(90)),
-
-                            ///用來配置邊框的樣式
-                            borderSide: BorderSide(
-                              ///設定邊框的顏色
-                              color: Color.fromRGBO(160, 82, 45, 1),
-                              width: 2.0,
-                            ),
-                          ),
-                          fillColor: Color.fromRGBO(255, 255, 255, 1),
-                          filled: true,
-                        ),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value!.isNotEmpty) {
-                            return null;
-                          } else {
-                            return '全名不得空白';
-                          }
-                        }),
                     SizedBox(height: 10.0),
                     //暱稱
                     TextFormField(
@@ -322,88 +299,6 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10.0),
-                    //性別
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "性別  :",
-                          style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 20,
-                            color: Colors.grey[700],
-                          ),
-                          softWrap: false,
-                        )),
-                    SizedBox(height: 5.0),
-                    Row(children: [
-                      Expanded(
-                        child: RadioListTile<int>(
-                          contentPadding: EdgeInsets.all(0.0),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          tileColor: Colors.grey[200],
-                          value: 0,
-                          groupValue: groupValue,
-                          onChanged: (value) {
-                            setState(() {
-                              groupValue = value!;
-                            });
-                          },
-                          secondary: Icon(
-                            Icons.male,
-                            color: Color.fromRGBO(160, 82, 45, 1),
-                          ),
-                          title: const Text(
-                            "男",
-                            style: TextStyle(
-                              fontFamily: 'Segoe UI',
-                              fontSize: 18,
-                              color: Color.fromRGBO(160, 82, 45, 1),
-                            ),
-                            softWrap: false,
-                          ),
-                          dense: true,
-                          activeColor:
-                              Color.fromRGBO(160, 82, 45, 1), // 指定選中時勾選框的顏色
-                          selected: false,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Expanded(
-                        child: RadioListTile<int>(
-                          contentPadding: EdgeInsets.all(0.0),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          value: 1,
-                          groupValue: groupValue,
-                          tileColor: Colors.grey[200],
-                          onChanged: (value) {
-                            setState(() {
-                              groupValue = value!;
-                            });
-                          },
-                          secondary: Icon(
-                            Icons.female,
-                            color: Color.fromRGBO(160, 82, 45, 1),
-                          ),
-                          title: const Text(
-                            "女",
-                            style: TextStyle(
-                              fontFamily: 'Segoe UI',
-                              fontSize: 18,
-                              color: Color.fromRGBO(160, 82, 45, 1),
-                            ),
-                            softWrap: false,
-                          ),
-                          dense: true,
-                          activeColor:
-                              Color.fromRGBO(160, 82, 45, 1), // 指定選中時勾選框的顏色
-                        ),
-                      ),
-                    ]),
                     SizedBox(height: 10.0),
                     //使用條款與隱私權政策
                     Row(
@@ -497,9 +392,9 @@ class _SignUpState extends State<SignUp> {
         Member(
           account: _accountController.text,
           birthday: formatDate(date, [yyyy, '-', mm, '-', dd]).toString(),
-          gender: groupValue,
+          gender: 0,
           mail: _mailController.text,
-          name: _fullnameController.text,
+          name: '',
           nickName: _nicknameController.text,
           password: _pwdController.text,
         ),
@@ -512,25 +407,6 @@ class _SignUpState extends State<SignUp> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("請詳細閱讀使用條款，並勾選同意。")));
     }
-  }
-}
-
-class InputFormatter extends TextInputFormatter {
-  //只能輸入英文跟數字
-  final String regExp;
-
-  InputFormatter(this.regExp);
-
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    if (newValue.text.isNotEmpty) {
-      if (RegExp(regExp).firstMatch(newValue.text) != null) {
-        return newValue;
-      }
-      return oldValue;
-    }
-    return newValue;
   }
 }
 

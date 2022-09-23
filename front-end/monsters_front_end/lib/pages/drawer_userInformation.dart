@@ -17,7 +17,6 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
   Widget build(BuildContext context) {
     const String userName = '洪靖翔';
     const String userNickname = '阿翔';
-    const String userGender = '男';
     const String userBirthday = '08/22';
     const String userMail = '10846028@ntub.edu.tw';
     return Scaffold(
@@ -135,13 +134,13 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                   Pinned.fromPins(
                     Pin(size: 140, middle: 0.5),
                     Pin(start: 26.1, end: 26.1),
-                    child:
-                        Container(
+                    child: Container(
                       decoration: BoxDecoration(
                         borderRadius:
                             BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                         image: DecorationImage(
-                          image: const AssetImage('assets/image/Avatar_Baku_JPG.jpg'),
+                          image: const AssetImage(
+                              'assets/image/Avatar_Baku_JPG.jpg'),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -170,10 +169,6 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
                   {
                     'text': '暱稱',
                     'content': userNickname,
-                  },
-                  {
-                    'text': '性別',
-                    'content': userGender,
                   },
                   {
                     'text': '生日',
