@@ -26,6 +26,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
+  StateSetter? animationState;
+
   int selectionTab_type = 1;
 
   @override
@@ -157,112 +159,119 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       ],
                     ),
                   ))),
+
               ///
               ///
               ///
-              Expanded(flex: 75, child: GridView(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, mainAxisSpacing: 30, crossAxisSpacing: 10),
-              children: List.generate(
-                monsterCount,
-                (index) => Container(
-                  alignment: Alignment.center,
-                  child: SizedBox(
-                    width: 160.0,
-                    height: 200.0,
-                    child: PageLink(
-                      links: [
-                        PageLinkInfo(
-                          transition: LinkTransition.Fade,
-                          ease: Curves.easeOut,
-                          duration: 0.3,
-                          pageBuilder: () => Monster_detail(),
-                        ),
-                      ],
-                      child: Stack(
-                        children: <Widget>[
-                          //border
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                              borderRadius: BorderRadius.circular(11.0),
-                              border: Border.all(
-                                  width: 1.0, color: const Color(0xffa0522d)),
+              Expanded(
+                flex: 75,
+                child: GridView(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 30,
+                      crossAxisSpacing: 10),
+                  children: List.generate(
+                    monsterCount,
+                    (index) => Container(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: 160.0,
+                        height: 200.0,
+                        child: PageLink(
+                          links: [
+                            PageLinkInfo(
+                              transition: LinkTransition.Fade,
+                              ease: Curves.easeOut,
+                              duration: 0.3,
+                              pageBuilder: () => Monster_detail(),
                             ),
-                            margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 32.0),
-                          ),
-                          //image
-                          Pinned.fromPins(
-                            Pin(start: 10.0, end: 10.0),
-                            Pin(size: 125.0, start: 5.0),
-                            child:
-                                // Adobe XD layer: 'monster1' (shape)
-                                Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(monsterPics[index]),
-                                  fit: BoxFit.fitHeight,
+                          ],
+                          child: Stack(
+                            children: <Widget>[
+                              //border
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(255, 255, 255, 1),
+                                  borderRadius: BorderRadius.circular(11.0),
+                                  border: Border.all(
+                                      width: 1.0,
+                                      color: const Color(0xffa0522d)),
+                                ),
+                                margin:
+                                    EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 32.0),
+                              ),
+                              //image
+                              Pinned.fromPins(
+                                Pin(start: 10.0, end: 10.0),
+                                Pin(size: 125.0, start: 5.0),
+                                child:
+                                    // Adobe XD layer: 'monster1' (shape)
+                                    Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(monsterPics[index]),
+                                      fit: BoxFit.fitHeight,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                          //name
-                          Pinned.fromPins(
-                            Pin(size: 80.0, middle: 0.5),
-                            Pin(size: 100.0, middle: 2.1),
-                            child: Text(
-                              monsterNames[index],
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 32,
-                                color: const Color(0xffa0522d),
+                              //name
+                              Pinned.fromPins(
+                                Pin(size: 80.0, middle: 0.5),
+                                Pin(size: 100.0, middle: 2.1),
+                                child: Text(
+                                  monsterNames[index],
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Segoe UI',
+                                    fontSize: 32,
+                                    color: const Color(0xffa0522d),
+                                  ),
+                                  softWrap: false,
+                                ),
                               ),
-                              softWrap: false,
-                            ),
+                              //stars
+                              Pinned.fromPins(
+                                Pin(size: 30.0, end: 75.0),
+                                Pin(size: 30.0, middle: 0.72),
+                                child:
+                                    // Adobe XD layer: 'Icon awesome-star' (shape)
+                                    SvgPicture.string(
+                                  _svg_bx5ln,
+                                  allowDrawingOutsideViewBox: true,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              Pinned.fromPins(
+                                Pin(size: 30.0, end: 40.0),
+                                Pin(size: 30.0, middle: 0.72),
+                                child:
+                                    // Adobe XD layer: 'Icon awesome-star' (shape)
+                                    SvgPicture.string(
+                                  _svg_bx5ln,
+                                  allowDrawingOutsideViewBox: true,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              Pinned.fromPins(
+                                Pin(size: 30.0, end: 5.0),
+                                Pin(size: 30.0, middle: 0.72),
+                                child:
+                                    // Adobe XD layer: 'Icon awesome-star' (shape)
+                                    SvgPicture.string(
+                                  _svg_bx5ln,
+                                  allowDrawingOutsideViewBox: true,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ],
                           ),
-                          //stars
-                          Pinned.fromPins(
-                            Pin(size: 30.0, end: 75.0),
-                            Pin(size: 30.0, middle: 0.72),
-                            child:
-                                // Adobe XD layer: 'Icon awesome-star' (shape)
-                                SvgPicture.string(
-                              _svg_bx5ln,
-                              allowDrawingOutsideViewBox: true,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Pinned.fromPins(
-                            Pin(size: 30.0, end: 40.0),
-                            Pin(size: 30.0, middle: 0.72),
-                            child:
-                                // Adobe XD layer: 'Icon awesome-star' (shape)
-                                SvgPicture.string(
-                              _svg_bx5ln,
-                              allowDrawingOutsideViewBox: true,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Pinned.fromPins(
-                            Pin(size: 30.0, end: 5.0),
-                            Pin(size: 30.0, middle: 0.72),
-                            child:
-                                // Adobe XD layer: 'Icon awesome-star' (shape)
-                                SvgPicture.string(
-                              _svg_bx5ln,
-                              allowDrawingOutsideViewBox: true,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ),
 
               ///
               ///
@@ -503,96 +512,103 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
           Pinned.fromPins(
             Pin(size: 150.0, middle: 0.5),
             Pin(size: 150.0, end: 5.0),
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                Positioned(
-                    child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: <Widget>[
-                    IgnorePointer(
-                      child: Container(
-                        color: Colors.transparent,
-                        height: 150.0,
-                        width: 150.0,
-                      ),
-                    ),
-                    Transform(
-                      transform: Matrix4.rotationZ(
-                          getRadiansFromDegree(rotationAnimation.value)),
-                      alignment: Alignment.center,
-                      child: CircularButton(
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                        width: 70,
-                        height: 70,
-                        icon: const Icon(
-                          Icons.add_rounded,
-                          color: Color.fromRGBO(255, 187, 0, 1),
-                          size: 50,
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              animationState = setState;
+              return Stack(
+                alignment: Alignment.bottomCenter,
+                children: <Widget>[
+                  Positioned(
+                      child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: <Widget>[
+                      IgnorePointer(
+                        child: Container(
+                          color: Colors.transparent,
+                          height: 150.0,
+                          width: 150.0,
                         ),
-                        onClick: () {
-                          if (animationController.isCompleted) {
-                            animationController.reverse();
-                          } else {
-                            animationController.forward();
-                          }
-                        },
                       ),
-                    ),
-                    Transform.translate(
-                      offset: Offset.fromDirection(getRadiansFromDegree(235),
-                          degOneTranslationAnimation.value * 80),
-                      child: Transform(
+                      Transform(
                         transform: Matrix4.rotationZ(
-                            getRadiansFromDegree(rotationAnimation.value))
-                          ..scale(degOneTranslationAnimation.value),
+                            getRadiansFromDegree(rotationAnimation.value)),
                         alignment: Alignment.center,
                         child: CircularButton(
-                          color: Colors.blueAccent,
+                          color: Color.fromRGBO(255, 255, 255, 1),
                           width: 70,
                           height: 70,
                           icon: const Icon(
-                            Icons.sentiment_dissatisfied,
-                            color: Colors.white,
-                            size: 40,
+                            Icons.add_rounded,
+                            color: Color.fromRGBO(255, 187, 0, 1),
+                            size: 50,
                           ),
                           onClick: () {
-                            animationController.reverse();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AnnoyanceChat()));
+                            if (animationController.isCompleted) {
+                              animationController.reverse();
+                            } else {
+                              animationController.forward();
+                              animationController.addListener(() {
+                                animationState!(() {});
+                              });
+                            }
                           },
                         ),
                       ),
-                    ),
-                    Transform.translate(
-                      offset: Offset.fromDirection(getRadiansFromDegree(305),
-                          degTwoTranslationAnimation.value * 80),
-                      child: Transform(
-                        transform: Matrix4.rotationZ(
-                            getRadiansFromDegree(rotationAnimation.value))
-                          ..scale(degTwoTranslationAnimation.value),
-                        alignment: Alignment.center,
-                        child: CircularButton(
-                          color: Colors.orangeAccent,
-                          width: 70,
-                          height: 70,
-                          icon: const Icon(
-                            Icons.import_contacts,
-                            color: Colors.white,
-                            size: 40,
+                      Transform.translate(
+                        offset: Offset.fromDirection(getRadiansFromDegree(235),
+                            degOneTranslationAnimation.value * 80),
+                        child: Transform(
+                          transform: Matrix4.rotationZ(
+                              getRadiansFromDegree(rotationAnimation.value))
+                            ..scale(degOneTranslationAnimation.value),
+                          alignment: Alignment.center,
+                          child: CircularButton(
+                            color: Colors.blueAccent,
+                            width: 70,
+                            height: 70,
+                            icon: const Icon(
+                              Icons.sentiment_dissatisfied,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                            onClick: () {
+                              animationController.reverse();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AnnoyanceChat()));
+                            },
                           ),
-                          onClick: () {
-                            animationController.reverse();
-                          },
                         ),
                       ),
-                    ),
-                  ],
-                ))
-              ],
-            ),
+                      Transform.translate(
+                        offset: Offset.fromDirection(getRadiansFromDegree(305),
+                            degTwoTranslationAnimation.value * 80),
+                        child: Transform(
+                          transform: Matrix4.rotationZ(
+                              getRadiansFromDegree(rotationAnimation.value))
+                            ..scale(degTwoTranslationAnimation.value),
+                          alignment: Alignment.center,
+                          child: CircularButton(
+                            color: Colors.orangeAccent,
+                            width: 70,
+                            height: 70,
+                            icon: const Icon(
+                              Icons.import_contacts,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                            onClick: () {
+                              animationController.reverse();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ))
+                ],
+              );
+            }),
           ),
         ],
       ),

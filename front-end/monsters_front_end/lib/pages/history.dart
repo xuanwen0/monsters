@@ -29,6 +29,8 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
+  StateSetter? animationState;
+
   //控制標籤
   //1:全部 2:煩惱 3:日記
   int selectionTab_type = 1;
@@ -273,8 +275,8 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                 leading: Container(
                                   height: double.infinity,
                                   child: CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage('assets/image/Avatar_Baku_JPG.jpg'),
+                                    backgroundImage: AssetImage(
+                                        'assets/image/Avatar_Baku_JPG.jpg'),
                                   ),
                                 ),
                                 title: Text(
@@ -544,96 +546,103 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           Pinned.fromPins(
             Pin(size: 150.0, middle: 0.5),
             Pin(size: 150.0, end: 5.0),
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                Positioned(
-                    child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: <Widget>[
-                    IgnorePointer(
-                      child: Container(
-                        color: Colors.transparent,
-                        height: 150.0,
-                        width: 150.0,
-                      ),
-                    ),
-                    Transform(
-                      transform: Matrix4.rotationZ(
-                          getRadiansFromDegree(rotationAnimation.value)),
-                      alignment: Alignment.center,
-                      child: CircularButton(
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                        width: 70,
-                        height: 70,
-                        icon: const Icon(
-                          Icons.add_rounded,
-                          color: Color.fromRGBO(255, 187, 0, 1),
-                          size: 50,
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              animationState = setState;
+              return Stack(
+                alignment: Alignment.bottomCenter,
+                children: <Widget>[
+                  Positioned(
+                      child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: <Widget>[
+                      IgnorePointer(
+                        child: Container(
+                          color: Colors.transparent,
+                          height: 150.0,
+                          width: 150.0,
                         ),
-                        onClick: () {
-                          if (animationController.isCompleted) {
-                            animationController.reverse();
-                          } else {
-                            animationController.forward();
-                          }
-                        },
                       ),
-                    ),
-                    Transform.translate(
-                      offset: Offset.fromDirection(getRadiansFromDegree(235),
-                          degOneTranslationAnimation.value * 80),
-                      child: Transform(
+                      Transform(
                         transform: Matrix4.rotationZ(
-                            getRadiansFromDegree(rotationAnimation.value))
-                          ..scale(degOneTranslationAnimation.value),
+                            getRadiansFromDegree(rotationAnimation.value)),
                         alignment: Alignment.center,
                         child: CircularButton(
-                          color: Colors.blueAccent,
+                          color: Color.fromRGBO(255, 255, 255, 1),
                           width: 70,
                           height: 70,
                           icon: const Icon(
-                            Icons.sentiment_dissatisfied,
-                            color: Colors.white,
-                            size: 40,
+                            Icons.add_rounded,
+                            color: Color.fromRGBO(255, 187, 0, 1),
+                            size: 50,
                           ),
                           onClick: () {
-                            animationController.reverse();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AnnoyanceChat()));
+                            if (animationController.isCompleted) {
+                              animationController.reverse();
+                            } else {
+                              animationController.forward();
+                              animationController.addListener(() {
+                                animationState!(() {});
+                              });
+                            }
                           },
                         ),
                       ),
-                    ),
-                    Transform.translate(
-                      offset: Offset.fromDirection(getRadiansFromDegree(305),
-                          degTwoTranslationAnimation.value * 80),
-                      child: Transform(
-                        transform: Matrix4.rotationZ(
-                            getRadiansFromDegree(rotationAnimation.value))
-                          ..scale(degTwoTranslationAnimation.value),
-                        alignment: Alignment.center,
-                        child: CircularButton(
-                          color: Colors.orangeAccent,
-                          width: 70,
-                          height: 70,
-                          icon: const Icon(
-                            Icons.import_contacts,
-                            color: Colors.white,
-                            size: 40,
+                      Transform.translate(
+                        offset: Offset.fromDirection(getRadiansFromDegree(235),
+                            degOneTranslationAnimation.value * 80),
+                        child: Transform(
+                          transform: Matrix4.rotationZ(
+                              getRadiansFromDegree(rotationAnimation.value))
+                            ..scale(degOneTranslationAnimation.value),
+                          alignment: Alignment.center,
+                          child: CircularButton(
+                            color: Colors.blueAccent,
+                            width: 70,
+                            height: 70,
+                            icon: const Icon(
+                              Icons.sentiment_dissatisfied,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                            onClick: () {
+                              animationController.reverse();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AnnoyanceChat()));
+                            },
                           ),
-                          onClick: () {
-                            animationController.reverse();
-                          },
                         ),
                       ),
-                    ),
-                  ],
-                ))
-              ],
-            ),
+                      Transform.translate(
+                        offset: Offset.fromDirection(getRadiansFromDegree(305),
+                            degTwoTranslationAnimation.value * 80),
+                        child: Transform(
+                          transform: Matrix4.rotationZ(
+                              getRadiansFromDegree(rotationAnimation.value))
+                            ..scale(degTwoTranslationAnimation.value),
+                          alignment: Alignment.center,
+                          child: CircularButton(
+                            color: Colors.orangeAccent,
+                            width: 70,
+                            height: 70,
+                            icon: const Icon(
+                              Icons.import_contacts,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                            onClick: () {
+                              animationController.reverse();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ))
+                ],
+              );
+            }),
           ),
         ],
       ),
@@ -719,9 +728,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
     super.initState();
     _future = getHistoryMapByAccount();
-    animationController.addListener(() {
-      setState(() {});
-    });
   }
 
   @override
