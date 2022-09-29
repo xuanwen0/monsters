@@ -65,6 +65,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
+  StateSetter? animationState;
 
   //控制執行續
   late Future _future;
@@ -102,9 +103,6 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
 
     _future = getSocialMapByAccount();
-    animationController.addListener(() {
-      setState(() {});
-    });
     super.initState();
   }
 
@@ -333,8 +331,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                             Pinned.fromPins(
                                               Pin(size: 40.0, start: 15.0),
                                               Pin(size: 40.0, start: 13.0),
-                                              child:
-                                                  Container(
+                                              child: Container(
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.all(
@@ -708,103 +705,105 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
             Pinned.fromPins(
               Pin(size: 200.0, middle: 0.5),
               Pin(size: 200.0, end: 5.0),
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: <Widget>[
-                  Positioned(
-                      child: Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: <Widget>[
-                      IgnorePointer(
-                        child: Container(
-                          color: Colors.transparent,
-                          height: 150.0,
-                          width: 150.0,
-                        ),
-                      ),
-                      Transform(
-                        transform: Matrix4.rotationZ(
-                            getRadiansFromDegree(rotationAnimation.value)),
-                        alignment: Alignment.center,
-                        child: CircularButton(
-                          color: Color.fromRGBO(255, 255, 255, 1),
-                          width: 70,
-                          height: 70,
-                          icon: const Icon(
-                            Icons.add_rounded,
-                            color: Color.fromRGBO(255, 187, 0, 1),
-                            size: 50,
+              child: StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setState) {
+                animationState = setState;
+                return Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: <Widget>[
+                    Positioned(
+                        child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: <Widget>[
+                        IgnorePointer(
+                          child: Container(
+                            color: Colors.transparent,
+                            height: 150.0,
+                            width: 150.0,
                           ),
-                          onClick: () {
-                            if (animationController.isCompleted) {
-                              animationController.reverse();
-                            } else {
-                              animationController.forward();
-                            }
-                          },
                         ),
-                      ),
-                      /*
-                       */
-
-                      Transform.translate(
-                        offset: Offset.fromDirection(getRadiansFromDegree(235),
-                            degOneTranslationAnimation.value * 80),
-                        child: Transform(
+                        Transform(
                           transform: Matrix4.rotationZ(
-                              getRadiansFromDegree(rotationAnimation.value))
-                            ..scale(degOneTranslationAnimation.value),
+                              getRadiansFromDegree(rotationAnimation.value)),
                           alignment: Alignment.center,
                           child: CircularButton(
-                            color: Colors.blueAccent,
+                            color: Color.fromRGBO(255, 255, 255, 1),
                             width: 70,
                             height: 70,
                             icon: const Icon(
-                              Icons.sentiment_dissatisfied,
-                              color: Colors.white,
-                              size: 40,
+                              Icons.add_rounded,
+                              color: Color.fromRGBO(255, 187, 0, 1),
+                              size: 50,
                             ),
                             onClick: () {
-                              animationController.reverse();
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AnnoyanceChat()));
+                              if (animationController.isCompleted) {
+                                animationController.reverse();
+                              } else {
+                                animationController.forward();
+                                animationController.addListener(() {
+                                  animationState!(() {});
+                                });
+                              }
                             },
                           ),
                         ),
-                      ),
-                      Transform.translate(
-                        offset: Offset.fromDirection(getRadiansFromDegree(305),
-                            degTwoTranslationAnimation.value * 80),
-                        child: Transform(
-                          transform: Matrix4.rotationZ(
-                              getRadiansFromDegree(rotationAnimation.value))
-                            ..scale(degTwoTranslationAnimation.value),
-                          alignment: Alignment.center,
-                          child: CircularButton(
-                            color: Colors.orangeAccent,
-                            width: 70,
-                            height: 70,
-                            icon: const Icon(
-                              Icons.import_contacts,
-                              color: Colors.white,
-                              size: 40,
+                        Transform.translate(
+                          offset: Offset.fromDirection(
+                              getRadiansFromDegree(235),
+                              degOneTranslationAnimation.value * 80),
+                          child: Transform(
+                            transform: Matrix4.rotationZ(
+                                getRadiansFromDegree(rotationAnimation.value))
+                              ..scale(degOneTranslationAnimation.value),
+                            alignment: Alignment.center,
+                            child: CircularButton(
+                              color: Colors.blueAccent,
+                              width: 70,
+                              height: 70,
+                              icon: const Icon(
+                                Icons.sentiment_dissatisfied,
+                                color: Colors.white,
+                                size: 40,
+                              ),
+                              onClick: () {
+                                animationController.reverse();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AnnoyanceChat()));
+                              },
                             ),
-                            onClick: () {
-                              // animationController.reverse();
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => Add_diary()));
-                            },
                           ),
                         ),
-                      ),
-                    ],
-                  ))
-                ],
-              ),
+                        Transform.translate(
+                          offset: Offset.fromDirection(
+                              getRadiansFromDegree(305),
+                              degTwoTranslationAnimation.value * 80),
+                          child: Transform(
+                            transform: Matrix4.rotationZ(
+                                getRadiansFromDegree(rotationAnimation.value))
+                              ..scale(degTwoTranslationAnimation.value),
+                            alignment: Alignment.center,
+                            child: CircularButton(
+                              color: Colors.orangeAccent,
+                              width: 70,
+                              height: 70,
+                              icon: const Icon(
+                                Icons.import_contacts,
+                                color: Colors.white,
+                                size: 40,
+                              ),
+                              onClick: () {
+                                animationController.reverse();
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ))
+                  ],
+                );
+              }),
             ),
           ],
         ));
