@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monsters_front_end/pages/edit_userInformation.dart';
+import 'package:monsters_front_end/pages/style.dart';
 
 class Drawer_userInformation extends StatefulWidget {
   Drawer_userInformation({
@@ -61,56 +63,29 @@ class _Drawer_userInformationState extends State<Drawer_userInformation> {
           Pinned.fromPins(
             Pin(size: 136.0, end: 25.0),
             Pin(size: 64.0, end: 33.0),
-            child: Stack(
-              children: <Widget>[
-                //編輯底
-                Stack(
-                  children: <Widget>[
-                    Pinned.fromPins(
-                      Pin(size: 66.0, middle: 0.5),
-                      Pin(start: 0.0, end: 0.0),
-                      child: Container(
-                        color: const Color(0xffffed97),
-                      ),
-                    ),
-                    Pinned.fromPins(
-                      Pin(size: 70.0, start: 0.0),
-                      Pin(start: 0.0, end: 0.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xffffed97),
-                          borderRadius: BorderRadius.all(
-                              Radius.elliptical(9999.0, 9999.0)),
-                        ),
-                      ),
-                    ),
-                    Pinned.fromPins(
-                      Pin(size: 70.0, end: 0.0),
-                      Pin(start: 0.0, end: 0.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xffffed97),
-                          borderRadius: BorderRadius.all(
-                              Radius.elliptical(9999.0, 9999.0)),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Pinned.fromPins(
-                  Pin(size: 80.0, middle: 0.5),
-                  Pin(start: 6.0, end: 5.0),
-                  child: Text(
-                    '編輯',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 40,
-                      color: const Color(0xffa0522d),
-                    ),
-                    softWrap: false,
+            child: SizedBox(
+              width: 150.0,
+              height: 50.0,
+              child: RaisedButton(
+                color: BackgroundColorSoft,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40.0)),
+                child: const Text(
+                  '編輯',
+                  style: TextStyle(
+                    fontFamily: 'Segoe UI',
+                    fontSize: 30,
+                    color: BackgroundColorWarm,
                   ),
+                  softWrap: false,
                 ),
-              ],
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Edit_userInformation()));
+                },
+              ),
             ),
           ),
           //頭貼

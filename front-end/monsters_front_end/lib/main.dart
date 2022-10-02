@@ -20,9 +20,6 @@ import 'pages/destressWays_list/destressWays_list.dart';
 import 'pages/style.dart';
 
 void main() async {
-  //開啟APP先判斷
-  WidgetsFlutterBinding.ensureInitialized();
-  checkLogin();
   runApp(Monsters());
 }
 
@@ -48,7 +45,7 @@ class Monsters extends StatelessWidget with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance?.addObserver(this);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     return MaterialApp(
       title: '貘nsters',
@@ -78,17 +75,4 @@ ThemeData _theme() {
     primarySwatch: Colors.grey,
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
-}
-
-void checkLogin() async {
-  //check if user already login or credential already available or not
-  SharedPreferences pref = await SharedPreferences.getInstance();
-  String? val = pref.getString("login");
-  if (val != null) {
-    //直接前往主畫面 !!失敗!!
-    print("已登入過，帳號:" + val);
-    MaterialPageRoute(builder: (context) => LoginPage());
-  } else {
-    print("已登出或第一次開啟");
-  }
 }

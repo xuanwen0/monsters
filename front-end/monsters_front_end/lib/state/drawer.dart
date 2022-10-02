@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../pages/drawer_setting.dart';
 import '../pages/drawer_userInformation.dart';
+import '../pages/edit_userInformation.dart';
 import '../pages/moodLineChart.dart';
 
 Widget GetDrawer(BuildContext context) {
@@ -75,10 +76,14 @@ Widget GetDrawer(BuildContext context) {
               ),
               onTap: () async {
                 SharedPreferences pref = await SharedPreferences.getInstance();
-                await pref.clear();
-                //await GoogleSignInApi.signout();
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text("登出!!")));
+                String? val = pref.getString("selfLogin");
+                if (val != null) {
+                  await pref.remove("selfLogin");
+                } else {
+                  await GoogleSignInApi.signout();
+                }
+                // ScaffoldMessenger.of(context)
+                //     .showSnackBar(SnackBar(content: Text("登出!!")));
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LoginPage()));
               },
