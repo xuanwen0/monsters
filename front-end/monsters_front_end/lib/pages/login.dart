@@ -1,8 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
-import 'package:flutter/services.dart';
+import 'package:monsters_front_end/pages/firtTime_editUserInfo.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/login_selfacount.dart';
 import 'package:monsters_front_end/pages/signUp.dart';
@@ -10,6 +8,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../API/google_sign_in_API.dart';
+import '../model/memberModel.dart';
+import '../repository/memberRepo.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,6 +17,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _loginState extends State<LoginPage> {
+  final MemberRepository memberRepository = MemberRepository();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,10 +59,7 @@ class _loginState extends State<LoginPage> {
                     softWrap: false,
                   ),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Login_selfacount()));
+                    checkSelfLogin();
                   }),
             ),
           ),
@@ -134,27 +132,55 @@ class _loginState extends State<LoginPage> {
 
   Future<GoogleSignInAccount?> signIn() async {
     final user = await GoogleSignInApi.signin();
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? val = pref.getString("googleLogin");
     if (user == null) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('sign in Google failed'),
       ));
     } else {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainPage()));
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-            'user name: ' + user.displayName! + ' user email: ' + user.email),
-      ));
+      if (val != user.email) {
+        memberRepository.createMember(
+          Member(
+            account: user.email,
+            birthday: "",
+            gender: 0,
+            mail: user.email,
+            name: user.displayName!,
+            nickName: user.displayName!,
+            password: "",
+          ),
+        );
+        pageRoute(user.email);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => FirstTime_editUserInfo()));
+      } else {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MainPage()));
+      }
     }
   }
 
   void pageRoute(String account) async {
     //儲存account shared preferences (後用來判斷此裝置是否登入過)
     SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString("login", account);
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("${pref.getString("login")}")));
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => MainPage()));
+    await pref.setString("googleLogin", account);
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text("${pref.getString("googleLogin")}")));
+  }
+
+  void checkSelfLogin() async {
+    //check if user already login or credential already available or not
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? val = pref.getString("selfLogin");
+    if (val != null) {
+      print("已登入過，帳號:" + val);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => MainPage()));
+    } else {
+      print("已登出或第一次開啟");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Login_selfacount()));
+    }
   }
 }
