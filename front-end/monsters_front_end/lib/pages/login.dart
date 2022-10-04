@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../API/google_sign_in_API.dart';
 import '../model/memberModel.dart';
 import '../repository/memberRepo.dart';
+import 'package:date_format/date_format.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,6 +18,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _loginState extends State<LoginPage> {
+  //生日
+  DateTime date = DateTime.now();
   final MemberRepository memberRepository = MemberRepository();
   @override
   Widget build(BuildContext context) {
@@ -136,25 +139,32 @@ class _loginState extends State<LoginPage> {
     String? val = pref.getString("googleLogin");
     if (user == null) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('sign in Google failed'),
+        content: Text('從Google登入失敗'),
       ));
     } else {
+      //先判斷上次是否登入過，if val != user.email => 新帳號 or 與上次登入之帳號不同
       if (val != user.email) {
+        //判斷資料庫有無此帳號(帳號不一定等於Google登入時的mail)
+        //if有 => 進行登入
+        print("已登出或第一次開啟");
+        //if無 => 註冊並前往初次設定資料
         memberRepository.createMember(
           Member(
             account: user.email,
-            birthday: "",
+            birthday: formatDate(date, [yyyy, '-', mm, '-', dd]).toString(),
             gender: 0,
             mail: user.email,
             name: user.displayName!,
-            nickName: user.displayName!,
+            nickName: "",
             password: "",
           ),
         );
         pageRoute(user.email);
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => FirstTime_editUserInfo()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => FirstTime_editUserInfo(user: user)));
       } else {
+        //val = user.email，無登出且與上次同帳號登入，直接前往主頁面
+        print("已登入過，Google帳號:" + user.email);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => MainPage()));
       }
@@ -165,8 +175,6 @@ class _loginState extends State<LoginPage> {
     //儲存account shared preferences (後用來判斷此裝置是否登入過)
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("googleLogin", account);
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(content: Text("${pref.getString("googleLogin")}")));
   }
 
   void checkSelfLogin() async {
