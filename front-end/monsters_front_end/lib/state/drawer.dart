@@ -80,10 +80,9 @@ Widget GetDrawer(BuildContext context) {
                 if (val != null) {
                   await pref.remove("selfLogin");
                 } else {
+                  // await pref.remove("googleLogin");
                   await GoogleSignInApi.signout();
                 }
-                // ScaffoldMessenger.of(context)
-                //     .showSnackBar(SnackBar(content: Text("登出!!")));
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LoginPage()));
               },

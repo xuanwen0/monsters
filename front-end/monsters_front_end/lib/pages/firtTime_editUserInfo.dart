@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';
-import 'package:monsters_front_end/pages/drawer_userInformation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:monsters_front_end/pages/home.dart';
 
-import 'package:monsters_front_end/repository/memberRepo.dart';
-
 class FirstTime_editUserInfo extends StatefulWidget {
+  FirstTime_editUserInfo({Key? key, required this.user}) : super(key: key);
+  final GoogleSignInAccount user;
   @override
-  _FirstTime_editUserInfoState createState() => _FirstTime_editUserInfoState();
+  _FirstTime_editUserInfoState createState() =>
+      _FirstTime_editUserInfoState(user);
 }
 
 class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
@@ -21,10 +22,11 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
 
   //生日
   DateTime date = DateTime.now();
+  final GoogleSignInAccount user;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final MemberRepository memberRepository = MemberRepository();
 
+  _FirstTime_editUserInfoState(this.user);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +54,7 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                     //帳號
                     TextFormField(
                       autofocus: false,
-                      controller: _accountController,
+                      controller: _accountController..text = user.email,
                       decoration: const InputDecoration(
                         labelText: "帳號",
                         hintText: '請輸入帳號',
@@ -77,12 +79,10 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                             RegExp("[a-zA-Z]|[0-9]")),
                       ],
                       validator: (value) {
-                        if (value!.isNotEmpty &&
-                            value.length > 5 &&
-                            value.length < 9) {
+                        if (value!.isNotEmpty && value.length > 5) {
                           return null;
                         } else if (value.isNotEmpty) {
-                          return '帳號須為6-8位元';
+                          return '帳號至少須6位元';
                         } else {
                           return '帳號不得空白';
                         }
@@ -167,7 +167,7 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                     //姓名
                     TextFormField(
                         autofocus: false,
-                        controller: _nameController,
+                        controller: _nameController..text = user.displayName!,
                         decoration: const InputDecoration(
                           labelText: "姓名",
                           hintText: '請輸入姓名',
@@ -229,7 +229,7 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                     //email
                     TextFormField(
                       autofocus: false,
-                      controller: _mailController,
+                      controller: _mailController..text = user.email,
                       decoration: const InputDecoration(
                         labelText: "信箱",
                         hintText: '請輸入信箱',
