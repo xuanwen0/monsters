@@ -1,18 +1,26 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/daily_test.dart';
+import 'package:monsters_front_end/pages/interaction.dart';
 
 class DailyTest_correct extends StatefulWidget {
-  const DailyTest_correct({Key? key}) : super(key: key);
+  int id;
+  DailyTest_correct({Key? key, required this.id}) : super(key: key);
   @override
-  _DailyTest_correctState createState() => _DailyTest_correctState();
+  _DailyTest_correctState createState() => _DailyTest_correctState(this.id);
 }
 
 class _DailyTest_correctState extends State<DailyTest_correct> {
+  final int questionID;
+  _DailyTest_correctState(this.questionID);
+
   @override
   Widget build(BuildContext context) {
+    log(questionID.toString());
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       body: Stack(
@@ -44,7 +52,7 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => Daily_test(),
+                  pageBuilder: () => InteractionPage(),
                 ),
               ],
               child: SvgPicture.string(

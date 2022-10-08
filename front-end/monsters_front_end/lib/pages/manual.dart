@@ -33,10 +33,21 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
-    const int monsterCount = 6; //總共20個，若是未取得顯示問號"?"
-    const List<String> monsterNames = ['巴古', '???', '???', '???', '???', '???'];
+    const int monsterCount = 8; //總共20個，若是未取得顯示問號"?"
+    const List<String> monsterNames = [
+      '巴古',
+      '???',
+      '???',
+      '???',
+      '???',
+      '???',
+      '???',
+      '???'
+    ];
     const List<String> monsterPics = [
       'assets/image/monster_Baku.png',
+      'assets/image/unknow.png',
+      'assets/image/unknow.png',
       'assets/image/unknow.png',
       'assets/image/unknow.png',
       'assets/image/unknow.png',
@@ -62,8 +73,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
           ),
           //整體布局
           Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               //標題 完成
               Expanded(flex: 10, child: mainAppBarTitleContainer("圖鑑")),
@@ -164,19 +175,19 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
               ///
               ///
               Expanded(
-                flex: 75,
+                flex: 80,
                 child: GridView(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      mainAxisSpacing: 30,
-                      crossAxisSpacing: 10),
+                      mainAxisSpacing: 20,
+                      crossAxisSpacing: 2),
                   children: List.generate(
                     monsterCount,
                     (index) => Container(
                       alignment: Alignment.center,
                       child: SizedBox(
                         width: 160.0,
-                        height: 200.0,
+                        height: 180.0,
                         child: PageLink(
                           links: [
                             PageLinkInfo(
@@ -203,14 +214,14 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                               //image
                               Pinned.fromPins(
                                 Pin(start: 10.0, end: 10.0),
-                                Pin(size: 125.0, start: 5.0),
+                                Pin(size: 120.0, start: 15.0),
                                 child:
                                     // Adobe XD layer: 'monster1' (shape)
                                     Container(
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: AssetImage(monsterPics[index]),
-                                      fit: BoxFit.fitHeight,
+                                      fit: BoxFit.scaleDown,
                                     ),
                                   ),
                                 ),
@@ -218,7 +229,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                               //name
                               Pinned.fromPins(
                                 Pin(size: 80.0, middle: 0.5),
-                                Pin(size: 100.0, middle: 2.1),
+                                Pin(size: 80.0, middle: 1.55),
                                 child: Text(
                                   monsterNames[index],
                                   textAlign: TextAlign.center,
@@ -233,7 +244,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                               //stars
                               Pinned.fromPins(
                                 Pin(size: 30.0, end: 75.0),
-                                Pin(size: 30.0, middle: 0.72),
+                                Pin(size: 30.0, middle: 0.75),
                                 child:
                                     // Adobe XD layer: 'Icon awesome-star' (shape)
                                     SvgPicture.string(
@@ -244,7 +255,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                               ),
                               Pinned.fromPins(
                                 Pin(size: 30.0, end: 40.0),
-                                Pin(size: 30.0, middle: 0.72),
+                                Pin(size: 30.0, middle: 0.75),
                                 child:
                                     // Adobe XD layer: 'Icon awesome-star' (shape)
                                     SvgPicture.string(
@@ -255,7 +266,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                               ),
                               Pinned.fromPins(
                                 Pin(size: 30.0, end: 5.0),
-                                Pin(size: 30.0, middle: 0.72),
+                                Pin(size: 30.0, middle: 0.75),
                                 child:
                                     // Adobe XD layer: 'Icon awesome-star' (shape)
                                     SvgPicture.string(

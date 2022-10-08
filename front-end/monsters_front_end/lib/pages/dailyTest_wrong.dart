@@ -3,10 +3,12 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/daily_test.dart';
+import 'package:monsters_front_end/pages/interaction.dart';
 
 class DailyTest_wrong extends StatefulWidget {
   DailyTest_wrong({
     Key? key,
+    required int id,
   }) : super(key: key);
   @override
   _DailyTest_wrongState createState() => _DailyTest_wrongState();
@@ -74,7 +76,7 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => Daily_test(),
+                  pageBuilder: () => InteractionPage(),
                 ),
               ],
               child: SvgPicture.string(

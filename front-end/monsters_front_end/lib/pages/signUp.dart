@@ -12,6 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/login_selfacount.dart';
 import 'package:monsters_front_end/repository/memberRepo.dart';
 import 'package:date_format/date_format.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../model/memberModel.dart';
 
@@ -321,7 +322,12 @@ class _SignUpState extends State<SignUp> {
                           softWrap: false,
                         ),
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              launch(
+                                  "https://docs.google.com/document/d/1XD3QLIDcEqYx2Zy9F0QHipRkf6KpcblE/edit");
+                              isCheck = true;
+                              setState(() {});
+                            },
                             child: const Text(
                               '使用條款',
                               style: TextStyle(

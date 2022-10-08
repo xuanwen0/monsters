@@ -33,11 +33,11 @@ class _TimerWidgetState extends State<TimerWidget> {
   }
 
   void reset() {
-    setState(() => duration = Duration(seconds: 0));
+    setState(() => duration = const Duration(seconds: 0));
   }
 
   void addTime() {
-    final addSeconds = 1;
+    const addSeconds = 1;
     final seconds = duration.inSeconds + addSeconds;
     if (seconds < 0 || seconds > 90) {
       timer?.cancel();

@@ -1,4 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors, unnecessary_string_interpolations, prefer_const_constructors, file_names, avoid_unnecessary_containers, sized_box_for_whitespace, non_constant_identifier_names, camel_case_types
+import 'dart:developer';
+
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,19 +10,20 @@ import 'package:monsters_front_end/pages/history.dart';
 import '../repository/annoyanceRepo.dart';
 
 class historyAnnoyanceChat extends StatefulWidget {
-  int annoyanceID;
-  historyAnnoyanceChat(this.annoyanceID);
+  var data;
+  historyAnnoyanceChat({required this.data});
 
   @override
   //int getindex;
   //historyAnnoyanceChat(this.getindex);
   //_historyAnnoyanceChat createState() => _historyAnnoyanceChat(getindex);
-  _historyAnnoyanceChat createState() => _historyAnnoyanceChat();
+  _historyAnnoyanceChat createState() => _historyAnnoyanceChat(data);
 }
 
 class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
+  var data;
   //int choosedId;
-  //_historyAnnoyanceChat(this.choosedId);
+  _historyAnnoyanceChat(this.data);
 
   final messageInsert = TextEditingController();
   int chatRound = 0;
@@ -42,6 +45,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
   int finalId = 0;
   int solve = 0;
   var userAns = [];
+
   //資料庫 抓annoyance[solve]
 
   //資料庫 抓annoyance_type[value], annoyance[content], annoyance[mood], annoyance[index], annoyance[share]
@@ -74,14 +78,19 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
   Widget build(BuildContext context) {
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    userAns.add(data["type"]);
 
+    for (int i = 0; i < 5; i++) {
+      insert(data[i]);
+      response(userAns[i]);
+    }
     //getAnnoyanceByID(choosedId);
 
     response();
-    for (int i = 0; i < 5; i++) {
-      insert(userAns[i]);
-      response(userAns[i]);
-    }
+    // for (int i = 0; i < 5; i++) {
+    //   insert(data[i]);
+    //   response(userAns[i]);
+    // }
 
     return Scaffold(
       appBar: AppBar(

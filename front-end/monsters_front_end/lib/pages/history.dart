@@ -9,6 +9,7 @@ import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/model/annoyanceModel.dart';
 import 'package:monsters_front_end/pages/annoyanceChat.dart';
+import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/manual.dart';
@@ -269,44 +270,54 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                   color: BackgroundColorWarm,
                                 )),
                               ),
-                              height: 120,
+                              height: 110,
                               alignment: Alignment.center,
                               child: ListTile(
-                                leading: Container(
-                                  height: double.infinity,
-                                  child: CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        'assets/image/Avatar_Baku_JPG.jpg'),
-                                  ),
-                                ),
-                                title: Text(
-                                  snapshot.data["result $index"]["content"],
-                                  style: TextStyle(fontSize: BodyTextSize),
-                                  textAlign: TextAlign.left,
-                                ),
-                                trailing: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Expanded(
-                                      flex: 7,
-                                      child: Text(
-                                          snapshot.data["result $index"]["type"]
-                                              .toString(),
-                                          style: TextStyle(fontSize: 20)),
+                                  leading: Container(
+                                    height: double.infinity,
+                                    child: CircleAvatar(
+                                      backgroundImage: AssetImage(
+                                          'assets/image/Avatar_Baku_JPG.jpg'),
                                     ),
-                                    Expanded(
-                                        flex: 3,
+                                  ),
+                                  title: Text(
+                                    snapshot.data["result $index"]["content"],
+                                    style: TextStyle(fontSize: BodyTextSize),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                  trailing: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Expanded(
+                                        flex: 7,
                                         child: Text(
                                             snapshot.data["result $index"]
-                                                    ["time"]
+                                                    ["type"]
                                                 .toString(),
-                                            style: TextStyle(fontSize: 14))),
-                                  ],
-                                ),
-                                onTap: () =>
-                                    print(snapshot.data["result $index"]["id"]),
-                              ),
+                                            style: TextStyle(fontSize: 20)),
+                                      ),
+                                      Expanded(
+                                          flex: 3,
+                                          child: Text(
+                                              snapshot.data["result $index"]
+                                                      ["time"]
+                                                  .toString(),
+                                              style: TextStyle(fontSize: 14))),
+                                    ],
+                                  ),
+                                  onTap: () =>
+                                      print(snapshot.data["result $index"])
+
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) =>
+                                  //             historyAnnoyanceChat(
+                                  //                 data: snapshot
+                                  //                     .data["result $index"])))
+
+                                  ),
                             ),
                           );
                         }),
@@ -693,6 +704,15 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
             'content': value.data.elementAt(index).content,
             'type': type,
             'time': value.data.elementAt(index).time,
+
+            /*
+            String type
+            String / File content
+            File 心情圖 (NULLABLE)
+            Int 煩惱分數
+            Int 分享
+
+             */
           },
         );
       }

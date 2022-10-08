@@ -62,15 +62,15 @@ class _AudioMainPage extends State<AudioMainPage> {
                         width: 300,
                         child: TimerWidget(controller: timerController)),
 
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     //start
                     buildStart(),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     //play
                     Container(
                       child: (isFinished) ? buildPlay() : null,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     //save
                     Container(
                       child: (isFinished) ? buildSave() : null,

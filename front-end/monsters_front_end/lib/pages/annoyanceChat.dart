@@ -8,6 +8,7 @@ import 'package:monsters_front_end/model/audio_Model/audio_player.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
+import 'package:monsters_front_end/pages/login.dart';
 import 'package:video_player/video_player.dart';
 import '../model/annoyanceModel.dart';
 import '../repository/annoyanceRepo.dart';
@@ -35,6 +36,14 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   var userAnswers = [];
   File? _media;
   File? _moodImage;
+
+  void dispose() {
+    player.dispose();
+    timerController.dispose();
+    messageInsert.dispose();
+    _videoPlayerController.dispose();
+    super.dispose();
+  }
 
   //新增煩惱-照相
   takePhoto() async {
@@ -197,18 +206,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                               menuList: [
                                 PopupMenuItem(
                                   child: ListTile(
-                                      //leading: Icon(Icons.camera_alt_rounded),
-                                      leading: CircleAvatar(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: const AssetImage(
-                                                  'assets/image/camera.png'),
-                                              fit: BoxFit.scaleDown,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                      leading: Icon(Icons.camera_alt_rounded),
                                       title: Text("照相"),
                                       onTap: () => {
                                             ////照相選項
@@ -352,7 +350,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                             );
 /* 前往歷史紀錄                           
 
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               
     //TODO: Level 2
     //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
@@ -390,7 +388,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                     height: 50,
                     width: 50,
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/image/Avatar_Baku_PNG.png'),
+                      backgroundImage:
+                          AssetImage('assets/image/Avatar_Baku_PNG.png'),
                     ),
                   )
                 : Container(),
