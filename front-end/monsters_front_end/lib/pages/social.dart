@@ -263,9 +263,12 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                     future: _future,
                     builder: (BuildContext context,
                         AsyncSnapshot<dynamic> snapshot) {
-                      if (snapshot.connectionState != ConnectionState.done &&
-                          snapshot.data == null) {
-                        return Container();
+                      if (snapshot.data == null) {
+                        return Center(
+                            child: Text(
+                          "Loading...",
+                          style: TextStyle(fontSize: 30),
+                        ));
                       }
                       return GridView(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

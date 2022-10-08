@@ -252,12 +252,11 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         builder: (BuildContext context,
                             AsyncSnapshot<dynamic> snapshot) {
                           if (snapshot.data == null) {
-                            return Container(
-                                child: Center(
-                                    child: Text(
+                            return Center(
+                                child: Text(
                               "Loading...",
                               style: TextStyle(fontSize: 30),
-                            )));
+                            ));
                           }
                           return ListView.builder(
                             itemCount: snapshot.data["itemCounter"],
