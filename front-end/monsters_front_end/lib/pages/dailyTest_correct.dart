@@ -18,339 +18,135 @@ class DailyTest_correct extends StatefulWidget {
 class _DailyTest_correctState extends State<DailyTest_correct> {
   final int questionID;
   _DailyTest_correctState(this.questionID);
-
+  int unlockProgress = 1;
   @override
   Widget build(BuildContext context) {
     log(questionID.toString());
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       appBar: secondAppBar("每日測驗"),
-      body: Stack(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          //答對框
-          Pinned.fromPins(
-            Pin(start: 34.0, end: 34.0),
-            Pin(size: 112.0, middle: 0.3168),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(22.0),
-                  ),
+          //留白
+          Expanded(
+            flex: 20,
+            child: Container(),
+          ),
+          //恭喜答對框
+          Expanded(
+            flex: 30,
+            child: Center(
+              child: Container(
+                margin: const EdgeInsets.only(left: 20, right: 20, bottom: 50),
+                height: 120,
+                decoration: BoxDecoration(
+                  color: const Color(0xffffffff),
+                  borderRadius: BorderRadius.circular(22.0),
                 ),
-                Pinned.fromPins(
-                  Pin(start: 34.0, end: 10.0),
-                  Pin(size: 80.0, end: 15.0),
+                child: Container(
+                  margin: const EdgeInsets.only(left: 30),
+                  alignment: Alignment.center,
                   child: const Text(
                     '恭喜答對！',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
                       fontSize: 60,
                       color: Color(0xffffbb00),
                     ),
-                    softWrap: false,
                   ),
                 ),
-              ],
+              ),
             ),
+          ),
+          //目前解鎖進度
+          Expanded(
+            flex: 10,
+            child: Container(
+                padding: const EdgeInsets.only(
+                  left: 30,
+                ),
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "再答對${7 - unlockProgress}次就可以解鎖隱藏怪獸！\n目前解鎖進度 ：",
+                  style:
+                      const TextStyle(fontSize: 20, color: BackgroundColorWarm),
+                )),
           ),
           //進度條
-          Pinned.fromPins(
-            Pin(start: 36.2, end: 36.2),
-            Pin(size: 66.0, middle: 0.5941),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 48.5, middle: 0.3333),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Stack(
-                    children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          Pinned.fromPins(
-                            Pin(start: 0.0, end: 0.0),
-                            Pin(size: 23.2, start: 0.0),
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(7.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Pinned.fromPins(
-                            Pin(size: 9.0, middle: 0.5),
-                            Pin(start: 0.0, end: 0.0),
-                            child: Text(
-                              '3\n\n',
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 17,
-                                color: const Color(0xffa0522d),
-                              ),
-                              softWrap: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 48.5, middle: 0.5),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Stack(
-                    children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          Pinned.fromPins(
-                            Pin(start: 0.0, end: 0.0),
-                            Pin(size: 23.2, start: 0.0),
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(7.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Pinned.fromPins(
-                            Pin(size: 9.0, middle: 0.4951),
-                            Pin(start: 0.0, end: 0.0),
-                            child: Text(
-                              '4\n\n',
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 17,
-                                color: const Color(0xffa0522d),
-                              ),
-                              softWrap: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 48.5, start: 48.5),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Stack(
-                    children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          Pinned.fromPins(
-                            Pin(start: 0.0, end: 0.0),
-                            Pin(size: 23.2, start: 0.0),
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(7.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Pinned.fromPins(
-                            Pin(size: 9.0, middle: 0.4984),
-                            Pin(start: 0.0, end: 0.0),
-                            child: Text(
-                              '2\n\n',
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 17,
-                                color: const Color(0xffa0522d),
-                              ),
-                              softWrap: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: SizedBox(
-                    width: 49.0,
-                    height: 44.0,
-                    child: Stack(
-                      children: <Widget>[
-                        Stack(
-                          children: <Widget>[
-                            Pinned.fromPins(
-                              Pin(start: 0.0, end: 0.0),
-                              Pin(size: 23.2, start: 0.0),
-                              child: Stack(
-                                children: <Widget>[
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xffffed97),
-                                      borderRadius: BorderRadius.circular(7.0),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Pinned.fromPins(
-                              Pin(size: 9.0, middle: 0.5),
-                              Pin(start: 0.0, end: 0.0),
-                              child: Text(
-                                '1\n',
-                                style: TextStyle(
-                                  fontFamily: 'Segoe UI',
-                                  fontSize: 17,
-                                  color: const Color(0xffa0522d),
-                                ),
-                                softWrap: false,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 48.5, middle: 0.6667),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Stack(
-                    children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          Pinned.fromPins(
-                            Pin(start: 0.0, end: 0.0),
-                            Pin(size: 23.2, start: 0.0),
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(7.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Pinned.fromPins(
-                            Pin(size: 9.0, middle: 0.5),
-                            Pin(start: 0.0, end: 0.0),
-                            child: Text(
-                              '5\n\n',
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 17,
-                                color: const Color(0xffa0522d),
-                              ),
-                              softWrap: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 48.5, end: 48.5),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Stack(
-                    children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          Pinned.fromPins(
-                            Pin(start: 0.0, end: 0.0),
-                            Pin(size: 23.2, start: 0.0),
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(7.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Pinned.fromPins(
-                            Pin(size: 9.0, middle: 0.5),
-                            Pin(start: 0.0, end: 0.0),
-                            child: Text(
-                              '6\n\n',
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 17,
-                                color: const Color(0xffa0522d),
-                              ),
-                              softWrap: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 48.5, end: 0.0),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Stack(
-                    children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          Pinned.fromPins(
-                            Pin(start: 0.0, end: 0.0),
-                            Pin(size: 23.2, start: 0.0),
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(7.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Pinned.fromPins(
-                            Pin(size: 9.0, middle: 0.5),
-                            Pin(start: 0.0, end: 0.0),
-                            child: Text(
-                              '7\n\n',
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 17,
-                                color: const Color(0xffa0522d),
-                              ),
-                              softWrap: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+          Expanded(
+            flex: 15,
+            child: Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.all(20),
+              child: progressBars(),
             ),
           ),
-          //進度小人
-          Pinned.fromPins(
-            Pin(size: 30.4, start: 45.9),
-            Pin(size: 38.2, middle: 0.511),
-            child:
-                // Adobe XD layer: 'Icon material-direc…' (shape)
-                SvgPicture.string(
-              _svg_mu7hm4,
-              allowDrawingOutsideViewBox: true,
-              fit: BoxFit.fill,
-            ),
+          //留白
+          Expanded(
+            flex: 25,
+            child: Container(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Row progressBars() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        singleProgress(1),
+        singleProgress(2),
+        singleProgress(3),
+        singleProgress(4),
+        singleProgress(5),
+        singleProgress(6),
+        singleProgress(7),
+      ],
+    );
+  }
+
+  Expanded singleProgress(int value) {
+    String showValue = value.toString();
+    Container littleguy = Container();
+    Color boxColor = Colors.white;
+    if (unlockProgress == value) {
+      littleguy = Container(
+        child: SvgPicture.string(
+          _svg_mu7hm4,
+          allowDrawingOutsideViewBox: true,
+          fit: BoxFit.fill,
+        ),
+      );
+      boxColor = BackgroundColorSoft;
+    }
+    return Expanded(
+      flex: 1,
+      child: Column(
+        children: [
+          Expanded(flex: 5, child: littleguy),
+          Expanded(
+            flex: 5,
+            child: Container(
+                decoration: BoxDecoration(
+                  color: boxColor,
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: Center(
+                  child: Text(
+                    showValue,
+                    style: const TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 17,
+                      color: const Color(0xffa0522d),
+                    ),
+                    softWrap: false,
+                  ),
+                )),
           ),
         ],
       ),
