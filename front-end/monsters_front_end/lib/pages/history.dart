@@ -13,6 +13,7 @@ import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/manual.dart';
+import 'package:monsters_front_end/pages/moodLineChart.dart';
 import 'package:monsters_front_end/pages/social.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/repository/annoyanceRepo.dart';
@@ -82,7 +83,41 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //標題 完成
-              Expanded(flex: 10, child: mainAppBarTitleContainer("歷史紀錄")),
+              Expanded(
+                  flex: 10,
+                  child: Stack(children: [
+                    GestureDetector(
+                      child: Container(
+                          margin: const EdgeInsets.fromLTRB(20, 20, 0, 15),
+                          width: 45,
+                          height: 45,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.black,
+                                  width: 1,
+                                  style: BorderStyle.solid),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10))),
+                          child: Center(
+                            child: Container(
+                                width: 35,
+                                height: 35,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image:
+                                        AssetImage('assets/image/barChart.png'),
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                ),
+                                child: Container()),
+                          )),
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MoodLineChart())),
+                    ),
+                    mainAppBarTitleContainer("歷史紀錄")
+                  ])),
               //標籤 完成
               Expanded(
                   flex: 5,
