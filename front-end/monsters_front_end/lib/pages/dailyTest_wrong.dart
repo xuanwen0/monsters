@@ -7,7 +7,7 @@ import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/style.dart';
 
 class DailyTest_wrong extends StatefulWidget {
-  DailyTest_wrong({
+  const DailyTest_wrong({
     Key? key,
     required int id,
   }) : super(key: key);
@@ -24,8 +24,11 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       appBar: secondAppBar("每日測驗"),
-      body: Stack(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
+          /*
           //答錯框
           Pinned.fromPins(
             Pin(start: 34.0, end: 34.0),
@@ -139,6 +142,117 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
                   ),
                 ],
               )),
+          */
+          //答錯囉
+          Expanded(
+            flex: 30,
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(30, 70, 30, 20),
+              decoration: BoxDecoration(
+                color: const Color(0xffffffff),
+                borderRadius: BorderRadius.circular(22.0),
+              ),
+              child: Container(
+                  alignment: Alignment.center,
+                  child: const Text(
+                    '答錯囉',
+                    style: TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 60,
+                      color: Color(0xff979797),
+                    ),
+                    softWrap: false,
+                  )),
+            ),
+          ),
+          //正確選項
+          Expanded(
+            flex: 15,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 25,
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 150,
+                        width: 150,
+                        margin: const EdgeInsets.fromLTRB(20, 10, 0, 10),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(40.0),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            correctChoose,
+                            style: const TextStyle(
+                                fontSize: 30, color: BackgroundColorWarm),
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 70),
+                          color: Colors.white,
+                          height: 60,
+                          width: 100,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 75,
+                  child: Container(
+                    height: 60,
+                    margin: const EdgeInsets.only(right: 20),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                          BorderRadius.horizontal(right: Radius.circular(30.0)),
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.only(right: 35),
+                      padding: const EdgeInsets.only(right: 35),
+                      child: Text(
+                        correctAnswer,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 24, color: BackgroundColorWarm),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 60,
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(20, 40, 20, 50),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+                border: Border.all(width: 1, color: Colors.grey),
+              ),
+              child: Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Text(
+                        learn,
+                        textAlign: TextAlign.justify,
+                        style: const TextStyle(
+                          color: BackgroundColorWarm,
+                          fontSize: 22,
+                        ),
+                      ))),
+            ),
+          ),
         ],
       ),
     );
