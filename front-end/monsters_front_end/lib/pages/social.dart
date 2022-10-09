@@ -22,36 +22,7 @@ import 'package:monsters_front_end/state/drawer.dart';
 
 import 'annoyanceChat.dart';
 
-var userAccount = 'Lin';
-
-Future<Map> getSocialMapByAccount() async {
-  Map socialResult = {};
-  final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
-  Future<Data> annoyances = annoyanceRepository
-      .searchAnnoyanceByAccount(userAccount)
-      .then((value) => Data.fromJson(value!));
-  await annoyances.then((value) async {
-    if (value != null) {
-      await socialResult.putIfAbsent(
-        "itemCounter",
-        () => value.data.length,
-      );
-      for (int index = 0; index < min(value.data.length, 20); index++) {
-        socialResult.putIfAbsent(
-          "result $index",
-          () => {
-            'id': value.data.elementAt(index).id,
-            'name': value.data.elementAt(index).account,
-            'content': value.data.elementAt(index).content,
-            'time': value.data.elementAt(index).time,
-          },
-        );
-      }
-    }
-  });
-
-  return socialResult;
-}
+var userAccount = 'SeanHong';
 
 class Social extends StatefulWidget {
   const Social({Key? key}) : super(key: key);
@@ -106,6 +77,35 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
     super.initState();
   }
 
+  Future<Map> getSocialMapByAccount() async {
+    Map socialResult = {};
+    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
+    Future<Data> annoyances = annoyanceRepository
+        .searchAnnoyanceByAccount(userAccount)
+        .then((value) => Data.fromJson(value!));
+    await annoyances.then((value) async {
+      if (value != null) {
+        await socialResult.putIfAbsent(
+          "itemCounter",
+          () => value.data.length,
+        );
+        for (int index = 0; index < min(value.data.length, 20); index++) {
+          socialResult.putIfAbsent(
+            "result $index",
+            () => {
+              'id': value.data.elementAt(index).id,
+              'name': value.data.elementAt(index).account,
+              'content': value.data.elementAt(index).content,
+              'time': value.data.elementAt(index).time,
+            },
+          );
+        }
+      }
+    });
+
+    return socialResult;
+  }
+
   List<String> nickNames = [];
   List<String> socialContents = [];
   List<String> shareTimes = [];
@@ -147,7 +147,6 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                       padding: EdgeInsets.only(bottom: 10),
                       child: Wrap(
                         spacing: 20,
-                        //標籤設定
                         children: [
                           //全部標籤
                           InkWell(
@@ -264,9 +263,12 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                     future: _future,
                     builder: (BuildContext context,
                         AsyncSnapshot<dynamic> snapshot) {
-                      if (snapshot.connectionState != ConnectionState.done &&
-                          snapshot.data == null) {
-                        return Container();
+                      if (snapshot.data == null) {
+                        return Center(
+                            child: Text(
+                          "Loading...",
+                          style: TextStyle(fontSize: 30),
+                        ));
                       }
                       return GridView(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -293,19 +295,25 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                               decoration: BoxDecoration(
                                                   color:
                                                       const Color(0xffffffff),
-                                                  border: Border(
-                                                      top: BorderSide(
-                                                          width: 1.0,
-                                                          color: const Color(
-                                                              0xffa0522d)),
-                                                      bottom: BorderSide(
-                                                          width: 2.0,
-                                                          color: const Color(
-                                                              0xffa0522d)),
-                                                      left: BorderSide(
-                                                          width: 2.0,
-                                                          color: const Color(
-                                                              0xffa0522d)))),
+                                                  border: Border.all(
+                                                      width: 1.0,
+                                                      color: const Color(
+                                                          0xffa0522d))
+
+                                                  // top: BorderSide(
+                                                  //     width: 1.0,
+                                                  //     color: const Color(
+                                                  //         0xffa0522d)),
+                                                  // bottom: BorderSide(
+                                                  //     width: 2.0,
+                                                  //     color: const Color(
+                                                  //         0xffa0522d)),
+                                                  // left: BorderSide(
+                                                  //     width: 2.0,
+                                                  //     color: const Color(
+                                                  //         0xffa0522d)))
+
+                                                  ),
                                             ),
                                             //頭貼框
                                             Pinned.fromPins(
@@ -347,7 +355,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                             ),
                                             //暱稱
                                             Pinned.fromPins(
-                                              Pin(size: 40.0, middle: 0.5),
+                                              Pin(size: 120.0, start: 70),
                                               Pin(size: 27.0, start: 21.0),
                                               child: Text(
                                                 snapshot.data["result $index"]
@@ -403,7 +411,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                               Pin(size: 40.0, start: 17.0),
                                               Pin(size: 20.0, end: 7.0),
                                               child: Text(
-                                                snapshot.data["result 1"]
+                                                snapshot.data["result $index"]
                                                     ["time"],
                                                 style: TextStyle(
                                                   fontFamily: 'Segoe UI',
@@ -430,7 +438,11 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                                 color: const Color(
                                                                     0xffa0522d)),
                                                             left: BorderSide(
-                                                                width: 2.0,
+                                                                width: 1.0,
+                                                                color: const Color(
+                                                                    0xffa0522d)),
+                                                            right: BorderSide(
+                                                                width: 1.0,
                                                                 color: const Color(
                                                                     0xffa0522d))),
                                                       ),
@@ -807,30 +819,6 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
             ),
           ],
         ));
-  }
-
-  Future<Map> getHistoryMapByAccount() async {
-    Map socialResult = {};
-    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
-    Future<Data> annoyances = annoyanceRepository
-        .searchAnnoyanceByAccount(userAccount)
-        .then((value) => Data.fromJson(value!));
-    await annoyances.then((value) async {
-      await socialResult.putIfAbsent(
-        "itemCounter",
-        () => value.data.length,
-      );
-      for (int index = 0; index < min(value.data.length, 20); index++) {
-        socialResult.putIfAbsent(
-          "result $index",
-          () => {
-            'monsters_id': value.data.elementAt(index).monsterId,
-          },
-        );
-      }
-    });
-
-    return socialResult;
   }
 }
 

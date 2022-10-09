@@ -11,7 +11,7 @@ class DestressWaysList extends StatelessWidget {
   DestressWaysList({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( 
         backgroundColor: BackgroundColorLight,
         appBar: secondAppBar("紓壓方法"),
         body: Container(

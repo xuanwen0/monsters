@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:monsters_front_end/pages/style.dart';
 
 //暫時放在抽屜
 class MoodLineChart extends StatefulWidget {
@@ -55,27 +56,7 @@ class _MoodLineChartState extends State<MoodLineChart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xffa0522d),
-        leading: IconButton(
-          alignment: Alignment.centerLeft,
-          icon: const Icon(Icons.arrow_back_rounded),
-          color: Colors.white,
-          iconSize: 45.0,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        centerTitle: true,
-        title: const Text(
-          '心的軌跡',
-          style: TextStyle(
-            fontFamily: 'Segoe UI',
-            fontSize: 40,
-            color: Colors.white,
-          ),
-        ),
-      ),
+      appBar: secondAppBar("心的軌跡"),
       backgroundColor: const Color(0xfffffed4),
       body: SafeArea(
           child: SingleChildScrollView(

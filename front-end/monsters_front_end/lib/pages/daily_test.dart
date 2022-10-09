@@ -13,399 +13,148 @@ class Daily_test extends StatefulWidget {
 }
 
 class _Daily_testState extends State<Daily_test> {
+  var dailyQuesion_ID = 1;
+  var daily_question = "人生大約有幾個月呢？";
+  var daily_A = "choose A";
+  var daily_B = "choose B";
+  var daily_C = "choose C";
+  var daily_D = "choose D";
+  var finalAnswer = "C";
+
+  checkAnswer(String userChoice) {
+    if (finalAnswer == userChoice) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => DailyTest_correct(id: dailyQuesion_ID)));
+    } else {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => DailyTest_wrong(id: dailyQuesion_ID)));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BackgroundColorLight,
-
-      // appBar: secondAppBar("每日測驗"),
-
-      body: Stack(
-        children: <Widget>[
-          /*
-          Container(
-      padding: const EdgeInsets.fromLTRB(0, 8, 0, 5),
-      constraints: const BoxConstraints.expand(
-        height: 250.0,
-      ),
-      child: Image.asset(
-        _assetsPath,
-        fit: BoxFit.fitHeight,
-      ),
-    ),
-    */
-
-          //標題
-          Pinned.fromPins(
-            Pin(size: 200.0, middle: 0.5),
-            Pin(size: 63.0, start: 20.0),
-            child: const Text(
-              '每日測驗',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 40,
-                color: Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
-          //箭頭
-          Pinned.fromPins(
-            Pin(size: 45.6, start: 14.4),
-            Pin(size: 41.1, start: 23.4),
-            child:
-                // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => InteractionPage(),
+      appBar: secondAppBar("每日測驗"),
+      body: Container(
+        color: BackgroundColorLight,
+        padding: EdgeInsets.fromLTRB(30, 50, 30, 50),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            //題目框
+            Expanded(
+              flex: 30,
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+                  border: Border.all(width: 1, color: Colors.white),
                 ),
-              ],
-              child: SvgPicture.string(
-                _svg_ryq30,
-                allowDrawingOutsideViewBox: true,
-                fit: BoxFit.fill,
+                child: Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                    child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Text(
+                          daily_question,
+                          style: const TextStyle(
+                              color: BackgroundColorWarm, fontSize: 24),
+                        ))),
               ),
             ),
-          ),
+            answerBox(choice: "A", text: "700個月"),
+            answerBox(choice: "B", text: "800個月"),
+            answerBox(choice: "C", text: "900個月"),
+            answerBox(choice: "D", text: "1000個月"),
+          ],
+        ),
+      ),
+    );
+  }
 
-          //題目
-          Pinned.fromPins(
-              Pin(start: 34.0, end: 34.0), Pin(size: 195.0, start: 111.0),
+  answerBox({required String choice, required String text}) {
+    return Expanded(
+      flex: 15,
+      child: GestureDetector(
+        onTap: () => checkAnswer(choice),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 25,
               child: Stack(
-                children: <Widget>[
+                children: [
                   Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      borderRadius: BorderRadius.circular(22.0),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      width: 265.0,
-                      height: 37.0,
-                      child: Text(
-                        '人生大約有幾個月呢?',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Segoe UI',
-                          fontSize: 26,
-                          color: Color.fromRGBO(160, 82, 45, 1),
-                        ),
-                        softWrap: false,
+                    height: 150,
+                    width: 150,
+                    margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(40.0),
                       ),
                     ),
                   ),
-                ],
-              )),
-          //答案選項
-          Pinned.fromPins(
-            Pin(start: 28.0, end: 27.0),
-            Pin(size: 409.0, end: 41.0),
-            child: SingleChildScrollView(
-              primary: false,
-              child: Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 20,
-                runSpacing: 20,
-                children: [
-                  //A
-                  SizedBox(
-                    width: 400.0,
-                    height: 86.0,
-                    child: Stack(
-                      children: <Widget>[
-                        PageLink(
-                            links: [
-                              PageLinkInfo(
-                                transition: LinkTransition.Fade,
-                                ease: Curves.easeOut,
-                                duration: 0.3,
-                                pageBuilder: () => DailyTest_correct(),
-                              ),
-                            ],
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(22.0),
-                                  ),
-                                  margin: EdgeInsets.fromLTRB(
-                                      13.0, 17.0, 0.0, 18.0),
-                                ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: SizedBox(
-                                    width: 120.0,
-                                    height: 37.0,
-                                    child: Text(
-                                      '700個月',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Segoe UI',
-                                        fontSize: 26,
-                                        color: const Color(0xffa0522d),
-                                      ),
-                                      softWrap: false,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-                        Pinned.fromPins(
-                          Pin(size: 87.0, start: 0.0),
-                          Pin(start: 0.0, end: 0.0),
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              color: Color(0xffffffff),
-                              borderRadius: BorderRadius.all(
-                                  Radius.elliptical(9999.0, 9999.0)),
-                            ),
-                          ),
-                        ),
-                        Pinned.fromPins(
-                          Pin(size: 30.0, start: 30.0),
-                          Pin(size: 40.0, middle: 0.5),
-                          child: const Text(
-                            'A',
-                            style: TextStyle(
-                              fontFamily: 'Segoe UI',
-                              fontSize: 30,
-                              color: Color(0xffa0522d),
-                            ),
-                            softWrap: false,
-                          ),
-                        ),
-                      ],
+                  Center(
+                    child: Text(
+                      choice,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontSize: 25, color: BackgroundColorWarm),
                     ),
                   ),
-                  //B
-                  SizedBox(
-                    width: 357.0,
-                    height: 86.0,
-                    child: Stack(
-                      children: <Widget>[
-                        PageLink(
-                            links: [
-                              PageLinkInfo(
-                                transition: LinkTransition.Fade,
-                                ease: Curves.easeOut,
-                                duration: 0.3,
-                                pageBuilder: () => DailyTest_wrong(),
-                              ),
-                            ],
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(22.0),
-                                  ),
-                                  margin: EdgeInsets.fromLTRB(
-                                      13.0, 17.0, 0.0, 18.0),
-                                ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: SizedBox(
-                                    width: 101.0,
-                                    height: 37.0,
-                                    child: Text(
-                                      '800個月',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Segoe UI',
-                                        fontSize: 26,
-                                        color: const Color(0xffa0522d),
-                                      ),
-                                      softWrap: false,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-                        Pinned.fromPins(
-                          Pin(size: 87.0, start: 0.0),
-                          Pin(start: 0.0, end: 0.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color(0xffffffff),
-                              borderRadius: BorderRadius.all(
-                                  Radius.elliptical(9999.0, 9999.0)),
-                            ),
-                          ),
-                        ),
-                        Pinned.fromPins(
-                          Pin(size: 30.0, start: 30.0),
-                          Pin(size: 40.0, middle: 0.5),
-                          child: Text(
-                            'B',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Segoe UI',
-                              fontSize: 30,
-                              color: const Color(0xffa0522d),
-                            ),
-                            softWrap: false,
-                          ),
-                        ),
-                      ],
+                  // Center(
+                  //   child: Container(
+                  //     height: 100,
+                  //     width: 100,
+                  //     alignment: Alignment.center,
+                  //     child: Text(
+                  //       choice,
+                  //       textAlign: TextAlign.center,
+                  //       style:
+                  //           TextStyle(fontSize: 30, color: BackgroundColorWarm),
+                  //     ),
+                  //   ),
+                  // ),
+                  Center(
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 70),
+                      color: Colors.white,
+                      height: 60,
+                      width: 100,
                     ),
-                  ),
-                  //C
-                  SizedBox(
-                    width: 357.0,
-                    height: 86.0,
-                    child: Stack(
-                      children: <Widget>[
-                        PageLink(
-                            links: [
-                              PageLinkInfo(
-                                transition: LinkTransition.Fade,
-                                ease: Curves.easeOut,
-                                duration: 0.3,
-                                pageBuilder: () => DailyTest_wrong(),
-                              ),
-                            ],
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(22.0),
-                                  ),
-                                  margin: EdgeInsets.fromLTRB(
-                                      13.0, 17.0, 0.0, 18.0),
-                                ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: SizedBox(
-                                    width: 101.0,
-                                    height: 37.0,
-                                    child: Text(
-                                      '900個月',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Segoe UI',
-                                        fontSize: 26,
-                                        color: const Color(0xffa0522d),
-                                      ),
-                                      softWrap: false,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-                        Pinned.fromPins(
-                          Pin(size: 87.0, start: 0.0),
-                          Pin(start: 0.0, end: 0.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color(0xffffffff),
-                              borderRadius: BorderRadius.all(
-                                  Radius.elliptical(9999.0, 9999.0)),
-                            ),
-                          ),
-                        ),
-                        Pinned.fromPins(
-                          Pin(size: 30.0, start: 30.0),
-                          Pin(size: 40.0, middle: 0.5),
-                          child: Text(
-                            'C',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Segoe UI',
-                              fontSize: 30,
-                              color: const Color(0xffa0522d),
-                            ),
-                            softWrap: false,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  //D
-                  SizedBox(
-                    width: 357.0,
-                    height: 86.0,
-                    child: Stack(
-                      children: <Widget>[
-                        PageLink(
-                            links: [
-                              PageLinkInfo(
-                                transition: LinkTransition.Fade,
-                                ease: Curves.easeOut,
-                                duration: 0.3,
-                                pageBuilder: () => DailyTest_wrong(),
-                              ),
-                            ],
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(22.0),
-                                  ),
-                                  margin: EdgeInsets.fromLTRB(
-                                      13.0, 17.0, 0.0, 18.0),
-                                ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: SizedBox(
-                                    width: 115.0,
-                                    height: 37.0,
-                                    child: Text(
-                                      '1000個月',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Segoe UI',
-                                        fontSize: 26,
-                                        color: const Color(0xffa0522d),
-                                      ),
-                                      softWrap: false,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-                        Pinned.fromPins(
-                          Pin(size: 87.0, start: 0.0),
-                          Pin(start: 0.0, end: 0.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color(0xffffffff),
-                              borderRadius: BorderRadius.all(
-                                  Radius.elliptical(9999.0, 9999.0)),
-                            ),
-                          ),
-                        ),
-                        Pinned.fromPins(
-                          Pin(size: 30.0, start: 30.0),
-                          Pin(size: 40.0, middle: 0.5),
-                          child: Text(
-                            'D',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Segoe UI',
-                              fontSize: 30,
-                              color: const Color(0xffa0522d),
-                            ),
-                            softWrap: false,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  )
                 ],
               ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 75,
+              child: Container(
+                height: 60,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.horizontal(
+                      right: Radius.circular(30.0)),
+                ),
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.only(right: 20),
+                  child: Text(
+                    text,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 24, color: BackgroundColorWarm),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

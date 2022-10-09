@@ -57,7 +57,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
                   child: FlatButton(
                     color: Color.fromRGBO(255, 237, 151, 1),
                     shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(9999.0)),
+                        borderRadius: BorderRadius.circular(9999.0)),
                     onPressed: () {
                       pressed = true;
                       setState(() {

@@ -5,12 +5,15 @@ import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/login_selfacount.dart';
 import 'package:monsters_front_end/pages/signUp.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:monsters_front_end/pages/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../API/google_sign_in_API.dart';
 import '../model/memberModel.dart';
 import '../repository/memberRepo.dart';
 import 'package:date_format/date_format.dart';
+
+var User_Name;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -119,7 +122,7 @@ class _loginState extends State<LoginPage> {
                         style: TextStyle(
                           fontFamily: 'Segoe UI',
                           fontSize: 20,
-                          color: Color.fromRGBO(255, 255, 255, 1),
+                          color: Colors.white,
                         ),
                       ),
                     ],

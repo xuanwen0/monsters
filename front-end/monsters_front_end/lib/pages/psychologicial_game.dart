@@ -3,6 +3,7 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
+import 'package:monsters_front_end/pages/style.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -26,46 +27,9 @@ class _Psychologicial_gameState extends State<Psychologicial_game> {
     const List<String> gameNames = ['森林', '愛情', '煩惱', '社交'];
     return Scaffold(
         backgroundColor: const Color(0xfffffed4),
+        appBar: secondAppBar("心理小遊戲"),
         body: Stack(
           children: <Widget>[
-            //標題
-            Pinned.fromPins(
-              Pin(size: 200.0, middle: 0.5),
-              Pin(size: 63.0, start: 20.0),
-              child: Text(
-                '心理小遊戲',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Segoe UI',
-                  fontSize: 40,
-                  color: const Color(0xffa0522d),
-                ),
-                softWrap: false,
-              ),
-            ),
-            //箭頭
-            Pinned.fromPins(
-              Pin(size: 45.6, start: 14.4),
-              Pin(size: 41.1, start: 23.4),
-              child:
-                  // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                  PageLink(
-                links: [
-                  PageLinkInfo(
-                    transition: LinkTransition.Fade,
-                    ease: Curves.easeOut,
-                    duration: 0.3,
-                    pageBuilder: () => InteractionPage(),
-                  ),
-                ],
-                child: SvgPicture.string(
-                  _svg_ryq30,
-                  allowDrawingOutsideViewBox: true,
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-            //列表
             Pinned.fromPins(
               Pin(start: 8.0, end: 8.0),
               Pin(size: 524.0, end: 85.0),

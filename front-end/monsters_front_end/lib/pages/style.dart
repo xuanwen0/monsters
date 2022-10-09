@@ -75,3 +75,9 @@ const Body1TextStyle = TextStyle(
   fontSize: BodyTextSize,
   color: Colors.black,
 );
+const ContentTextStyle = TextStyle(
+  fontFamily: FontNameDefault,
+  fontWeight: FontWeight.w300,
+  fontSize: contentTextSize,
+  color: Colors.black,
+);

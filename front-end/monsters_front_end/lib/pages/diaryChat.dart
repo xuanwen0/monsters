@@ -339,7 +339,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                             );
 */
 /* 前往歷史紀錄                           
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => History()));
