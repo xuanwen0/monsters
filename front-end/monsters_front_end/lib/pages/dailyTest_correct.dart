@@ -6,6 +6,7 @@ import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/daily_test.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
+import 'package:monsters_front_end/pages/style.dart';
 
 class DailyTest_correct extends StatefulWidget {
   int id;
@@ -23,45 +24,9 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
     log(questionID.toString());
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
+      appBar: secondAppBar("每日測驗"),
       body: Stack(
         children: <Widget>[
-          //標題
-          Pinned.fromPins(
-            Pin(size: 200.0, middle: 0.5),
-            Pin(size: 63.0, start: 20.0),
-            child: Text(
-              '每日測驗',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 40,
-                color: const Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
-          //箭頭
-          Pinned.fromPins(
-            Pin(size: 45.6, start: 13.7),
-            Pin(size: 41.1, start: 21.9),
-            child:
-                // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => InteractionPage(),
-                ),
-              ],
-              child: SvgPicture.string(
-                _svg_ryq30,
-                allowDrawingOutsideViewBox: true,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
           //答對框
           Pinned.fromPins(
             Pin(start: 34.0, end: 34.0),
@@ -77,12 +42,12 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
                 Pinned.fromPins(
                   Pin(start: 34.0, end: 10.0),
                   Pin(size: 80.0, end: 15.0),
-                  child: Text(
+                  child: const Text(
                     '恭喜答對！',
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
                       fontSize: 60,
-                      color: const Color(0xffffbb00),
+                      color: Color(0xffffbb00),
                     ),
                     softWrap: false,
                   ),
