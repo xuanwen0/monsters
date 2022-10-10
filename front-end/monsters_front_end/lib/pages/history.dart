@@ -108,8 +108,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                         AssetImage('assets/image/barChart.png'),
                                     fit: BoxFit.scaleDown,
                                   ),
-                                ),
-                                child: Container()),
+                                )),
                           )),
                       onTap: () => Navigator.push(
                           context,

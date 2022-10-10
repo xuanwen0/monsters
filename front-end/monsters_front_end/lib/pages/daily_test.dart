@@ -6,6 +6,10 @@ import 'package:monsters_front_end/pages/dailyTest_correct.dart';
 import 'package:monsters_front_end/pages/dailyTest_wrong.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/style.dart';
+import 'package:monsters_front_end/repository/dailyTestRepo.dart';
+
+import 'package:monsters_front_end/model/dailyTestModel.dart';
+
 
 class Daily_test extends StatefulWidget {
   @override
@@ -13,6 +17,14 @@ class Daily_test extends StatefulWidget {
 }
 
 class _Daily_testState extends State<Daily_test> {
+  final DailyTestRepository dailyTestRepository = DailyTestRepository();
+  Future<DailyTest> getAnswer() {
+    Future<DailyTest> dailyTest = dailyTestRepository
+        .searchDailyTest()
+        .then((value) => DailyTest.fromMap(value));
+    return dailyTest;
+  }
+
   var dailyQuesion_ID = 1;
   var daily_question = "人生大約有幾個月呢？";
   var daily_A = "choose A";
