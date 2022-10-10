@@ -9,19 +9,18 @@ import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/style.dart';
 
 class DailyTest_correct extends StatefulWidget {
-  int id;
-  DailyTest_correct({Key? key, required this.id}) : super(key: key);
+  String learn;
+  DailyTest_correct(this.learn);
   @override
-  _DailyTest_correctState createState() => _DailyTest_correctState(this.id);
+  _DailyTest_correctState createState() => _DailyTest_correctState(this.learn);
 }
 
 class _DailyTest_correctState extends State<DailyTest_correct> {
-  final int questionID;
-  _DailyTest_correctState(this.questionID);
+  var learn;
+  _DailyTest_correctState(this.learn);
   int unlockProgress = 1;
   @override
   Widget build(BuildContext context) {
-    log(questionID.toString());
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       appBar: secondAppBar("每日測驗"),
@@ -31,16 +30,16 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
         children: <Widget>[
           //留白
           Expanded(
-            flex: 20,
+            flex: 5,
             child: Container(),
           ),
           //恭喜答對框
           Expanded(
-            flex: 30,
+            flex: 25,
             child: Center(
               child: Container(
                 margin: const EdgeInsets.only(left: 20, right: 20, bottom: 50),
-                height: 120,
+                height: 200,
                 decoration: BoxDecoration(
                   color: const Color(0xffffffff),
                   borderRadius: BorderRadius.circular(22.0),
@@ -86,8 +85,28 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
           ),
           //留白
           Expanded(
-            flex: 25,
-            child: Container(),
+            flex: 45,
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(20, 20, 20, 50),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+                border: Border.all(width: 1, color: Colors.grey),
+              ),
+              child: Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Text(
+                        learn,
+                        textAlign: TextAlign.justify,
+                        style: const TextStyle(
+                          color: BackgroundColorWarm,
+                          fontSize: 22,
+                        ),
+                      ))),
+            ),
           ),
         ],
       ),

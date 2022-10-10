@@ -188,13 +188,11 @@ class _Psychologicial_testState extends State<Psychologicial_test> {
 
   checkAns() {
     int total = 0;
-    log(groupVal.toString());
     for (int score in groupVal) {
       total += score;
     }
 
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (context) => Psychologicial_result(total)));
-    log("總得分為$total分");
   }
 }

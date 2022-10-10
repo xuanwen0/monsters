@@ -67,9 +67,12 @@ class _Psychologicial_result extends State<Psychologicial_result> {
               children: [
                 Container(child: player),
                 suggestion(),
+                const SizedBox(
+                  height: 40,
+                ),
                 pushButton("心理小遊戲"),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 pushButton("紓壓方法"),
                 //心理小遊戲
@@ -87,6 +90,7 @@ class _Psychologicial_result extends State<Psychologicial_result> {
     var title = "";
     var subTitle = "";
     var content = "";
+    var score;
     if (total < 6) {
       title = "您的心情很健康！";
       subTitle = "請繼續保持，好嗎？";
@@ -107,6 +111,13 @@ class _Psychologicial_result extends State<Psychologicial_result> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Text(
+              "得分: $total\n",
+              style: const TextStyle(
+                  fontSize: 22,
+                  color: BackgroundColorWarm,
+                  fontWeight: FontWeight.bold),
+            ),
             Text(
               title,
               style: const TextStyle(

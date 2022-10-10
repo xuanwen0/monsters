@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
@@ -10,40 +12,50 @@ import 'package:monsters_front_end/repository/dailyTestRepo.dart';
 
 import 'package:monsters_front_end/model/dailyTestModel.dart';
 
-
 class Daily_test extends StatefulWidget {
   @override
   _Daily_testState createState() => _Daily_testState();
 }
 
 class _Daily_testState extends State<Daily_test> {
-  final DailyTestRepository dailyTestRepository = DailyTestRepository();
-  Future<DailyTest> getAnswer() {
-    Future<DailyTest> dailyTest = dailyTestRepository
-        .searchDailyTest()
-        .then((value) => DailyTest.fromMap(value));
-    return dailyTest;
-  }
-
-  var dailyQuesion_ID = 1;
-  var daily_question = "人生大約有幾個月呢？";
+  late Future _future;
+  var dailyQuesion_ID = 0;
+  var daily_question = "question";
   var daily_A = "choose A";
   var daily_B = "choose B";
   var daily_C = "choose C";
   var daily_D = "choose D";
-  var finalAnswer = "C";
+  var correctChoice = 0;
+  var learn = "";
 
-  checkAnswer(String userChoice) {
-    if (finalAnswer == userChoice) {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => DailyTest_correct(id: dailyQuesion_ID)));
+  checkAnswer(int userChoice, String userAnswer) {
+    if (correctChoice == userChoice) {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => DailyTest_correct(learn)));
     } else {
+      var showChoice;
+      var showAnswer;
+      if (correctChoice == 1) {
+        showChoice = "A";
+        showAnswer = daily_A;
+      }
+      if (correctChoice == 2) {
+        showChoice = "B";
+        showAnswer = daily_B;
+      }
+      if (correctChoice == 3) {
+        showChoice = "C";
+        showAnswer = daily_C;
+      }
+      if (correctChoice == 4) {
+        showChoice = "D";
+        showAnswer = daily_D;
+      }
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => DailyTest_wrong(id: dailyQuesion_ID)));
+              builder: (context) =>
+                  DailyTest_wrong(showChoice, showAnswer, learn)));
     }
   }
 
@@ -54,7 +66,7 @@ class _Daily_testState extends State<Daily_test> {
       appBar: secondAppBar("每日測驗"),
       body: Container(
         color: BackgroundColorLight,
-        padding: EdgeInsets.fromLTRB(30, 50, 30, 50),
+        padding: const EdgeInsets.fromLTRB(30, 50, 30, 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -62,49 +74,67 @@ class _Daily_testState extends State<Daily_test> {
             //題目框
             Expanded(
               flex: 30,
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                  border: Border.all(width: 1, color: Colors.white),
-                ),
-                child: Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                    child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Text(
-                          daily_question,
-                          style: const TextStyle(
-                              color: BackgroundColorWarm, fontSize: 24),
-                        ))),
-              ),
+              child: FutureBuilder<dynamic>(
+                  future: _future,
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (correctChoice == 0) {
+                      return const Center(
+                          child: Text(
+                        "Loading...",
+                        style: TextStyle(fontSize: 30),
+                      ));
+                    }
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(30.0)),
+                        border: Border.all(width: 1, color: Colors.white),
+                      ),
+                      child: Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                          child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Text(
+                                daily_question,
+                                style: const TextStyle(
+                                    color: BackgroundColorWarm, fontSize: 24),
+                              ))),
+                    );
+                  }),
             ),
-            answerBox(choice: "A", text: "700個月"),
-            answerBox(choice: "B", text: "800個月"),
-            answerBox(choice: "C", text: "900個月"),
-            answerBox(choice: "D", text: "1000個月"),
+            answerBox(option: 1, choice: "A", text: daily_A),
+            answerBox(option: 2, choice: "B", text: daily_B),
+            answerBox(option: 3, choice: "C", text: daily_C),
+            answerBox(option: 4, choice: "D", text: daily_D),
           ],
         ),
       ),
     );
   }
 
-  answerBox({required String choice, required String text}) {
+  answerBox({
+    required int option,
+    required String choice,
+    required String text,
+  }) {
     return Expanded(
       flex: 15,
       child: GestureDetector(
-        onTap: () => checkAnswer(choice),
+        onTap: () => checkAnswer(option, text),
         child: Row(
           children: [
             Expanded(
+              //circle
               flex: 25,
               child: Stack(
                 children: [
                   Container(
-                    height: 150,
-                    width: 150,
+                    height: 100,
+                    width: 100,
                     margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -121,42 +151,22 @@ class _Daily_testState extends State<Daily_test> {
                           fontSize: 25, color: BackgroundColorWarm),
                     ),
                   ),
-                  // Center(
-                  //   child: Container(
-                  //     height: 100,
-                  //     width: 100,
-                  //     alignment: Alignment.center,
-                  //     child: Text(
-                  //       choice,
-                  //       textAlign: TextAlign.center,
-                  //       style:
-                  //           TextStyle(fontSize: 30, color: BackgroundColorWarm),
-                  //     ),
-                  //   ),
-                  // ),
-                  Center(
-                    child: Container(
-                      margin: const EdgeInsets.only(left: 70),
-                      color: Colors.white,
-                      height: 60,
-                      width: 100,
-                    ),
-                  )
                 ],
               ),
             ),
+            //選項敘述
             Expanded(
               flex: 75,
               child: Container(
-                height: 60,
+                height: 90,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: const BorderRadius.horizontal(
+                      left: Radius.circular(30.0),
                       right: Radius.circular(30.0)),
                 ),
                 child: Container(
                   alignment: Alignment.center,
-                  margin: const EdgeInsets.only(right: 20),
                   child: Text(
                     text,
                     textAlign: TextAlign.center,
@@ -169,6 +179,31 @@ class _Daily_testState extends State<Daily_test> {
         ),
       ),
     );
+  }
+
+  //初始化
+  @override
+  void initState() {
+    _future = getRandomDailyTest();
+    super.initState();
+  }
+
+  getRandomDailyTest() async {
+    final DailyTestRepository dailyTestRepository = DailyTestRepository();
+    Future<DailyTest> dailyTest = dailyTestRepository
+        .searchDailyTest()
+        .then((value) => DailyTest.fromMap(value));
+
+    dailyTest.then((value) {
+      dailyQuesion_ID = value.id;
+      daily_question = value.question;
+      daily_A = value.optionOne;
+      daily_B = value.optionTwo;
+      daily_C = value.optionThree;
+      daily_D = value.optionFour;
+      correctChoice = value.answer;
+      learn = value.learn;
+    }).then((value) => setState(() {}));
   }
 }
 
