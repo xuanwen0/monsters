@@ -190,6 +190,20 @@ class _Drawer_settingsState extends State<Drawer_settings> {
                   ),
                 ],
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const <Widget>[
+                  Text(
+                    '音樂',
+                    style: TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 40,
+                      color: Color(0xffa0522d),
+                    ),
+                    softWrap: false,
+                  ),
+                ],
+              ),
             ],
           ),
         ],

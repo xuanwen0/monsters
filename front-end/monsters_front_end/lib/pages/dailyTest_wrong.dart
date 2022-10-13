@@ -67,20 +67,20 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
                       Container(
                         height: 100,
                         width: 100,
-                        margin: const EdgeInsets.fromLTRB(10, 10, 0, 10),
+                        margin: const EdgeInsets.fromLTRB(20, 10, 0, 10),
                         decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(
                             Radius.circular(40.0),
                           ),
                         ),
-                      ),
-                      Center(
-                        child: Text(
-                          showChoice,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontSize: 25, color: BackgroundColorWarm),
+                        child: Center(
+                          child: Text(
+                            showChoice,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 25, color: BackgroundColorWarm),
+                          ),
                         ),
                       ),
                     ],
@@ -90,7 +90,7 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
                   flex: 75,
                   child: Container(
                     height: 90,
-                    margin: const EdgeInsets.only(right: 20),
+                    margin: const EdgeInsets.only(right: 25),
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: const BorderRadius.horizontal(
@@ -115,7 +115,7 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
           Expanded(
             flex: 60,
             child: Container(
-              margin: const EdgeInsets.fromLTRB(20, 20, 20, 50),
+              margin: const EdgeInsets.fromLTRB(20, 20, 20, 30),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: const BorderRadius.all(Radius.circular(30.0)),
@@ -123,7 +123,7 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
               ),
               child: Container(
                   alignment: Alignment.center,
-                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                  margin: const EdgeInsets.all(20),
                   child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
                       child: Text(
