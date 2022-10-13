@@ -13,7 +13,6 @@ class Edit_userInformation extends StatefulWidget {
 
 class _Edit_userInformationState extends State<Edit_userInformation> {
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _mailController = TextEditingController();
   final TextEditingController _nicknameController = TextEditingController();
 
   //生日
@@ -107,39 +106,6 @@ class _Edit_userInformationState extends State<Edit_userInformation> {
                             return '暱稱不得空白';
                           }
                         }),
-                    SizedBox(height: 20.0),
-                    //email
-                    TextFormField(
-                      autofocus: false,
-                      controller: _mailController,
-                      decoration: const InputDecoration(
-                        labelText: "信箱",
-                        hintText: '請輸入信箱',
-                        prefixIcon: Icon(Icons.mail),
-                        border: OutlineInputBorder(
-                          ///設定邊框四個角的弧度
-                          borderRadius: BorderRadius.all(Radius.circular(90)),
-
-                          ///用來配置邊框的樣式
-                          borderSide: BorderSide(
-                            ///設定邊框的顏色
-                            color: Color.fromRGBO(160, 82, 45, 1),
-                            width: 2.0,
-                          ),
-                        ),
-                        fillColor: Color.fromRGBO(255, 255, 255, 1),
-                        filled: true,
-                      ),
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp("[a-zA-Z]|[0-9]|[@]|[.]")),
-                      ],
-                      validator: (email) =>
-                          email != null && !EmailValidator.validate(email)
-                              ? '請輸入正確的信箱格式'
-                              : null,
-                    ),
                     SizedBox(height: 20.0),
                     //生日
                     Row(

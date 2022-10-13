@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:monsters_front_end/pages/firtTime_editUserInfo.dart';
 import 'package:monsters_front_end/pages/home.dart';
+import 'package:monsters_front_end/pages/lock/lock_page.dart';
 import 'package:monsters_front_end/pages/login_selfacount.dart';
 import 'package:monsters_front_end/pages/signUp.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -181,13 +182,19 @@ class _loginState extends State<LoginPage> {
     //check if user already login or credential already available or not
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? val = pref.getString("selfLogin");
+    String? lock = pref.getString("lock");
     if (val != null) {
       print("已登入過，帳號:" + val);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainPage()));
+      if (lock == 'true') {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LockPage()));
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MainPage()));
+      }
     } else {
       print("已登出或第一次開啟");
-      Navigator.push(
+      Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Login_selfacount()));
     }
   }
