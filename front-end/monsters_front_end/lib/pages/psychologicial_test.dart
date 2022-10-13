@@ -1,8 +1,14 @@
+import 'dart:developer';
+
 import 'package:adobe_xd/page_link.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monsters_front_end/pages/psychologicial_result.dart';
+import 'package:monsters_front_end/pages/style.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Psychologicial_test extends StatefulWidget {
   @override
@@ -10,54 +16,185 @@ class Psychologicial_test extends StatefulWidget {
 }
 
 class _Psychologicial_testState extends State<Psychologicial_test> {
+  late YoutubePlayerController controller;
+  final value = [0, 1, 2, 3, 4, 5];
+  final groups = [0, 1, 2, 3, 4, 5];
+  final groupVal = [0, 0, 0, 0, 0, 0];
+  var alarm = "";
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xfffffed4),
-      body: Stack(
-        children: <Widget>[
-          //標題
-          Pinned.fromPins(
-            Pin(size: 250.0, middle: 0.5),
-            Pin(size: 63.0, start: 20.0),
-            child: const Text(
-              '深度心理測驗',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 35,
-                color: Color(0xffa0522d),
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+    const url = "https://www.youtube.com/watch?v=ycXMqLOHZGA";
+    controller = YoutubePlayerController(
+        initialVideoId: YoutubePlayer.convertUrlToId(url)!,
+        flags: const YoutubePlayerFlags(
+          endAt: 90,
+          mute: false,
+          loop: false,
+          forceHD: true,
+          autoPlay: false,
+          controlsVisibleAtStart: false,
+        ));
+  }
+
+  @override
+  void deactivate() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    controller.pause();
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => YoutubePlayerBuilder(
+        player: YoutubePlayer(controller: controller),
+        builder: (context, player) => Scaffold(
+          appBar: secondAppBar("深度心理測驗"),
+          backgroundColor: BackgroundColorLight,
+          body: Container(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(child: player),
+              const SizedBox(
+                height: 10,
               ),
-              softWrap: false,
-            ),
-          ),
-          //箭頭
-          Pinned.fromPins(
-            Pin(size: 45.6, start: 14.4),
-            Pin(size: 41.1, start: 23.4),
-            child:
-                // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => InteractionPage(),
+              Container(
+                height: 515,
+                padding: const EdgeInsets.only(bottom: 5),
+                child: ListView(
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    questionContainer("1.睡眠困難"),
+                    answerRow(groups[0]),
+                    questionContainer("2.感覺緊張不安"),
+                    answerRow(groups[1]),
+                    questionContainer("3.覺得容易苦惱或動怒"),
+                    answerRow(groups[2]),
+                    questionContainer("4.感覺憂鬱、情緒低落"),
+                    answerRow(groups[3]),
+                    questionContainer("5.覺得比不上別人"),
+                    answerRow(groups[4]),
+                    questionContainer("6.有過自殺的念頭"),
+                    answerRow(groups[5]),
+                    Container(
+                      color: BackgroundColorLight,
+                      height: 30,
+                      child: Text(alarm),
+                    ),
+                    TextButton(
+                        child: Container(
+                          width: 250,
+                          decoration: BoxDecoration(
+                              color: BackgroundColorWarm,
+                              border: Border.all(
+                                  color: BackgroundColorWarm, width: 3),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(50.0))),
+                          child: const Text(
+                            "查看分析結果",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 28, color: Colors.white),
+                          ),
+                        ),
+                        onPressed: () => checkAns()),
+                  ],
                 ),
-              ],
-              child: SvgPicture.string(
-                _svg_ryq30,
-                allowDrawingOutsideViewBox: true,
-                fit: BoxFit.fill,
               ),
-            ),
+            ],
+          )),
+        ),
+      );
+
+  Center answerRow(int group) {
+    return Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            "輕微",
+            style: TextStyle(fontSize: 18),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          answerColumn(
+            0,
+            group,
+          ),
+          answerColumn(
+            1,
+            group,
+          ),
+          answerColumn(
+            2,
+            group,
+          ),
+          answerColumn(
+            3,
+            group,
+          ),
+          answerColumn(
+            4,
+            group,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          const Text(
+            "嚴重",
+            style: TextStyle(fontSize: 18),
           ),
         ],
       ),
     );
   }
-}
 
-const String _svg_ryq30 =
-    '<svg viewBox="13.7 21.9 45.6 41.1" ><path transform="translate(8.07, 15.61)" d="M 47.28736877441406 22.92952919006348 L 19.54702568054199 22.92952919006348 L 30.30613327026367 13.09178352355957 C 31.84870529174805 11.54302215576172 31.84870529174805 9.040220260620117 30.30613327026367 7.491456031799316 C 28.76356315612793 5.942692756652832 26.26174545288086 5.942692756652832 24.70621109008789 7.491456031799316 L 6.791648864746094 24.09420013427734 C 6.013882637023926 24.81282615661621 5.624999046325684 25.79164695739746 5.624999046325684 26.86958694458008 L 5.624999046325684 26.91914939880371 C 5.624999046325684 27.99708938598633 6.013882637023926 28.97590446472168 6.791648864746094 29.69453430175781 L 24.69325065612793 46.29727935791016 C 26.24878120422363 47.84604263305664 28.75060272216797 47.84604263305664 30.29317092895508 46.29727935791016 C 31.83573913574219 44.74851226806641 31.83573913574219 42.2457160949707 30.29317092895508 40.69694900512695 L 19.5340633392334 30.85920524597168 L 47.27440643310547 30.85920524597168 C 49.46512222290039 30.85920524597168 51.24102020263672 29.08742141723633 51.24102020263672 26.89437294006348 C 51.25398254394531 24.66414642333984 49.47808074951172 22.92952919006348 47.28736877441406 22.92952919006348 Z" fill="#ffbb00" stroke="none" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';
+  Column answerColumn(int _value, int inGroup) {
+    return Column(
+      children: [
+        Text(_value.toString()),
+        const SizedBox(width: 10.0),
+        Radio<int>(
+            value: _value,
+            groupValue: groupVal[inGroup],
+            onChanged: (val) => setState(() {
+                  groupVal[inGroup] = val!;
+                })),
+      ],
+    );
+  }
+
+  Container questionContainer(String question) {
+    return Container(
+      padding: const EdgeInsets.only(top: 10, left: 30, bottom: 15),
+      child: Text(
+        question,
+        textAlign: TextAlign.left,
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  checkAns() {
+    int total = 0;
+    log(groupVal.toString());
+    for (int score in groupVal) {
+      total += score;
+    }
+
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => Psychologicial_result(total)));
+    log("總得分為$total分");
+  }
+}

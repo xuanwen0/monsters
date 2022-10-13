@@ -248,7 +248,7 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                         onPressed: () {
                           final isValidForm = _formKey.currentState!.validate();
                           if (isValidForm) {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => MainPage()));

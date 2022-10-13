@@ -11,5 +11,5 @@ public class DailyTestBean extends BaseBean {
     private String optionThree;
     private String optionFour;
     private Integer answer;
-    private  String learn;
+    private String learn;
 }

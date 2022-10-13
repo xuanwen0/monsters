@@ -87,20 +87,6 @@ Widget GetDrawer(BuildContext context) {
                     MaterialPageRoute(builder: (context) => LoginPage()));
               },
             ),
-            ListTile(
-              title: const Text(
-                "心的軌跡",
-                style: TextStyle(
-                  fontFamily: 'Segoe UI',
-                  fontSize: 35.0,
-                  color: Color(0xffa0522d),
-                ),
-              ),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MoodLineChart()));
-              },
-            ),
           ])));
   return drawer;
 }

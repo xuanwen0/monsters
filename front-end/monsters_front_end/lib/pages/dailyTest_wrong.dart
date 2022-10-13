@@ -3,87 +3,32 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/daily_test.dart';
+import 'package:monsters_front_end/pages/interaction.dart';
+import 'package:monsters_front_end/pages/style.dart';
 
 class DailyTest_wrong extends StatefulWidget {
-  DailyTest_wrong({
+  const DailyTest_wrong({
     Key? key,
+    required int id,
   }) : super(key: key);
   @override
   _DailyTest_wrongState createState() => _DailyTest_wrongState();
 }
 
 class _DailyTest_wrongState extends State<DailyTest_wrong> {
+  String correctChoose = "C";
+  String correctAnswer = '900個月';
+  String learn = "人生只有約900個月，所以拿張紙畫出30*30的表格，每過一個月就打勾。這樣你全部的人生就在這張紙上囉！";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
-      body: Stack(
+      appBar: secondAppBar("每日測驗"),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          //標題
-          Pinned.fromPins(
-            Pin(size: 200.0, middle: 0.5),
-            Pin(size: 63.0, start: 20.0),
-            child: Text(
-              '每日測驗',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 40,
-                color: const Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
-          //解答解釋
-          Pinned.fromPins(
-              Pin(start: 34.0, end: 34.0), Pin(size: 219.0, end: 160.0),
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      border:
-                          Border.all(color: Color.fromRGBO(151, 151, 151, 1)),
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                      borderRadius: BorderRadius.circular(22.0),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 290.0, middle: 0.5),
-                    Pin(size: 165.0, start: 520.0),
-                    child: Text(
-                      '人生只有約900個月，所以拿張紙畫出30*30的表格，每過一個月就打勾。這樣你全部的人生就在這張紙上囉！',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 20,
-                        color: const Color(0xffa0522d),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              )),
-          //箭頭
-          Pinned.fromPins(
-            Pin(size: 45.6, start: 13.7),
-            Pin(size: 41.1, start: 21.9),
-            child:
-                // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => Daily_test(),
-                ),
-              ],
-              child: SvgPicture.string(
-                _svg_ryq30,
-                allowDrawingOutsideViewBox: true,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
+          /*
           //答錯框
           Pinned.fromPins(
             Pin(start: 34.0, end: 34.0),
@@ -142,7 +87,7 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
                     width: 101.0,
                     height: 37.0,
                     child: Text(
-                      '900個月',
+                      correctAnswer,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
@@ -157,7 +102,7 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
                   Pin(size: 25.0, start: 30.0),
                   Pin(size: 53.0, middle: 0.5),
                   child: Text(
-                    'C',
+                    correctChoose,
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
                       fontSize: 40,
@@ -167,6 +112,145 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
                   ),
                 ),
               ],
+            ),
+          ),
+          //解答解釋
+          Pinned.fromPins(
+              Pin(start: 34.0, end: 34.0), Pin(size: 219.0, end: 160.0),
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      border:
+                          Border.all(color: Color.fromRGBO(151, 151, 151, 1)),
+                      color: Color.fromRGBO(255, 255, 255, 1),
+                      borderRadius: BorderRadius.circular(22.0),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 290.0, middle: 0.5),
+                    Pin(size: 165.0, start: 520.0),
+                    child: Text(
+                      learn,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 20,
+                        color: const Color(0xffa0522d),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              )),
+          */
+          //答錯囉
+          Expanded(
+            flex: 30,
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(30, 70, 30, 20),
+              decoration: BoxDecoration(
+                color: const Color(0xffffffff),
+                borderRadius: BorderRadius.circular(22.0),
+              ),
+              child: Container(
+                  alignment: Alignment.center,
+                  child: const Text(
+                    '答錯囉',
+                    style: TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 60,
+                      color: Color(0xff979797),
+                    ),
+                    softWrap: false,
+                  )),
+            ),
+          ),
+          //正確選項
+          Expanded(
+            flex: 15,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 25,
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 150,
+                        width: 150,
+                        margin: const EdgeInsets.fromLTRB(20, 10, 0, 10),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(40.0),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            correctChoose,
+                            style: const TextStyle(
+                                fontSize: 30, color: BackgroundColorWarm),
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 70),
+                          color: Colors.white,
+                          height: 60,
+                          width: 100,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 75,
+                  child: Container(
+                    height: 60,
+                    margin: const EdgeInsets.only(right: 20),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                          BorderRadius.horizontal(right: Radius.circular(30.0)),
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.only(right: 35),
+                      padding: const EdgeInsets.only(right: 35),
+                      child: Text(
+                        correctAnswer,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 24, color: BackgroundColorWarm),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 60,
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(20, 40, 20, 50),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+                border: Border.all(width: 1, color: Colors.grey),
+              ),
+              child: Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Text(
+                        learn,
+                        textAlign: TextAlign.justify,
+                        style: const TextStyle(
+                          color: BackgroundColorWarm,
+                          fontSize: 22,
+                        ),
+                      ))),
             ),
           ),
         ],
