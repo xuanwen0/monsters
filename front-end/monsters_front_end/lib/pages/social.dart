@@ -131,7 +131,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //標題 完成
+                //標題 
                 Expanded(flex: 10, child: mainAppBarTitleContainer("社群")),
                 //標籤
                 Expanded(
@@ -250,7 +250,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                         ],
                       ),
                     ))),
-
+                //社群主體
                 Expanded(
                   flex: 75,
                   child: FutureBuilder<dynamic>(

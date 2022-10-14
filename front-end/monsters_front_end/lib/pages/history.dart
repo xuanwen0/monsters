@@ -732,15 +732,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
             'content': value.data.elementAt(index).content,
             'type': type,
             'time': value.data.elementAt(index).time,
-
-            /*
-            String type
-            String / File content
-            File 心情圖 (NULLABLE)
-            Int 煩惱分數
-            Int 分享
-
-             */
           },
         );
       }
@@ -774,10 +765,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     ]).animate(animationController);
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
-    super.initState();
+        
     _future = getHistoryMapByAccount();
+    super.initState();
   }
-
+  
+  //關閉
   @override
   void dispose() {
     animationController.dispose();

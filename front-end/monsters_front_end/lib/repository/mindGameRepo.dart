@@ -13,7 +13,7 @@ class MindGameRepository implements MindGameApiDataSource {
 
   @override
   Future<Map<String, dynamic>?> searchMindGame() {
-    return _searchMindGame(Uri.parse('$domain/mindGame'));
+    return _searchMindGame(Uri.parse('$domain/mindGame/search'));
   }
 
   Future<Map<String, dynamic>?> _searchMindGame(Uri url) async {
@@ -32,5 +32,4 @@ class MindGameRepository implements MindGameApiDataSource {
       return null;
     }
   }
-
 }

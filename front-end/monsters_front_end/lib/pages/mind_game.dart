@@ -1,14 +1,8 @@
-import 'dart:math';
-
-import 'package:adobe_xd/page_link.dart';
-import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/repository/mindGameRepo.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../model/mindGameModel.dart';
 
@@ -18,9 +12,9 @@ class Psychologicial_game extends StatefulWidget {
 }
 
 class _Psychologicial_gameState extends State<Psychologicial_game> {
-  
-  //異部處理
+  //異步處理
   late Future _future;
+
   @override
   void dispose() {
     super.dispose();
@@ -35,55 +29,56 @@ class _Psychologicial_gameState extends State<Psychologicial_game> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
-    int gameCount = 4;
-    List<String> gameWebs = [
-      'https://girlstyle.com/tw/article/278283/%E5%BF%83%E7%90%86%E6%B8%AC%E9%A9%97-%E4%BA%BA%E6%A0%BC-%E6%BD%9B%E6%84%8F%E8%AD%98-%E6%A3%AE%E6%9E%97-%E5%B0%8F%E6%9C%A8%E5%B1%8B-%E8%8A%B1-%E5%8B%95%E7%89%A9-%E5%80%8B%E6%80%A7',
-      'https://womany.net/read/article/28510',
-      'https://www.popdaily.com.tw/korea/741531',
-      'https://www.beauty321.com/post/47206'
-    ];
-    List<String> gameNames = ['森林', '愛情', '煩惱', '社交'];
-
     return Scaffold(
         backgroundColor: const Color(0xfffffed4),
         appBar: secondAppBar("心理小遊戲"),
-        body: Stack(
-          children: <Widget>[
-            Pinned.fromPins(
-              Pin(start: 8.0, end: 8.0),
-              Pin(size: 524.0, end: 85.0),
-              child: ListView.separated(
-                primary: false,
-                itemBuilder: (BuildContext context, int index) {
-                  return Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        TextButton(
-                          onPressed: () => launch(gameWebs[index]),
-                          child: Text(gameNames[index]),
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.transparent),
-                            foregroundColor: MaterialStateProperty.all(
-                                const Color.fromRGBO(160, 82, 45, 1)),
-                            textStyle: MaterialStateProperty.all(
-                                const TextStyle(fontSize: 40)),
+        body: FutureBuilder<dynamic>(
+            future: _future,
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.data == null) {
+                return const Center(
+                    child: Text(
+                  "Loading...",
+                  style: TextStyle(fontSize: 30),
+                ));
+              }
+              return ListView.builder(
+                itemCount: snapshot.data["itemCounter"],
+                itemBuilder: (BuildContext context, int index) => Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(
+                      width: 1.0,
+                      color: BackgroundColorWarm,
+                    )),
+                  ),
+                  height: 110,
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                    width: 280,
+                    child: ListTile(
+                        title: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: const Color(0xffffffff),
+                            borderRadius: BorderRadius.circular(23.0),
+                            border: Border.all(
+                                width: 1.0, color: const Color(0xffa0522d)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              snapshot.data["result $index"]["name"],
+                              style: const TextStyle(fontSize: BodyTextSize),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
-                      ],
-                    ),
-                  );
-                },
-                itemCount: gameCount,
-                separatorBuilder: (BuildContext context, int index) {
-                  return const Divider(height: 10.0, color: Colors.transparent);
-                },
-              ),
-            ),
-          ],
-        ));
+                        onTap: () => launchUrlString(
+                            snapshot.data["result $index"]["web"])),
+                  ),
+                ),
+              );
+            }));
   }
 
   Future<Map> getMindGames() async {
@@ -93,21 +88,19 @@ class _Psychologicial_gameState extends State<Psychologicial_game> {
         .searchMindGame()
         .then((value) => Data.fromJson(value!));
     await mindGames.then((value) async {
-      if (value != null) {
-        await socialResult.putIfAbsent(
-          "itemCounter",
-          () => value.data.length,
+      await socialResult.putIfAbsent(
+        "itemCounter",
+        () => value.data.length,
+      );
+      for (int index = 0; index < value.data.length; index++) {
+        socialResult.putIfAbsent(
+          "result $index",
+          () => {
+            'id': value.data.elementAt(index).id,
+            'name': value.data.elementAt(index).name,
+            'web': value.data.elementAt(index).web,
+          },
         );
-        for (int index = 0; index < value.data.length; index++) {
-          socialResult.putIfAbsent(
-            "result $index",
-            () => {
-              'id': value.data.elementAt(index).id,
-              'name': value.data.elementAt(index).name,
-              'web': value.data.elementAt(index).web,
-            },
-          );
-        }
       }
     });
 
