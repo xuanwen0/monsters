@@ -11,7 +11,7 @@ import 'package:monsters_front_end/pages/drawer_userInformation.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/manual.dart';
-import 'package:monsters_front_end/pages/psychologicial_game.dart';
+import 'package:monsters_front_end/pages/mind_game.dart';
 import 'package:monsters_front_end/pages/psychologicial_test.dart';
 import 'package:monsters_front_end/pages/social.dart';
 import 'package:monsters_front_end/pages/style.dart';

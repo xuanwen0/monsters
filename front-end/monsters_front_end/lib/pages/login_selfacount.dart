@@ -148,7 +148,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                         }
                       }),
                   const SizedBox(height: 50.0),
-                  //忘記/重設密碼
+                  //忘記密碼
                   TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -157,7 +157,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                                 builder: (context) => Forget_password_Auth()));
                       },
                       child: const Text(
-                        '忘記/重設密碼',
+                        '忘記密碼',
                         style: TextStyle(
                           fontFamily: 'Segoe UI',
                           fontSize: 25,
