@@ -11,11 +11,5 @@ import java.util.List;
 
 @Repository
 public class MindGameDAOImpl extends BaseDAOImplement<MindGame> implements MindGameDAO {
-    @Override
-    public List<MindGame> findById(Integer id) {
-        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(MindGame.class);
-        detachedCriteria.add(Restrictions.eq("id", id));
-        return findByCriteria(detachedCriteria);
-    }
 
 }

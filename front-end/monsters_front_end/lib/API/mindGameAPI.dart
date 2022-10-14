@@ -3,5 +3,5 @@
 import 'package:monsters_front_end/model/mindGameModel.dart';
 
 abstract class MindGameApiDataSource {
-  Future<Map<String, dynamic>?> searchMindGameById(int id);
+  Future<Map<String, dynamic>?> searchMindGame();
 }

@@ -1,11 +1,16 @@
+import 'dart:math';
+
 import 'package:adobe_xd/page_link.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/style.dart';
+import 'package:monsters_front_end/repository/mindGameRepo.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../model/mindGameModel.dart';
 
 class Psychologicial_game extends StatefulWidget {
   @override
@@ -13,18 +18,33 @@ class Psychologicial_game extends StatefulWidget {
 }
 
 class _Psychologicial_gameState extends State<Psychologicial_game> {
+  
+  //異部處理
+  late Future _future;
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    _future = getMindGames();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
-    const int gameCount = 4;
-    const List<String> gameWebs = [
+    int gameCount = 4;
+    List<String> gameWebs = [
       'https://girlstyle.com/tw/article/278283/%E5%BF%83%E7%90%86%E6%B8%AC%E9%A9%97-%E4%BA%BA%E6%A0%BC-%E6%BD%9B%E6%84%8F%E8%AD%98-%E6%A3%AE%E6%9E%97-%E5%B0%8F%E6%9C%A8%E5%B1%8B-%E8%8A%B1-%E5%8B%95%E7%89%A9-%E5%80%8B%E6%80%A7',
       'https://womany.net/read/article/28510',
       'https://www.popdaily.com.tw/korea/741531',
       'https://www.beauty321.com/post/47206'
     ];
-    const List<String> gameNames = ['森林', '愛情', '煩惱', '社交'];
+    List<String> gameNames = ['森林', '愛情', '煩惱', '社交'];
+
     return Scaffold(
         backgroundColor: const Color(0xfffffed4),
         appBar: secondAppBar("心理小遊戲"),
@@ -64,6 +84,34 @@ class _Psychologicial_gameState extends State<Psychologicial_game> {
             ),
           ],
         ));
+  }
+
+  Future<Map> getMindGames() async {
+    Map socialResult = {};
+    final MindGameRepository mindGameRepository = MindGameRepository();
+    Future<Data> mindGames = mindGameRepository
+        .searchMindGame()
+        .then((value) => Data.fromJson(value!));
+    await mindGames.then((value) async {
+      if (value != null) {
+        await socialResult.putIfAbsent(
+          "itemCounter",
+          () => value.data.length,
+        );
+        for (int index = 0; index < value.data.length; index++) {
+          socialResult.putIfAbsent(
+            "result $index",
+            () => {
+              'id': value.data.elementAt(index).id,
+              'name': value.data.elementAt(index).name,
+              'web': value.data.elementAt(index).web,
+            },
+          );
+        }
+      }
+    });
+
+    return socialResult;
   }
 }
 
