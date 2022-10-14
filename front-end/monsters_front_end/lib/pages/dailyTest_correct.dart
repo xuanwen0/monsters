@@ -69,7 +69,7 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
                 ),
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "再答對${7 - unlockProgress}次就可以解鎖隱藏怪獸！\n目前解鎖進度 ：",
+                  "再答對${7 - unlockProgress}次就可以解鎖隱藏獎勵！\n目前解鎖進度 ：",
                   style:
                       const TextStyle(fontSize: 20, color: BackgroundColorWarm),
                 )),

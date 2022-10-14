@@ -79,7 +79,7 @@ class _Drawer_settingsState extends State<Drawer_settings> {
                     softWrap: false,
                   ),
                   FlutterSwitch(
-                    activeColor: Color.fromRGBO(255, 187, 0, 1),
+                    activeColor: const Color.fromRGBO(255, 187, 0, 1),
                     activeTextColor: BackgroundColorLight,
                     width: 125.0,
                     height: 45.0,

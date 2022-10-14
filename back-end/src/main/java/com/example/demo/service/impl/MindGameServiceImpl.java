@@ -7,6 +7,7 @@ import com.example.demo.service.MindGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +28,16 @@ public class MindGameServiceImpl extends BaseServiceImplement<MindGameDAO, MindG
         return mindGameDAO.searchAll();
     }
 
+
+    public List<MindGameBean> searchMindGameById(Integer id){
+        List<MindGame> gameList = mindGameDAO.findById(id);
+        List<MindGameBean> mindGameBeanList = new ArrayList<>();
+        for(MindGame mindGame : gameList){
+            mindGameBeanList.add(createBean(mindGame));
+        }
+        return mindGameBeanList;
+    }
+
     @Override
     protected MindGame createVO(MindGameBean bean) {
         MindGame entity = new MindGame();
@@ -35,6 +46,7 @@ public class MindGameServiceImpl extends BaseServiceImplement<MindGameDAO, MindG
         entity.setWeb(bean.getWeb());
         return entity;
     }
+
 
     @Override
     protected MindGameBean createBean(MindGame entity) {

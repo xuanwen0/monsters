@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/destressWays_list/destressWays_list.dart';
-import 'package:monsters_front_end/pages/psychologicial_game.dart';
+import 'package:monsters_front_end/pages/mind_game.dart';
 import 'dart:developer';
 
 import 'package:monsters_front_end/pages/style.dart';
