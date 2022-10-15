@@ -6,4 +6,7 @@ abstract class MemberApiDataSource {
   Future<String> createMember(Member member);
 
   Future<String> login(Member member);
+
+  Future<Map<String, dynamic>?> searchPersonalInfoByAccount(String account);
 }
+//http://192.168.0.178:8080/member/search?account=Lin
