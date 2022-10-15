@@ -65,4 +65,26 @@ class MemberRepository implements MemberApiDataSource {
       return e.toString();
     }
   }
+
+  @override
+  Future<Map<String, dynamic>?> searchPersonalInfoByAccount(String account) {
+    return _searchPersonalInfoByAccount(
+        Uri.parse('$domain/member/search?account=$account'));
+  }
+    Future<Map<String, dynamic>?> _searchPersonalInfoByAccount(Uri url) async {
+    try {
+      final request =
+          await client.get(url, headers: {'Content-type': 'application/json'});
+      if (request.statusCode == 200) {
+        Map<String, dynamic> personalInfo = jsonDecode(request.body);
+        return Future.value(personalInfo);
+      } else {
+        Map<String, dynamic> personalInfo = jsonDecode(request.body);
+        return personalInfo;
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 }
