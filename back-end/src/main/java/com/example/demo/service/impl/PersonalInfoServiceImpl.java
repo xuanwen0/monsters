@@ -1,9 +1,7 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.bean.AnnoyanceBean;
 import com.example.demo.bean.PersonalInfoBean;
 import com.example.demo.dao.PersonalInfoDAO;
-import com.example.demo.entity.Annoyance;
 import com.example.demo.entity.PersonalInfo;
 import com.example.demo.service.PersonalInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +49,7 @@ public class PersonalInfoServiceImpl extends BaseServiceImplement<PersonalInfoDA
         entity.setAccount(bean.getAccount());
         entity.setPassword(bean.getPassword());
         entity.setBirthday(bean.getBirthday());
-        entity.setName(bean.getName());
         entity.setNickName(bean.getNickName());
-        entity.setGender(bean.getGender());
         entity.setMail(bean.getMail());
         entity.setLock(bean.getLock());
         entity.setPhoto(bean.getPhoto());
@@ -67,9 +63,7 @@ public class PersonalInfoServiceImpl extends BaseServiceImplement<PersonalInfoDA
         bean.setAccount(entity.getAccount());
         bean.setPassword(entity.getPassword());
         bean.setBirthday(entity.getBirthday());
-        bean.setName(entity.getName());
         bean.setNickName(entity.getNickName());
-        bean.setGender(entity.getGender());
         bean.setMail(entity.getMail());
         bean.setLock(entity.getLock());
         bean.setPhoto(entity.getPhoto());

@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +50,6 @@ public class PersonalInfoController {
                 result.put("account", local.getAccount());
                 result.put("birthday", local.getBirthday().toString());
                 result.put("mail",local.getMail());
-                result.put("name", local.getName());
                 result.put("nickName", local.getNickName());
                 result.put("theme", local.getTheme());
                 result.put("result", true);
