@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
 
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:monsters_front_end/pages/edit_personalInfo.dart';
 import 'package:monsters_front_end/pages/style.dart';
@@ -137,6 +135,7 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
                         width: 130,
                         height: 70,
                         margin: const EdgeInsets.only(bottom: 40, right: 40),
+                        alignment: Alignment.center,
                         decoration: BoxDecoration(
                             color: BackgroundColorSoft,
                             borderRadius: BorderRadius.circular(40.0)),
