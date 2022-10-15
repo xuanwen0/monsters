@@ -22,14 +22,8 @@ public class PersonalInfo {
     @Column(name = "`birthday`", nullable = false)
     private LocalDate birthday;
 
-    @Column(name = "`name`", nullable = false, length = 15)
-    private String name;
-
     @Column(name = "`nick_name`", nullable = false, length = 45)
     private String nickName;
-
-    @Column(name = "`gender`", nullable = false)
-    private int gender;
 
     @Column(name = "`mail`", nullable = false)
     private String mail;

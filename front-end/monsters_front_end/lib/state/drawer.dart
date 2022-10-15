@@ -6,8 +6,8 @@ import 'package:monsters_front_end/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../pages/drawer_setting.dart';
-import '../pages/drawer_userInformation.dart';
-import '../pages/edit_userInformation.dart';
+import '../pages/drawer_personalInfo.dart';
+import '../pages/edit_personalInfo.dart';
 import '../pages/moodLineChart.dart';
 
 Widget GetDrawer(BuildContext context) {
@@ -28,7 +28,7 @@ Widget GetDrawer(BuildContext context) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Drawer_userInformation()));
+                        builder: (context) => Drawer_personalInfo()));
               },
             ),
             ListTile(

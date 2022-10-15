@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';
-import 'package:monsters_front_end/pages/drawer_userInformation.dart';
+import 'package:monsters_front_end/pages/drawer_personalInfo.dart';
 import 'package:monsters_front_end/pages/home.dart';
 
 import 'package:monsters_front_end/repository/memberRepo.dart';
 
-class Edit_userInformation extends StatefulWidget {
+class Edit_personalInfo extends StatefulWidget {
   @override
-  _Edit_userInformationState createState() => _Edit_userInformationState();
+  _Edit_personalInfoState createState() => _Edit_personalInfoState();
 }
 
-class _Edit_userInformationState extends State<Edit_userInformation> {
+class _Edit_personalInfoState extends State<Edit_personalInfo> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _nicknameController = TextEditingController();
 
@@ -35,8 +35,9 @@ class _Edit_userInformationState extends State<Edit_userInformation> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const SizedBox(height: 150),
                     //標題
-                    Text(
+                    const Text(
                       '編輯個人資料',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
@@ -44,38 +45,7 @@ class _Edit_userInformationState extends State<Edit_userInformation> {
                         color: Color.fromRGBO(160, 82, 45, 1),
                       ),
                     ),
-                    SizedBox(height: 50.0),
-                    //姓名
-                    TextFormField(
-                        autofocus: false,
-                        controller: _nameController,
-                        decoration: const InputDecoration(
-                          labelText: "姓名",
-                          hintText: '請輸入姓名',
-                          prefixIcon: Icon(Icons.person_pin),
-                          border: OutlineInputBorder(
-                            ///設定邊框四個角的弧度
-                            borderRadius: BorderRadius.all(Radius.circular(90)),
-
-                            ///用來配置邊框的樣式
-                            borderSide: BorderSide(
-                              ///設定邊框的顏色
-                              color: Color.fromRGBO(160, 82, 45, 1),
-                              width: 2.0,
-                            ),
-                          ),
-                          fillColor: Color.fromRGBO(255, 255, 255, 1),
-                          filled: true,
-                        ),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value!.isNotEmpty) {
-                            return null;
-                          } else {
-                            return '姓名不得空白';
-                          }
-                        }),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 70.0),
                     //暱稱
                     TextFormField(
                         autofocus: false,

@@ -44,13 +44,13 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
               ),
             ),
           ),
-          //取得解答紐
+          //取得解答按鈕
           Pinned.fromPins(
             Pin(size: 136.0, middle: 0.5),
             Pin(size: 64.0, end: 73.0),
             child: Stack(
               children: <Widget>[
-                //解答紐
+                //解答按鈕
                 Pinned.fromPins(
                   Pin(size: 136.0, middle: 0.5),
                   Pin(size: 64.0, end: 73.0),
@@ -99,14 +99,16 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
           pressed == false
               ? Pinned.fromPins(
                   Pin(start: 52.0, end: 52.0), Pin(size: 185.0, middle: 0.3659),
-                  child: Text(
-                    answer,
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 25,
-                      color: Color(0xffa0522d),
+                  child: Center(
+                    child: Text(
+                      answer,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 25,
+                        color: Color(0xffa0522d),
+                      ),
+                      softWrap: false,
                     ),
-                    softWrap: false,
                   ))
               : Pinned.fromPins(
                   Pin(start: 50.0, end: 50.0), Pin(size: 50.0, middle: 0.4),

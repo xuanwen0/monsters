@@ -237,11 +237,10 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                               ),
                             ),
                             onTap: () {
-                              setState(() {
-                                if (selectionTab_solve_enabled == true) {
-                                  selectionTab_solve = 1;
-                                }
-                              });
+                              if (selectionTab_solve_enabled == true) {
+                                selectionTab_solve = 1;
+                                setState(() {});
+                              }
                             }),
                         //已解決標籤
                         InkWell(
@@ -266,95 +265,89 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                               ),
                             ),
                             onTap: () {
-                              setState(() {
-                                if (selectionTab_solve_enabled == true) {
-                                  selectionTab_solve = 2;
-                                }
-                              });
+                              if (selectionTab_solve_enabled == true) {
+                                selectionTab_solve = 2;
+                                setState(() {});
+                              }
                             }),
                       ],
                     ),
                   ))),
-              //煩惱清單
-              //TODO: Level 1
-              //取得怪獸頭貼、煩惱/日記的內容、日期(mm/dd)、指數
+              //歷史清單
               Expanded(
                   flex: 75,
-                  child: Container(
-                    child: FutureBuilder<dynamic>(
-                        future: _future,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<dynamic> snapshot) {
-                          if (snapshot.data == null) {
-                            return Center(
-                                child: Text(
-                              "Loading...",
-                              style: TextStyle(fontSize: 30),
-                            ));
-                          }
-                          return ListView.builder(
-                            itemCount: snapshot.data["itemCounter"],
-                            itemBuilder: (BuildContext context, int index) =>
-                                Container(
-                              decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                  width: 1.0,
-                                  color: BackgroundColorWarm,
-                                )),
-                              ),
-                              height: 110,
-                              alignment: Alignment.center,
-                              child: ListTile(
-                                  leading: Container(
-                                    height: double.infinity,
-                                    child: CircleAvatar(
-                                      backgroundImage: AssetImage(
-                                          'assets/image/Avatar_Baku_JPG.jpg'),
+                  child: FutureBuilder<dynamic>(
+                      future: _future,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        if (snapshot.data == null) {
+                          return Center(
+                              child: Text(
+                            "Loading...",
+                            style: TextStyle(fontSize: 30),
+                          ));
+                        }
+                        return ListView.builder(
+                          itemCount: snapshot.data["itemCounter"],
+                          itemBuilder: (BuildContext context, int index) =>
+                              Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                width: 1.0,
+                                color: BackgroundColorWarm,
+                              )),
+                            ),
+                            height: 110,
+                            alignment: Alignment.center,
+                            child: ListTile(
+                                leading: SizedBox(
+                                  height: double.infinity,
+                                  child: CircleAvatar(
+                                    backgroundImage: AssetImage(
+                                        'assets/image/Avatar_Baku_JPG.jpg'),
+                                  ),
+                                ),
+                                title: Text(
+                                  snapshot.data["result $index"]["content"],
+                                  style: TextStyle(fontSize: BodyTextSize),
+                                  textAlign: TextAlign.left,
+                                ),
+                                trailing: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Expanded(
+                                      flex: 7,
+                                      child: Text(
+                                          snapshot.data["result $index"]["type"]
+                                              .toString(),
+                                          style: TextStyle(fontSize: 20)),
                                     ),
-                                  ),
-                                  title: Text(
-                                    snapshot.data["result $index"]["content"],
-                                    style: TextStyle(fontSize: BodyTextSize),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  trailing: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Expanded(
-                                        flex: 7,
+                                    Expanded(
+                                        flex: 3,
                                         child: Text(
                                             snapshot.data["result $index"]
-                                                    ["type"]
+                                                    ["time"]
                                                 .toString(),
-                                            style: TextStyle(fontSize: 20)),
-                                      ),
-                                      Expanded(
-                                          flex: 3,
-                                          child: Text(
-                                              snapshot.data["result $index"]
-                                                      ["time"]
-                                                  .toString(),
-                                              style: TextStyle(fontSize: 14))),
-                                    ],
-                                  ),
-                                  onTap: () =>
-                                      print(snapshot.data["result $index"])
+                                            style: TextStyle(fontSize: 14))),
+                                  ],
+                                ),
+                                onTap: () =>
+                                    print(snapshot.data["result $index"]["id"])
 
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) =>
-                                  //             historyAnnoyanceChat(
-                                  //                 data: snapshot
-                                  //                     .data["result $index"])))
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) =>
+                                //             historyAnnoyanceChat(
+                                //                 data: snapshot
+                                //                     .data["result $index"])))
 
-                                  ),
-                            ),
-                          );
-                        }),
-                  )),
+                                ),
+                          ),
+                        );
+                      })),
               //底部
               Expanded(
                   flex: 10,
@@ -737,15 +730,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
             'content': value.data.elementAt(index).content,
             'type': type,
             'time': value.data.elementAt(index).time,
-
-            /*
-            String type
-            String / File content
-            File 心情圖 (NULLABLE)
-            Int 煩惱分數
-            Int 分享
-
-             */
           },
         );
       }
@@ -779,10 +763,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     ]).animate(animationController);
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
-    super.initState();
+
     _future = getHistoryMapByAccount();
+    super.initState();
   }
 
+  //關閉
   @override
   void dispose() {
     animationController.dispose();
