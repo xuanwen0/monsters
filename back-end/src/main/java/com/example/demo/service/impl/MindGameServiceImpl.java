@@ -29,8 +29,8 @@ public class MindGameServiceImpl extends BaseServiceImplement<MindGameDAO, MindG
     }
 
 
-    public List<MindGameBean> searchMindGameById(Integer id){
-        List<MindGame> gameList = mindGameDAO.findById(id);
+    public List<MindGameBean> searchMindGame(){
+        List<MindGame> gameList = mindGameDAO.searchAll();
         List<MindGameBean> mindGameBeanList = new ArrayList<>();
         for(MindGame mindGame : gameList){
             mindGameBeanList.add(createBean(mindGame));

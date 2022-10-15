@@ -273,9 +273,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       ],
                     ),
                   ))),
-              //煩惱清單
-              //TODO: Level 1
-              //取得怪獸頭貼、煩惱/日記的內容、日期(mm/dd)、指數
+              //歷史清單
               Expanded(
                   flex: 75,
                   child: FutureBuilder<dynamic>(
@@ -303,7 +301,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                             height: 110,
                             alignment: Alignment.center,
                             child: ListTile(
-                                leading: Container(
+                                leading: SizedBox(
                                   height: double.infinity,
                                   child: CircleAvatar(
                                     backgroundImage: AssetImage(
@@ -336,7 +334,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                   ],
                                 ),
                                 onTap: () =>
-                                    print(snapshot.data["result $index"])
+                                    print(snapshot.data["result $index"]["id"])
 
                                 // Navigator.push(
                                 //     context,
@@ -732,15 +730,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
             'content': value.data.elementAt(index).content,
             'type': type,
             'time': value.data.elementAt(index).time,
-
-            /*
-            String type
-            String / File content
-            File 心情圖 (NULLABLE)
-            Int 煩惱分數
-            Int 分享
-
-             */
           },
         );
       }
@@ -774,10 +763,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     ]).animate(animationController);
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
-    super.initState();
+
     _future = getHistoryMapByAccount();
+    super.initState();
   }
 
+  //關閉
   @override
   void dispose() {
     animationController.dispose();

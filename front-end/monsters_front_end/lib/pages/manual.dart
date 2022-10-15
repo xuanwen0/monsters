@@ -50,10 +50,10 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
     'assets/image/unknow.png',
     'assets/image/monster_Baku.png',
     'assets/image/unknow.png',
-    'assets/image/monster_Baku.png',
-    'assets/image/monster_Baku.png',
-    'assets/image/monster_Baku.png',
-    'assets/image/monster_Baku.png',
+    'assets/image/unknow.png',
+    'assets/image/unknow.png',
+    'assets/image/unknow.png',
+    'assets/image/unknow.png',
   ];
   int selectionTab_type = 1;
 

@@ -12,11 +12,11 @@ class MindGameRepository implements MindGameApiDataSource {
   final String domain = "http://10.0.2.2:8080";
 
   @override
-  Future<Map<String, dynamic>?> searchMindGameById(int id) {
-    return _searchMindGameById(Uri.parse('$domain/mindGame/search?id=$id'));
+  Future<Map<String, dynamic>?> searchMindGame() {
+    return _searchMindGame(Uri.parse('$domain/mindGame/search'));
   }
 
-  Future<Map<String, dynamic>?> _searchMindGameById(Uri url) async {
+  Future<Map<String, dynamic>?> _searchMindGame(Uri url) async {
     try {
       final request =
           await client.get(url, headers: {'Content-type': 'application/json'});

@@ -21,14 +21,14 @@ public class MindGameController {
     private final MindGameServiceImpl mindGameService;
 
     @ResponseBody
-    @GetMapping(path = "search", params = "id", produces = "application/json; charset=UTF-8")
-    public ResponseEntity searchMindGameById(@RequestParam(name = "id") Integer id) {
+    @GetMapping(path = "search", produces = "application/json; charset=UTF-8")
+    public ResponseEntity searchMindGame() {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         ArrayNode dataNode = result.putArray("data");
 
         try {
-            List<MindGameBean> mindGameList = mindGameService.searchMindGameById(id);
+            List<MindGameBean> mindGameList = mindGameService.searchMindGame();
 
             for (MindGameBean mindGameBean : mindGameList){
                 ObjectNode mindGameNode = dataNode.addObject();

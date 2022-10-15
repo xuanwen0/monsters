@@ -38,7 +38,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
   late Animation rotationAnimation;
   StateSetter? animationState;
 
-  //控制執行續
+  //異部處理
   late Future _future;
   //控制標籤
   int selectionTab_type = 1;
@@ -106,15 +106,9 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
     return socialResult;
   }
 
-  List<String> nickNames = [];
-  List<String> socialContents = [];
-  List<String> shareTimes = [];
-  int index = 0;
-
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
-
     return Scaffold(
         backgroundColor: const Color(0xfffffed4),
         key: _scaffoldKEy,
@@ -137,7 +131,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //標題 完成
+                //標題 
                 Expanded(flex: 10, child: mainAppBarTitleContainer("社群")),
                 //標籤
                 Expanded(
@@ -256,7 +250,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                         ],
                       ),
                     ))),
-
+                //社群主體
                 Expanded(
                   flex: 75,
                   child: FutureBuilder<dynamic>(
