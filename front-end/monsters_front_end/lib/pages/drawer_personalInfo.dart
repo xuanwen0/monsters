@@ -1,8 +1,11 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:monsters_front_end/model/memberModel.dart';
 import 'package:monsters_front_end/pages/edit_personalInfo.dart';
+import 'package:monsters_front_end/pages/social.dart';
 import 'package:monsters_front_end/pages/style.dart';
+import 'package:monsters_front_end/repository/memberRepo.dart';
 
 class Drawer_personalInfo extends StatefulWidget {
   Drawer_personalInfo({
@@ -13,153 +16,204 @@ class Drawer_personalInfo extends StatefulWidget {
 }
 
 class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
+  late Future _future;
+
+  //初始化
+  @override
+  void initState() {
+    _future = getPersonalInfo();
+    super.initState();
+  }
+
+  //關閉
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future<Map> getPersonalInfo() async {
+    Map personalInfoResult = {};
+    print("doing...");
+    final MemberRepository memberRepository = MemberRepository();
+    Future<Data> personalInfo = memberRepository
+        .searchPersonalInfoByAccount("Lin")
+        .then((value) => Data.fromJson(value!));
+
+    await personalInfo.then((value) async {
+      print("0");
+      personalInfoResult["nickname"] = value.data.first.nickName;
+      personalInfoResult["birthday"] = value.data.first.birthday;
+      personalInfoResult["mail"] = value.data.first.mail;
+    });
+    print(personalInfoResult);
+    setState(() {});
+    return personalInfoResult;
+  }
+
   @override
   Widget build(BuildContext context) {
     const String userNickname = '阿翔';
     const String userBirthday = '08/22';
     const String userMail = '10846028@ntub.edu.tw';
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: secondAppBar("個人資料"),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            //頭貼
-            Expanded(
-                flex: 4,
-                child: Center(
-                  child: Container(
-                    width: 250,
-                    margin: const EdgeInsets.only(top: 50, bottom: 10),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            width: 1.5, color: const Color(0xffa0522d)),
-                        color: Colors.white),
-                    child: Container(
-                      margin: const EdgeInsets.all(10),
-                      decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                        image: DecorationImage(
-                          image: AssetImage('assets/image/Avatar_Baku_JPG.jpg'),
-                          fit: BoxFit.scaleDown,
-                        ),
-                      ),
-                    ),
-                  ),
-                )),
-            //使用者資訊
-            Expanded(
-                flex: 4,
-                child: Center(
-                    child: SingleChildScrollView(
-                  primary: false,
-                  child: Wrap(
-                    alignment: WrapAlignment.center,
-                    runSpacing: 40,
-                    children: [
-                      {
-                        'text': '暱稱',
-                        'content': userNickname,
-                      },
-                      {
-                        'text': '生日',
-                        'content': userBirthday,
-                      },
-                      {
-                        'text': '信箱',
-                        'content': userMail,
-                      }
-                    ].map((itemData) {
-                      final text = itemData['text']!;
-                      final content = itemData['content']!;
-                      return Row(
-                        children: [
-                          // 標題:暱稱/生日/信箱
-                          Expanded(
-                              flex: 2,
-                              child: Container(
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  text,
-                                  style: const TextStyle(
-                                    fontFamily: 'Segoe UI',
-                                    fontSize: 30,
-                                    color: Color(0xffa0522d),
-                                  ),
-                                  softWrap: false,
-                                ),
-                              )),
-                          // 內容:暱稱/生日/信箱
-                          Expanded(
-                              flex: 8,
-                              child: Container(
-                                margin:
-                                    const EdgeInsets.fromLTRB(30, 15, 30, 0),
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                        width: 2.0, color: BackgroundColorWarm),
-                                  ),
-                                ),
-                                child: Center(
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Text(
-                                      content,
-                                      style: const TextStyle(
-                                        fontFamily: 'Segoe UI',
-                                        fontSize: 22,
-                                        color: Color(0xff000000),
-                                      ),
-                                      softWrap: false,
-                                    ),
-                                  ),
-                                ),
-                              )),
-                        ],
-                      );
-                    }).toList(),
-                  ),
-                ))),
-            //留白和編輯按鈕
-            Expanded(
-                flex: 3,
-                child: Container(
-                  alignment: Alignment.bottomRight,
-                  color: BackgroundColorLight,
-                  child: SizedBox(
-                    child: GestureDetector(
-                      child: Container(
-                        width: 130,
-                        height: 70,
-                        margin: const EdgeInsets.only(bottom: 40, right: 40),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: BackgroundColorSoft,
-                            borderRadius: BorderRadius.circular(40.0)),
-                        child: const Text(
-                          '編輯',
-                          style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 30,
-                            color: BackgroundColorWarm,
+        body: FutureBuilder<dynamic>(
+            future: _future,
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.data == null) {
+                return const Center(
+                    child: Text(
+                  "Loading...",
+                  style: TextStyle(fontSize: 30),
+                ));
+              }
+
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  //頭貼
+                  Expanded(
+                      flex: 4,
+                      child: Center(
+                        child: Container(
+                          width: 250,
+                          margin: const EdgeInsets.only(top: 50, bottom: 10),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 1.5, color: const Color(0xffa0522d)),
+                              color: Colors.white),
+                          child: Container(
+                            margin: const EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                  Radius.elliptical(9999.0, 9999.0)),
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/image/Avatar_Baku_JPG.jpg'),
+                                fit: BoxFit.scaleDown,
+                              ),
+                            ),
                           ),
-                          softWrap: false,
                         ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Edit_personalInfo()));
-                      },
-                    ),
-                  ),
-                )),
-          ],
-        ));
+                      )),
+                  //使用者資訊
+                  Expanded(
+                      flex: 4,
+                      child: Center(
+                          child: SingleChildScrollView(
+                        primary: false,
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          runSpacing: 40,
+                          children: [
+                            {
+                              'text': '暱稱',
+                              'content': userNickname,
+                            },
+                            {
+                              'text': '生日',
+                              'content': userBirthday,
+                            },
+                            {
+                              'text': '信箱',
+                              'content': userMail,
+                            }
+                          ].map((itemData) {
+                            final text = itemData['text']!;
+                            final content = itemData['content']!;
+                            return Row(
+                              children: [
+                                // 標題:暱稱/生日/信箱
+                                Expanded(
+                                    flex: 2,
+                                    child: Container(
+                                      alignment: Alignment.centerRight,
+                                      child: Text(
+                                        text,
+                                        style: const TextStyle(
+                                          fontFamily: 'Segoe UI',
+                                          fontSize: 30,
+                                          color: Color(0xffa0522d),
+                                        ),
+                                        softWrap: false,
+                                      ),
+                                    )),
+                                // 內容:暱稱/生日/信箱
+                                Expanded(
+                                    flex: 8,
+                                    child: Container(
+                                      margin: const EdgeInsets.fromLTRB(
+                                          30, 15, 30, 0),
+                                      decoration: const BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                              width: 2.0,
+                                              color: BackgroundColorWarm),
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Text(
+                                            content,
+                                            style: const TextStyle(
+                                              fontFamily: 'Segoe UI',
+                                              fontSize: 22,
+                                              color: Color(0xff000000),
+                                            ),
+                                            softWrap: false,
+                                          ),
+                                        ),
+                                      ),
+                                    )),
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                      ))),
+                  //留白和編輯按鈕
+                  Expanded(
+                      flex: 3,
+                      child: Container(
+                        alignment: Alignment.bottomRight,
+                        color: BackgroundColorLight,
+                        child: SizedBox(
+                          child: GestureDetector(
+                            child: Container(
+                              width: 130,
+                              height: 70,
+                              margin:
+                                  const EdgeInsets.only(bottom: 40, right: 40),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: BackgroundColorSoft,
+                                  borderRadius: BorderRadius.circular(40.0)),
+                              child: const Text(
+                                '編輯',
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 30,
+                                  color: BackgroundColorWarm,
+                                ),
+                                softWrap: false,
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Edit_personalInfo()));
+                            },
+                          ),
+                        ),
+                      )),
+                ],
+              );
+            }));
   }
 }
 

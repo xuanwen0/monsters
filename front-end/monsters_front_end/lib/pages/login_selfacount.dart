@@ -24,6 +24,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
   final TextEditingController _accountController = TextEditingController();
   final TextEditingController _pwdController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final MemberRepository memberRepository = MemberRepository();
 
   @override
@@ -185,9 +186,10 @@ class _Login_selfacountState extends State<Login_selfacount> {
                       onPressed: () {
                         final isValidForm = _formKey.currentState!.validate();
                         if (isValidForm) {
-                          pageRoute(_accountController.text);
-                          //login();
+                          // pageRoute(_accountController.text);
+                          // login();
                         }
+                        login();
                       },
                     ),
                   ),
@@ -220,6 +222,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
   }
 
   void login() async {
+    print("doing...");
     //登入功能 !!尚未完成!!
     // var response = await http.post(
     //     Uri.parse("http://localhost:8080/member/login"),
@@ -236,16 +239,11 @@ class _Login_selfacountState extends State<Login_selfacount> {
     //   ScaffoldMessenger.of(context)
     //       .showSnackBar(const SnackBar(content: Text("查無此帳號")));
     // }
-    memberRepository.login(
-      Member(
-          account: _accountController.text,
-          password: _pwdController.text,
-          birthday: '',
-          name: '',
-          nickName: '',
-          gender: 0,
-          mail: ''),
-    );
+    print("try account: " + _accountController.text);
+    print("try pass: " + _pwdController.text);
+    var result = await memberRepository.login(Member(
+        account: _accountController.text, password: _pwdController.text));
+    print(result);
   }
 
   void pageRoute(String account) async {
