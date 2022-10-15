@@ -125,7 +125,6 @@ class _Drawer_settingsState extends State<Drawer_settings> {
                     onToggle: (val) {
                       setState(() {
                         lock = val;
-                        saveLock(lock.toString());
                         if (lock == true) {
                           print('開啟密碼鎖');
                           Navigator.push(
@@ -134,7 +133,7 @@ class _Drawer_settingsState extends State<Drawer_settings> {
                                   builder: (context) => SettingLockPage()));
                         } else {
                           print('關閉密碼鎖');
-                          clearLock();
+                          saveLock('false');
                         }
                       });
                     },
@@ -211,10 +210,4 @@ void checkLock() async {
   } else {
     lock = false;
   }
-}
-
-void clearLock() async {
-  SharedPreferences pref = await SharedPreferences.getInstance();
-  String? val = pref.getString("lock");
-  await pref.remove("lock");
 }

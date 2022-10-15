@@ -64,6 +64,7 @@ class _CheckLockPageState extends State<CheckLockPage> {
                           await SharedPreferences.getInstance();
                       String? val = pref.getString("pin");
                       if (val == mPin) {
+                        saveLock('true');
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -123,4 +124,9 @@ class _CheckLockPageState extends State<CheckLockPage> {
       ),
     );
   }
+}
+
+void saveLock(String lock) async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  await pref.setString("lock", lock);
 }

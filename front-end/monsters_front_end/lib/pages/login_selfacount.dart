@@ -185,7 +185,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                       onPressed: () {
                         final isValidForm = _formKey.currentState!.validate();
                         if (isValidForm) {
-                          pageRoute(_accountController.text);
+                          saveSelfLogin(_accountController.text);
                           //login();
                         }
                       },
@@ -248,12 +248,10 @@ class _Login_selfacountState extends State<Login_selfacount> {
     );
   }
 
-  void pageRoute(String account) async {
+  void saveSelfLogin(String account) async {
     //儲存account shared preferences (後用來判斷此裝置是否登入過)
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("selfLogin", account);
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("${pref.getString("selfLogin")}")));
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => MainPage()));
   }
