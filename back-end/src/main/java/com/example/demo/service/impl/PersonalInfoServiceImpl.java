@@ -1,7 +1,9 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.bean.AnnoyanceBean;
 import com.example.demo.bean.PersonalInfoBean;
 import com.example.demo.dao.PersonalInfoDAO;
+import com.example.demo.entity.Annoyance;
 import com.example.demo.entity.PersonalInfo;
 import com.example.demo.service.PersonalInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PersonalInfoServiceImpl extends BaseServiceImplement<PersonalInfoDAO, PersonalInfo, PersonalInfoBean> implements PersonalInfoService {
@@ -20,6 +24,16 @@ public class PersonalInfoServiceImpl extends BaseServiceImplement<PersonalInfoDA
         super(baseDAO);
         this.personalInfoDAO = personalInfoDAO;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public List<PersonalInfoBean> searchPersonalInfoByAccount(String account){
+        List<PersonalInfo> userList = personalInfoDAO.findByAccount(account);
+        List<PersonalInfoBean> personalInfoBeanList = new ArrayList<>();
+        for(PersonalInfo personalInfo : userList){
+            personalInfoBeanList.add(createBean(personalInfo));
+        }
+        return personalInfoBeanList;
     }
 
     @Transactional
