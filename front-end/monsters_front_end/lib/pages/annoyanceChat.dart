@@ -45,6 +45,11 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     super.dispose();
   }
 
+  void init() {
+    player.init();
+    super.initState();
+  }
+
   //新增煩惱-照相
   takePhoto() async {
     final media = await ImagePicker().pickImage(source: ImageSource.camera);

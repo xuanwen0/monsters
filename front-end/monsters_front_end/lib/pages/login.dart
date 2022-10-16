@@ -163,10 +163,8 @@ class _loginState extends State<LoginPage> {
         Member(
           account: user.email,
           birthday: formatDate(date, [yyyy, '-', mm, '-', dd]).toString(),
-          gender: 0,
           mail: user.email,
-          name: user.displayName!,
-          nickName: "",
+          nickName: user.displayName!,
           password: "",
         ),
       );
