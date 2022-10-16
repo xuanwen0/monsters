@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/drawer_personalInfo.dart';
+import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/login.dart';
 import 'package:monsters_front_end/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,9 +60,13 @@ class Monsters extends StatelessWidget with WidgetsBindingObserver {
 
 ThemeData _theme() {
   return ThemeData(
-    appBarTheme: AppBarTheme(
-        titleTextStyle: AppBarTextStyle, backgroundColor: BackgroundColorWarm),
-    textTheme: TextTheme(subtitle1: TitleTextStyle, bodyText1: Body1TextStyle),
+    appBarTheme: const AppBarTheme(
+        iconTheme: IconThemeData(color: Colors.white),
+        titleTextStyle: AppBarTextStyle,
+        backgroundColor: BackgroundColorWarm),
+    textTheme:
+        const TextTheme(subtitle1: TitleTextStyle, bodyText1: Body1TextStyle),
+    iconTheme: const IconThemeData(color: Colors.white),
     primarySwatch: Colors.grey,
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );

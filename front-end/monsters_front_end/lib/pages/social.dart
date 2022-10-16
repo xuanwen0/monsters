@@ -131,7 +131,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //標題 
+                //標題
                 Expanded(flex: 10, child: mainAppBarTitleContainer("社群")),
                 //標籤
                 Expanded(
@@ -271,102 +271,202 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                             crossAxisSpacing: 0),
                         children: List.generate(
                             snapshot.data["itemCounter"],
-                            (index) => GestureDetector(
-                                  onTap: () => print(
-                                      snapshot.data["result $index"]["id"]),
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    child: SizedBox(
-                                      width: 200.0,
-                                      height: 200.0,
-                                      child: Stack(
-                                        children: <Widget>[
-                                          Stack(children: <Widget>[
-                                            //底
-                                            Container(
-                                              width: 200.0,
-                                              height: 200.0,
+                            (index) => Container(
+                                  alignment: Alignment.center,
+                                  child: SizedBox(
+                                    width: 200.0,
+                                    height: 200.0,
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Stack(children: <Widget>[
+                                          //底
+                                          Container(
+                                            width: 200.0,
+                                            height: 200.0,
+                                            decoration: BoxDecoration(
+                                                color: const Color(0xffffffff),
+                                                border: Border.all(
+                                                    width: 1.0,
+                                                    color: const Color(
+                                                        0xffa0522d))),
+                                          ),
+                                          //頭貼框
+                                          Pinned.fromPins(
+                                            Pin(size: 53.0, start: 9.0),
+                                            Pin(size: 53.0, start: 9.0),
+                                            child: Container(
                                               decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0xffffffff),
-                                                  border: Border.all(
-                                                      width: 1.0,
-                                                      color: const Color(
-                                                          0xffa0522d))
-
-                                                  // top: BorderSide(
-                                                  //     width: 1.0,
-                                                  //     color: const Color(
-                                                  //         0xffa0522d)),
-                                                  // bottom: BorderSide(
-                                                  //     width: 2.0,
-                                                  //     color: const Color(
-                                                  //         0xffa0522d)),
-                                                  // left: BorderSide(
-                                                  //     width: 2.0,
-                                                  //     color: const Color(
-                                                  //         0xffa0522d)))
-
-                                                  ),
-                                            ),
-                                            //頭貼框
-                                            Pinned.fromPins(
-                                              Pin(size: 53.0, start: 9.0),
-                                              Pin(size: 53.0, start: 9.0),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0xffffffff),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.elliptical(
-                                                              9999.0, 9999.0)),
-                                                  border: Border.all(
-                                                      width: 0.5,
-                                                      color: const Color(
-                                                          0xffa0522d)),
-                                                ),
+                                                color: const Color(0xffffffff),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.elliptical(
+                                                        9999.0, 9999.0)),
+                                                border: Border.all(
+                                                    width: 0.5,
+                                                    color: const Color(
+                                                        0xffa0522d)),
                                               ),
                                             ),
-                                            //頭貼
-                                            //TODO: 資料庫獲取頭貼
-                                            Pinned.fromPins(
-                                              Pin(size: 40.0, start: 15.0),
-                                              Pin(size: 40.0, start: 13.0),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.elliptical(
-                                                              9999.0, 9999.0)),
-                                                  image: DecorationImage(
-                                                    image: const AssetImage(
-                                                        'assets/image/Avatar_Baku_JPG.jpg'),
+                                          ),
+                                          //可點擊 內容區域
+                                          GestureDetector(
+                                            onTap: () => print(
+                                              snapshot.data["result $index"]
+                                                  ["id"],
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                //頭貼
+                                                //TODO: 資料庫獲取頭貼
+                                                Pinned.fromPins(
+                                                  Pin(size: 40.0, start: 15.0),
+                                                  Pin(size: 40.0, start: 13.0),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.elliptical(
+                                                                  9999.0,
+                                                                  9999.0)),
+                                                      image: DecorationImage(
+                                                        image: const AssetImage(
+                                                            'assets/image/Avatar_Baku_JPG.jpg'),
+                                                        fit: BoxFit.fill,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                //暱稱
+                                                Pinned.fromPins(
+                                                  Pin(size: 120.0, start: 70),
+                                                  Pin(size: 27.0, start: 21.0),
+                                                  child: Text(
+                                                    snapshot.data[
+                                                            "result $index"]
+                                                        ["name"],
+                                                    style: TextStyle(
+                                                      fontFamily: 'Segoe UI',
+                                                      fontSize: 20,
+                                                      color: const Color(
+                                                          0xffa0522d),
+                                                    ),
+                                                    softWrap: false,
+                                                  ),
+                                                ),
+                                                //content
+                                                Pinned.fromPins(
+                                                    Pin(start: 0.0, end: 0.0),
+                                                    Pin(
+                                                        size: 80.0,
+                                                        middle: 0.65),
+                                                    child: Stack(
+                                                      children: <Widget>[
+                                                        Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: const Color(
+                                                                0xffffffff),
+                                                            border: Border(
+                                                                bottom: BorderSide(
+                                                                    width: 1.0,
+                                                                    color: const Color(
+                                                                        0xffa0522d)),
+                                                                left: BorderSide(
+                                                                    width: 1.0,
+                                                                    color: const Color(
+                                                                        0xffa0522d)),
+                                                                right: BorderSide(
+                                                                    width: 1.0,
+                                                                    color: const Color(
+                                                                        0xffa0522d))),
+                                                          ),
+                                                        ),
+                                                        Pinned.fromPins(
+                                                          Pin(
+                                                              start: 10.0,
+                                                              end: 1.0),
+                                                          Pin(
+                                                              size: 70.0,
+                                                              start: 0.0),
+                                                          child:
+                                                              SingleChildScrollView(
+                                                            scrollDirection:
+                                                                Axis.vertical,
+                                                            child: Text(
+                                                              snapshot.data[
+                                                                      "result $index"]
+                                                                  ["content"],
+                                                              style: TextStyle(
+                                                                fontFamily:
+                                                                    'Segoe UI',
+                                                                fontSize: 16,
+                                                                color: const Color(
+                                                                    0xff707070),
+                                                              ),
+                                                              softWrap: true,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
+                                          //時間
+                                          Pinned.fromPins(
+                                            Pin(size: 40.0, start: 17.0),
+                                            Pin(size: 20.0, end: 7.0),
+                                            child: Text(
+                                              snapshot.data["result $index"]
+                                                  ["time"],
+                                              style: TextStyle(
+                                                fontFamily: 'Segoe UI',
+                                                fontSize: 15,
+                                                color: const Color(0xffa0522d),
+                                              ),
+                                              softWrap: false,
+                                            ),
+                                          ),
+
+                                          GestureDetector(
+                                            onTap: () => print("觸發留言"),
+                                            child: Stack(
+                                              children: [
+                                                //留言icon堆疊圖層
+                                                Pinned.fromPins(
+                                                  Pin(size: 26.0, middle: 0.72),
+                                                  Pin(size: 21.8, end: 10.4),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: const Color(
+                                                          0xffdcdcdc),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.elliptical(
+                                                                  9999.0,
+                                                                  9999.0)),
+                                                    ),
+                                                  ),
+                                                ),
+                                                //留言icon堆疊圖層
+                                                Pinned.fromPins(
+                                                  Pin(size: 16.3, middle: 0.71),
+                                                  Pin(size: 16.4, end: 2.2),
+                                                  child: SvgPicture.string(
+                                                    _svg_urb4yp,
+                                                    allowDrawingOutsideViewBox:
+                                                        true,
                                                     fit: BoxFit.fill,
                                                   ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
-                                            //暱稱
-                                            Pinned.fromPins(
-                                              Pin(size: 120.0, start: 70),
-                                              Pin(size: 27.0, start: 21.0),
-                                              child: Text(
-                                                snapshot.data["result $index"]
-                                                    ["name"],
-                                                style: TextStyle(
-                                                  fontFamily: 'Segoe UI',
-                                                  fontSize: 20,
-                                                  color:
-                                                      const Color(0xffa0522d),
-                                                ),
-                                                softWrap: false,
-                                              ),
-                                            ),
-                                            //愛心
-                                            Pinned.fromPins(
-                                              Pin(size: 26.2, end: 7.0),
-                                              Pin(size: 23.8, end: 7),
+                                          ),
+                                          //愛心
+                                          Pinned.fromPins(
+                                            Pin(size: 26.2, end: 7.0),
+                                            Pin(size: 23.8, end: 7),
+                                            child: GestureDetector(
+                                              onTap: () => print("觸發愛心"),
                                               child: SvgPicture.string(
                                                 _svg_fb6j2b,
                                                 allowDrawingOutsideViewBox:
@@ -374,99 +474,9 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                 fit: BoxFit.fill,
                                               ),
                                             ),
-                                            //留言
-                                            Pinned.fromPins(
-                                              Pin(size: 26.0, middle: 0.72),
-                                              Pin(size: 21.8, end: 10.4),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0xffdcdcdc),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.elliptical(
-                                                              9999.0, 9999.0)),
-                                                ),
-                                              ),
-                                            ),
-                                            //留言
-                                            Pinned.fromPins(
-                                              Pin(size: 16.3, middle: 0.71),
-                                              Pin(size: 16.4, end: 2.2),
-                                              child: SvgPicture.string(
-                                                _svg_urb4yp,
-                                                allowDrawingOutsideViewBox:
-                                                    true,
-                                                fit: BoxFit.fill,
-                                              ),
-                                            ),
-                                            //時間
-                                            Pinned.fromPins(
-                                              Pin(size: 40.0, start: 17.0),
-                                              Pin(size: 20.0, end: 7.0),
-                                              child: Text(
-                                                snapshot.data["result $index"]
-                                                    ["time"],
-                                                style: TextStyle(
-                                                  fontFamily: 'Segoe UI',
-                                                  fontSize: 15,
-                                                  color:
-                                                      const Color(0xffa0522d),
-                                                ),
-                                                softWrap: false,
-                                              ),
-                                            ),
-                                            //content
-                                            Pinned.fromPins(
-                                                Pin(start: 0.0, end: 0.0),
-                                                Pin(size: 80.0, middle: 0.65),
-                                                child: Stack(
-                                                  children: <Widget>[
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        color: const Color(
-                                                            0xffffffff),
-                                                        border: Border(
-                                                            bottom: BorderSide(
-                                                                width: 1.0,
-                                                                color: const Color(
-                                                                    0xffa0522d)),
-                                                            left: BorderSide(
-                                                                width: 1.0,
-                                                                color: const Color(
-                                                                    0xffa0522d)),
-                                                            right: BorderSide(
-                                                                width: 1.0,
-                                                                color: const Color(
-                                                                    0xffa0522d))),
-                                                      ),
-                                                    ),
-                                                    Pinned.fromPins(
-                                                      Pin(
-                                                          start: 10.0,
-                                                          end: 1.0),
-                                                      Pin(
-                                                          size: 54.0,
-                                                          start: 5.0),
-                                                      child: Text(
-                                                        snapshot.data[
-                                                                "result $index"]
-                                                            ["content"],
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              'Segoe UI',
-                                                          fontSize: 16,
-                                                          color: const Color(
-                                                              0xff707070),
-                                                        ),
-                                                        softWrap: true,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )),
-                                          ]),
-                                        ],
-                                      ),
+                                          ),
+                                        ]),
+                                      ],
                                     ),
                                   ),
                                 )),
@@ -474,6 +484,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                     },
                   ),
                 ),
+                //底部背景顏色
                 Expanded(
                   flex: 10,
                   child: Container(
