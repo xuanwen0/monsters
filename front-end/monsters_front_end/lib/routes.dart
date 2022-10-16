@@ -28,7 +28,6 @@ class myRoutes {
   static const GetDrawer = '/GetDrawer';
   static const LoginPage = '/LoginPage';
   static const SignUp = '/SignUp';
-  static const FacebookLogin = '/FacebookLogin';
   static const Forget_password_Auth = '/Forget_password_Auth';
 
   //account

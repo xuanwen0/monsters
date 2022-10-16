@@ -73,7 +73,7 @@ public class PersonalInfoController {
             for (PersonalInfoBean personalInfoBean : personalInfoList){
                 String birthday = personalInfoBean.getBirthday().toString().replace("-","/");
                 ObjectNode personalInfoNode = dataNode.addObject();
-                personalInfoNode.put("nickname", personalInfoBean.getNickName());
+                personalInfoNode.put("nickName", personalInfoBean.getNickName());
                 personalInfoNode.put("birthday",birthday.substring(birthday.length()-5));
                 personalInfoNode.put("mail", personalInfoBean.getMail());
             }

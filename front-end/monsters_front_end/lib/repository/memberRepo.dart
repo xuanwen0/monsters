@@ -17,6 +17,7 @@ class MemberRepository implements MemberApiDataSource {
 
   @override
   Future<String> login(Member member) {
+    print("Logining");
     return _login(Uri.parse('$domain/member/login'), member);
   }
 
@@ -71,7 +72,8 @@ class MemberRepository implements MemberApiDataSource {
     return _searchPersonalInfoByAccount(
         Uri.parse('$domain/member/search?account=$account'));
   }
-    Future<Map<String, dynamic>?> _searchPersonalInfoByAccount(Uri url) async {
+
+  Future<Map<String, dynamic>?> _searchPersonalInfoByAccount(Uri url) async {
     try {
       final request =
           await client.get(url, headers: {'Content-type': 'application/json'});
