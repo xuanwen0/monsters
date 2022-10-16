@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PersonalInfoServiceImpl extends BaseServiceImplement<PersonalInfoDAO, PersonalInfo, PersonalInfoBean> implements PersonalInfoService {
@@ -20,6 +22,16 @@ public class PersonalInfoServiceImpl extends BaseServiceImplement<PersonalInfoDA
         super(baseDAO);
         this.personalInfoDAO = personalInfoDAO;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public List<PersonalInfoBean> searchPersonalInfoByAccount(String account){
+        List<PersonalInfo> userList = personalInfoDAO.findByAccount(account);
+        List<PersonalInfoBean> personalInfoBeanList = new ArrayList<>();
+        for(PersonalInfo personalInfo : userList){
+            personalInfoBeanList.add(createBean(personalInfo));
+        }
+        return personalInfoBeanList;
     }
 
     @Transactional
@@ -37,9 +49,7 @@ public class PersonalInfoServiceImpl extends BaseServiceImplement<PersonalInfoDA
         entity.setAccount(bean.getAccount());
         entity.setPassword(bean.getPassword());
         entity.setBirthday(bean.getBirthday());
-        entity.setName(bean.getName());
         entity.setNickName(bean.getNickName());
-        entity.setGender(bean.getGender());
         entity.setMail(bean.getMail());
         entity.setLock(bean.getLock());
         entity.setPhoto(bean.getPhoto());
@@ -53,9 +63,7 @@ public class PersonalInfoServiceImpl extends BaseServiceImplement<PersonalInfoDA
         bean.setAccount(entity.getAccount());
         bean.setPassword(entity.getPassword());
         bean.setBirthday(entity.getBirthday());
-        bean.setName(entity.getName());
         bean.setNickName(entity.getNickName());
-        bean.setGender(entity.getGender());
         bean.setMail(entity.getMail());
         bean.setLock(entity.getLock());
         bean.setPhoto(entity.getPhoto());

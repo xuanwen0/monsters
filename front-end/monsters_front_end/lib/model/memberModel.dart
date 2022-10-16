@@ -38,23 +38,19 @@ class Member {
   Member({
     required this.account,
     required this.password,
-    required this.birthday,
-    required this.name,
-    required this.nickName,
-    required this.gender,
-    required this.mail,
+    this.birthday,
+    this.nickName,
+    this.mail,
     this.lock,
     this.photo,
     this.theme,
   });
 
-  String account;
-  String password;
-  String birthday;
-  String name;
-  String nickName;
-  int? gender;
-  String mail;
+  String? account;
+  String? password;
+  String? birthday;
+  String? nickName;
+  String? mail;
   String? lock;
   String? photo;
   int? theme;
@@ -62,10 +58,8 @@ class Member {
   factory Member.fromJson(Map<String, dynamic> json) => Member(
         account: json["account"],
         password: json["password"],
-        birthday: json["birthday"],
-        name: json["name"],
         nickName: json["nickName"],
-        gender: json["gender"],
+        birthday: json["birthday"],
         mail: json["mail"],
         lock: json["lock"],
         photo: json["photo"],
@@ -76,9 +70,7 @@ class Member {
         "account": account,
         "password": password,
         "birthday": birthday,
-        "name": name,
         "nickName": nickName,
-        "gender": gender,
         "mail": mail,
         "lock": lock,
         "photo": photo,

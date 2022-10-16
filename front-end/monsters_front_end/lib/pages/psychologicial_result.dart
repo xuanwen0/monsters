@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/destressWays_list/destressWays_list.dart';
-import 'package:monsters_front_end/pages/psychologicial_game.dart';
+import 'package:monsters_front_end/pages/mind_game.dart';
 import 'dart:developer';
 
 import 'package:monsters_front_end/pages/style.dart';
@@ -67,37 +67,36 @@ class _Psychologicial_result extends State<Psychologicial_result> {
               children: [
                 Container(child: player),
                 suggestion(),
+                const SizedBox(
+                  height: 30,
+                ),
                 pushButton("心理小遊戲"),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 pushButton("紓壓方法"),
                 //心理小遊戲
                 //紓壓方法
               ],
             ),
-            /*
-            0~5 :正常
-            6~14 :有點憂鬱，壓力太大
-            15UP :建議求診
-             */
           ));
 
   Container suggestion() {
     var title = "";
     var subTitle = "";
     var content = "";
+    var score;
     if (total < 6) {
       title = "您的心情很健康！";
       subTitle = "請繼續保持，好嗎？";
       content = "想要更開心嗎？玩一下心情小遊戲吧！";
     } else if (total < 15) {
       title = "最近有些憂鬱嗎？";
-      subTitle = "請多喝水並充分休息，一切都會更好的～";
+      subTitle = "請多喝水並充分休息，\n一切都會更好的～";
       content = "歡迎使用貘nsters提供的紓壓管道！";
     } else {
       title = "您的情況較嚴重";
-      subTitle = "我們在乎您，\n建議尋求專家幫助！\n\n請嘗試貘nsters的互動功能，\n也歡迎撥打以下免費專線！\n";
+      subTitle = "我們關心您，\n建議尋求專家幫助！\n\n歡迎使用貘nsters的互動功能，\n也歡迎撥打以下免費專線！\n";
       content = "衛生福利部安心專線: 1925\n生命線: 1995\n張老師: 1980";
     }
 
@@ -107,6 +106,16 @@ class _Psychologicial_result extends State<Psychologicial_result> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Text(
+              "分數: $total",
+              style: const TextStyle(
+                  fontSize: 32,
+                  color: BackgroundColorWarm,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 10,
+            ),
             Text(
               title,
               style: const TextStyle(

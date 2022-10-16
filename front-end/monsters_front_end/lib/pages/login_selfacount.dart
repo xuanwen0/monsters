@@ -24,6 +24,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
   final TextEditingController _accountController = TextEditingController();
   final TextEditingController _pwdController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final MemberRepository memberRepository = MemberRepository();
 
   @override
@@ -148,7 +149,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                         }
                       }),
                   const SizedBox(height: 50.0),
-                  //忘記/重設密碼
+                  //忘記密碼
                   TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -157,7 +158,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                                 builder: (context) => Forget_password_Auth()));
                       },
                       child: const Text(
-                        '忘記/重設密碼',
+                        '忘記密碼',
                         style: TextStyle(
                           fontFamily: 'Segoe UI',
                           fontSize: 25,
@@ -188,6 +189,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                           saveSelfLogin(_accountController.text);
                           //login();
                         }
+                        login();
                       },
                     ),
                   ),
@@ -220,6 +222,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
   }
 
   void login() async {
+    print("doing...");
     //登入功能 !!尚未完成!!
     // var response = await http.post(
     //     Uri.parse("http://localhost:8080/member/login"),
@@ -236,16 +239,11 @@ class _Login_selfacountState extends State<Login_selfacount> {
     //   ScaffoldMessenger.of(context)
     //       .showSnackBar(const SnackBar(content: Text("查無此帳號")));
     // }
-    memberRepository.login(
-      Member(
-          account: _accountController.text,
-          password: _pwdController.text,
-          birthday: '',
-          name: '',
-          nickName: '',
-          gender: 0,
-          mail: ''),
-    );
+    print("try account: " + _accountController.text);
+    print("try pass: " + _pwdController.text);
+    var result = await memberRepository.login(Member(
+        account: _accountController.text, password: _pwdController.text));
+    print(result);
   }
 
   void saveSelfLogin(String account) async {

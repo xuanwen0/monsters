@@ -399,9 +399,7 @@ class _SignUpState extends State<SignUp> {
         Member(
           account: _accountController.text,
           birthday: formatDate(date, [yyyy, '-', mm, '-', dd]).toString(),
-          gender: 0,
           mail: _mailController.text,
-          name: '',
           nickName: _nicknameController.text,
           password: _pwdController.text,
         ),
