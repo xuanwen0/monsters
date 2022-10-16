@@ -25,6 +25,14 @@ class _loginState extends State<LoginPage> {
   //生日
   DateTime date = DateTime.now();
   final MemberRepository memberRepository = MemberRepository();
+
+  @override
+  void initState() {
+    checkSelfLogin();
+    checkGoogleLogin();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +74,10 @@ class _loginState extends State<LoginPage> {
                     softWrap: false,
                   ),
                   onPressed: () {
-                    checkSelfLogin();
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Login_selfacount()));
                   }),
             ),
           ),
@@ -139,41 +150,33 @@ class _loginState extends State<LoginPage> {
 
   Future<GoogleSignInAccount?> signIn() async {
     final user = await GoogleSignInApi.signin();
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String? val = pref.getString("googleLogin");
     if (user == null) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('從Google登入失敗'),
       ));
     } else {
-      //先判斷上次是否登入過，if val != user.email => 新帳號 or 與上次登入之帳號不同
-      if (val != user.email) {
-        //判斷資料庫有無此帳號(帳號不一定等於Google登入時的mail)
-        //if有 => 進行登入
-        print("已登出或第一次開啟");
-        //if無 => 註冊並前往初次設定資料
-        memberRepository.createMember(
-          Member(
-            account: user.email,
-            birthday: formatDate(date, [yyyy, '-', mm, '-', dd]).toString(),
-            mail: user.email,
-            nickName:user.displayName!,
-            password: "",
-          ),
-        );
-        pageRoute(user.email);
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => FirstTime_editUserInfo(user: user)));
-      } else {
-        //val = user.email，無登出且與上次同帳號登入，直接前往主頁面
-        print("已登入過，Google帳號:" + user.email);
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => MainPage()));
-      }
+      //判斷資料庫是否有此帳號
+      //if有 => 進行登入
+
+      //if無 => 註冊並前往初次設定資料
+      memberRepository.createMember(
+        Member(
+          account: user.email,
+          birthday: formatDate(date, [yyyy, '-', mm, '-', dd]).toString(),
+          gender: 0,
+          mail: user.email,
+          name: user.displayName!,
+          nickName: "",
+          password: "",
+        ),
+      );
+      saveGoogleLogin(user.email);
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => FirstTime_editUserInfo(user: user)));
     }
   }
 
-  void pageRoute(String account) async {
+  void saveGoogleLogin(String account) async {
     //儲存account shared preferences (後用來判斷此裝置是否登入過)
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("googleLogin", account);
@@ -184,8 +187,10 @@ class _loginState extends State<LoginPage> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? val = pref.getString("selfLogin");
     String? lock = pref.getString("lock");
+    String? pin = pref.getString("pin");
     if (val != null) {
       print("已登入過，帳號:" + val);
+      print("密碼:" + pin!);
       if (lock == 'true') {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => LockPage()));
@@ -195,8 +200,25 @@ class _loginState extends State<LoginPage> {
       }
     } else {
       print("已登出或第一次開啟");
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Login_selfacount()));
+    }
+  }
+
+  void checkGoogleLogin() async {
+    final user = await GoogleSignInApi.signin();
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? val = pref.getString("googleLogin");
+    String? lock = pref.getString("lock");
+    if (val == user!.email) {
+      print("已登入過，Google帳號:" + user.email);
+      if (lock == 'true') {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LockPage()));
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MainPage()));
+      }
+    } else {
+      print("已登出或第一次開啟");
     }
   }
 }
