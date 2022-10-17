@@ -157,22 +157,30 @@ class _loginState extends State<LoginPage> {
     } else {
       //判斷資料庫是否有此帳號
       //if有 => 進行登入
-
-      //if無 => 註冊並前往初次設定資料
-      memberRepository.createMember(
-        Member(
-          account: user.email,
-          birthday: formatDate(date, [yyyy, '-', mm, '-', dd]).toString(),
-          gender: 0,
-          mail: user.email,
-          name: user.displayName!,
-          nickName: "",
-          password: "",
-        ),
-      );
-      saveGoogleLogin(user.email);
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => FirstTime_editUserInfo(user: user)));
+      print("doing...");
+      var result = await memberRepository
+          .login(Member(account: user.email, password: ""));
+      print(result);
+      print(result.contains("result"));
+      if (result.contains("result") == true) {
+        saveGoogleLogin(user.email);
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => MainPage()));
+      } else {
+        //if無 => 註冊並前往初次設定資料
+        memberRepository.createMember(
+          Member(
+            account: user.email,
+            birthday: formatDate(date, [yyyy, '-', mm, '-', dd]).toString(),
+            mail: user.email,
+            nickName: "",
+            password: "",
+          ),
+        );
+        saveGoogleLogin(user.email);
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => FirstTime_editUserInfo()));
+      }
     }
   }
 
@@ -185,11 +193,11 @@ class _loginState extends State<LoginPage> {
   void checkSelfLogin() async {
     //check if user already login or credential already available or not
     SharedPreferences pref = await SharedPreferences.getInstance();
-    String? val = pref.getString("selfLogin");
+    String? selfLogin = pref.getString("selfLogin");
     String? lock = pref.getString("lock");
     String? pin = pref.getString("pin");
-    if (val != null) {
-      print("已登入過，帳號:" + val);
+    if (selfLogin != null) {
+      print("已登入過，帳號:" + selfLogin);
       print("密碼:" + pin!);
       if (lock == 'true') {
         Navigator.pushReplacement(
@@ -206,9 +214,9 @@ class _loginState extends State<LoginPage> {
   void checkGoogleLogin() async {
     final user = await GoogleSignInApi.signin();
     SharedPreferences pref = await SharedPreferences.getInstance();
-    String? val = pref.getString("googleLogin");
+    String? googleLogin = pref.getString("googleLogin");
     String? lock = pref.getString("lock");
-    if (val == user!.email) {
+    if (googleLogin == user!.email) {
       print("已登入過，Google帳號:" + user.email);
       if (lock == 'true') {
         Navigator.pushReplacement(
