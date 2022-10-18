@@ -46,9 +46,9 @@ class _loginState extends State<LoginPage> {
             child:
                 // Adobe XD layer: 'logo' (shape)
                 Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: const AssetImage('assets/image/icon_main.png'),
+                  image: AssetImage('assets/image/icon_main.png'),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -61,7 +61,7 @@ class _loginState extends State<LoginPage> {
               width: 225.0,
               height: 39.0,
               child: RaisedButton(
-                  color: Color.fromRGBO(216, 185, 99, 1),
+                  color: const Color.fromRGBO(216, 185, 99, 1),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(7.0)),
                   child: const Text(
@@ -188,6 +188,7 @@ class _loginState extends State<LoginPage> {
     //儲存account shared preferences (後用來判斷此裝置是否登入過)
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("googleLogin", account);
+    await pref.setString("account", account);
   }
 
   void checkSelfLogin() async {

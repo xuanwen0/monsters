@@ -22,7 +22,7 @@ import 'package:monsters_front_end/state/drawer.dart';
 
 import 'annoyanceChat.dart';
 
-var userAccount = 'SeanHong';
+var userAccount = 'Lin';
 
 class Social extends StatefulWidget {
   const Social({Key? key}) : super(key: key);
@@ -36,9 +36,26 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
+  final _messageController = TextEditingController();
   StateSetter? animationState;
+  var Comments = [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+  ];
+  var userNames = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+  ];
+  var times = ["1/1", "2/2", "3/3", "4/4", "5/5"];
+  List<String> messages = [];
 
-  //異部處理
+  //異步處理
   late Future _future;
   //控制標籤
   int selectionTab_type = 1;
@@ -51,6 +68,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
   @override
   void dispose() {
     animationController.dispose();
+    _messageController.dispose();
     super.dispose();
   }
 
@@ -290,7 +308,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                     color: const Color(
                                                         0xffa0522d))),
                                           ),
-                                          //頭貼框
+                                          //頭貼框 //TODO: 資料庫獲取頭貼
                                           Pinned.fromPins(
                                             Pin(size: 53.0, start: 9.0),
                                             Pin(size: 53.0, start: 9.0),
@@ -305,36 +323,35 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                     color: const Color(
                                                         0xffa0522d)),
                                               ),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.elliptical(
+                                                              9999.0, 9999.0)),
+                                                  image: DecorationImage(
+                                                    image: const AssetImage(
+                                                        'assets/image/Avatar_Baku_JPG.jpg'),
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                          //可點擊 內容區域
+                                          //社群內容 點擊觸發留言功能
                                           GestureDetector(
-                                            onTap: () => print(
+                                            onTap: () => showComment(
                                               snapshot.data["result $index"]
                                                   ["id"],
+                                              snapshot.data["result $index"]
+                                                  ["name"],
+                                              snapshot.data["result $index"]
+                                                  ["content"],
+                                              snapshot.data["result $index"]
+                                                  ["time"],
                                             ),
                                             child: Stack(
                                               children: [
-                                                //頭貼
-                                                //TODO: 資料庫獲取頭貼
-                                                Pinned.fromPins(
-                                                  Pin(size: 40.0, start: 15.0),
-                                                  Pin(size: 40.0, start: 13.0),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.elliptical(
-                                                                  9999.0,
-                                                                  9999.0)),
-                                                      image: DecorationImage(
-                                                        image: const AssetImage(
-                                                            'assets/image/Avatar_Baku_JPG.jpg'),
-                                                        fit: BoxFit.fill,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
                                                 //暱稱
                                                 Pinned.fromPins(
                                                   Pin(size: 120.0, start: 70),
@@ -408,29 +425,23 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                         ),
                                                       ],
                                                     )),
-                                              ],
-                                            ),
-                                          ),
-                                          //時間
-                                          Pinned.fromPins(
-                                            Pin(size: 40.0, start: 17.0),
-                                            Pin(size: 20.0, end: 7.0),
-                                            child: Text(
-                                              snapshot.data["result $index"]
-                                                  ["time"],
-                                              style: TextStyle(
-                                                fontFamily: 'Segoe UI',
-                                                fontSize: 15,
-                                                color: const Color(0xffa0522d),
-                                              ),
-                                              softWrap: false,
-                                            ),
-                                          ),
-
-                                          GestureDetector(
-                                            onTap: () => print("觸發留言"),
-                                            child: Stack(
-                                              children: [
+                                                //時間
+                                                Pinned.fromPins(
+                                                  Pin(size: 40.0, start: 17.0),
+                                                  Pin(size: 20.0, end: 7.0),
+                                                  child: Text(
+                                                    snapshot.data[
+                                                            "result $index"]
+                                                        ["time"],
+                                                    style: TextStyle(
+                                                      fontFamily: 'Segoe UI',
+                                                      fontSize: 15,
+                                                      color: const Color(
+                                                          0xffa0522d),
+                                                    ),
+                                                    softWrap: false,
+                                                  ),
+                                                ),
                                                 //留言icon堆疊圖層
                                                 Pinned.fromPins(
                                                   Pin(size: 26.0, middle: 0.72),
@@ -461,7 +472,8 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                               ],
                                             ),
                                           ),
-                                          //愛心
+
+                                          //愛心 點擊觸發按愛心功能
                                           Pinned.fromPins(
                                             Pin(size: 26.2, end: 7.0),
                                             Pin(size: 23.8, end: 7),
@@ -493,7 +505,6 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                 )
               ],
             ),
-
             //底部
             Pinned.fromPins(
               Pin(start: 0.0, end: 0.0),
@@ -824,6 +835,243 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
             ),
           ],
         ));
+  }
+
+  Future<dynamic> showComment(
+      int id, String name, String content, String time) {
+    print(id);
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Material(
+              type: MaterialType.transparency,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  //分享者資料
+                  Container(
+                    color: BackgroundColorLight,
+                    height: 70,
+                    child: Row(
+                      children: [
+                        //頭貼
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            margin: const EdgeInsets.only(left: 40, right: 30),
+                            decoration: BoxDecoration(
+                              color: BackgroundColorLight,
+                              borderRadius: BorderRadius.all(
+                                  Radius.elliptical(9999.0, 9999.0)),
+                              border: Border.all(
+                                  width: 1, color: const Color(0xffa0522d)),
+                            ),
+                            child: CircleAvatar(
+                              radius: 30,
+                              backgroundImage: AssetImage(
+                                  'assets/image/Avatar_Baku_JPG.jpg'),
+                            ),
+                          ),
+                        ),
+                        //姓名
+                        Expanded(
+                          flex: 4,
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Text(
+                                name,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 28,
+                                  color: const Color(0xffa0522d),
+                                ),
+                                softWrap: false,
+                              ),
+                            ),
+                          ),
+                        ),
+                        //時間及愛心
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                time,
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 16,
+                                  color: const Color(0xffa0522d),
+                                ),
+                                softWrap: false,
+                              ),
+                              SizedBox(height: 5),
+                              GestureDetector(
+                                onTap: () => print("觸發愛心"),
+                                child: SvgPicture.string(
+                                  _svg_fb6j2b,
+                                  // color: Colors.red,
+                                  allowDrawingOutsideViewBox: true,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  //分享內容
+                  Container(
+                    alignment: Alignment.topLeft,
+                    color: BackgroundColorLight,
+                    height: 130,
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 35, vertical: 15),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Text(
+                          content,
+                          style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 22,
+                            color: const Color(0xff707070),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  //貼文的相關留言
+                  Container(
+                      alignment: Alignment.center,
+                      height: 300,
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          border: Border.symmetric(
+                            horizontal: BorderSide(
+                                width: 1, color: BackgroundColorWarm),
+                          )),
+                      child: ListView.builder(
+                          itemCount: Comments.length,
+                          itemBuilder: (context, int index) {
+                            return Card(
+                              child: ListTile(
+                                leading: Container(
+                                  decoration: BoxDecoration(
+                                    color: BackgroundColorLight,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.elliptical(9999.0, 9999.0)),
+                                    border: Border.all(
+                                        width: 0.5,
+                                        color: const Color(0xffa0522d)),
+                                  ),
+                                  child: CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: AssetImage(
+                                        'assets/image/Avatar_Baku_JPG.jpg'),
+                                  ),
+                                ),
+                                title: Text(
+                                  userNames[index],
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                subtitle: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Text(
+                                    Comments[index],
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                                trailing: Text(times[index]),
+                              ),
+                            );
+                          })),
+
+                  //使用者輸入留言區
+                  Container(
+                      alignment: Alignment.centerLeft,
+                      color: BackgroundColorSoft,
+                      height: 60,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: BackgroundColorLight,
+                                borderRadius: BorderRadius.all(
+                                    Radius.elliptical(9999.0, 9999.0)),
+                                border: Border.all(
+                                    width: 1, color: const Color(0xffa0522d)),
+                              ),
+                              margin: EdgeInsets.only(left: 15.0),
+                              child: CircleAvatar(
+                                radius: 30,
+                                backgroundImage: AssetImage(
+                                    'assets/image/Avatar_Baku_JPG.jpg'),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 6,
+                            child: Container(
+                              width: 70,
+                              margin: EdgeInsets.only(
+                                  left: 15.0, top: 10, bottom: 10),
+                              alignment: Alignment.bottomLeft,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(13)),
+                                color: Colors.white,
+                                border: Border.all(
+                                    width: 0.5, color: BackgroundColorWarm),
+                              ),
+                              padding: EdgeInsets.only(left: 20),
+                              child: TextFormField(
+                                textAlign: TextAlign.left,
+                                controller: _messageController,
+                                decoration: InputDecoration(
+                                  hintText: "Enter a Message...",
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                ),
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                                onChanged: (value) {},
+                              ),
+                            ),
+                          ),
+                          //傳送
+                          Expanded(
+                            flex: 2,
+                            child: IconButton(
+                                icon: Icon(
+                                  Icons.send,
+                                  size: 30.0,
+                                  color: Color.fromARGB(255, 164, 78, 38),
+                                ),
+                                onPressed: () {
+                                  //TODO:新增一筆留言 接API
+                                  _messageController.clear();
+                                  FocusScopeNode currentFocus =
+                                      FocusScope.of(context);
+                                  if (!currentFocus.hasPrimaryFocus) {
+                                    currentFocus.unfocus();
+                                  }
+                                  setState(() {});
+                                }),
+                          ),
+                        ],
+                      )),
+                ],
+              ));
+        });
   }
 }
 
