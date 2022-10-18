@@ -60,59 +60,61 @@ class _Psychologicial_testState extends State<Psychologicial_test> {
         builder: (context, player) => Scaffold(
           appBar: secondAppBar("深度心理測驗"),
           backgroundColor: BackgroundColorLight,
-          body: Container(
+          body: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(child: player),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                height: 515,
-                padding: const EdgeInsets.only(bottom: 5),
-                child: ListView(
-                  scrollDirection: Axis.vertical,
-                  children: [
-                    questionContainer("1.睡眠困難"),
-                    answerRow(groups[0]),
-                    questionContainer("2.感覺緊張不安"),
-                    answerRow(groups[1]),
-                    questionContainer("3.覺得容易苦惱或動怒"),
-                    answerRow(groups[2]),
-                    questionContainer("4.感覺憂鬱、情緒低落"),
-                    answerRow(groups[3]),
-                    questionContainer("5.覺得比不上別人"),
-                    answerRow(groups[4]),
-                    questionContainer("6.有過自殺的念頭"),
-                    answerRow(groups[5]),
-                    Container(
-                      color: BackgroundColorLight,
-                      height: 30,
-                      child: Text(alarm),
-                    ),
-                    TextButton(
-                        child: Container(
-                          width: 250,
-                          decoration: BoxDecoration(
-                              color: BackgroundColorWarm,
-                              border: Border.all(
-                                  color: BackgroundColorWarm, width: 3),
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(50.0))),
-                          child: const Text(
-                            "查看分析結果",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 28, color: Colors.white),
-                          ),
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(child: player),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 515,
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: ListView(
+                      scrollDirection: Axis.vertical,
+                      children: [
+                        questionContainer("1.睡眠困難"),
+                        answerRow(groups[0]),
+                        questionContainer("2.感覺緊張不安"),
+                        answerRow(groups[1]),
+                        questionContainer("3.覺得容易苦惱或動怒"),
+                        answerRow(groups[2]),
+                        questionContainer("4.感覺憂鬱、情緒低落"),
+                        answerRow(groups[3]),
+                        questionContainer("5.覺得比不上別人"),
+                        answerRow(groups[4]),
+                        questionContainer("6.有過自殺的念頭"),
+                        answerRow(groups[5]),
+                        Container(
+                          color: BackgroundColorLight,
+                          height: 30,
+                          child: Text(alarm),
                         ),
-                        onPressed: () => checkAns()),
-                  ],
-                ),
-              ),
-            ],
-          )),
+                        TextButton(
+                            child: Container(
+                              width: 250,
+                              decoration: BoxDecoration(
+                                  color: BackgroundColorWarm,
+                                  border: Border.all(
+                                      color: BackgroundColorWarm, width: 3),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(50.0))),
+                              child: const Text(
+                                "查看分析結果",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 28, color: Colors.white),
+                              ),
+                            ),
+                            onPressed: () => checkAns()),
+                      ],
+                    ),
+                  ),
+                ],
+              )),
         ),
       );
 
