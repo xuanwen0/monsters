@@ -12,7 +12,6 @@ class Edit_personalInfo extends StatefulWidget {
 }
 
 class _Edit_personalInfoState extends State<Edit_personalInfo> {
-  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _nicknameController = TextEditingController();
 
   //生日

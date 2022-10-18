@@ -127,7 +127,7 @@ class _Drawer_settingsState extends State<Drawer_settings> {
                         lock = val;
                         if (lock == true) {
                           print('開啟密碼鎖');
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => SettingLockPage()));

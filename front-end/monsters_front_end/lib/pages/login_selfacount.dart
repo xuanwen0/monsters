@@ -186,8 +186,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                       onPressed: () {
                         final isValidForm = _formKey.currentState!.validate();
                         if (isValidForm) {
-                          saveSelfLogin(_accountController.text);
-                          //login();
+                          login();
                         }
                         login();
                       },
@@ -223,27 +222,20 @@ class _Login_selfacountState extends State<Login_selfacount> {
 
   void login() async {
     print("doing...");
-    //登入功能 !!尚未完成!!
-    // var response = await http.post(
-    //     Uri.parse("http://localhost:8080/member/login"),
-    //     body: ({
-    //       "account": _accountController.text,
-    //       "password": _pwdController.text
-    //     }));
-    // if (response.statusCode == 200) {
-    //   final body = jsonDecode(response.body);
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(content: Text("Account : ${body["account"]}")));
-    //   pageRoute(body["account"]);
-    // } else {
-    //   ScaffoldMessenger.of(context)
-    //       .showSnackBar(const SnackBar(content: Text("查無此帳號")));
-    // }
     print("try account: " + _accountController.text);
     print("try pass: " + _pwdController.text);
     var result = await memberRepository.login(Member(
         account: _accountController.text, password: _pwdController.text));
     print(result);
+    print(result.contains("result"));
+    if (result.contains("result") == true) {
+      saveSelfLogin(_accountController.text);
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) => MainPage()));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("登入失敗")));
+    }
   }
 
   void saveSelfLogin(String account) async {

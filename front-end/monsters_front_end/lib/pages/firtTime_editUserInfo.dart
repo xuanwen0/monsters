@@ -5,26 +5,20 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:monsters_front_end/pages/home.dart';
 
 class FirstTime_editUserInfo extends StatefulWidget {
-  FirstTime_editUserInfo({Key? key, required this.user}) : super(key: key);
-  final GoogleSignInAccount user;
   @override
-  _FirstTime_editUserInfoState createState() =>
-      _FirstTime_editUserInfoState(user);
+  _FirstTime_editUserInfoState createState() => _FirstTime_editUserInfoState();
 }
 
 class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
-  final TextEditingController _pwdController = TextEditingController();
-  final TextEditingController _checkpwdController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
+  // final TextEditingController _pwdController = TextEditingController();
+  // final TextEditingController _checkpwdController = TextEditingController();
   final TextEditingController _nicknameController = TextEditingController();
 
   //生日
   DateTime date = DateTime.now();
-  final GoogleSignInAccount user;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  _FirstTime_editUserInfoState(this.user);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +43,8 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                       ),
                     ),
                     SizedBox(height: 50.0),
-                    //密碼
+                    /* 
+                   //密碼
                     TextFormField(
                         controller: _pwdController,
                         decoration: const InputDecoration(
@@ -124,37 +119,7 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                           }
                         }),
                     SizedBox(height: 20.0),
-                    //姓名
-                    TextFormField(
-                        autofocus: false,
-                        controller: _nameController..text = user.displayName!,
-                        decoration: const InputDecoration(
-                          labelText: "姓名",
-                          hintText: '請輸入姓名',
-                          prefixIcon: Icon(Icons.person_pin),
-                          border: OutlineInputBorder(
-                            ///設定邊框四個角的弧度
-                            borderRadius: BorderRadius.all(Radius.circular(90)),
-
-                            ///用來配置邊框的樣式
-                            borderSide: BorderSide(
-                              ///設定邊框的顏色
-                              color: Color.fromRGBO(160, 82, 45, 1),
-                              width: 2.0,
-                            ),
-                          ),
-                          fillColor: Color.fromRGBO(255, 255, 255, 1),
-                          filled: true,
-                        ),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value!.isNotEmpty) {
-                            return null;
-                          } else {
-                            return '姓名不得空白';
-                          }
-                        }),
-                    SizedBox(height: 20.0),
+                    */
                     //暱稱
                     TextFormField(
                         autofocus: false,
