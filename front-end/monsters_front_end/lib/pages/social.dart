@@ -19,6 +19,7 @@ import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/repository/annoyanceRepo.dart';
 import 'package:monsters_front_end/state/drawer.dart';
+import 'package:dotted_border/dotted_border.dart';
 
 import 'annoyanceChat.dart';
 
@@ -475,18 +476,9 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
 
                                           //愛心 點擊觸發按愛心功能
                                           Pinned.fromPins(
-                                            Pin(size: 26.2, end: 7.0),
-                                            Pin(size: 23.8, end: 7),
-                                            child: GestureDetector(
-                                              onTap: () => print("觸發愛心"),
-                                              child: SvgPicture.string(
-                                                _svg_fb6j2b,
-                                                allowDrawingOutsideViewBox:
-                                                    true,
-                                                fit: BoxFit.fill,
-                                              ),
-                                            ),
-                                          ),
+                                              Pin(size: 26.2, end: 7.0),
+                                              Pin(size: 23.8, end: 7),
+                                              child: HeartWidget()),
                                         ]),
                                       ],
                                     ),
@@ -843,6 +835,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
+          var _like;
           return Material(
               type: MaterialType.transparency,
               child: Column(
@@ -909,15 +902,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 softWrap: false,
                               ),
                               SizedBox(height: 5),
-                              GestureDetector(
-                                onTap: () => print("觸發愛心"),
-                                child: SvgPicture.string(
-                                  _svg_fb6j2b,
-                                  // color: Colors.red,
-                                  allowDrawingOutsideViewBox: true,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
+                              HeartWidget(),
                             ],
                           ),
                         ),
@@ -991,7 +976,6 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                               ),
                             );
                           })),
-
                   //使用者輸入留言區
                   Container(
                       alignment: Alignment.centerLeft,
@@ -1072,6 +1056,42 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                 ],
               ));
         });
+  }
+}
+
+class HeartWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _HeartWidgetState();
+  }
+}
+
+class _HeartWidgetState extends State<HeartWidget> {
+  bool _like = false;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => setState(() {
+        _like = !_like;
+      }),
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          SvgPicture.string(
+            _svg_fb6j2b,
+            width: 25,
+            color: Colors.red,
+            fit: BoxFit.fill,
+          ),
+          SvgPicture.string(
+            _svg_fb6j2b,
+            width: 22,
+            color: (_like) ? Colors.red : BackgroundColorLight,
+            fit: BoxFit.fill,
+          ),
+        ],
+      ),
+    );
   }
 }
 
