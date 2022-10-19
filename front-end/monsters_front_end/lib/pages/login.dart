@@ -201,10 +201,10 @@ class _loginState extends State<LoginPage> {
       print("已登入過，帳號:" + selfLogin);
       print("密碼:" + pin!);
       if (lock == 'true') {
-        Navigator.pushReplacement(
+        Navigator.push(
             context, MaterialPageRoute(builder: (context) => LockPage()));
       } else {
-        Navigator.pushReplacement(
+        Navigator.push(
             context, MaterialPageRoute(builder: (context) => MainPage()));
       }
     } else {
@@ -220,10 +220,10 @@ class _loginState extends State<LoginPage> {
     if (googleLogin == user!.email) {
       print("已登入過，Google帳號:" + user.email);
       if (lock == 'true') {
-        Navigator.pushReplacement(
+        Navigator.push(
             context, MaterialPageRoute(builder: (context) => LockPage()));
       } else {
-        Navigator.pushReplacement(
+        Navigator.push(
             context, MaterialPageRoute(builder: (context) => MainPage()));
       }
     } else {

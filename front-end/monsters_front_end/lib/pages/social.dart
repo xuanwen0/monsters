@@ -19,7 +19,6 @@ import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/repository/annoyanceRepo.dart';
 import 'package:monsters_front_end/state/drawer.dart';
-import 'package:dotted_border/dotted_border.dart';
 
 import 'annoyanceChat.dart';
 
