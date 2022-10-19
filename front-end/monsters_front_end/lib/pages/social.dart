@@ -1014,7 +1014,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                     BorderRadius.all(Radius.circular(13)),
                                 color: Colors.white,
                                 border: Border.all(
-                                    width: 0.5, color: BackgroundColorWarm),
+                                    width: 1, color: BackgroundColorWarm),
                               ),
                               padding: EdgeInsets.only(left: 20),
                               child: TextFormField(
