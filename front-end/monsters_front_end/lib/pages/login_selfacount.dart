@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
@@ -187,8 +188,9 @@ class _Login_selfacountState extends State<Login_selfacount> {
                         final isValidForm = _formKey.currentState!.validate();
                         if (isValidForm) {
                           login();
+                        } else {
+                          log("格式錯誤");
                         }
-                        login();
                       },
                     ),
                   ),
@@ -221,13 +223,13 @@ class _Login_selfacountState extends State<Login_selfacount> {
   }
 
   void login() async {
-    print("doing...");
+    print("start login()...");
     print("try account: " + _accountController.text);
     print("try pass: " + _pwdController.text);
     var result = await memberRepository.login(Member(
         account: _accountController.text, password: _pwdController.text));
-    print(result);
-    print(result.contains("result"));
+    print("get Result: " + result.contains("result").toString()+ "\n");
+    print("result: " + result + "\n");
     if (result.contains("result") == true) {
       saveSelfLogin(_accountController.text);
       Navigator.of(context)

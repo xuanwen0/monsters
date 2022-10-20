@@ -157,11 +157,11 @@ class _loginState extends State<LoginPage> {
     } else {
       //判斷資料庫是否有此帳號
       //if有 => 進行登入
-      print("doing...");
+      print("doing signIn()...");
       var result = await memberRepository
           .login(Member(account: user.email, password: ""));
-      print(result);
-      print(result.contains("result"));
+      print("get Result: " + result.contains("result").toString() + "\n");
+      print("result: " + result + "\n");
       if (result.contains("result") == true) {
         saveGoogleLogin(user.email);
         Navigator.of(context).pushReplacement(
@@ -201,10 +201,10 @@ class _loginState extends State<LoginPage> {
       print("已登入過，帳號:" + selfLogin);
       print("密碼:" + pin!);
       if (lock == 'true') {
-        Navigator.pushReplacement(
+        Navigator.push(
             context, MaterialPageRoute(builder: (context) => LockPage()));
       } else {
-        Navigator.pushReplacement(
+        Navigator.push(
             context, MaterialPageRoute(builder: (context) => MainPage()));
       }
     } else {
@@ -220,10 +220,10 @@ class _loginState extends State<LoginPage> {
     if (googleLogin == user!.email) {
       print("已登入過，Google帳號:" + user.email);
       if (lock == 'true') {
-        Navigator.pushReplacement(
+        Navigator.push(
             context, MaterialPageRoute(builder: (context) => LockPage()));
       } else {
-        Navigator.pushReplacement(
+        Navigator.push(
             context, MaterialPageRoute(builder: (context) => MainPage()));
       }
     } else {

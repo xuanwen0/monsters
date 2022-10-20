@@ -77,6 +77,8 @@ Widget GetDrawer(BuildContext context) {
               onTap: () async {
                 SharedPreferences pref = await SharedPreferences.getInstance();
                 String? val = pref.getString("selfLogin");
+                String account = "";
+                await pref.remove("account");
                 if (val != null) {
                   await pref.remove("selfLogin");
                 } else {

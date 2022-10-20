@@ -19,7 +19,6 @@ import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/repository/annoyanceRepo.dart';
 import 'package:monsters_front_end/state/drawer.dart';
-import 'package:dotted_border/dotted_border.dart';
 
 import 'annoyanceChat.dart';
 
@@ -1015,7 +1014,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                     BorderRadius.all(Radius.circular(13)),
                                 color: Colors.white,
                                 border: Border.all(
-                                    width: 0.5, color: BackgroundColorWarm),
+                                    width: 1, color: BackgroundColorWarm),
                               ),
                               padding: EdgeInsets.only(left: 20),
                               child: TextFormField(
