@@ -16,25 +16,6 @@ void main() async {
 
 class Monsters extends StatelessWidget with WidgetsBindingObserver {
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    switch (state) {
-      case AppLifecycleState.inactive:
-        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-        break;
-      case AppLifecycleState.paused:
-        log(state.toString());
-        break;
-      case AppLifecycleState.resumed:
-        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-        log(state.toString());
-        break;
-      case AppLifecycleState.detached:
-        log(state.toString());
-        break;
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance?.addObserver(this);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -55,6 +36,25 @@ class Monsters extends StatelessWidget with WidgetsBindingObserver {
       },
       debugShowCheckedModeBanner: false,
     );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.inactive:
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+        break;
+      case AppLifecycleState.paused:
+        log(state.toString());
+        break;
+      case AppLifecycleState.resumed:
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+        log(state.toString());
+        break;
+      case AppLifecycleState.detached:
+        log(state.toString());
+        break;
+    }
   }
 }
 
