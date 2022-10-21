@@ -45,13 +45,13 @@ class _Psychologicial_gameState extends State<Psychologicial_game> {
               return ListView.builder(
                 itemCount: snapshot.data["itemCounter"],
                 itemBuilder: (BuildContext context, int index) => Container(
-                  decoration: const BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                      width: 1.0,
-                      color: BackgroundColorWarm,
-                    )),
-                  ),
+                  // decoration: const BoxDecoration(
+                  //   border: Border(
+                  //       bottom: BorderSide(
+                  //     width: 1.0,
+                  //     color: BackgroundColorWarm,
+                  //   )),
+                  // ),
                   height: 110,
                   alignment: Alignment.center,
                   child: SizedBox(
