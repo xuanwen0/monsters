@@ -22,8 +22,6 @@ import 'package:monsters_front_end/state/drawer.dart';
 
 import 'annoyanceChat.dart';
 
-var userAccount = 'Lin';
-
 class Social extends StatefulWidget {
   const Social({Key? key}) : super(key: key);
 
@@ -99,7 +97,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
     Map socialResult = {};
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     Future<Data> annoyances = annoyanceRepository
-        .searchAnnoyanceByAccount(userAccount)
+        .searchAnnoyanceByAccount("Lin")
         .then((value) => Data.fromJson(value!));
     await annoyances.then((value) async {
       if (value != null) {

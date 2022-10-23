@@ -117,7 +117,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                     ),
                     mainAppBarTitleContainer("歷史紀錄")
                   ])),
-              //標籤 完成
+              //標籤
               Expanded(
                   flex: 5,
                   child: Center(
@@ -291,6 +291,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                           itemCount: snapshot.data["itemCounter"],
                           itemBuilder: (BuildContext context, int index) =>
                               Container(
+                            height: 110,
                             decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
@@ -298,14 +299,18 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                 color: BackgroundColorWarm,
                               )),
                             ),
-                            height: 110,
                             alignment: Alignment.center,
                             child: ListTile(
                                 leading: SizedBox(
                                   height: double.infinity,
                                   child: CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        'assets/image/Avatar_Baku_JPG.jpg'),
+                                    radius: 35,
+                                    backgroundColor: Colors.white,
+                                    child: CircleAvatar(
+                                      radius: 35,
+                                      backgroundImage: AssetImage(
+                                          'assets/image/Avatar_Baku_JPG.jpg'),
+                                    ),
                                   ),
                                 ),
                                 title: Text(
@@ -690,7 +695,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     Map socialResult = {};
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     Future<Data> annoyances = annoyanceRepository
-        .searchAnnoyanceByAccount(userAccount)
+        .searchAnnoyanceByAccount('Lin')
         .then((value) => Data.fromJson(value!));
     await annoyances.then((value) async {
       await socialResult.putIfAbsent(
