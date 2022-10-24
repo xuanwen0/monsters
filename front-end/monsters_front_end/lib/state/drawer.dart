@@ -76,16 +76,16 @@ Widget GetDrawer(BuildContext context) {
               ),
               onTap: () async {
                 SharedPreferences pref = await SharedPreferences.getInstance();
-                String? val = pref.getString("selfLogin");
+                String? selfLogin = pref.getString("selfLogin");
                 String account = "";
                 await pref.remove("account");
-                if (val != null) {
+                if (selfLogin != null) {
                   await pref.remove("selfLogin");
                 } else {
-                  // await pref.remove("googleLogin");
+                  await pref.remove("googleLogin");
                   await GoogleSignInApi.signout();
                 }
-                Navigator.push(context,
+                Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => LoginPage()));
               },
             ),

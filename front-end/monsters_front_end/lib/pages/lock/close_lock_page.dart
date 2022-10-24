@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:monsters_front_end/pages//lock/lock_widget.dart';
-import 'package:monsters_front_end/pages/home.dart';
+import 'package:monsters_front_end/pages/drawer_setting.dart';
 import 'package:monsters_front_end/pages/lock/forget_lock_auth.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LockPage extends StatefulWidget {
+class CloseLockPage extends StatefulWidget {
   @override
-  _LockPageState createState() => _LockPageState();
+  _CloseLockPageState createState() => _CloseLockPageState();
 }
 
-class _LockPageState extends State<LockPage> {
+class _CloseLockPageState extends State<CloseLockPage> {
   MPinController mPinController = MPinController();
   @override
   Widget build(BuildContext context) {
@@ -53,10 +53,12 @@ class _LockPageState extends State<LockPage> {
                           await SharedPreferences.getInstance();
                       String? val = pref.getString("pin");
                       if (mPin == val) {
+                        saveLock('false');
+                        await pref.remove("pin");
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MainPage()));
+                                builder: (context) => Drawer_settings()));
                       } else {
                         mPinController.notifyWrongInput();
                       }
@@ -122,5 +124,10 @@ class _LockPageState extends State<LockPage> {
         style: TextStyle(fontSize: 24),
       ),
     );
+  }
+
+  void saveLock(String lock) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString("lock", lock);
   }
 }
