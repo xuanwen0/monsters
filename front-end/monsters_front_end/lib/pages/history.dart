@@ -130,7 +130,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         //全部標籤
                         InkWell(
                             child: Container(
-                              width: 60,
+                              width: 50,
                               decoration: BoxDecoration(
                                 color: selectionTab_type == 1
                                     ? const Color(0xffa0522d)
@@ -159,7 +159,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         //煩惱標籤
                         InkWell(
                             child: Container(
-                              width: 60,
+                              width: 50,
                               decoration: BoxDecoration(
                                 color: selectionTab_type == 2
                                     ? const Color(0xffa0522d)
@@ -188,7 +188,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         //日記標籤
                         InkWell(
                             child: Container(
-                              width: 60,
+                              width: 50,
                               decoration: BoxDecoration(
                                 color: selectionTab_type == 3
                                     ? const Color(0xffa0522d)
@@ -217,7 +217,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         //未解決標籤
                         InkWell(
                             child: Container(
-                              width: 80,
+                              width: 70,
                               decoration: BoxDecoration(
                                 color: selectionTab_solve == 1
                                     ? const Color(0xffa0522d)
@@ -245,7 +245,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         //已解決標籤
                         InkWell(
                             child: Container(
-                              width: 80,
+                              width: 70,
                               decoration: BoxDecoration(
                                 color: selectionTab_solve == 2
                                     ? const Color(0xffa0522d)

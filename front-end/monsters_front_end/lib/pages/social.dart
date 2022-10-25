@@ -295,7 +295,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                     child: Stack(
                                       children: <Widget>[
                                         Stack(children: <Widget>[
-                                          //底
+                                          //底部顏色
                                           Container(
                                             width: 200.0,
                                             height: 200.0,
@@ -352,19 +352,23 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                               children: [
                                                 //暱稱
                                                 Pinned.fromPins(
-                                                  Pin(size: 120.0, start: 70),
+                                                  Pin(size: 110.0, start: 110),
                                                   Pin(size: 27.0, start: 21.0),
-                                                  child: Text(
-                                                    snapshot.data[
-                                                            "result $index"]
-                                                        ["name"],
-                                                    style: TextStyle(
-                                                      fontFamily: 'Segoe UI',
-                                                      fontSize: 20,
-                                                      color: const Color(
-                                                          0xffa0522d),
+                                                  child: SingleChildScrollView(
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    child: Text(
+                                                      snapshot.data[
+                                                              "result $index"]
+                                                          ["name"],
+                                                      style: TextStyle(
+                                                        fontFamily: 'Segoe UI',
+                                                        fontSize: 20,
+                                                        color: const Color(
+                                                            0xffa0522d),
+                                                      ),
+                                                      softWrap: false,
                                                     ),
-                                                    softWrap: false,
                                                   ),
                                                 ),
                                                 //content
@@ -848,7 +852,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                         Expanded(
                           flex: 3,
                           child: Container(
-                            margin: const EdgeInsets.only(left: 40, right: 30),
+                            margin: const EdgeInsets.only(left: 30, right: 30),
                             decoration: BoxDecoration(
                               color: BackgroundColorLight,
                               borderRadius: BorderRadius.all(
