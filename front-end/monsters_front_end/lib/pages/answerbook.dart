@@ -90,7 +90,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
           //提示框
           Pinned.fromPins(
             Pin(start: 32.0, end: 31.0),
-            Pin(size: 251.0, middle: 0.3491),
+            Pin(size: 251.0, middle: 0.32),
             child: Container(
               color: const Color(0xc9ffffff),
             ),
@@ -98,7 +98,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
           //是否第一次按(提示框內容再次取得解答)
           pressed == false
               ? Pinned.fromPins(
-                  Pin(start: 52.0, end: 52.0), Pin(size: 185.0, middle: 0.3659),
+                  Pin(start: 52.0, end: 52.0), Pin(size: 185.0, middle: 0.34),
                   child: Center(
                     child: Text(
                       answer,
@@ -111,7 +111,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
                     ),
                   ))
               : Pinned.fromPins(
-                  Pin(start: 50.0, end: 50.0), Pin(size: 50.0, middle: 0.4),
+                  Pin(start: 50.0, end: 50.0), Pin(size: 185.0, middle: 0.35),
                   child: Center(
                     child: Text(
                       answer,
