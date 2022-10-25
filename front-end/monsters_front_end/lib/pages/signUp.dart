@@ -379,7 +379,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Login_selfacount()));
@@ -404,7 +404,7 @@ class _SignUpState extends State<SignUp> {
           password: _pwdController.text,
         ),
       );
-      Navigator.push(
+      Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Login_selfacount()));
     } else {
       ScaffoldMessenger.of(context)

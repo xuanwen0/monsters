@@ -5,7 +5,7 @@ import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monsters_front_end/model/memberModel.dart';
-import 'package:monsters_front_end/pages/forget_psw_auth.dart';
+import 'package:monsters_front_end/pages/forgetPassword/forget_psw_auth.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/login.dart';
@@ -153,7 +153,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                   //忘記密碼
                   TextButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Forget_password_Auth()));
@@ -208,7 +208,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(context,
+                        Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) => SignUp()));
                       },
                     ),
@@ -228,7 +228,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
     print("try pass: " + _pwdController.text);
     var result = await memberRepository.login(Member(
         account: _accountController.text, password: _pwdController.text));
-    print("get Result: " + result.contains("result").toString()+ "\n");
+    print("get Result: " + result.contains("result").toString() + "\n");
     print("result: " + result + "\n");
     if (result.contains("result") == true) {
       saveSelfLogin(_accountController.text);
@@ -245,8 +245,6 @@ class _Login_selfacountState extends State<Login_selfacount> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("selfLogin", account);
     await pref.setString("account", account);
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => MainPage()));
   }
 }
 
