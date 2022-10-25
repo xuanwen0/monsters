@@ -28,8 +28,7 @@ class _loginState extends State<LoginPage> {
 
   @override
   void initState() {
-    checkSelfLogin();
-    checkGoogleLogin();
+    checkLogin();
     super.initState();
   }
 
@@ -74,7 +73,7 @@ class _loginState extends State<LoginPage> {
                     softWrap: false,
                   ),
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => Login_selfacount()));
@@ -191,43 +190,33 @@ class _loginState extends State<LoginPage> {
     await pref.setString("account", account);
   }
 
-  void checkSelfLogin() async {
-    //check if user already login or credential already available or not
+  void checkLogin() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
+    String? googleLogin = pref.getString("googleLogin");
     String? selfLogin = pref.getString("selfLogin");
     String? lock = pref.getString("lock");
     String? pin = pref.getString("pin");
     if (selfLogin != null) {
       print("已登入過，帳號:" + selfLogin);
-      print("密碼:" + pin!);
       if (lock == 'true') {
-        Navigator.push(
+        print("密碼:" + pin!);
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => LockPage()));
       } else {
-        Navigator.push(
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MainPage()));
+      }
+    } else if (googleLogin != null) {
+      print("已登入過，Google帳號:" + googleLogin);
+      if (lock == 'true') {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LockPage()));
+      } else {
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => MainPage()));
       }
     } else {
-      print("已登出或第一次開啟");
-    }
-  }
-
-  void checkGoogleLogin() async {
-    final user = await GoogleSignInApi.signin();
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String? googleLogin = pref.getString("googleLogin");
-    String? lock = pref.getString("lock");
-    if (googleLogin == user!.email) {
-      print("已登入過，Google帳號:" + user.email);
-      if (lock == 'true') {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LockPage()));
-      } else {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => MainPage()));
-      }
-    } else {
-      print("已登出或第一次開啟");
+      print("已登出APP或第一次開啟");
     }
   }
 }

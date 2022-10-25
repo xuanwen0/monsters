@@ -1,57 +1,17 @@
 import 'package:adobe_xd/page_link.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:email_auth/email_auth.dart';
-
 import 'package:monsters_front_end/pages/login_selfacount.dart';
-import 'package:monsters_front_end/pages/reset_password.dart';
 
-class Forget_password_Auth extends StatefulWidget {
+class Reset_Password extends StatefulWidget {
   @override
-  _Forget_password_AuthState createState() => _Forget_password_AuthState();
+  _Reset_PasswordState createState() => _Reset_PasswordState();
 }
 
-class _Forget_password_AuthState extends State<Forget_password_Auth> {
-  final TextEditingController _mailController = TextEditingController();
-  final TextEditingController _otpController = TextEditingController();
+class _Reset_PasswordState extends State<Reset_Password> {
+  final TextEditingController _pwdController = TextEditingController();
+  final TextEditingController _checkpwdController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late EmailAuth emailAuth;
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize the package
-    emailAuth = EmailAuth(
-      sessionName: "貘nsters",
-    );
-  }
-
-  void sendOTP() async {
-    emailAuth.sessionName = "貘nsters";
-    var res = await emailAuth.sendOtp(recipientMail: _mailController.text);
-    if (res) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("認證碼傳送成功")));
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("認證碼傳送失敗")));
-    }
-  }
-
-  void verifyOTP() {
-    var res = emailAuth.validateOtp(
-        recipientMail: _mailController.text, userOtp: _otpController.text);
-    if (res) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("認證成功")));
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Reset_Password()));
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("認證失敗")));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +50,7 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                   ),
                   //標題
                   const Text(
-                    '忘記密碼',
+                    '重新設密碼',
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
                       fontSize: 47,
@@ -98,56 +58,13 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                     ),
                   ),
                   SizedBox(height: 50.0),
-                  //信箱
+                  //密碼
                   TextFormField(
                     autofocus: false,
-                    controller: _mailController,
+                    controller: _pwdController,
                     decoration: const InputDecoration(
-                      labelText: "信箱",
-                      hintText: '請輸入信箱',
-                      prefixIcon: Icon(Icons.email),
-                      border: OutlineInputBorder(
-                        ///設定邊框四個角的弧度
-                        borderRadius: BorderRadius.all(Radius.circular(90)),
-
-                        ///用來配置邊框的樣式
-                        borderSide: BorderSide(
-                          ///設定邊框的顏色
-                          color: Color.fromRGBO(160, 82, 45, 1),
-                          width: 2.0,
-                        ),
-                      ),
-                      fillColor: Color.fromRGBO(255, 255, 255, 1),
-                      filled: true,
-                    ),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (email) =>
-                        email != null && !EmailValidator.validate(email)
-                            ? '請輸入正確的信箱格式'
-                            : null,
-                  ),
-                  SizedBox(height: 10.0),
-                  //傳送認證碼
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                        onPressed: () => sendOTP(),
-                        child: const Text(
-                          '傳送認證碼',
-                          style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 20,
-                            color: Color.fromRGBO(160, 82, 45, 1),
-                          ),
-                        )),
-                  ),
-                  SizedBox(height: 10.0),
-                  //認證碼
-                  TextFormField(
-                    controller: _otpController,
-                    decoration: const InputDecoration(
-                      labelText: "認證碼",
-                      hintText: '請輸入認證碼',
+                      labelText: "密碼",
+                      hintText: '請輸入新的密碼',
                       prefixIcon: Icon(Icons.password),
                       border: OutlineInputBorder(
                         ///設定邊框四個角的弧度
@@ -166,17 +83,52 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                     obscureText: true,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
-                      if (value!.isNotEmpty && value.length == 6) {
+                      if (value!.isNotEmpty && value.length > 5) {
                         return null;
                       } else if (value.isNotEmpty && value.length < 6) {
-                        return '認證碼為6數';
+                        return '密碼需至少6數';
                       } else {
-                        return '認證碼不得空白';
+                        return '密碼不得空白';
                       }
                     },
                   ),
+                  SizedBox(height: 10.0),
+                  //確認密碼
+                  TextFormField(
+                      controller: _checkpwdController,
+                      decoration: const InputDecoration(
+                        labelText: "確認密碼",
+                        hintText: '請再次輸入密碼',
+                        prefixIcon: Icon(Icons.password),
+                        border: OutlineInputBorder(
+                          ///設定邊框四個角的弧度
+                          borderRadius: BorderRadius.all(Radius.circular(90)),
+
+                          ///用來配置邊框的樣式
+                          borderSide: BorderSide(
+                            ///設定邊框的顏色
+                            color: Color.fromRGBO(160, 82, 45, 1),
+                            width: 2.0,
+                          ),
+                        ),
+                        fillColor: Color.fromRGBO(255, 255, 255, 1),
+                        filled: true,
+                      ),
+                      obscureText: true,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return '確認密碼不得空白';
+                        } else if (value.isNotEmpty && value.length < 6) {
+                          return '確認密碼需至少6數';
+                        } else if (value == _pwdController.text) {
+                          return null;
+                        } else {
+                          return '與密碼不一致';
+                        }
+                      }),
                   SizedBox(height: 50.0),
-                  //認證
+                  //確認
                   SizedBox(
                     width: 200.0,
                     height: 60.0,
@@ -185,7 +137,7 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(22.0)),
                       child: const Text(
-                        '認證',
+                        '確認',
                         style: TextStyle(
                           fontFamily: 'Segoe UI',
                           fontSize: 30,
@@ -196,7 +148,10 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                       onPressed: () {
                         final isValidForm = _formKey.currentState!.validate();
                         if (isValidForm) {
-                          verifyOTP();
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Login_selfacount()));
                         }
                       },
                     ),

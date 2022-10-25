@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:monsters_front_end/pages/lock/close_lock_page.dart';
+import 'package:monsters_front_end/pages/lock/lock_page.dart';
 import 'package:monsters_front_end/pages/lock/setting_lock_page.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -126,14 +128,15 @@ class _Drawer_settingsState extends State<Drawer_settings> {
                       setState(() {
                         lock = val;
                         if (lock == true) {
-                          print('開啟密碼鎖');
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => SettingLockPage()));
                         } else {
-                          print('關閉密碼鎖');
-                          saveLock('false');
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CloseLockPage()));
                         }
                       });
                     },
