@@ -35,7 +35,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   ///we can ask whether that stuff make it feels better
   var userAnswers = [];
   File? contentFile;
-  File? _moodImage;
+  File? moodFile;
 
   @override
   void dispose() {
@@ -140,8 +140,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       reply("畫心情失敗，請通知官方平台");
     } else {
       final imageTemporary = File(moodImage.path);
-      this._moodImage = imageTemporary;
-      messages.insert(0, {"data": 5, "image": _moodImage});
+      this.moodFile = imageTemporary;
+      messages.insert(0, {"data": 5, "image": moodFile});
     }
 
     setState(() {});
@@ -637,7 +637,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                         ),
                         Flexible(
                             child: Container(
-                                child: Image.file(_moodImage!,
+                                child: Image.file(moodFile!,
                                     width: 200,
                                     height: 200,
                                     filterQuality: FilterQuality.medium))),
