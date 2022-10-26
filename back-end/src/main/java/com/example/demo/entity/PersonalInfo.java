@@ -36,4 +36,7 @@ public class PersonalInfo {
 
     @Column(name = "`theme`")
     private int theme;
+
+    @Column(name = "daily_test")
+    private int dailyTest;
 }
