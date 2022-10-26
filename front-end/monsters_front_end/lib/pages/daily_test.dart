@@ -11,6 +11,7 @@ import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/repository/dailyTestRepo.dart';
 
 import 'package:monsters_front_end/model/dailyTestModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Daily_test extends StatefulWidget {
   @override
@@ -28,7 +29,9 @@ class _Daily_testState extends State<Daily_test> {
   var correctChoice = 0;
   var learn = "";
 
-  checkAnswer(int userChoice, String userAnswer) {
+  checkAnswer(int userChoice, String userAnswer) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString("LastTryDate", DateTime.now().day.toString());
     if (correctChoice == userChoice) {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => DailyTest_correct(learn)));
@@ -79,6 +82,7 @@ class _Daily_testState extends State<Daily_test> {
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (correctChoice == 0) {
+                      //正在讀取資料庫資料
                       return const Center(
                           child: Text(
                         "Loading...",

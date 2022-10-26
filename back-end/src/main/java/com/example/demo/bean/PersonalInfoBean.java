@@ -14,4 +14,5 @@ public class PersonalInfoBean extends BaseBean{
     private String lock;
     private String photo;
     private int theme = 1;
+    private int dailyTest = 0;
 }

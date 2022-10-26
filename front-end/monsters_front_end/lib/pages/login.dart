@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
+import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/pages/firtTime_editUserInfo.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/lock/lock_page.dart';
 import 'package:monsters_front_end/pages/login_selfacount.dart';
 import 'package:monsters_front_end/pages/signUp.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:monsters_front_end/pages/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../API/google_sign_in_API.dart';
@@ -172,7 +172,7 @@ class _loginState extends State<LoginPage> {
             account: user.email,
             birthday: formatDate(date, [yyyy, '-', mm, '-', dd]).toString(),
             mail: user.email,
-            nickName: "",
+            nickName: user.displayName,
             password: "",
           ),
         );
@@ -187,7 +187,7 @@ class _loginState extends State<LoginPage> {
     //儲存account shared preferences (後用來判斷此裝置是否登入過)
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("googleLogin", account);
-    await pref.setString("account", account);
+    user_Account = account;
   }
 
   void checkLogin() async {

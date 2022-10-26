@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface AnnoyanceDAO extends BaseDAO<Annoyance> {
     List<Annoyance> findByAccount(String account);
+    List<Annoyance> findByShare();
 }

@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/memberModel.dart';
 import 'package:monsters_front_end/pages/forgetPassword/forget_psw_auth.dart';
 import 'package:monsters_front_end/pages/home.dart';
@@ -244,7 +245,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
     //儲存account shared preferences (後用來判斷此裝置是否登入過)
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("selfLogin", account);
-    await pref.setString("account", account);
+    user_Account = account;
   }
 }
 
