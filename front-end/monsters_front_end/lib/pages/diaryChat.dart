@@ -30,8 +30,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
   int acceptShare = 0;
   var userAnswers = [];
 
-  File? _media;
-  File? _moodImage;
+  File? contentFile;
 
   //新增煩惱-照相
   takePhoto() async {
@@ -39,10 +38,10 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
     if (media == null) return;
     final imageTemporary = File(media.path);
 
-    this._media = imageTemporary;
-    if (_media != null) {
-      messages.insert(0, {"data": 2, "image": _media});
-      response(null, _media);
+    contentFile = imageTemporary;
+    if (contentFile != null) {
+      messages.insert(0, {"data": 2, "image": contentFile});
+      response(null, contentFile);
     }
     setState(() {});
   }
@@ -52,12 +51,12 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
     XFile? recordedVideo = await ImagePicker().pickVideo(
         source: ImageSource.camera, maxDuration: Duration(seconds: 15));
     if (recordedVideo == null) return;
-    _media = File(recordedVideo.path);
-    _videoPlayerController = VideoPlayerController.file(_media!)
+    contentFile = File(recordedVideo.path);
+    _videoPlayerController = VideoPlayerController.file(contentFile!)
       ..initialize().then((_) {
-        messages.insert(0, {"data": 3, "video": _media});
+        messages.insert(0, {"data": 3, "video": contentFile});
         _videoPlayerController.play();
-        response(null, _media);
+        response(null, contentFile);
       });
     setState(() {});
   }
@@ -68,10 +67,10 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
     if (media == null) return;
     final imageTemporary = File(media.path);
 
-    this._media = imageTemporary;
-    if (_media != null) {
-      messages.insert(0, {"data": 2, "image": _media});
-      response(null, _media);
+    contentFile = imageTemporary;
+    if (contentFile != null) {
+      messages.insert(0, {"data": 2, "image": contentFile});
+      response(null, contentFile);
     }
     setState(() {});
   }
@@ -81,12 +80,12 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
     XFile? pickedVideo =
         await ImagePicker().pickVideo(source: ImageSource.gallery);
     if (pickedVideo == null) return;
-    _media = File(pickedVideo.path);
-    _videoPlayerController = VideoPlayerController.file(_media!)
+    contentFile = File(pickedVideo.path);
+    _videoPlayerController = VideoPlayerController.file(contentFile!)
       ..initialize().then((_) {
-        messages.insert(0, {"data": 3, "video": _media});
+        messages.insert(0, {"data": 3, "video": contentFile});
         _videoPlayerController.play();
-        response(null, _media);
+        response(null, contentFile);
       });
     setState(() {});
   }
@@ -100,10 +99,10 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
 
     if (media == null) return;
     final audioTemporary = File(media);
-    this._media = audioTemporary;
-    if (_media != null) {
-      messages.insert(0, {"data": 4, "audio": _media});
-      response(null, _media);
+    contentFile = audioTemporary;
+    if (contentFile != null) {
+      messages.insert(0, {"data": 4, "audio": contentFile});
+      response(null, contentFile);
     }
     setState(() {});
   }
@@ -307,7 +306,8 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                           onPressed: () {
                             log(userAnswers.toString());
 //後端修改
-/*
+/* 
+  多媒體資料變數已改成contentFile
                             annoyanceRepository.createAnnoyance(
                               Annoyance(
                                   id: 0,
@@ -428,7 +428,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                         ),
                         Flexible(
                             child: Container(
-                                child: Image.file(_media!,
+                                child: Image.file(contentFile!,
                                     width: (MediaQuery.of(context).size.width >
                                             MediaQuery.of(context).size.height)
                                         ? 288

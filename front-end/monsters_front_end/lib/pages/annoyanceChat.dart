@@ -9,7 +9,6 @@ import 'package:monsters_front_end/model/audio_Model/audio_player.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
-import 'package:monsters_front_end/pages/login.dart';
 import 'package:video_player/video_player.dart';
 import '../model/annoyanceModel.dart';
 import '../repository/annoyanceRepo.dart';
@@ -33,11 +32,12 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   int acceptShare = 0;
   //TODO: LEVEL 3
   ///when user comes after using interactionPage and some feature
-  ///we should ask whether that stuff make it feels better
+  ///we can ask whether that stuff make it feels better
   var userAnswers = [];
-  File? _media;
+  File? contentFile;
   File? _moodImage;
 
+  @override
   void dispose() {
     player.dispose();
     timerController.dispose();
@@ -57,10 +57,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     if (media == null) return;
     final imageTemporary = File(media.path);
 
-    this._media = imageTemporary;
-    if (_media != null) {
-      messages.insert(0, {"data": 2, "image": _media});
-      response(null, _media);
+    this.contentFile = imageTemporary;
+    if (contentFile != null) {
+      messages.insert(0, {"data": 2, "image": contentFile});
+      response(null, contentFile);
     }
     setState(() {});
   }
@@ -70,12 +70,12 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     XFile? recordedVideo = await ImagePicker().pickVideo(
         source: ImageSource.camera, maxDuration: Duration(seconds: 15));
     if (recordedVideo == null) return;
-    _media = File(recordedVideo.path);
-    _videoPlayerController = VideoPlayerController.file(_media!)
+    contentFile = File(recordedVideo.path);
+    _videoPlayerController = VideoPlayerController.file(contentFile!)
       ..initialize().then((_) {
-        messages.insert(0, {"data": 3, "video": _media});
+        messages.insert(0, {"data": 3, "video": contentFile});
         _videoPlayerController.play();
-        response(null, _media);
+        response(null, contentFile);
       });
     setState(() {});
   }
@@ -86,10 +86,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     if (media == null) return;
     final imageTemporary = File(media.path);
 
-    this._media = imageTemporary;
-    if (_media != null) {
-      messages.insert(0, {"data": 2, "image": _media});
-      response(null, _media);
+    this.contentFile = imageTemporary;
+    if (contentFile != null) {
+      messages.insert(0, {"data": 2, "image": contentFile});
+      response(null, contentFile);
     }
     setState(() {});
   }
@@ -99,12 +99,12 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     XFile? pickedVideo =
         await ImagePicker().pickVideo(source: ImageSource.gallery);
     if (pickedVideo == null) return;
-    _media = File(pickedVideo.path);
-    _videoPlayerController = VideoPlayerController.file(_media!)
+    contentFile = File(pickedVideo.path);
+    _videoPlayerController = VideoPlayerController.file(contentFile!)
       ..initialize().then((_) {
-        messages.insert(0, {"data": 3, "video": _media});
+        messages.insert(0, {"data": 3, "video": contentFile});
         _videoPlayerController.play();
-        response(null, _media);
+        response(null, contentFile);
       });
     setState(() {});
   }
@@ -120,10 +120,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
     if (media == null) return;
     final audioTemporary = File(media);
-    this._media = audioTemporary;
-    if (_media != null) {
-      messages.insert(0, {"data": 4, "audio": _media});
-      response(null, _media);
+    this.contentFile = audioTemporary;
+    if (contentFile != null) {
+      messages.insert(0, {"data": 4, "audio": contentFile});
+      response(null, contentFile);
     }
     setState(() {});
   }
@@ -462,7 +462,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                         ),
                         Flexible(
                             child: Container(
-                                child: Image.file(_media!,
+                                child: Image.file(contentFile!,
                                     width: (MediaQuery.of(context).size.width >
                                             MediaQuery.of(context).size.height)
                                         ? 288
