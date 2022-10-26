@@ -127,7 +127,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    //後端修改
+    //TODO:後端修改
     /*
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     */
@@ -635,21 +635,19 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
 
   //怪獸訊息(提示輸入格式)
   void hint() {
-    String hintDiaryType = "[請擇一輸入]\n課業 / 事業 / 愛情 \n友情 / 親情 / 其他";
     String hintEmotionGrade = "[請擇一輸入]\n1 / 2 / 3 / 4 / 5";
     String hintAccept = "[請擇一輸入]\n是 / 否";
     String hintDiaryMethod = "請用以下幾種方式記錄：\n★以文字記錄日記\n★點選左下角圖示新增";
-    if (chatRound == 0) {
-      reply(hintDiaryType);
-    } else if (chatRound == 1) {
+    if (chatRound == 1) {
+    } else if (chatRound == 2) {
       pickable = true;
       reply(hintDiaryMethod);
-    } else if (chatRound == 2) {
+    } else if (chatRound == 3) {
       pickable = false;
       reply(hintAccept);
-    } else if (chatRound == 3) {
-      reply(hintEmotionGrade);
     } else if (chatRound == 4) {
+      reply(hintEmotionGrade);
+    } else if (chatRound == 5) {
       reply(hintAccept);
     } else {
       reply("還想新增更多日記嗎，再找下一位同伴來幫忙吧！");
@@ -659,30 +657,24 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
   //提示輸入格式錯誤
   void cannotRead() {
     String hintCannotRead = "員工手冊上沒有這個選項耶...麻煩確認一下好嗎？";
-
-    String secHintdiaryType = "來寫一些類型的日記呢？";
     String secHintEmotionGrade = "心情指數有多高呢？\n1分是最低的喔！";
     String secHintDrawingAcception = "要不要把你的心情畫下來呢？";
     String secHintSharingAcception = "想分享日記給別人看看嗎？";
     chatRound--;
     reply(hintCannotRead);
-    if (chatRound == 0) {
-      reply(secHintdiaryType);
-    }
-    if (chatRound == 2) {
+    if (chatRound == 1) {
       reply(secHintDrawingAcception);
     }
-    if (chatRound == 3) {
+    if (chatRound == 2) {
       reply(secHintEmotionGrade);
     }
-    if (chatRound == 4) {
+    if (chatRound == 3) {
       reply(secHintSharingAcception);
     }
   }
 
   //確認是否符合選擇格式，符合->回覆 不符合->提示再次輸入
   Future<void> response([String? text, File? media]) async {
-    List<String> diaryTypeMembers = ["", "課業", "事業", "愛情", "友情", "親情", "其他"];
     List<String> emotionGradeMembers = ["", "1", "2", "3", "4", "5"];
     List<String> acceptDrawingMembers = ["", "是", "否"];
     //進入時自動訊息問安
@@ -700,19 +692,10 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
       reply("什麼樣子的日記呢？");
     }
 
-    if (chatRound < 7) {
+    if (chatRound < 6) {
       if (robotSpeakable == true) {
-        //取得類別
-        if (chatRound == 1) {
-          if (diaryTypeMembers.contains(text)) {
-            userAnswers.add(diaryTypeMembers.indexOf(text!));
-            reply("關於" + text + "的日記嗎？我想聽聽你的事情！");
-          } else {
-            cannotRead();
-          }
-        }
         //取得內容
-        if (chatRound == 2) {
+        if (chatRound == 1) {
           log("--完成類別");
           if (text != null) {
             userAnswers.add(text);
@@ -723,7 +706,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
           reply("想畫點甚麼表達你的感受嗎？");
         }
         //取得是否畫心情
-        if (chatRound == 3) {
+        if (chatRound == 2) {
           log("--完成內容");
           if (acceptDrawingMembers.contains(text)) {
             if (text == "是") {
@@ -737,7 +720,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
           }
         }
         //取得心情分數
-        if (chatRound == 4) {
+        if (chatRound == 3) {
           log("--完成畫心情");
           if (emotionGradeMembers.contains(text)) {
             userAnswers.add(emotionGradeMembers.indexOf(text!));
@@ -747,7 +730,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
           }
         }
         //取得是否分享
-        if (chatRound == 5) {
+        if (chatRound == 4) {
           log("--完成心情分數");
           if (acceptShare == 0 || acceptShare == 1) {
             if (text == "是") {

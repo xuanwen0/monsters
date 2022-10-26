@@ -82,6 +82,7 @@ class _Daily_testState extends State<Daily_test> {
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (correctChoice == 0) {
+                      //正在讀取資料庫資料
                       return const Center(
                           child: Text(
                         "Loading...",
