@@ -30,7 +30,8 @@ import java.util.List;
 public class AnnoyanceController {
     private final AnnoyanceServiceImpl annoyanceService;
 
-    private final String UPLOADED_FOLDER = "./file/";
+    private final String CONTENT_FILE = "./file/annoyance/content/";
+    private final String MOOD_FILE = "./file/annoyance/mood/";
 
     @ResponseBody
     @PostMapping("/create")
@@ -46,16 +47,16 @@ public class AnnoyanceController {
             } else {
                 try {
                     if (annoyanceBean.getContent() == null) {
-                        byte[] bytes = annoyanceBean.getContentFile().getBytes();
-                        Path path = Paths.get(UPLOADED_FOLDER + annoyanceBean.getContentFile().getOriginalFilename());
-                        Files.write(path, bytes);
-                        System.out.println(path.toString());
-                        annoyanceBean.setContent(path.toString());
-                        System.out.println(annoyanceBean.getContent());
-                        annoyanceService.createAndReturnBean(annoyanceBean);
-                        result.put("result", true);
-                        result.put("errorCode", "");
-                        result.put("message", "新增成功");
+                        byte[] contentBytes = annoyanceBean.getContentFile().getBytes();
+                        Path contentPath = Paths.get(CONTENT_FILE + annoyanceBean.getContentFile().getOriginalFilename());
+                        Files.write(contentPath, contentBytes);
+                        annoyanceBean.setContent(contentPath.toString());
+                        if(annoyanceBean.getMood().equals("是")){
+                            byte[] moodBytes = annoyanceBean.getMoodFile().getBytes();
+                            Path moodPath = Paths.get(MOOD_FILE + annoyanceBean.getMoodFile().getOriginalFilename());
+                            Files.write(moodPath, moodBytes);
+                            annoyanceBean.setMood(moodPath.toString());
+                        }
                     }
                     annoyanceService.createAndReturnBean(annoyanceBean);
                     result.put("result", true);
