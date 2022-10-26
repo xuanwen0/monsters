@@ -65,10 +65,11 @@ class _CheckLockPageState extends State<CheckLockPage> {
                       String? val = pref.getString("pin");
                       if (val == mPin) {
                         saveLock('true');
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Drawer_settings()));
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => Drawer_settings()));
+                        Navigator.of(context).pop();
                       } else {
                         mPinController.notifyWrongInput();
                       }

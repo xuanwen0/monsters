@@ -78,7 +78,7 @@ class _LockPageState extends State<LockPage> {
                     children: [
                       MaterialButton(
                           onPressed: () {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => Forget_Lock_Auth()));

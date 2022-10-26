@@ -18,6 +18,17 @@ class _CloseLockPageState extends State<CloseLockPage> {
       backgroundColor: BackgroundColorLight,
       body: Stack(
         children: [
+          //上一頁
+          Align(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                icon: Icon(Icons.arrow_back_rounded),
+                color: Color.fromRGBO(255, 187, 0, 1),
+                iconSize: 57.0,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )),
           //標題
           const Align(
             alignment: Alignment.topCenter,
@@ -80,7 +91,7 @@ class _CloseLockPageState extends State<CloseLockPage> {
                     children: [
                       MaterialButton(
                           onPressed: () {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => Forget_Lock_Auth()));
