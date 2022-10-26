@@ -108,23 +108,6 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
     setState(() {});
   }
 
-  //畫心情功能
-  _navigateAndDisplayPaint(BuildContext context) async {
-    final moodImage = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Draw_mood()),
-    );
-    if (moodImage == null) {
-      reply("畫心情失敗，請通知官方平台");
-    } else {
-      final imageTemporary = File(moodImage.path);
-      this._moodImage = imageTemporary;
-      messages.insert(0, {"data": 5, "image": _moodImage});
-    }
-
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     //TODO:後端修改
@@ -529,6 +512,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
       );
     }
 
+    //audio container
     if (data == 4) {
       userChatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
@@ -589,47 +573,6 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
       );
     }
 
-    //painting container
-    if (data == 5) {
-      userChatContainer = Container(
-        padding: EdgeInsets.only(left: 10, right: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            //訊息框
-            Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Bubble(
-                  radius: Radius.circular(15.0),
-                  color: Color.fromRGBO(255, 237, 151, 1),
-                  elevation: 2.0,
-                  //訊息文字格式
-                  child: Padding(
-                    padding: EdgeInsets.all(2.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 3.0,
-                        ),
-                        Flexible(
-                            child: Container(
-                                child: Image.file(_moodImage!,
-                                    width: 200,
-                                    height: 200,
-                                    filterQuality: FilterQuality.medium))),
-                        SizedBox(
-                          width: 3.0,
-                        ),
-                      ],
-                    ),
-                  )),
-            ),
-          ],
-        ),
-      );
-    }
-
     return userChatContainer;
   }
 
@@ -643,11 +586,8 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
       pickable = true;
       reply(hintDiaryMethod);
     } else if (chatRound == 3) {
-      pickable = false;
-      reply(hintAccept);
-    } else if (chatRound == 4) {
       reply(hintEmotionGrade);
-    } else if (chatRound == 5) {
+    } else if (chatRound == 4) {
       reply(hintAccept);
     } else {
       reply("還想新增更多日記嗎，再找下一位同伴來幫忙吧！");
@@ -658,17 +598,13 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
   void cannotRead() {
     String hintCannotRead = "員工手冊上沒有這個選項耶...麻煩確認一下好嗎？";
     String secHintEmotionGrade = "心情指數有多高呢？\n1分是最低的喔！";
-    String secHintDrawingAcception = "要不要把你的心情畫下來呢？";
     String secHintSharingAcception = "想分享日記給別人看看嗎？";
     chatRound--;
     reply(hintCannotRead);
     if (chatRound == 1) {
-      reply(secHintDrawingAcception);
-    }
-    if (chatRound == 2) {
       reply(secHintEmotionGrade);
     }
-    if (chatRound == 3) {
+    if (chatRound == 2) {
       reply(secHintSharingAcception);
     }
   }
@@ -676,7 +612,6 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
   //確認是否符合選擇格式，符合->回覆 不符合->提示再次輸入
   Future<void> response([String? text, File? media]) async {
     List<String> emotionGradeMembers = ["", "1", "2", "3", "4", "5"];
-    List<String> acceptDrawingMembers = ["", "是", "否"];
     //進入時自動訊息問安
     if (chatRound == 0) {
       int hourNow = DateTime.now().hour.toInt();
@@ -705,23 +640,10 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
           }
           reply("想畫點甚麼表達你的感受嗎？");
         }
-        //取得是否畫心情
+
+        //取得心情分數
         if (chatRound == 2) {
           log("--完成內容");
-          if (acceptDrawingMembers.contains(text)) {
-            if (text == "是") {
-              await _navigateAndDisplayPaint(context);
-            }
-            userAnswers.add(text);
-            //提示輸入煩惱程度
-            reply("給現在的心情打一個分數～\n5分是最開心的喔！");
-          } else {
-            cannotRead();
-          }
-        }
-        //取得心情分數
-        if (chatRound == 3) {
-          log("--完成畫心情");
           if (emotionGradeMembers.contains(text)) {
             userAnswers.add(emotionGradeMembers.indexOf(text!));
             reply("想不想把這件事分享給別人呢？");
@@ -730,7 +652,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
           }
         }
         //取得是否分享
-        if (chatRound == 4) {
+        if (chatRound == 3) {
           log("--完成心情分數");
           if (acceptShare == 0 || acceptShare == 1) {
             if (text == "是") {
