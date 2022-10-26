@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/audio_Model/audio_player.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
@@ -343,7 +344,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                             annoyanceRepository.createAnnoyance(
                               Annoyance(
                                   id: 0,
-                                  account: 'Lin',
+                                  account: user_Account,
                                   content: userAnswers[1],
                                   monsterId: 1,
                                   type: userAnswers[0],
@@ -353,17 +354,12 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                                   solve: 0,
                                   share: acceptShare),
                             );
-/* 前往歷史紀錄                           
-
                             Navigator.pushReplacement(
-                              
-    //TODO: Level 2
-    //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
+                                //TODO: Level 2
+                                //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => History()));
-                          
-*/
                           },
                         ),
                       ),

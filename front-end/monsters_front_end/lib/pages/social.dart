@@ -97,7 +97,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
     Map socialResult = {};
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     Future<Data> annoyances = annoyanceRepository
-        .searchAnnoyanceByAccount("Lin")
+        .searchAnnoyanceByAccount(user_Account)
         .then((value) => Data.fromJson(value!));
     await annoyances.then((value) async {
       if (value != null) {

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/audio_model/audio_player.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
@@ -323,11 +324,11 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                           onPressed: () {
                             log(userAnswers.toString());
 //後端修改
-/* 新增煩惱
+/*
                             annoyanceRepository.createAnnoyance(
                               Annoyance(
                                   id: 0,
-                                  account: 'Lin',
+                                  account: user_Account,
                                   content: userAnswers[1],
                                   monsterId: 1,
                                   type: userAnswers[0],
@@ -337,7 +338,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                                   solve: 0,
                                   share: acceptShare),
                             );
-*/
+                            */
 /* 前往歷史紀錄                           
                             Navigator.pushReplacement(
                                 context,
@@ -374,7 +375,8 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                     height: 50,
                     width: 50,
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/image/Avatar_Baku_PNG.png'),
+                      backgroundImage:
+                          AssetImage('assets/image/Avatar_Baku_PNG.png'),
                     ),
                   )
                 : Container(),

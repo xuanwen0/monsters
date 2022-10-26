@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/annoyanceModel.dart';
 import 'package:monsters_front_end/pages/annoyanceChat.dart';
 import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
@@ -695,7 +696,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     Map socialResult = {};
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     Future<Data> annoyances = annoyanceRepository
-        .searchAnnoyanceByAccount('Lin')
+        .searchAnnoyanceByAccount(user_Account)
         .then((value) => Data.fromJson(value!));
     await annoyances.then((value) async {
       await socialResult.putIfAbsent(

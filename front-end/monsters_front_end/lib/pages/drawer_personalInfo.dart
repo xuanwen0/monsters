@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/memberModel.dart';
 import 'package:monsters_front_end/pages/edit_personalInfo.dart';
 import 'package:monsters_front_end/pages/social.dart';
@@ -36,7 +37,7 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
     print("doing...");
     final MemberRepository memberRepository = MemberRepository();
     Future<Data> personalInfo = memberRepository
-        .searchPersonalInfoByAccount("Lin")
+        .searchPersonalInfoByAccount(user_Account)
         .then((value) => Data.fromJson(value!));
 
     await personalInfo.then((value) async {

@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/daily_test.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DailyTest_correct extends StatefulWidget {
   String learn;
@@ -16,11 +17,20 @@ class DailyTest_correct extends StatefulWidget {
 }
 
 class _DailyTest_correctState extends State<DailyTest_correct> {
+  late Future _future;
   var learn;
   _DailyTest_correctState(this.learn);
   int unlockProgress = 1;
+
+  @override
+  void initState() {
+    _future = getUserDailyTestProgress();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    dailyTestReward();
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       appBar: secondAppBar("每日測驗"),
@@ -60,29 +70,44 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
               ),
             ),
           ),
-          //目前解鎖進度
+
           Expanded(
-            flex: 10,
-            child: Container(
-                padding: const EdgeInsets.only(
-                  left: 30,
-                ),
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "再答對${7 - unlockProgress}次就可以解鎖隱藏獎勵！\n目前解鎖進度 ：",
-                  style:
-                      const TextStyle(fontSize: 20, color: BackgroundColorWarm),
-                )),
-          ),
-          //進度條
-          Expanded(
-            flex: 15,
-            child: Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.all(20),
-              child: progressBars(),
-            ),
-          ),
+              flex: 25,
+              child: FutureBuilder<dynamic>(
+                  future: _future,
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.data == null) {
+                      return const Center(
+                          child: Text(
+                        "Loading...",
+                        style: TextStyle(fontSize: 30),
+                      ));
+                    }
+                    return Column(
+                      children: [
+                        Container(
+                            padding: const EdgeInsets.only(
+                              left: 30,
+                            ),
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "再答對${7 - unlockProgress}次就可以解鎖隱藏獎勵！\n目前解鎖進度 ：",
+                              style: const TextStyle(
+                                  fontSize: 20, color: BackgroundColorWarm),
+                            )), //進度條
+                        Expanded(
+                          flex: 15,
+                          child: Container(
+                            alignment: Alignment.center,
+                            margin: const EdgeInsets.all(20),
+                            child: progressBars(),
+                          ),
+                        ),
+                      ],
+                    );
+                  })),
+
           //留白
           Expanded(
             flex: 45,
@@ -170,6 +195,17 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
         ],
       ),
     );
+  }
+
+  dailyTestReward() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    if (DateTime.now().day.toString() != pref.getString("LastTryDate")) {
+      //TODO:使用者解鎖進度+1
+    }
+  }
+
+  Future<bool> getUserDailyTestProgress() async {
+    return true;
   }
 }
 
