@@ -20,7 +20,6 @@ class _Psychologicial_testState extends State<Psychologicial_test> {
   final value = [0, 1, 2, 3, 4, 5];
   final groups = [0, 1, 2, 3, 4, 5];
   final groupVal = [0, 0, 0, 0, 0, 0];
-  var alarm = "";
 
   @override
   void initState() {
@@ -31,13 +30,12 @@ class _Psychologicial_testState extends State<Psychologicial_test> {
     controller = YoutubePlayerController(
         initialVideoId: YoutubePlayer.convertUrlToId(url)!,
         flags: const YoutubePlayerFlags(
-          endAt: 90,
-          mute: false,
-          loop: false,
-          forceHD: true,
-          autoPlay: false,
-          controlsVisibleAtStart: false,
-        ));
+            endAt: 90,
+            mute: false,
+            loop: false,
+            forceHD: true,
+            autoPlay: false,
+            controlsVisibleAtStart: false));
   }
 
   @override
@@ -71,8 +69,8 @@ class _Psychologicial_testState extends State<Psychologicial_test> {
                     height: 10,
                   ),
                   Container(
-                    height: 515,
-                    padding: const EdgeInsets.only(bottom: 5),
+                    height: 500,
+                    padding: const EdgeInsets.only(bottom: 80),
                     child: ListView(
                       scrollDirection: Axis.vertical,
                       children: [
@@ -88,11 +86,6 @@ class _Psychologicial_testState extends State<Psychologicial_test> {
                         answerRow(groups[4]),
                         questionContainer("6.有過自殺的念頭"),
                         answerRow(groups[5]),
-                        Container(
-                          color: BackgroundColorLight,
-                          height: 30,
-                          child: Text(alarm),
-                        ),
                         TextButton(
                             child: Container(
                               width: 250,

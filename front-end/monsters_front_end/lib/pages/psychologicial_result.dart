@@ -70,13 +70,16 @@ class _Psychologicial_result extends State<Psychologicial_result> {
                 const SizedBox(
                   height: 30,
                 ),
+                //心理小遊戲
                 pushButton("心理小遊戲"),
                 const SizedBox(
                   height: 20,
                 ),
-                pushButton("紓壓方法"),
-                //心理小遊戲
                 //紓壓方法
+                pushButton("紓壓方法"),
+                const SizedBox(
+                  height: 20,
+                ),
               ],
             ),
           ));

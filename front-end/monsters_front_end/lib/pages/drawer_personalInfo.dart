@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/memberModel.dart';
 import 'package:monsters_front_end/pages/edit_personalInfo.dart';
 import 'package:monsters_front_end/pages/social.dart';
@@ -36,14 +37,15 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
     print("doing...");
     final MemberRepository memberRepository = MemberRepository();
     Future<Data> personalInfo = memberRepository
+        // .searchPersonalInfoByAccount("user_Account")
         .searchPersonalInfoByAccount("Lin")
         .then((value) => Data.fromJson(value!));
 
     await personalInfo.then((value) async {
-      print("0");
       personalInfoResult["nickname"] = value.data.first.nickName;
       personalInfoResult["birthday"] = value.data.first.birthday;
       personalInfoResult["mail"] = value.data.first.mail;
+      print(personalInfoResult);
     });
     print(personalInfoResult);
     setState(() {});
@@ -111,15 +113,15 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
                           children: [
                             {
                               'text': '暱稱',
-                              'content': userNickname,
+                              'content': snapshot.data["nickname"],
                             },
                             {
                               'text': '生日',
-                              'content': userBirthday,
+                              'content': snapshot.data["birthday"],
                             },
                             {
                               'text': '信箱',
-                              'content': userMail,
+                              'content': snapshot.data["mail"],
                             }
                           ].map((itemData) {
                             final text = itemData['text']!;

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/annoyanceModel.dart';
 import 'package:monsters_front_end/pages/annoyanceChat.dart';
 import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
@@ -117,7 +118,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                     ),
                     mainAppBarTitleContainer("歷史紀錄")
                   ])),
-              //標籤 完成
+              //標籤
               Expanded(
                   flex: 5,
                   child: Center(
@@ -130,7 +131,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         //全部標籤
                         InkWell(
                             child: Container(
-                              width: 60,
+                              width: 50,
                               decoration: BoxDecoration(
                                 color: selectionTab_type == 1
                                     ? const Color(0xffa0522d)
@@ -159,7 +160,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         //煩惱標籤
                         InkWell(
                             child: Container(
-                              width: 60,
+                              width: 50,
                               decoration: BoxDecoration(
                                 color: selectionTab_type == 2
                                     ? const Color(0xffa0522d)
@@ -188,7 +189,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         //日記標籤
                         InkWell(
                             child: Container(
-                              width: 60,
+                              width: 50,
                               decoration: BoxDecoration(
                                 color: selectionTab_type == 3
                                     ? const Color(0xffa0522d)
@@ -217,7 +218,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         //未解決標籤
                         InkWell(
                             child: Container(
-                              width: 80,
+                              width: 70,
                               decoration: BoxDecoration(
                                 color: selectionTab_solve == 1
                                     ? const Color(0xffa0522d)
@@ -245,7 +246,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         //已解決標籤
                         InkWell(
                             child: Container(
-                              width: 80,
+                              width: 70,
                               decoration: BoxDecoration(
                                 color: selectionTab_solve == 2
                                     ? const Color(0xffa0522d)
@@ -291,6 +292,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                           itemCount: snapshot.data["itemCounter"],
                           itemBuilder: (BuildContext context, int index) =>
                               Container(
+                            height: 110,
                             decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
@@ -298,14 +300,18 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                 color: BackgroundColorWarm,
                               )),
                             ),
-                            height: 110,
                             alignment: Alignment.center,
                             child: ListTile(
                                 leading: SizedBox(
                                   height: double.infinity,
                                   child: CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        'assets/image/Avatar_Baku_JPG.jpg'),
+                                    radius: 35,
+                                    backgroundColor: Colors.white,
+                                    child: CircleAvatar(
+                                      radius: 35,
+                                      backgroundImage: AssetImage(
+                                          'assets/image/Avatar_Baku_JPG.jpg'),
+                                    ),
                                   ),
                                 ),
                                 title: Text(
@@ -690,7 +696,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     Map socialResult = {};
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     Future<Data> annoyances = annoyanceRepository
-        .searchAnnoyanceByAccount(userAccount)
+        .searchAnnoyanceByAccount(user_Account)
         .then((value) => Data.fromJson(value!));
     await annoyances.then((value) async {
       await socialResult.putIfAbsent(
