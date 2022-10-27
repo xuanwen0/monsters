@@ -39,15 +39,11 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    player.dispose();
-    timerController.dispose();
     messageInsert.dispose();
-    _videoPlayerController.dispose();
     super.dispose();
   }
 
   void init() {
-    player.init();
     super.initState();
   }
 
@@ -57,7 +53,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     if (media == null) return;
     final imageTemporary = File(media.path);
 
-    this.contentFile = imageTemporary;
+    contentFile = imageTemporary;
     if (contentFile != null) {
       messages.insert(0, {"data": 2, "image": contentFile});
       response(null, contentFile);
@@ -86,7 +82,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     if (media == null) return;
     final imageTemporary = File(media.path);
 
-    this.contentFile = imageTemporary;
+    contentFile = imageTemporary;
     if (contentFile != null) {
       messages.insert(0, {"data": 2, "image": contentFile});
       response(null, contentFile);
@@ -340,19 +336,29 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                             ),
                           ),
                           onPressed: () {
-                            log(userAnswers.toString());
+                            log("user_Account: " + user_Account.toString());
+                            log("type:" + userAnswers[0].toString());
+                            log("content: " + userAnswers[1].toString());
+                            log("mood: " + userAnswers[2].toString());
+                            log("index: " + userAnswers[3].toString());
+                            log("share: " + userAnswers[4].toString());
+                            log("moodFile: " + moodFile.toString());
+                            log("contentFile: " + contentFile.toString());
                             annoyanceRepository.createAnnoyance(
                               Annoyance(
-                                  id: 0,
-                                  account: user_Account,
-                                  content: userAnswers[1],
-                                  monsterId: 1,
-                                  type: userAnswers[0],
-                                  mood: userAnswers[2],
-                                  index: userAnswers[3],
-                                  time: '',
-                                  solve: 0,
-                                  share: acceptShare),
+                                id: 0,
+                                account: user_Account, //"Lin"
+                                monsterId: 1,
+                                type: userAnswers[0], //4
+                                content: userAnswers[1], //"純文字不分享無多媒體"
+                                mood: userAnswers[2], //"否"
+                                index: userAnswers[3], //3
+                                share: userAnswers[4], //0
+                                contentFile: contentFile, //null
+                                moodFile: moodFile, //null
+                                time: '',
+                                solve: 0,
+                              ),
                             );
                             Navigator.pushReplacement(
                                 //TODO: Level 2
@@ -739,9 +745,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
         if (chatRound == 2) {
           if (text != null) {
             userAnswers.add(text);
-          }
-          if (media != null) {
-            userAnswers.add(media);
+          } else {
+            userAnswers.add(null);
           }
           log("--完成內容");
           reply("真是辛苦你了，想做一幅畫表達你的感受嗎？");
@@ -774,12 +779,12 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
         }
         //取得是否分享
         if (chatRound == 5) {
-          if (acceptShare == 0 || acceptShare == 1) {
+          if (text != "是" || text != "否") {
             if (text == "是") {
-              acceptShare = 1;
+              userAnswers.add(1);
             }
             if (text == "否") {
-              acceptShare = 0;
+              userAnswers.add(0);
             }
             lastSpeaking = true;
             reply("解決煩惱請馬上跟我說！我已經迫不及待想吃飯了！");

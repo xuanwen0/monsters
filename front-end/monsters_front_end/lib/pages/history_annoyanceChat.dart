@@ -55,25 +55,6 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
     userAns = [type, content, mood, index, share];
   }
 
-  void getAnnoyanceByID(int index) {
-    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
-    String userAccount = 'Lin';
-    Future<Data> annoyances = annoyanceRepository
-        .searchAnnoyanceByAccount(userAccount)
-        .then((value) => Data.fromJson(value!));
-    annoyances.then(
-      (value) => storeItem(
-          value.data.elementAt(index).content,
-          value.data.elementAt(index).time,
-          value.data.elementAt(index).type.toString(),
-          value.data.elementAt(index).monsterId.toString(),
-          value.data.elementAt(index).mood,
-          value.data.elementAt(index).index.toString(),
-          value.data.elementAt(index).solve.toString(),
-          value.data.elementAt(index).share.toString()),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();

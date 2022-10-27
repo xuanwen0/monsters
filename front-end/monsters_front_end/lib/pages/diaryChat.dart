@@ -313,6 +313,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                                   id: 0,
                                   account: user_Account,
                                   content: userAnswers[1],
+                                  contentFile: contentFile,
                                   monsterId: 1,
                                   type: userAnswers[0],
                                   mood: userAnswers[2],

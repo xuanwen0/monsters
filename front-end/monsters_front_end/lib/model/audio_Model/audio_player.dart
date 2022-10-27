@@ -18,7 +18,7 @@ class AudioPlayer {
   }
 
   void dispose() {
-    _audioPlayer!.closeAudioSession();
+    _audioPlayer?.closeAudioSession();
     _audioPlayer = null;
   }
 
