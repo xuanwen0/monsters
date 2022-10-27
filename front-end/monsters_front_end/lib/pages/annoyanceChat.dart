@@ -380,10 +380,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
   //聊天功能
   Widget chat(String message, int data) {
-    Container userChatContainer = Container();
+    Container chatContainer = Container();
     //text container
     if (data < 2) {
-      userChatContainer = Container(
+      chatContainer = Container(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: Row(
           mainAxisAlignment:
@@ -445,7 +445,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       //TODO: Level 2
       //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
       ///wrap by something make it clickable
-      userChatContainer = Container(
+      chatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -495,7 +495,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       ///TODO: Level 2
       ///ADD HERO https://youtu.be/1xipg02Wu8s?t=657
       ///wrap by something make it clickable
-      userChatContainer = Container(
+      chatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -556,7 +556,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     }
 
     if (data == 4) {
-      userChatContainer = Container(
+      chatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -620,7 +620,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       //TODO: Level 2
       ///ADD HERO https://youtu.be/1xipg02Wu8s?t=657
       ///wrap by something make it clickable to watch
-      userChatContainer = Container(
+      chatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -659,13 +659,54 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       );
     }
 
-    return userChatContainer;
+    if (data == 6) {
+      chatContainer = Container(
+        padding: EdgeInsets.only(left: 20, right: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: 50,
+              width: 50,
+              child: CircleAvatar(
+                backgroundImage: AssetImage('assets/image/Avatar_Baku_PNG.png'),
+              ),
+            ),
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: Colors.white,
+                  elevation: 2.0,
+                  //訊息格式 以圖表示煩惱指數
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                        Flexible(
+                            child: Container(
+                                constraints: BoxConstraints(maxWidth: 200),
+                                child: annoyancePointRow()))
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return chatContainer;
   }
 
   //怪獸訊息(提示輸入格式)
   void hint() {
     String hintAnnoyType = "[請擇一輸入]\n課業 / 事業 / 愛情 \n友情 / 親情 / 其他";
-    String hintEmotionGrade = "[請擇一輸入]\n1 / 2 / 3 / 4 / 5";
     String hintAccept = "[請擇一輸入]\n是 / 否";
     String hintAnnoyMethod = "請用以下幾種方式記錄：\n★以文字記錄煩惱\n★點選左下角圖示新增";
 
@@ -678,7 +719,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       pickable = false;
       reply(hintAccept);
     } else if (chatRound == 3) {
-      reply(hintEmotionGrade);
+      replyImage();
     } else if (chatRound == 4) {
       reply(hintAccept);
     } else {
@@ -759,8 +800,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
             }
             userAnswers.add(text);
             //提示輸入煩惱程度
-            reply("給煩惱程度打一個分數～\n5分是最煩惱的喔！");
-
+            // reply("給煩惱程度打一個分數～\n5分是最煩惱的喔！");
+            reply("給煩惱程度打一個分數～");
             log("--完成畫心情");
           } else {
             cannotRead();
@@ -802,9 +843,52 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     setState(() {});
   }
 
-  //怪獸回覆
+  //怪獸文字回覆
   void reply(String text) {
     messages.insert(0, {"data": 0, "message": text});
+  }
+
+  void replyImage() {
+    messages.insert(0, {"data": 6, "message": "print image"});
+  }
+
+  Row annoyancePointRow() {
+    Row annoyancePointRow = Row();
+    annoyancePointRow = Row(
+      children: [
+        annoyancePointColumn("1"),
+        Spacer(),
+        annoyancePointColumn("2"),
+        Spacer(),
+        annoyancePointColumn("3"),
+        Spacer(),
+        annoyancePointColumn("4"),
+        Spacer(),
+        annoyancePointColumn("5"),
+        Spacer(),
+      ],
+    );
+
+    return annoyancePointRow;
+  }
+
+  Column annoyancePointColumn(String point) {
+    Column annoyanceImageColumn = Column();
+    annoyanceImageColumn = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CircleAvatar(
+          radius: 19,
+          backgroundImage: AssetImage('assets/mood/annoyancePoint_$point.png'),
+        ),
+        SizedBox(height: 1),
+        Text(point,
+            style:
+                TextStyle(fontSize: 17, color: Color.fromRGBO(160, 82, 45, 1)))
+      ],
+    );
+
+    return annoyanceImageColumn;
   }
 }
 

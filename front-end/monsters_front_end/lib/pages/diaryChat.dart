@@ -579,7 +579,6 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
 
   //怪獸訊息(提示輸入格式)
   void hint() {
-    String hintEmotionGrade = "[請擇一輸入]\n1 / 2 / 3 / 4 / 5";
     String hintAccept = "[請擇一輸入]\n是 / 否";
     String hintDiaryMethod = "請用以下幾種方式記錄：\n★以文字記錄日記\n★點選左下角圖示新增";
     if (chatRound == 1) {
@@ -587,7 +586,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
       pickable = true;
       reply(hintDiaryMethod);
     } else if (chatRound == 3) {
-      reply(hintEmotionGrade);
+      replyImage();
     } else if (chatRound == 4) {
       reply(hintAccept);
     } else {
@@ -680,6 +679,49 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
   //怪獸回覆
   void reply(String text) {
     messages.insert(0, {"data": 0, "message": text});
+  }
+
+  void replyImage() {
+    messages.insert(0, {"data": 6, "message": "print image"});
+  }
+
+  Row emotionPointRow() {
+    Row annoyancePointRow = Row();
+    annoyancePointRow = Row(
+      children: [
+        emotionPointColumn("1"),
+        Spacer(),
+        emotionPointColumn("2"),
+        Spacer(),
+        emotionPointColumn("3"),
+        Spacer(),
+        emotionPointColumn("4"),
+        Spacer(),
+        emotionPointColumn("5"),
+        Spacer(),
+      ],
+    );
+
+    return annoyancePointRow;
+  }
+
+  Column emotionPointColumn(String point) {
+    Column annoyanceImageColumn = Column();
+    annoyanceImageColumn = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CircleAvatar(
+          radius: 19,
+          backgroundImage: AssetImage('assets/mood/annoyancePoint_$point.png'),
+        ),
+        SizedBox(height: 1),
+        Text(point,
+            style:
+                TextStyle(fontSize: 17, color: Color.fromRGBO(160, 82, 45, 1)))
+      ],
+    );
+
+    return annoyanceImageColumn;
   }
 }
 
