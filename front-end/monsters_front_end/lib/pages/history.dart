@@ -339,8 +339,13 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                             style: TextStyle(fontSize: 14))),
                                   ],
                                 ),
-                                onTap: () =>
-                                    print(snapshot.data["result $index"]["id"])
+                                onTap: () => print("type: " +
+                                    snapshot.data["result $index"]["type"] +
+                                    "\n" +
+                                    "id: " +
+                                    snapshot.data["result $index"]["id"]
+                                        .toString() +
+                                    "\n")
 
                                 // Navigator.push(
                                 //     context,

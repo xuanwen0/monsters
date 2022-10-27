@@ -30,14 +30,13 @@ class _Psychologicial_result extends State<Psychologicial_result> {
     controller = YoutubePlayerController(
         initialVideoId: YoutubePlayer.convertUrlToId(url)!,
         flags: const YoutubePlayerFlags(
-          startAt: 89,
-          endAt: 113,
-          mute: false,
-          loop: false,
-          forceHD: true,
-          autoPlay: true,
-          controlsVisibleAtStart: false,
-        ));
+            startAt: 89,
+            endAt: 113,
+            mute: false,
+            loop: false,
+            forceHD: true,
+            autoPlay: false,
+            controlsVisibleAtStart: false));
   }
 
   @override
@@ -61,26 +60,29 @@ class _Psychologicial_result extends State<Psychologicial_result> {
       builder: (context, player) => Scaffold(
             appBar: secondAppBar("分析結果"),
             backgroundColor: BackgroundColorLight,
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(child: player),
-                suggestion(),
-                const SizedBox(
-                  height: 30,
-                ),
-                //心理小遊戲
-                pushButton("心理小遊戲"),
-                const SizedBox(
-                  height: 20,
-                ),
-                //紓壓方法
-                pushButton("紓壓方法"),
-                const SizedBox(
-                  height: 20,
-                ),
-              ],
+            body: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(child: player),
+                  suggestion(),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  //心理小遊戲
+                  pushButton("心理小遊戲"),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //紓壓方法
+                  pushButton("紓壓方法"),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
             ),
           ));
 
@@ -104,7 +106,7 @@ class _Psychologicial_result extends State<Psychologicial_result> {
     }
 
     return Container(
-        padding: const EdgeInsets.all(30),
+        padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -115,9 +117,6 @@ class _Psychologicial_result extends State<Psychologicial_result> {
                   fontSize: 32,
                   color: BackgroundColorWarm,
                   fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 10,
             ),
             Text(
               title,
