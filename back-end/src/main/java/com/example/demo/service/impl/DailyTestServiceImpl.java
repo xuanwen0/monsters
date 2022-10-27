@@ -7,8 +7,6 @@ import com.example.demo.service.DailyTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 
 @Service
 public class DailyTestServiceImpl extends BaseServiceImplement<DailyTestDAO, DailyTest, DailyTestBean> implements DailyTestService {
@@ -23,9 +21,6 @@ public class DailyTestServiceImpl extends BaseServiceImplement<DailyTestDAO, Dai
     @Override
     public DailyTestBean createAndReturnBean(DailyTestBean bean) {
         return null;
-    }
-    public List<DailyTest> find(){
-        return dailyTestDAO.searchAll();
     }
 
     @Override

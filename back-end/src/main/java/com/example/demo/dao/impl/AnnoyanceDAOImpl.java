@@ -17,6 +17,13 @@ public class AnnoyanceDAOImpl extends BaseDAOImplement<Annoyance> implements Ann
         detachedCriteria.add(Restrictions.eq("account", account));
         return findByCriteria(detachedCriteria);
     }
+
+    @Override
+    public List<Annoyance> findByShare() {
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Annoyance.class);
+        detachedCriteria.add(Restrictions.eq("share", 1));
+        return findByCriteria(detachedCriteria);
+    }
 }
 
 

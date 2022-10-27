@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.bean.AnnoyanceBean;
 import com.example.demo.dao.AnnoyanceDAO;
 import com.example.demo.entity.Annoyance;
+import com.example.demo.entity.enumerate.AnnoyanceTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Service
 public class AnnoyanceServiceImpl extends BaseServiceImplement<AnnoyanceDAO, Annoyance, AnnoyanceBean> implements com.example.demo.service.AnnoyanceService {
+
     @Autowired
     private final AnnoyanceDAO annoyanceDAO;
 
@@ -26,19 +28,32 @@ public class AnnoyanceServiceImpl extends BaseServiceImplement<AnnoyanceDAO, Ann
     public AnnoyanceBean createAndReturnBean(AnnoyanceBean bean) {
         Annoyance annoyance = createVO(bean);
         annoyance.setTime(LocalDateTime.now());
+        annoyance.setType(AnnoyanceTypeEnum.CAUSE);
         annoyanceDAO.insert(annoyance);
         bean = createBean(annoyance);
         return bean;
     }
+
     @Override
-    public List<AnnoyanceBean> searchAnnoyanceByAccount(String account){
+    public List<AnnoyanceBean> searchAnnoyanceByAccount(String account) {
         List<Annoyance> userList = annoyanceDAO.findByAccount(account);
         List<AnnoyanceBean> annoyanceBeanList = new ArrayList<>();
-        for(Annoyance annoyance : userList){
+        for (Annoyance annoyance : userList) {
             annoyanceBeanList.add(createBean(annoyance));
         }
         return annoyanceBeanList;
     }
+
+    @Override
+    public List<AnnoyanceBean> searchAnnoyanceByShare() {
+        List<Annoyance> userList = annoyanceDAO.findByShare();
+        List<AnnoyanceBean> annoyanceBeanList = new ArrayList<>();
+        for (Annoyance annoyance : userList) {
+            annoyanceBeanList.add(createBean(annoyance));
+        }
+        return annoyanceBeanList;
+    }
+
     @Override
     protected Annoyance createVO(AnnoyanceBean bean) {
         Annoyance entity = new Annoyance();
@@ -54,6 +69,7 @@ public class AnnoyanceServiceImpl extends BaseServiceImplement<AnnoyanceDAO, Ann
         entity.setShare(bean.getShare());
         return entity;
     }
+
     @Override
     protected AnnoyanceBean createBean(Annoyance entity) {
         AnnoyanceBean bean = new AnnoyanceBean();

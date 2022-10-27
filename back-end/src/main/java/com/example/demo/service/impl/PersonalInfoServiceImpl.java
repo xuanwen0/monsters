@@ -54,6 +54,7 @@ public class PersonalInfoServiceImpl extends BaseServiceImplement<PersonalInfoDA
         entity.setLock(bean.getLock());
         entity.setPhoto(bean.getPhoto());
         entity.setTheme(bean.getTheme());
+        entity.setDailyTest(bean.getDailyTest());
         return entity;
     }
 
@@ -68,6 +69,7 @@ public class PersonalInfoServiceImpl extends BaseServiceImplement<PersonalInfoDA
         bean.setLock(entity.getLock());
         bean.setPhoto(entity.getPhoto());
         bean.setTheme(entity.getTheme());
+        bean.setDailyTest(entity.getDailyTest());
         return bean;
     }
 }

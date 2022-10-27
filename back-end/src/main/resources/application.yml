@@ -5,7 +5,7 @@ database:
   name: monsters
   driver: com.mysql.cj.jdbc.Driver
 file:
-  path: D://monsters/back-end/image
+  path: ./monsters/back-end/file
 spring:
   main:
     allow-bean-definition-overriding: true
