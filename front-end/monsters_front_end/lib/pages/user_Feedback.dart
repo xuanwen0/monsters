@@ -32,51 +32,64 @@ class _user_FeedbackState extends State<user_Feedback> {
     return Scaffold(
         backgroundColor: const Color(0xfffffed4),
         appBar: secondAppBar("使用回饋"),
-        body: Column(
-          children: [
-            const Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text("若有任何建議歡迎聯繫我們，\n請在下方輸入您的回饋！", style: Body1TextStyle),
-            ),
-            Container(
-                margin: const EdgeInsets.only(bottom: 20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                  border: Border.all(width: 1, color: Colors.white),
-                ),
-                child: TextFormField(
-                    autofocus: false,
-                    controller: _messageController,
-                    decoration: const InputDecoration(
-                      hintText: '請輸入回饋',
-                      border: OutlineInputBorder(
-                        ///設定邊框四個角的弧度
-                        borderRadius: BorderRadius.all(Radius.circular(90)),
-
-                        ///用來配置邊框的樣式
-                        borderSide: BorderSide(
-                          ///設定邊框的顏色
-                          color: Color.fromRGBO(160, 82, 45, 1),
-                          width: 2.0,
-                        ),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 30, 20, 10),
+                child: Text("有任何寶貴意見可以寫在下方，\n幫助我們改善貘nsters ！",
+                    style: Body1TextStyle),
+              ),
+              Container(
+                  height: 15 * 24.0,
+                  margin: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                    border: Border.all(width: 8, color: BackgroundColorSoft),
+                  ),
+                  child: TextFormField(
+                      textInputAction: TextInputAction.done,
+                      maxLines: null,
+                      autofocus: false,
+                      controller: _messageController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: '輸入至少五個字',
+                        fillColor: Color.fromRGBO(255, 255, 255, 1),
                       ),
-                      fillColor: Color.fromRGBO(255, 255, 255, 1),
-                      filled: true,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.length < 5) {
+                          return '回饋至少五個字喔';
+                        } else {
+                          return null;
+                        }
+                      })),
+              const SizedBox(height: 30),
+              FlatButton(
+                  minWidth: 150,
+                  height: 60,
+                  color: Color.fromRGBO(255, 237, 151, 1),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(9999.0)),
+                  // onPressed: () => sendEmail(message: _messageController.text),
+                  onPressed: () => print(_messageController.text),
+                  //是否第一次按(按鈕文字)
+                  child: const Text(
+                    '送出',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 36,
+                      color: Color(0xffa0522d),
                     ),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.length < 5) {
-                        return '回饋至少五個字喔';
-                      } else {
-                        return null;
-                      }
-                    })),
-            FlatButton(
-                // onPressed: () => sendEmail(message: message),
-                onPressed: () => sendEmail(message: _messageController.text),
-                child: const Text("送出"))
-          ],
+                    softWrap: false,
+                  ))
+            ],
+          ),
         ));
   }
 
