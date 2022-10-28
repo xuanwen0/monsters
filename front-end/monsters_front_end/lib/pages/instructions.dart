@@ -79,7 +79,7 @@ class _InstructionsPageState extends State<InstructionsPage> {
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                       onPressed: () => _controller.animateToPage(4,
-                          duration: const Duration(milliseconds: 500),
+                          duration: const Duration(milliseconds: 1000),
                           curve: Curves.easeIn),
                     ),
                     Center(
