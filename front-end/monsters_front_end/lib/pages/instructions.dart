@@ -28,7 +28,7 @@ class _InstructionsPageState extends State<InstructionsPage> {
             },
             children: [
               buildPage(
-                  color: Color.fromARGB(255, 255, 222, 57),
+                  color: Color.fromARGB(255, 255, 224, 68),
                   urlImage: 'assets/image/instructions/instructionPage_1.png',
                   title: "新增煩惱/日記",
                   subtitle: "點選下方導覽列的+號，\n點選左測按鈕開始抒發煩惱，\n或點選右側按鈕紀錄日記"),
@@ -51,7 +51,7 @@ class _InstructionsPageState extends State<InstructionsPage> {
                   color: Color.fromRGBO(255, 254, 212, 1),
                   urlImage: 'assets/image/instructions/instructionPage_5.png',
                   title: "互動區",
-                  subtitle: "點選下方導覽列的互動區，\n我們提供了五個方法讓您紓壓，\n請來試試看吧～"),
+                  subtitle: "點選下方導覽列的互動區，\n我們提供了五個方法讓您紓壓，\n快來試試看吧～"),
             ],
           ),
         ),
@@ -74,7 +74,10 @@ class _InstructionsPageState extends State<InstructionsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
-                        child: Text("SKIP"),
+                        child: Text(
+                          "SKIP",
+                          style: TextStyle(fontSize: 18, color: Colors.black),
+                        ),
                         onPressed: () => _controller.jumpToPage(2)),
                     Center(
                         child: SmoothPageIndicator(
@@ -82,14 +85,17 @@ class _InstructionsPageState extends State<InstructionsPage> {
                       count: 5,
                       effect: WormEffect(
                           spacing: 16,
-                          dotColor: Colors.black26,
-                          activeDotColor: Colors.teal.shade700),
+                          dotColor: Color.fromARGB(255, 211, 193, 184),
+                          activeDotColor: Color.fromRGBO(160, 82, 45, 1)),
                       onDotClicked: (index) => _controller.animateToPage(index,
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.easeIn),
                     )),
                     TextButton(
-                        child: Text("NEXT"),
+                        child: Text(
+                          "NEXT",
+                          style: TextStyle(fontSize: 18, color: Colors.black),
+                        ),
                         onPressed: () => _controller.nextPage(
                             duration: const Duration(milliseconds: 500),
                             curve: Curves.easeInOut))
