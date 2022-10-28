@@ -28,22 +28,26 @@ class _InstructionsPageState extends State<InstructionsPage> {
             },
             children: [
               buildPage(
-                  color: Color.fromARGB(255, 251, 217, 46),
+                  // color: Color.fromARGB(255, 251, 217, 46),
+                  color: Color.fromRGBO(255, 254, 212, 1),
                   urlImage: 'assets/image/instructions/instructionPage_1.png',
                   title: "新增煩惱/日記",
                   subtitle: "點選下方導覽列的+號，\n點選左測按鈕開始抒發煩惱，\n或點選右側按鈕紀錄日記！"),
               buildPage(
-                  color: Color.fromARGB(255, 255, 228, 90),
+                  // color: Color.fromARGB(255, 255, 228, 90),
+                  color: Color.fromRGBO(255, 254, 212, 1),
                   urlImage: 'assets/image/instructions/instructionPage_2.png',
                   title: "歷史紀錄",
                   subtitle: "點選下方導覽列的歷史紀錄，\n查看過往的煩惱和日記，\n並可點選一項未解決的煩惱完成解決。"),
               buildPage(
-                  color: Color.fromRGBO(255, 237, 151, 1),
+                  // color: Color.fromRGBO(255, 237, 151, 1),
+                  color: Color.fromRGBO(255, 254, 212, 1),
                   urlImage: 'assets/image/instructions/instructionPage_3.png',
                   title: "圖鑑",
                   subtitle: "點選下方導覽列的圖鑑，\n查看可愛怪獸圖鑑，\n點選已獲得的怪獸幫他裝飾配件吧！"),
               buildPage(
-                  color: Color.fromARGB(255, 254, 253, 178),
+                  // color: Color.fromARGB(255, 254, 253, 178),
+                  color: Color.fromRGBO(255, 254, 212, 1),
                   urlImage: 'assets/image/instructions/instructionPage_4.png',
                   title: "社群",
                   subtitle: "點選下方導覽列的社群，\n查看社群中分享的貼文，\n並按下愛心或留言！"),
@@ -117,26 +121,34 @@ class _InstructionsPageState extends State<InstructionsPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                      width: 2, color: Color.fromRGBO(160, 82, 45, 1)),
+              Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        width: 2, color: Color.fromRGBO(160, 82, 45, 1)),
+                  ),
+                  child:
+                      Image.asset(urlImage, fit: BoxFit.contain, height: 500),
                 ),
-                child: Image.asset(urlImage, fit: BoxFit.contain, height: 500),
               ),
               const SizedBox(height: 30),
-              Text(title,
-                  style: TextStyle(
-                    color: Color.fromRGBO(160, 82, 45, 1),
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                  )),
+              Center(
+                child: Text(title,
+                    style: TextStyle(
+                      color: Color.fromRGBO(160, 82, 45, 1),
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    )),
+              ),
               const SizedBox(height: 24),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Text(
-                  subtitle,
-                  style: const TextStyle(color: Colors.black, fontSize: 18),
+                child: Center(
+                  child: Text(
+                    subtitle,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.black, fontSize: 18),
+                  ),
                 ),
               )
             ],
