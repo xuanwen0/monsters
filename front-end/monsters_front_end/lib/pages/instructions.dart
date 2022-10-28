@@ -28,7 +28,7 @@ class _InstructionsPageState extends State<InstructionsPage> {
             },
             children: [
               buildPage(
-                  color: Color.fromARGB(255, 255, 224, 68),
+                  color: Color.fromARGB(255, 251, 217, 46),
                   urlImage: 'assets/image/instructions/instructionPage_1.png',
                   title: "新增煩惱/日記",
                   subtitle: "點選下方導覽列的+號，\n點選左測按鈕開始抒發煩惱，\n或點選右側按鈕紀錄日記"),
