@@ -31,12 +31,12 @@ class _InstructionsPageState extends State<InstructionsPage> {
                   color: Color.fromARGB(255, 251, 217, 46),
                   urlImage: 'assets/image/instructions/instructionPage_1.png',
                   title: "新增煩惱/日記",
-                  subtitle: "點選下方導覽列的+號，\n點選左測按鈕開始抒發煩惱，\n或點選右側按鈕紀錄日記"),
+                  subtitle: "點選下方導覽列的+號，\n點選左測按鈕開始抒發煩惱，\n或點選右側按鈕紀錄日記！"),
               buildPage(
                   color: Color.fromARGB(255, 255, 228, 90),
                   urlImage: 'assets/image/instructions/instructionPage_2.png',
                   title: "歷史紀錄",
-                  subtitle: "點選下方導覽列的歷史紀錄，\n查看過往的煩惱和日記，\n並可點選一項未解決的煩惱完成解決"),
+                  subtitle: "點選下方導覽列的歷史紀錄，\n查看過往的煩惱和日記，\n並可點選一項未解決的煩惱完成解決。"),
               buildPage(
                   color: Color.fromRGBO(255, 237, 151, 1),
                   urlImage: 'assets/image/instructions/instructionPage_3.png',
@@ -46,7 +46,7 @@ class _InstructionsPageState extends State<InstructionsPage> {
                   color: Color.fromARGB(255, 254, 253, 178),
                   urlImage: 'assets/image/instructions/instructionPage_4.png',
                   title: "社群",
-                  subtitle: "點選下方導覽列的社群，\n查看社群中分享的貼文，\n並按下愛心或留言吧！"),
+                  subtitle: "點選下方導覽列的社群，\n查看社群中分享的貼文，\n並按下愛心或留言！"),
               buildPage(
                   color: Color.fromRGBO(255, 254, 212, 1),
                   urlImage: 'assets/image/instructions/instructionPage_5.png',
