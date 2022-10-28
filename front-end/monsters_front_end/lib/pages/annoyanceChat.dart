@@ -879,7 +879,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       children: [
         CircleAvatar(
           radius: 19,
-          backgroundImage: AssetImage('assets/mood/annoyancePoint_$point.png'),
+          backgroundImage: AssetImage('assets/image/mood/moodPoint_$point.png'),
         ),
         SizedBox(height: 1),
         Text(point,

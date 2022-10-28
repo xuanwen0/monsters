@@ -3,9 +3,9 @@ import 'package:adobe_xd/adobe_xd.dart';
 import 'package:flutter/material.dart';
 
 //colors settings
-const BackgroundColorLight = Color(0xfffffed4);
-const BackgroundColorSoft = Color(0xffffed97);
-const BackgroundColorWarm = Color(0xffa0522d);
+const BackgroundColorLight = Color.fromRGBO(255, 254, 212, 1);
+const BackgroundColorSoft = Color.fromRGBO(255, 237, 151, 1);
+const BackgroundColorWarm = Color.fromRGBO(160, 82, 45, 1);
 
 //AppBar settings
 
