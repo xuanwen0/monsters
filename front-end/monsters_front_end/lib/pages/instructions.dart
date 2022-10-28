@@ -74,11 +74,14 @@ class _InstructionsPageState extends State<InstructionsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
-                        child: Text(
-                          "SKIP",
-                          style: TextStyle(fontSize: 18, color: Colors.black),
-                        ),
-                        onPressed: () => _controller.jumpToPage(2)),
+                      child: Text(
+                        "SKIP",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                      onPressed: () => _controller.animateToPage(4,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeIn),
+                    ),
                     Center(
                         child: SmoothPageIndicator(
                       controller: _controller,
