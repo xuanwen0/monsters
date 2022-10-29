@@ -64,25 +64,22 @@ class _MoodLineChartState extends State<MoodLineChart> {
           children: <Widget>[
             Column(
               children: <Widget>[
-                const SizedBox(height: 20.0),
+                const SizedBox(height: 30.0),
                 AspectRatio(
                   aspectRatio: 1.10,
-                  child: Stack(
-                    children: [
-                      Container(
-                        decoration: const BoxDecoration(color: Colors.white),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              right: 20.0, left: 10.0, top: 24, bottom: 12),
-                          child: LineChart(
-                            mainData(),
-                          ),
-                        ),
+                  child: Container(
+                    decoration: const BoxDecoration(color: Colors.white),
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.fromLTRB(10, 24, 20, 12),
+                      child: LineChart(
+                        mainData(),
                       ),
-                    ],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 50.0),
+                const SizedBox(height: 20.0),
+                //downside face and day counter
                 AspectRatio(
                   aspectRatio: 2.10,
                   child: Padding(
@@ -132,7 +129,7 @@ class _MoodLineChartState extends State<MoodLineChart> {
                                           decoration: const BoxDecoration(
                                             image: DecorationImage(
                                               image: AssetImage(
-                                                  'assets/mood/happy.png'),
+                                                  'assets/image/mood/moodPoint_1.png'),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -163,7 +160,7 @@ class _MoodLineChartState extends State<MoodLineChart> {
                                           decoration: const BoxDecoration(
                                             image: DecorationImage(
                                               image: AssetImage(
-                                                  'assets/mood/fine.png'),
+                                                  'assets/image/mood/moodPoint_2.png'),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -194,7 +191,7 @@ class _MoodLineChartState extends State<MoodLineChart> {
                                           decoration: const BoxDecoration(
                                             image: DecorationImage(
                                               image: AssetImage(
-                                                  'assets/mood/not_bad.png'),
+                                                  'assets/image/mood/moodPoint_3.png'),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -225,7 +222,7 @@ class _MoodLineChartState extends State<MoodLineChart> {
                                           decoration: const BoxDecoration(
                                             image: DecorationImage(
                                               image: AssetImage(
-                                                  'assets/mood/not_good.png'),
+                                                  'assets/image/mood/moodPoint_4.png'),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -256,7 +253,7 @@ class _MoodLineChartState extends State<MoodLineChart> {
                                           decoration: const BoxDecoration(
                                             image: DecorationImage(
                                               image: AssetImage(
-                                                  'assets/mood/bad_bad.png'),
+                                                  'assets/image/mood/moodPoint_5.png'),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -340,34 +337,34 @@ class _MoodLineChartState extends State<MoodLineChart> {
     switch (value.toInt()) {
       case 1:
         mood = const Image(
-          image: AssetImage('assets/mood/bad_bad.png'),
+          image: AssetImage('assets/image/mood/moodPoint_5.png'),
         );
         break;
       case 2:
         mood = const Image(
-          image: AssetImage('assets/mood/not_good.png'),
+          image: AssetImage('assets/image/mood/moodPoint_4.png'),
         );
         break;
       case 3:
         mood = const Image(
-          image: AssetImage('assets/mood/not_bad.png'),
+          image: AssetImage('assets/image/mood/moodPoint_3.png'),
         );
         break;
       case 4:
         mood = const Image(
-          image: AssetImage('assets/mood/fine.png'),
+          image: AssetImage('assets/image/mood/moodPoint_2.png'),
         );
         break;
       case 5:
         mood = const Image(
-          image: AssetImage('assets/mood/happy.png'),
+          image: AssetImage('assets/image/mood/moodPoint_1.png'),
         );
         break;
       default:
         return Container();
     }
 
-    return mood;
+    return Container(margin: const EdgeInsets.only(right: 5), child: mood);
   }
 
   LineChartData mainData() {
@@ -419,6 +416,7 @@ class _MoodLineChartState extends State<MoodLineChart> {
       borderData: FlBorderData(
         show: true,
         border: const Border(
+          top: BorderSide(color: Color(0xffa0522d), width: 0.3),
           left: BorderSide(color: Color(0xffa0522d), width: 2),
           bottom: BorderSide(color: Color(0xffa0522d), width: 2),
         ),
@@ -429,6 +427,8 @@ class _MoodLineChartState extends State<MoodLineChart> {
       maxY: 5,
       lineBarsData: [
         LineChartBarData(
+          // 改為曲線
+          // isCurved: true,
           spots: [
             FlSpot(1, moodData[0].toDouble()),
             FlSpot(2, moodData[1].toDouble()),

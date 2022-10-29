@@ -72,7 +72,6 @@ class _InstructionsPageState extends State<InstructionsPage> {
                 },
               )
             : Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
                 height: 80,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
