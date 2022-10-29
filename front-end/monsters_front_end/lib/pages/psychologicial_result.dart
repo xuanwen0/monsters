@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/destressWays_list/destressWays_list.dart';
 import 'package:monsters_front_end/pages/mind_game.dart';
-import 'dart:developer';
 
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -24,7 +23,6 @@ class _Psychologicial_result extends State<Psychologicial_result> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     const url = "https://www.youtube.com/watch?v=ycXMqLOHZGA";
     controller = YoutubePlayerController(
@@ -37,6 +35,8 @@ class _Psychologicial_result extends State<Psychologicial_result> {
             forceHD: true,
             autoPlay: false,
             controlsVisibleAtStart: false));
+
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   }
 
   @override
@@ -101,12 +101,12 @@ class _Psychologicial_result extends State<Psychologicial_result> {
       content = "歡迎使用貘nsters提供的紓壓管道！";
     } else {
       title = "您的情況較嚴重";
-      subTitle = "我們關心您，\n建議尋求專家幫助！\n\n歡迎使用貘nsters的互動功能，\n也歡迎撥打以下免費專線！\n";
+      subTitle = "我們關心您，\n建議尋求專家幫助！\n\n歡迎使用貘nsters的互動功能，\n也歡迎撥打以下免費專線！";
       content = "衛生福利部安心專線: 1925\n生命線: 1995\n張老師: 1980";
     }
 
     return Container(
-        padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
+        padding: const EdgeInsets.fromLTRB(30, 5, 10, 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -146,8 +146,8 @@ class _Psychologicial_result extends State<Psychologicial_result> {
     return Center(
       child: Container(
         alignment: Alignment.center,
-        width: 200,
-        height: 60,
+        width: 190,
+        height: 55,
         decoration: BoxDecoration(
             color: BackgroundColorWarm,
             border: Border.all(color: BackgroundColorWarm, width: 2),

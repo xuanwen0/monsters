@@ -1,5 +1,4 @@
 // ignore_for_file: constant_identifier_names
-import 'package:adobe_xd/adobe_xd.dart';
 import 'package:flutter/material.dart';
 
 //colors settings
@@ -12,7 +11,7 @@ const BackgroundColorWarm = Color.fromRGBO(160, 82, 45, 1);
 //取得title名稱並回傳mainAppBarTitle格式
 Container mainAppBarTitleContainer(String name) {
   return Container(
-    padding: EdgeInsets.only(top: 5, bottom: 10),
+    padding: const EdgeInsets.only(top: 5, bottom: 10),
     child: Center(
       child: Text(
         name,

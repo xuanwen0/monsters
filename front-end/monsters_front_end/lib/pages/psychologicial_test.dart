@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/psychologicial_result.dart';
@@ -31,7 +29,7 @@ class _Psychologicial_testState extends State<Psychologicial_test> {
             loop: false,
             forceHD: true,
             autoPlay: false,
-            controlsVisibleAtStart: false));
+            controlsVisibleAtStart: true));
   }
 
   @override
@@ -183,7 +181,7 @@ class _Psychologicial_testState extends State<Psychologicial_test> {
       total += score;
     }
 
-    Navigator.pushReplacement(context,
+    Navigator.push(context,
         MaterialPageRoute(builder: (context) => Psychologicial_result(total)));
   }
 }

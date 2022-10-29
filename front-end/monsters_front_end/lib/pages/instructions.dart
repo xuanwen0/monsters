@@ -32,19 +32,19 @@ class _InstructionsPageState extends State<InstructionsPage> {
                   color: Color.fromRGBO(255, 254, 212, 1),
                   urlImage: 'assets/image/instructions/instructionPage_1.png',
                   title: "新增煩惱/日記",
-                  subtitle: "點選下方導覽列的+號，\n點選左測按鈕開始抒發煩惱，\n或點選右側按鈕紀錄日記！"),
+                  subtitle: "點選下方導覽列的+號，\n點選左側按鈕開始抒發煩惱，\n或點選右側按鈕紀錄日記！"),
               buildPage(
                   // color: Color.fromARGB(255, 255, 228, 90),
                   color: Color.fromRGBO(255, 254, 212, 1),
                   urlImage: 'assets/image/instructions/instructionPage_2.png',
                   title: "歷史紀錄",
-                  subtitle: "點選下方導覽列的歷史紀錄，\n查看過往的煩惱和日記，\n並可點選一項未解決的煩惱完成解決。"),
+                  subtitle: "點選下方導覽列的歷史紀錄，\n查看過往的煩惱和日記，\n並可點選未解決的煩惱完成解決。"),
               buildPage(
                   // color: Color.fromRGBO(255, 237, 151, 1),
                   color: Color.fromRGBO(255, 254, 212, 1),
                   urlImage: 'assets/image/instructions/instructionPage_3.png',
                   title: "圖鑑",
-                  subtitle: "點選下方導覽列的圖鑑，\n查看可愛怪獸圖鑑，\n點選已獲得的怪獸幫他裝飾配件吧！"),
+                  subtitle: "點選下方導覽列的圖鑑，\n查看可愛怪獸圖鑑，\n點選已獲得的怪獸來裝飾配件吧！"),
               buildPage(
                   // color: Color.fromARGB(255, 254, 253, 178),
                   color: Color.fromRGBO(255, 254, 212, 1),
@@ -71,7 +71,7 @@ class _InstructionsPageState extends State<InstructionsPage> {
                   Navigator.pop(context);
                 },
               )
-            : Container(
+            : SizedBox(
                 height: 80,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,7 +127,7 @@ class _InstructionsPageState extends State<InstructionsPage> {
                         width: 2, color: Color.fromRGBO(160, 82, 45, 1)),
                   ),
                   child:
-                      Image.asset(urlImage, fit: BoxFit.contain, height: 500),
+                      Image.asset(urlImage, fit: BoxFit.contain, height: 400),
                 ),
               ),
               const SizedBox(height: 30),

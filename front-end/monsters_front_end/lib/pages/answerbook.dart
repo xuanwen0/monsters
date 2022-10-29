@@ -2,12 +2,9 @@
 
 import 'package:adobe_xd/adobe_xd.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:monsters_front_end/model/answerbookModel.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/repository/answerBookRepo.dart';
-
-import 'interaction.dart';
 
 class AnswerbookPage extends StatefulWidget {
   @override

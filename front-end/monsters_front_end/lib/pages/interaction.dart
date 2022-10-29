@@ -136,15 +136,16 @@ class _InteractionPageState extends State<InteractionPage>
                           Pinned.fromPins(
                             Pin(size: 144.0, middle: 0.5),
                             Pin(size: 48.0, start: 10.0),
-                            child: const Text(
-                              '解答之書',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 30,
-                                color: Color(0xffa0522d),
+                            child: Center(
+                              child: const Text(
+                                '解答之書',
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 30,
+                                  color: Color(0xffa0522d),
+                                ),
+                                softWrap: false,
                               ),
-                              softWrap: false,
                             ),
                           ),
                         ],
@@ -176,15 +177,17 @@ class _InteractionPageState extends State<InteractionPage>
                           Pinned.fromPins(
                             Pin(size: 144.0, middle: 0.5),
                             Pin(size: 48.0, end: 10.0),
-                            child: const Text(
-                              '每日測驗',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 30,
-                                color: Color(0xffa0522d),
+                            child: Center(
+                              child: const Text(
+                                '每日測驗',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 30,
+                                  color: Color(0xffa0522d),
+                                ),
+                                softWrap: false,
                               ),
-                              softWrap: false,
                             ),
                           ),
                         ],
@@ -216,15 +219,17 @@ class _InteractionPageState extends State<InteractionPage>
                           Pinned.fromPins(
                             Pin(start: 40.0, end: 40.0),
                             Pin(size: 40.0, middle: 0.5),
-                            child: const Text(
-                              '深度心理測驗',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 28,
-                                color: Color(0xffa0522d),
+                            child: Center(
+                              child: const Text(
+                                '深度心理測驗',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 28,
+                                  color: Color(0xffa0522d),
+                                ),
+                                softWrap: false,
                               ),
-                              softWrap: false,
                             ),
                           ),
                         ],
@@ -256,15 +261,17 @@ class _InteractionPageState extends State<InteractionPage>
                           Pinned.fromPins(
                             Pin(start: 0.0, end: 0.0),
                             Pin(size: 40.0, middle: 0.5),
-                            child: const Text(
-                              '心理小遊戲',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 30,
-                                color: Color(0xffa0522d),
+                            child: Center(
+                              child: const Text(
+                                '心理小遊戲',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 30,
+                                  color: Color(0xffa0522d),
+                                ),
+                                softWrap: false,
                               ),
-                              softWrap: false,
                             ),
                           ),
                         ],
@@ -296,15 +303,17 @@ class _InteractionPageState extends State<InteractionPage>
                           Pinned.fromPins(
                             Pin(size: 144.0, middle: 0.5),
                             Pin(size: 48.0, end: 10.0),
-                            child: const Text(
-                              '紓壓方法',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 30,
-                                color: Color(0xffa0522d),
+                            child: Center(
+                              child: const Text(
+                                '紓壓方法',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 30,
+                                  color: Color(0xffa0522d),
+                                ),
+                                softWrap: false,
                               ),
-                              softWrap: false,
                             ),
                           ),
                         ],
