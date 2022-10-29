@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/destressWays_list/destressWays_list.dart';
 import 'package:monsters_front_end/pages/mind_game.dart';
-import 'dart:developer';
 
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -24,20 +23,20 @@ class _Psychologicial_result extends State<Psychologicial_result> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     const url = "https://www.youtube.com/watch?v=ycXMqLOHZGA";
     controller = YoutubePlayerController(
         initialVideoId: YoutubePlayer.convertUrlToId(url)!,
         flags: const YoutubePlayerFlags(
-          startAt: 89,
-          endAt: 113,
-          mute: false,
-          loop: false,
-          forceHD: true,
-          autoPlay: true,
-          controlsVisibleAtStart: false,
-        ));
+            startAt: 89,
+            endAt: 113,
+            mute: false,
+            loop: false,
+            forceHD: true,
+            autoPlay: false,
+            controlsVisibleAtStart: false));
+
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   }
 
   @override
@@ -61,26 +60,29 @@ class _Psychologicial_result extends State<Psychologicial_result> {
       builder: (context, player) => Scaffold(
             appBar: secondAppBar("分析結果"),
             backgroundColor: BackgroundColorLight,
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(child: player),
-                suggestion(),
-                const SizedBox(
-                  height: 30,
-                ),
-                //心理小遊戲
-                pushButton("心理小遊戲"),
-                const SizedBox(
-                  height: 20,
-                ),
-                //紓壓方法
-                pushButton("紓壓方法"),
-                const SizedBox(
-                  height: 20,
-                ),
-              ],
+            body: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(child: player),
+                  suggestion(),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  //心理小遊戲
+                  pushButton("心理小遊戲"),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //紓壓方法
+                  pushButton("紓壓方法"),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
             ),
           ));
 
@@ -99,12 +101,12 @@ class _Psychologicial_result extends State<Psychologicial_result> {
       content = "歡迎使用貘nsters提供的紓壓管道！";
     } else {
       title = "您的情況較嚴重";
-      subTitle = "我們關心您，\n建議尋求專家幫助！\n\n歡迎使用貘nsters的互動功能，\n也歡迎撥打以下免費專線！\n";
+      subTitle = "我們關心您，\n建議尋求專家幫助！\n\n歡迎使用貘nsters的互動功能，\n也歡迎撥打以下免費專線！";
       content = "衛生福利部安心專線: 1925\n生命線: 1995\n張老師: 1980";
     }
 
     return Container(
-        padding: const EdgeInsets.all(30),
+        padding: const EdgeInsets.fromLTRB(30, 5, 10, 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -115,9 +117,6 @@ class _Psychologicial_result extends State<Psychologicial_result> {
                   fontSize: 32,
                   color: BackgroundColorWarm,
                   fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 10,
             ),
             Text(
               title,
@@ -147,8 +146,8 @@ class _Psychologicial_result extends State<Psychologicial_result> {
     return Center(
       child: Container(
         alignment: Alignment.center,
-        width: 200,
-        height: 60,
+        width: 190,
+        height: 55,
         decoration: BoxDecoration(
             color: BackgroundColorWarm,
             border: Border.all(color: BackgroundColorWarm, width: 2),

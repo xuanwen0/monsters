@@ -2,14 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:monsters_front_end/API/google_sign_in_API.dart';
+import 'package:monsters_front_end/pages/instructions.dart';
 import 'package:monsters_front_end/pages/user_Feedback.dart';
 import 'package:monsters_front_end/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../pages/drawer_setting.dart';
 import '../pages/drawer_personalInfo.dart';
-import '../pages/edit_personalInfo.dart';
-import '../pages/moodLineChart.dart';
 
 Widget GetDrawer(BuildContext context) {
   var drawer = Container(
@@ -46,8 +45,14 @@ Widget GetDrawer(BuildContext context) {
                     MaterialPageRoute(builder: (context) => Drawer_settings()));
               },
             ),
-            const ListTile(
-              title: Text(
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => InstructionsPage()));
+              },
+              title: const Text(
                 "使用說明",
                 style: TextStyle(
                   fontFamily: 'Segoe UI',

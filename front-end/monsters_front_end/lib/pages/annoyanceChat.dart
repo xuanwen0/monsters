@@ -9,7 +9,6 @@ import 'package:monsters_front_end/model/audio_Model/audio_player.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
-import 'package:monsters_front_end/pages/login.dart';
 import 'package:video_player/video_player.dart';
 import '../model/annoyanceModel.dart';
 import '../repository/annoyanceRepo.dart';
@@ -33,21 +32,18 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
   int acceptShare = 0;
   //TODO: LEVEL 3
   ///when user comes after using interactionPage and some feature
-  ///we should ask whether that stuff make it feels better
+  ///we can ask whether that stuff make it feels better
   var userAnswers = [];
-  File? _media;
-  File? _moodImage;
+  File? contentFile;
+  File? moodFile;
 
+  @override
   void dispose() {
-    player.dispose();
-    timerController.dispose();
     messageInsert.dispose();
-    _videoPlayerController.dispose();
     super.dispose();
   }
 
   void init() {
-    player.init();
     super.initState();
   }
 
@@ -57,10 +53,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     if (media == null) return;
     final imageTemporary = File(media.path);
 
-    this._media = imageTemporary;
-    if (_media != null) {
-      messages.insert(0, {"data": 2, "image": _media});
-      response(null, _media);
+    contentFile = imageTemporary;
+    if (contentFile != null) {
+      messages.insert(0, {"data": 2, "image": contentFile});
+      response(null, contentFile);
     }
     setState(() {});
   }
@@ -70,12 +66,12 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     XFile? recordedVideo = await ImagePicker().pickVideo(
         source: ImageSource.camera, maxDuration: Duration(seconds: 15));
     if (recordedVideo == null) return;
-    _media = File(recordedVideo.path);
-    _videoPlayerController = VideoPlayerController.file(_media!)
+    contentFile = File(recordedVideo.path);
+    _videoPlayerController = VideoPlayerController.file(contentFile!)
       ..initialize().then((_) {
-        messages.insert(0, {"data": 3, "video": _media});
+        messages.insert(0, {"data": 3, "video": contentFile});
         _videoPlayerController.play();
-        response(null, _media);
+        response(null, contentFile);
       });
     setState(() {});
   }
@@ -86,10 +82,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     if (media == null) return;
     final imageTemporary = File(media.path);
 
-    this._media = imageTemporary;
-    if (_media != null) {
-      messages.insert(0, {"data": 2, "image": _media});
-      response(null, _media);
+    contentFile = imageTemporary;
+    if (contentFile != null) {
+      messages.insert(0, {"data": 2, "image": contentFile});
+      response(null, contentFile);
     }
     setState(() {});
   }
@@ -99,12 +95,12 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     XFile? pickedVideo =
         await ImagePicker().pickVideo(source: ImageSource.gallery);
     if (pickedVideo == null) return;
-    _media = File(pickedVideo.path);
-    _videoPlayerController = VideoPlayerController.file(_media!)
+    contentFile = File(pickedVideo.path);
+    _videoPlayerController = VideoPlayerController.file(contentFile!)
       ..initialize().then((_) {
-        messages.insert(0, {"data": 3, "video": _media});
+        messages.insert(0, {"data": 3, "video": contentFile});
         _videoPlayerController.play();
-        response(null, _media);
+        response(null, contentFile);
       });
     setState(() {});
   }
@@ -120,10 +116,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
     if (media == null) return;
     final audioTemporary = File(media);
-    this._media = audioTemporary;
-    if (_media != null) {
-      messages.insert(0, {"data": 4, "audio": _media});
-      response(null, _media);
+    this.contentFile = audioTemporary;
+    if (contentFile != null) {
+      messages.insert(0, {"data": 4, "audio": contentFile});
+      response(null, contentFile);
     }
     setState(() {});
   }
@@ -140,8 +136,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       reply("畫心情失敗，請通知官方平台");
     } else {
       final imageTemporary = File(moodImage.path);
-      this._moodImage = imageTemporary;
-      messages.insert(0, {"data": 5, "image": _moodImage});
+      this.moodFile = imageTemporary;
+      messages.insert(0, {"data": 5, "image": moodFile});
     }
 
     setState(() {});
@@ -340,19 +336,29 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                             ),
                           ),
                           onPressed: () {
-                            log(userAnswers.toString());
+                            log("user_Account: " + user_Account.toString());
+                            log("type:" + userAnswers[0].toString());
+                            log("content: " + userAnswers[1].toString());
+                            log("mood: " + userAnswers[2].toString());
+                            log("index: " + userAnswers[3].toString());
+                            log("share: " + userAnswers[4].toString());
+                            log("moodFile: " + moodFile.toString());
+                            log("contentFile: " + contentFile.toString());
                             annoyanceRepository.createAnnoyance(
                               Annoyance(
-                                  id: 0,
-                                  account: user_Account,
-                                  content: userAnswers[1],
-                                  monsterId: 1,
-                                  type: userAnswers[0],
-                                  mood: userAnswers[2],
-                                  index: userAnswers[3],
-                                  time: '',
-                                  solve: 0,
-                                  share: acceptShare),
+                                id: 0,
+                                account: user_Account, //"Lin"
+                                monsterId: 1,
+                                type: userAnswers[0], //4
+                                content: userAnswers[1], //"純文字不分享無多媒體"
+                                mood: userAnswers[2], //"否"
+                                index: userAnswers[3], //3
+                                share: userAnswers[4], //0
+                                contentFile: contentFile, //null
+                                moodFile: moodFile, //null
+                                time: '',
+                                solve: 0,
+                              ),
                             );
                             Navigator.pushReplacement(
                                 //TODO: Level 2
@@ -374,10 +380,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
   //聊天功能
   Widget chat(String message, int data) {
-    Container userChatContainer = Container();
+    Container chatContainer = Container();
     //text container
     if (data < 2) {
-      userChatContainer = Container(
+      chatContainer = Container(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: Row(
           mainAxisAlignment:
@@ -439,7 +445,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       //TODO: Level 2
       //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
       ///wrap by something make it clickable
-      userChatContainer = Container(
+      chatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -462,7 +468,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                         ),
                         Flexible(
                             child: Container(
-                                child: Image.file(_media!,
+                                child: Image.file(contentFile!,
                                     width: (MediaQuery.of(context).size.width >
                                             MediaQuery.of(context).size.height)
                                         ? 288
@@ -489,7 +495,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       ///TODO: Level 2
       ///ADD HERO https://youtu.be/1xipg02Wu8s?t=657
       ///wrap by something make it clickable
-      userChatContainer = Container(
+      chatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -550,7 +556,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     }
 
     if (data == 4) {
-      userChatContainer = Container(
+      chatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -614,7 +620,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       //TODO: Level 2
       ///ADD HERO https://youtu.be/1xipg02Wu8s?t=657
       ///wrap by something make it clickable to watch
-      userChatContainer = Container(
+      chatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -637,7 +643,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                         ),
                         Flexible(
                             child: Container(
-                                child: Image.file(_moodImage!,
+                                child: Image.file(moodFile!,
                                     width: 200,
                                     height: 200,
                                     filterQuality: FilterQuality.medium))),
@@ -653,13 +659,54 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       );
     }
 
-    return userChatContainer;
+    if (data == 6) {
+      chatContainer = Container(
+        padding: EdgeInsets.only(left: 20, right: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: 50,
+              width: 50,
+              child: CircleAvatar(
+                backgroundImage: AssetImage('assets/image/Avatar_Baku_PNG.png'),
+              ),
+            ),
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: Colors.white,
+                  elevation: 2.0,
+                  //訊息格式 以圖表示煩惱指數
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                        Flexible(
+                            child: Container(
+                                constraints: BoxConstraints(maxWidth: 200),
+                                child: annoyancePointRow()))
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return chatContainer;
   }
 
   //怪獸訊息(提示輸入格式)
   void hint() {
     String hintAnnoyType = "[請擇一輸入]\n課業 / 事業 / 愛情 \n友情 / 親情 / 其他";
-    String hintEmotionGrade = "[請擇一輸入]\n1 / 2 / 3 / 4 / 5";
     String hintAccept = "[請擇一輸入]\n是 / 否";
     String hintAnnoyMethod = "請用以下幾種方式記錄：\n★以文字記錄煩惱\n★點選左下角圖示新增";
 
@@ -672,7 +719,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       pickable = false;
       reply(hintAccept);
     } else if (chatRound == 3) {
-      reply(hintEmotionGrade);
+      replyImage();
     } else if (chatRound == 4) {
       reply(hintAccept);
     } else {
@@ -739,9 +786,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
         if (chatRound == 2) {
           if (text != null) {
             userAnswers.add(text);
-          }
-          if (media != null) {
-            userAnswers.add(media);
+          } else {
+            userAnswers.add(null);
           }
           log("--完成內容");
           reply("真是辛苦你了，想做一幅畫表達你的感受嗎？");
@@ -754,8 +800,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
             }
             userAnswers.add(text);
             //提示輸入煩惱程度
-            reply("給煩惱程度打一個分數～\n5分是最煩惱的喔！");
-
+            // reply("給煩惱程度打一個分數～\n5分是最煩惱的喔！");
+            reply("給煩惱程度打一個分數～");
             log("--完成畫心情");
           } else {
             cannotRead();
@@ -774,12 +820,12 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
         }
         //取得是否分享
         if (chatRound == 5) {
-          if (acceptShare == 0 || acceptShare == 1) {
+          if (text != "是" || text != "否") {
             if (text == "是") {
-              acceptShare = 1;
+              userAnswers.add(1);
             }
             if (text == "否") {
-              acceptShare = 0;
+              userAnswers.add(0);
             }
             lastSpeaking = true;
             reply("解決煩惱請馬上跟我說！我已經迫不及待想吃飯了！");
@@ -797,9 +843,52 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     setState(() {});
   }
 
-  //怪獸回覆
+  //怪獸文字回覆
   void reply(String text) {
     messages.insert(0, {"data": 0, "message": text});
+  }
+
+  void replyImage() {
+    messages.insert(0, {"data": 6, "message": "print image"});
+  }
+
+  Row annoyancePointRow() {
+    Row annoyancePointRow = Row();
+    annoyancePointRow = Row(
+      children: [
+        annoyancePointColumn("1"),
+        Spacer(),
+        annoyancePointColumn("2"),
+        Spacer(),
+        annoyancePointColumn("3"),
+        Spacer(),
+        annoyancePointColumn("4"),
+        Spacer(),
+        annoyancePointColumn("5"),
+        Spacer(),
+      ],
+    );
+
+    return annoyancePointRow;
+  }
+
+  Column annoyancePointColumn(String point) {
+    Column annoyanceImageColumn = Column();
+    annoyanceImageColumn = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CircleAvatar(
+          radius: 19,
+          backgroundImage: AssetImage('assets/image/mood/moodPoint_$point.png'),
+        ),
+        SizedBox(height: 1),
+        Text(point,
+            style:
+                TextStyle(fontSize: 17, color: Color.fromRGBO(160, 82, 45, 1)))
+      ],
+    );
+
+    return annoyanceImageColumn;
   }
 }
 
