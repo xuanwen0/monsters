@@ -211,7 +211,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                                       leading: Icon(Icons.camera_alt_rounded),
                                       title: Text("照相"),
                                       onTap: () => {
-                                            ////照相選項
+                                            //照相選項
                                             takePhoto(),
                                             Navigator.pop(context)
                                           }),
