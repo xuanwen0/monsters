@@ -38,7 +38,12 @@ class _user_FeedbackState extends State<user_Feedback> {
               const Padding(
                 padding: EdgeInsets.fromLTRB(20, 30, 20, 10),
                 child: Text("有任何寶貴意見可以寫在下方，\n幫助我們改善貘nsters ！",
-                    style: Body1TextStyle),
+                    style: TextStyle(
+                      fontFamily: FontNameDefault,
+                      fontWeight: FontWeight.w300,
+                      fontSize: BodyTextSize,
+                      color: Color.fromRGBO(160, 82, 45, 1),
+                    )),
               ),
               Container(
                   height: 15 * 24.0,
