@@ -158,11 +158,21 @@ class _devPageState extends State<devPage> {
                     ),
                   ),
                   onPressed: () {
+                    _type = 2;
+                    _content = "測試";
+                    _mood = "否";
+                    _index = 3;
+                    _share = 0;
                     var pushContent;
                     if (_contentFile == null) {
                       pushContent = _content;
                     } else {
                       pushContent = null;
+                    }
+                    if (_moodFile == null) {
+                      _mood = "否";
+                    } else {
+                      _mood = "是";
                     }
                     log("_type: " + _type.toString());
                     log("_content: " + pushContent.toString());
@@ -281,6 +291,7 @@ class PopUpMen extends StatelessWidget {
     return PopupMenuButton(
       itemBuilder: ((context) => menuList),
       icon: icon,
+      iconSize: 200,
     );
   }
 }
