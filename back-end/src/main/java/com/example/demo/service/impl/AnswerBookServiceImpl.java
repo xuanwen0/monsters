@@ -7,8 +7,6 @@ import com.example.demo.service.AnswerBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class AnswerBookServiceImpl extends BaseServiceImplement<AnswerBookDAO, AnswerBook, AnswerBookBean> implements AnswerBookService {
     @Autowired
@@ -22,9 +20,6 @@ public class AnswerBookServiceImpl extends BaseServiceImplement<AnswerBookDAO, A
     @Override
     public AnswerBookBean createAndReturnBean(AnswerBookBean bean) {
         return null;
-    }
-    public List<AnswerBook> find(){
-        return answerBookDAO.searchAll();
     }
 
     protected AnswerBook createVO(AnswerBookBean bean) {

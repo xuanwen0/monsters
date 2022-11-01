@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'dart:convert';
+import 'dart:io';
 
 Data annoyanceFromJson(String str) => Data.fromJson(json.decode(str));
 
@@ -40,6 +41,8 @@ class Annoyance {
     required this.id,
     required this.account,
     required this.content,
+    required this.contentFile,
+    required this.moodFile,
     required this.type,
     required this.monsterId,
     required this.mood,
@@ -51,7 +54,9 @@ class Annoyance {
 
   int id;
   String account;
-  String content;
+  String? content;
+  File? contentFile;
+  File? moodFile;
   int type;
   int monsterId;
   String mood;
@@ -64,6 +69,8 @@ class Annoyance {
         id: json["id"],
         account: json["account"],
         content: json["content"],
+        contentFile: json["contentFile"],
+        moodFile:json["moodFile"],
         type: json["type"],
         monsterId: json["monsterId"],
         mood: json["mood"],
@@ -77,6 +84,8 @@ class Annoyance {
         "id": id,
         "account": account,
         "content": content,
+        "contentFile": contentFile,
+        "moodFile":moodFile,
         "type": type,
         "monsterId": monsterId,
         "mood": mood,

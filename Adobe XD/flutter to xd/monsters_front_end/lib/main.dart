@@ -7,8 +7,12 @@ import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/login.dart';
 import 'package:monsters_front_end/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  //開啟APP先判斷
+  WidgetsFlutterBinding.ensureInitialized();
+  //checkLogin();
   runApp(Monsters());
 }
 
@@ -43,18 +47,31 @@ class Monsters extends StatelessWidget with WidgetsBindingObserver {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
-        GitmeRebornRoutes.login: (context) => LoginPage(),
+        GitmeRebornRoutes.login: (context) => MainPage(),
         GitmeRebornRoutes.home: (context) => MainPage(),
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case GitmeRebornRoutes.root:
-            return MaterialPageRoute(builder: (context) => LoginPage());
+            return MaterialPageRoute(builder: (context) => MainPage());
           default:
-            return MaterialPageRoute(builder: (context) => LoginPage());
+            return MaterialPageRoute(builder: (context) => MainPage());
         }
       },
       debugShowCheckedModeBanner: false,
     );
+  }
+}
+
+void checkLogin() async {
+  //check if user already login or credential already available or not
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  String? val = pref.getString("login");
+  if (val != null) {
+    //直接前往主畫面 !!失敗!!
+    print("已登入過，帳號:" + val);
+    MaterialPageRoute(builder: (context) => MainPage());
+  } else {
+    print("已登出或第一次開啟");
   }
 }

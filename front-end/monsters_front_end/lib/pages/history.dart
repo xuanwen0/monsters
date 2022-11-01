@@ -1,66 +1,24 @@
-// ignore_for_file: avoid_function_literals_in_foreach_calls
+// ignore_for_file: avoid_function_literals_in_foreach_calls, prefer_const_constructors
 
 import 'dart:async';
 import 'dart:developer';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/main.dart';
+import 'package:monsters_front_end/model/annoyanceModel.dart';
+import 'package:monsters_front_end/pages/annoyanceChat.dart';
 import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/manual.dart';
+import 'package:monsters_front_end/pages/moodLineChart.dart';
 import 'package:monsters_front_end/pages/social.dart';
+import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/repository/annoyanceRepo.dart';
 import 'package:monsters_front_end/state/drawer.dart';
-import '../model/annoyanceModel.dart';
-import 'annoyanceChat.dart';
-
-//全域變數
-bool beep = false;
-var userAccount = 'Lin';
-var tempNum = 0;
-var tempString = [];
-var len;
-
-void getMaxIdByAccount(String account) {
-  final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
-  Future<Data> annoyances = annoyanceRepository
-      .searchAnnoyanceByAccount(account)
-      .then((value) => Data.fromJson(value!));
-  annoyances.then((value) => len = value.data.length.toString());
-  annoyances.then((value) => storeMaxId(value.data.length));
-}
-
-//取得最大ID 得到總筆數
-void storeMaxId(int length) {
-  len = length;
-}
-
-//資料庫 用帳號抓煩惱
-void getAnnoyanceByAccount(String account, int index) {
-  final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
-  Future<Data> annoyances = annoyanceRepository
-      .searchAnnoyanceByAccount(account)
-      .then((value) => Data.fromJson(value!));
-  annoyances.then(
-    (value) => storeItem(
-        value.data.elementAt(index).content,
-        value.data.elementAt(index).time,
-        value.data.elementAt(index).type.toString(),
-        value.data.elementAt(index).monsterId.toString(),
-        value.data.elementAt(index).mood,
-        value.data.elementAt(index).index.toString(),
-        value.data.elementAt(index).solve.toString(),
-        value.data.elementAt(index).share.toString()),
-  );
-}
-
-void storeItem(String content, String time, String type, String monsterId,
-    String mood, String index, String solve, String share) {
-  tempString = [content, time, type, monsterId, mood, index, solve, share];
-}
 
 class History extends StatefulWidget {
   const History({Key? key}) : super(key: key);
@@ -74,409 +32,401 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
-  //預設標籤
-  int selectionTab_type = 1;
-  int selectionTab_solve = 0;
-  //煩惱標籤狀態，已解決和未解決標籤 enabled=ture
-  bool selectionTab_solve_enabled = false;
-  //控制執行續
-  late Timer _timer;
-  int curentTimer = 0;
-  bool reset = false;
+  StateSetter? animationState;
 
-  List<String> historyContents = [];
-  List<String> historyTimes = [];
-  var index;
+  //控制標籤
+  //1:全部 2:煩惱 3:日記
+  int selectionTab_type = 1;
+  //當selectedSolve開啟已解決標籤
+  int selectionTab_solve = 0;
+  //當selectionTab_solve_enabled解鎖後兩個標籤
+  bool selectionTab_solve_enabled = false;
+
+  late Future _future;
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
-    int historyCount = historyContents.length < 0 ? 0 : historyContents.length;
-    if (reset == false) {
-      index = 0;
-      reset = true;
-    }
-    getMaxIdByAccount(userAccount);
-    getAnnoyanceByAccount(userAccount, index == null ? 0 : index);
-    try {
-      int temper = index - 1 < 0 ? 0 : index - 1;
-      historyContents.insert(temper, tempString[0]);
-      historyTimes.insert(temper, tempString[1]);
-      index++;
-      log(historyContents.toString());
-      //log("historycontents = " + historyContents.toString()); //除錯
-      //執行續搶先時除錯 -> rollback
-      if (beep == false && historyCount > 0) {
-        log("BEEP"); //執行續搶先時除錯 -> LOG提示
-        historyContents.removeLast();
-        historyTimes.removeLast();
-        beep = true;
-      }
-    } catch (e) {
-      //log("BB = " + e.toString());
-      tempString.clear();
-    }
+    //TODO: Level 1
+    //計算不同歷史類別的數量
+    /*
+    int itemCounter 
+    int annoyanceCounter 
+    int diaryCounter 
 
-    //log("historyCount = " + historyCount.toString());
+    iterate the History and doing so =>
+    itemCounter:
+      在搜尋到一個History時加一，計算總數
+    annoyanceCounter & diaryCounter:
+      在搜尋到一個History後annoyance時++，否則diaryCounter++
+    */
+
     //畫面呈現
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
-      key: _scaffoldKEy,
       endDrawer: GetDrawer(context),
+      key: _scaffoldKEy,
       body: Stack(
         children: <Widget>[
-          //標題
-          Pinned.fromPins(
-            Pin(size: 200.0, middle: 0.5),
-            Pin(size: 63.0, start: 20.0),
-            child: const Text(
-              '歷史紀錄',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 40,
-                color: Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
-          //底部
-          Pinned.fromPins(
-            Pin(start: 0.0, end: 0.0),
-            Pin(size: 78.0, end: 0.0),
-            child: Container(
-              color: const Color(0xffffed97),
-            ),
-          ),
           //抽屜
           Align(
             alignment: Alignment.topRight,
             child: IconButton(
-              alignment: Alignment.center,
-              iconSize: 57.0,
+              iconSize: 60.0,
               icon: const Icon(Icons.menu_rounded),
               color: const Color(0xffffbb00),
+              padding: const EdgeInsets.fromLTRB(0, 10, 10, 5),
               onPressed: () => _scaffoldKEy.currentState?.openEndDrawer(),
             ),
           ),
-          //類別:全部
-          Pinned.fromPins(
-            Pin(size: 44.8, start: 24.5),
-            Pin(size: 30.0, start: 93.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 70.0, middle: 0.5),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: selectionTab_type == 1
-                          ? const Color(0xffa0522d)
-                          : const Color(0xffffed97),
-                      borderRadius: const BorderRadius.all(
-                          Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
-                  child: InkWell(
-                      child: SizedBox.expand(
-                          child: Text(
-                        '全部',
-                        style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 20,
-                            color: selectionTab_type == 1 //點按後更新文字顏色
-                                ? const Color(0xffffffff)
-                                : const Color(0xffa0522d)),
-                        softWrap: false,
-                      )),
-                      onTap: () {
-                        setState(() {
-                          selectionTab_type = 1;
-                          selectionTab_solve_enabled = false;
-                          selectionTab_solve = 0;
-                        });
-                      }),
-                ),
-              ],
-            ),
-          ),
-          //類別:煩惱
-          Pinned.fromPins(
-            Pin(size: 44.8, middle: 0.2846),
-            Pin(size: 30.0, start: 93.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 70.0, middle: 0.5385),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: selectionTab_type == 2
-                          ? const Color(0xffa0522d)
-                          : const Color(0xffffed97),
-                      borderRadius: const BorderRadius.all(
-                          Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
-                  child: InkWell(
-                      child: SizedBox.expand(
-                          child: Text(
-                        '煩惱',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 20,
-                            color: selectionTab_type == 2 //點按後更新文字顏色
-                                ? const Color(0xffffffff)
-                                : const Color(0xffa0522d)),
-                        softWrap: false,
-                      )),
-                      onTap: () {
-                        setState(() {
-                          selectionTab_type = 2;
-                          selectionTab_solve_enabled = true;
-                          selectionTab_solve = 1;
-                        });
-                      }),
-                ),
-              ],
-            ),
-          ),
-          //類別:日記
-          Pinned.fromPins(
-            Pin(size: 44.8, middle: 0.5025),
-            Pin(size: 30.0, start: 93.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 70.0, middle: 0.5385),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: selectionTab_type == 3
-                          ? const Color(0xffa0522d)
-                          : const Color(0xffffed97),
-                      borderRadius: const BorderRadius.all(
-                          Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
-                  child: InkWell(
-                      child: SizedBox.expand(
-                          child: Text(
-                        '日記',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 20,
-                            color: selectionTab_type == 3 //點按後更新文字顏色
-                                ? const Color(0xffffffff)
-                                : const Color(0xffa0522d)),
-                        softWrap: false,
-                      )),
-                      onTap: () {
-                        setState(() {
-                          selectionTab_type = 3;
-                          selectionTab_solve_enabled = false;
-                          selectionTab_solve = 0;
-                        });
-                      }),
-                ),
-              ],
-            ),
-          ),
-          //類別:未解決
-          Pinned.fromPins(
-            Pin(size: 60.0, middle: 0.7298),
-            Pin(size: 30.0, start: 93.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 75.0, middle: 0.5385),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: selectionTab_solve == 1
-                          ? const Color(0xffa0522d)
-                          : const Color(0xffffed97),
-                      borderRadius: const BorderRadius.all(
-                          Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
-                  child: InkWell(
-                      child: SizedBox.expand(
-                          child: Text(
-                        '未解決',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 18,
-                            color: selectionTab_solve == 1 //點按後更新文字顏色
-                                ? const Color(0xffffffff)
-                                : const Color(0xffa0522d)),
-                        softWrap: false,
-                      )),
-                      onTap: () {
-                        setState(() {
-                          if (selectionTab_solve_enabled == true) {
-                            selectionTab_solve = 1;
-                          }
-                        });
-                      }),
-                ),
-              ],
-            ),
-          ),
-          //類別:已解決
-          Pinned.fromPins(
-            Pin(size: 60.0, end: 15.1),
-            Pin(size: 30.0, start: 93.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 75.0, middle: 0.5385),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: selectionTab_solve == 2
-                          ? const Color(0xffa0522d)
-                          : const Color(0xffffed97),
-                      borderRadius: const BorderRadius.all(
-                          Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
-                  child: InkWell(
-                      child: SizedBox.expand(
-                          child: Text(
-                        '已解決',
-                        style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 18,
-                            color: selectionTab_solve == 2 //點按後更新文字顏色
-                                ? const Color(0xffffffff)
-                                : const Color(0xffa0522d)),
-                        softWrap: false,
-                      )),
-                      onTap: () {
-                        setState(() {
-                          if (selectionTab_solve_enabled == true) {
-                            selectionTab_solve = 2;
-                          }
-                        });
-                      }),
-                ),
-              ],
-            ),
-          ),
-          //煩惱列表
-          Pinned.fromPins(
-            Pin(start: 8.0, end: 8.0),
-            Pin(start: 140.0, end: 85.0),
-            child: ListView.separated(
-              primary: false,
-              itemBuilder: (BuildContext context, int index) {
-                return Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 365.0,
-                        height: 105.0,
-                        child: PageLink(
-                          /*
-                          links: [
-                            PageLinkInfo(
-                              transition: LinkTransition.Fade,
-                              ease: Curves.easeOut,
-                              duration: 0.3,
-                              pageBuilder: () => historyAnnoyanceChat(),
-                            ),
-                          ],*/
-
-                          links: [],
-                          child: Stack(
-                            children: <Widget>[
-                              //底
-                              Container(
+          //整體布局
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //標題 完成
+              Expanded(
+                  flex: 10,
+                  child: Stack(children: [
+                    
+                    mainAppBarTitleContainer("歷史紀錄"),
+                    GestureDetector(
+                      child: Container(
+                          margin: const EdgeInsets.fromLTRB(20, 20, 0, 15),
+                          width: 45,
+                          height: 45,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.black,
+                                  width: 1,
+                                  style: BorderStyle.solid),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10))),
+                          child: Center(
+                            child: Container(
+                                width: 35,
+                                height: 35,
                                 decoration: BoxDecoration(
-                                  color: const Color.fromRGBO(255, 255, 255, 1),
-                                  borderRadius: BorderRadius.circular(13.0),
-                                  border: Border.all(
-                                      width: 1.0,
-                                      color: const Color(0xffa0522d)),
-                                ),
-                              ),
-                              //頭貼
-                              Pinned.fromPins(
-                                Pin(size: 69.0, start: 25.0),
-                                Pin(start: 19.0, end: 18.0),
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.elliptical(9999.0, 9999.0)),
-                                    image: DecorationImage(
-                                      image:
-                                          AssetImage('assets/image/baku1.jpg'),
-                                      fit: BoxFit.fill,
-                                    ),
+                                  image: DecorationImage(
+                                    image:
+                                        AssetImage('assets/image/barChart.png'),
+                                    fit: BoxFit.scaleDown,
                                   ),
-                                ),
+                                )),
+                          )),
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MoodLineChart())),
+                    ),
+                  ])),
+              //標籤
+              Expanded(
+                  flex: 5,
+                  child: Center(
+                      child: Container(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: Wrap(
+                      spacing: 7,
+                      //標籤設定
+                      children: [
+                        //全部標籤
+                        InkWell(
+                            child: Container(
+                              width: 50,
+                              decoration: BoxDecoration(
+                                color: selectionTab_type == 1
+                                    ? const Color(0xffa0522d)
+                                    : const Color(0xffffed97),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.elliptical(9999.0, 9999.0)),
                               ),
-                              //內容
-                              Pinned.fromPins(
-                                Pin(size: 170.0, start: 105.0),
-                                Pin(size: 81.0, end: 10.0),
-                                child: Text(
-                                  historyContents[index],
-                                  style: const TextStyle(
+                              child: Text(
+                                '全部',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
                                     fontFamily: 'Segoe UI',
                                     fontSize: 20,
-                                    color: Color.fromRGBO(160, 82, 45, 1),
-                                  ),
-                                  softWrap: true,
-                                ),
+                                    color: selectionTab_type == 1 //點按後更新文字顏色
+                                        ? const Color(0xffffffff)
+                                        : const Color(0xffa0522d)),
                               ),
-                              //時間
-                              Pinned.fromPins(
-                                Pin(size: 45.0, end: 20.0),
-                                Pin(size: 21.0, middle: 0.8),
-                                child: Text(
-                                  historyTimes[index],
-                                  style: const TextStyle(
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selectionTab_type = 1;
+                                selectionTab_solve_enabled = false;
+                                selectionTab_solve = 0;
+                              });
+                            }),
+                        //煩惱標籤
+                        InkWell(
+                            child: Container(
+                              width: 50,
+                              decoration: BoxDecoration(
+                                color: selectionTab_type == 2
+                                    ? const Color(0xffa0522d)
+                                    : const Color(0xffffed97),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.elliptical(100.0, 100.0)),
+                              ),
+                              child: Text(
+                                '煩惱',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
                                     fontFamily: 'Segoe UI',
-                                    fontSize: 16,
-                                    color: Color.fromRGBO(97, 48, 24, 1),
-                                  ),
-                                  softWrap: false,
-                                ),
+                                    fontSize: 20,
+                                    color: selectionTab_type == 2 //點按後更新文字顏色
+                                        ? const Color(0xffffffff)
+                                        : const Color(0xffa0522d)),
                               ),
-                            ],
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selectionTab_type = 2;
+                                selectionTab_solve_enabled = true;
+                                selectionTab_solve = 1;
+                              });
+                            }),
+                        //日記標籤
+                        InkWell(
+                            child: Container(
+                              width: 50,
+                              decoration: BoxDecoration(
+                                color: selectionTab_type == 3
+                                    ? const Color(0xffa0522d)
+                                    : const Color(0xffffed97),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.elliptical(100.0, 100.0)),
+                              ),
+                              child: Text(
+                                '日記',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: 'Segoe UI',
+                                    fontSize: 20,
+                                    color: selectionTab_type == 3 //點按後更新文字顏色
+                                        ? const Color(0xffffffff)
+                                        : const Color(0xffa0522d)),
+                              ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selectionTab_type = 3;
+                                selectionTab_solve_enabled = false;
+                                selectionTab_solve = 0;
+                              });
+                            }),
+                        //未解決標籤
+                        InkWell(
+                            child: Container(
+                              width: 70,
+                              decoration: BoxDecoration(
+                                color: selectionTab_solve == 1
+                                    ? const Color(0xffa0522d)
+                                    : const Color(0xffffed97),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.elliptical(100.0, 100.0)),
+                              ),
+                              child: Text(
+                                '未解決',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: 'Segoe UI',
+                                    fontSize: 20,
+                                    color: selectionTab_solve == 1 //點按後更新文字顏色
+                                        ? const Color(0xffffffff)
+                                        : const Color(0xffa0522d)),
+                              ),
+                            ),
+                            onTap: () {
+                              if (selectionTab_solve_enabled == true) {
+                                selectionTab_solve = 1;
+                                setState(() {});
+                              }
+                            }),
+                        //已解決標籤
+                        InkWell(
+                            child: Container(
+                              width: 70,
+                              decoration: BoxDecoration(
+                                color: selectionTab_solve == 2
+                                    ? const Color(0xffa0522d)
+                                    : const Color(0xffffed97),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.elliptical(100.0, 100.0)),
+                              ),
+                              child: Text(
+                                '已解決',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: 'Segoe UI',
+                                    fontSize: 20,
+                                    color: selectionTab_solve == 2 //點按後更新文字顏色
+                                        ? const Color(0xffffffff)
+                                        : const Color(0xffa0522d)),
+                              ),
+                            ),
+                            onTap: () {
+                              if (selectionTab_solve_enabled == true) {
+                                selectionTab_solve = 2;
+                                setState(() {});
+                              }
+                            }),
+                      ],
+                    ),
+                  ))),
+              //歷史清單
+              Expanded(
+                  flex: 75,
+                  child: FutureBuilder<dynamic>(
+                      future: _future,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        if (snapshot.data == null) {
+                          return Center(
+                              child: Text(
+                            "Loading...",
+                            style: TextStyle(fontSize: 30),
+                          ));
+                        }
+                        return ListView.builder(
+                          itemCount: snapshot.data["itemCounter"],
+                          itemBuilder: (BuildContext context, int index) =>
+                              Container(
+                            height: 110,
+                            decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                width: 1.0,
+                                color: BackgroundColorWarm,
+                              )),
+                            ),
+                            alignment: Alignment.center,
+                            child: ListTile(
+                                leading: Container(
+                                  decoration: BoxDecoration(
+                                    color: BackgroundColorLight,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.elliptical(9999.0, 9999.0)),
+                                    border: Border.all(
+                                        width: 1,
+                                        color: const Color(0xffa0522d)),
+                                  ),
+                                  child: CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: AssetImage(
+                                        'assets/image/Avatar_Baku_JPG.jpg'),
+                                  ),
+                                ),
+                                title: Text(
+                                  snapshot.data["result $index"]["content"],
+                                  style: TextStyle(fontSize: BodyTextSize),
+                                  textAlign: TextAlign.left,
+                                ),
+                                trailing: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Expanded(
+                                      flex: 7,
+                                      child: Text(
+                                          snapshot.data["result $index"]["type"]
+                                              .toString(),
+                                          style: TextStyle(fontSize: 20)),
+                                    ),
+                                    Expanded(
+                                        flex: 3,
+                                        child: Text(
+                                            snapshot.data["result $index"]
+                                                    ["time"]
+                                                .toString(),
+                                            style: TextStyle(fontSize: 14))),
+                                  ],
+                                ),
+                                onTap: () => print("type: " +
+                                    snapshot.data["result $index"]["type"] +
+                                    "\n" +
+                                    "id: " +
+                                    snapshot.data["result $index"]["id"]
+                                        .toString() +
+                                    "\n")
+
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) =>
+                                //             historyAnnoyanceChat(
+                                //                 data: snapshot
+                                //                     .data["result $index"])))
+
+                                ),
                           ),
-                        ),
-                      ),
-                    ],
+                        );
+                      })),
+              //底部
+              Expanded(
+                  flex: 10,
+                  child: Container(
+                    color: BackgroundColorSoft,
+                  )),
+            ],
+          ),
+          //互動
+          Pinned.fromPins(
+            Pin(size: 69.0, start: 9.0),
+            Pin(size: 68.0, end: 5.0),
+            child:
+                // Adobe XD layer: 'interactive' (group)
+                PageLink(
+              links: [
+                PageLinkInfo(
+                  transition: LinkTransition.Fade,
+                  ease: Curves.easeOut,
+                  duration: 0.3,
+                  pageBuilder: () => InteractionPage(),
+                ),
+              ],
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xffffffff),
+                      // color: BackgroundColorWarm,
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                    ),
                   ),
-                );
-              },
-              itemCount: historyCount,
-              separatorBuilder: (BuildContext context, int index) {
-                return const Divider(
-                  height: 10.0,
-                  color: Colors.transparent,
-                );
-              },
+                  Pinned.fromPins(
+                    Pin(size: 24.0, middle: 0.5111),
+                    Pin(size: 16.0, end: 9.0),
+                    child: Text(
+                      '互動',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 12,
+                        color: const Color(0xffa0522d),
+                        //color: Colors.white,
+                      ),
+                      softWrap: false,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(-0.008, -0.415),
+                    child: SizedBox(
+                      width: 29.0,
+                      height: 29.0,
+                      child:
+                          // Adobe XD layer: 'Icon material-gamep…' (shape)
+                          SvgPicture.string(
+                        _svg_a3julx,
+                        // color:Colors.white,
+                        allowDrawingOutsideViewBox: true,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           //圖鑑
@@ -497,14 +447,14 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
               child: Stack(
                 children: <Widget>[
                   Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffffff),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffffffff),
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
                   ),
                   Align(
-                    alignment: const Alignment(-0.015, -0.398),
+                    alignment: Alignment(-0.015, -0.398),
                     child: SizedBox(
                       width: 24.0,
                       height: 27.0,
@@ -519,12 +469,13 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   Pinned.fromPins(
                     Pin(size: 24.0, middle: 0.4889),
                     Pin(size: 16.0, end: 9.0),
-                    child: const Text(
+                    child: Text(
                       '圖鑑',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 12,
-                        color: Color(0xffa0522d),
+                        color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
                     ),
@@ -562,18 +513,19 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   Pinned.fromPins(
                     Pin(size: 48.0, end: 9.0),
                     Pin(size: 16.0, end: 9.0),
-                    child: const Text(
+                    child: Text(
                       '歷史紀錄',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 12,
-                        color: Color(0xffa0522d),
+                        color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
                     ),
                   ),
                   Align(
-                    alignment: const Alignment(0.073, -0.408),
+                    alignment: Alignment(0.073, -0.408),
                     child: SizedBox(
                       width: 28.0,
                       height: 28.0,
@@ -601,7 +553,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => const Social(),
+                  pageBuilder: () => Social(),
                 ),
               ],
               child: Stack(
@@ -616,12 +568,13 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   Pinned.fromPins(
                     Pin(size: 24.0, middle: 0.5111),
                     Pin(size: 16.0, end: 9.0),
-                    child: const Text(
+                    child: Text(
                       '社群',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 12,
-                        color: Color(0xffa0522d),
+                        color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
                     ),
@@ -641,162 +594,163 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
               ),
             ),
           ),
-          //互動
-          Pinned.fromPins(
-            Pin(size: 69.0, start: 9.0),
-            Pin(size: 68.0, end: 5.0),
-            child:
-                // Adobe XD layer: 'interactive' (group)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => InteractionPage(),
-                ),
-              ],
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffffff),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 24.0, middle: 0.5111),
-                    Pin(size: 16.0, end: 9.0),
-                    child: const Text(
-                      '互動',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 12,
-                        color: Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                  Align(
-                    alignment: const Alignment(-0.008, -0.415),
-                    child: SizedBox(
-                      width: 29.0,
-                      height: 29.0,
-                      child:
-                          // Adobe XD layer: 'Icon material-gamep…' (shape)
-                          SvgPicture.string(
-                        _svg_a3julx,
-                        allowDrawingOutsideViewBox: true,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
           //新增
           Pinned.fromPins(
             Pin(size: 150.0, middle: 0.5),
             Pin(size: 150.0, end: 5.0),
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                Positioned(
-                    child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: <Widget>[
-                    IgnorePointer(
-                      child: Container(
-                        color: Colors.transparent,
-                        height: 150.0,
-                        width: 150.0,
-                      ),
-                    ),
-                    Transform(
-                      transform: Matrix4.rotationZ(
-                          getRadiansFromDegree(rotationAnimation.value)),
-                      alignment: Alignment.center,
-                      child: CircularButton(
-                        color: const Color.fromRGBO(255, 255, 255, 1),
-                        width: 70,
-                        height: 70,
-                        icon: const Icon(
-                          Icons.add_rounded,
-                          color: Color.fromRGBO(255, 187, 0, 1),
-                          size: 50,
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              animationState = setState;
+              return Stack(
+                alignment: Alignment.bottomCenter,
+                children: <Widget>[
+                  Positioned(
+                      child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: <Widget>[
+                      IgnorePointer(
+                        child: Container(
+                          color: Colors.transparent,
+                          height: 150.0,
+                          width: 150.0,
                         ),
-                        onClick: () {
-                          if (animationController.isCompleted) {
-                            animationController.reverse();
-                          } else {
-                            animationController.forward();
-                          }
-                        },
                       ),
-                    ),
-                    Transform.translate(
-                      offset: Offset.fromDirection(getRadiansFromDegree(235),
-                          degOneTranslationAnimation.value * 80),
-                      child: Transform(
+                      Transform(
                         transform: Matrix4.rotationZ(
-                            getRadiansFromDegree(rotationAnimation.value))
-                          ..scale(degOneTranslationAnimation.value),
+                            getRadiansFromDegree(rotationAnimation.value)),
                         alignment: Alignment.center,
                         child: CircularButton(
-                          color: Colors.blueAccent,
+                          color: Color.fromRGBO(255, 255, 255, 1),
                           width: 70,
                           height: 70,
                           icon: const Icon(
-                            Icons.sentiment_dissatisfied,
-                            color: Colors.white,
-                            size: 40,
+                            Icons.add_rounded,
+                            color: Color.fromRGBO(255, 187, 0, 1),
+                            size: 50,
                           ),
                           onClick: () {
-                            animationController.reverse();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AnnoyanceChat()));
+                            if (animationController.isCompleted) {
+                              animationController.reverse();
+                            } else {
+                              animationController.forward();
+                              animationController.addListener(() {
+                                animationState!(() {});
+                              });
+                            }
                           },
                         ),
                       ),
-                    ),
-                    Transform.translate(
-                      offset: Offset.fromDirection(getRadiansFromDegree(305),
-                          degTwoTranslationAnimation.value * 80),
-                      child: Transform(
-                        transform: Matrix4.rotationZ(
-                            getRadiansFromDegree(rotationAnimation.value))
-                          ..scale(degTwoTranslationAnimation.value),
-                        alignment: Alignment.center,
-                        child: CircularButton(
-                          color: Colors.orangeAccent,
-                          width: 70,
-                          height: 70,
-                          icon: const Icon(
-                            Icons.import_contacts,
-                            color: Colors.white,
-                            size: 40,
+                      Transform.translate(
+                        offset: Offset.fromDirection(getRadiansFromDegree(235),
+                            degOneTranslationAnimation.value * 80),
+                        child: Transform(
+                          transform: Matrix4.rotationZ(
+                              getRadiansFromDegree(rotationAnimation.value))
+                            ..scale(degOneTranslationAnimation.value),
+                          alignment: Alignment.center,
+                          child: CircularButton(
+                            color: Colors.blueAccent,
+                            width: 70,
+                            height: 70,
+                            icon: const Icon(
+                              Icons.sentiment_dissatisfied,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                            onClick: () {
+                              animationController.reverse();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AnnoyanceChat()));
+                            },
                           ),
-                          onClick: () {
-                            // animationController.reverse();
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => Add_diary()));
-                          },
                         ),
                       ),
-                    ),
-                  ],
-                ))
-              ],
-            ),
+                      Transform.translate(
+                        offset: Offset.fromDirection(getRadiansFromDegree(305),
+                            degTwoTranslationAnimation.value * 80),
+                        child: Transform(
+                          transform: Matrix4.rotationZ(
+                              getRadiansFromDegree(rotationAnimation.value))
+                            ..scale(degTwoTranslationAnimation.value),
+                          alignment: Alignment.center,
+                          child: CircularButton(
+                            color: Colors.orangeAccent,
+                            width: 70,
+                            height: 70,
+                            icon: const Icon(
+                              Icons.import_contacts,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                            onClick: () {
+                              animationController.reverse();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ))
+                ],
+              );
+            }),
           ),
         ],
       ),
     );
+  }
+
+  Future<Map> getHistoryMapByAccount() async {
+    Map socialResult = {};
+    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
+    Future<Data> annoyances = annoyanceRepository
+        .searchAnnoyanceByAccount(user_Account)
+        .then((value) => Data.fromJson(value!));
+    await annoyances.then((value) async {
+      await socialResult.putIfAbsent(
+        "itemCounter",
+        () => value.data.length,
+      );
+      for (int index = 0; index < min(value.data.length, 20); index++) {
+        String type = "";
+        switch (value.data.elementAt(index).type) {
+          case 1:
+            type = "課業";
+            break;
+          case 2:
+            type = "事業";
+            break;
+          case 3:
+            type = "愛情";
+            break;
+          case 4:
+            type = "友情";
+            break;
+          case 5:
+            type = "親情";
+            break;
+          case 6:
+            type = "其他";
+            break;
+          default:
+            break;
+        }
+
+        socialResult.putIfAbsent(
+          "result $index",
+          () => {
+            'id': value.data.elementAt(index).id,
+            'avatar': value.data.elementAt(index).monsterId,
+            'content': value.data.elementAt(index).content,
+            'type': type,
+            'time': value.data.elementAt(index).time,
+          },
+        );
+      }
+    });
+
+    return socialResult;
   }
 
   //介面設計
@@ -808,8 +762,8 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   //初始化
   @override
   void initState() {
-    animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 200));
+    animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 250));
     degOneTranslationAnimation = TweenSequence([
       TweenSequenceItem<double>(
           tween: Tween<double>(begin: 0.0, end: 1.2), weight: 75.0),
@@ -824,21 +778,16 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     ]).animate(animationController);
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
+
+    _future = getHistoryMapByAccount();
     super.initState();
+  }
 
-    beep = false;
-
-    Timer(Duration(milliseconds: 800), () {
-      _timer = Timer.periodic(Duration(milliseconds: 350), (timer) {
-        ///取12筆
-        if (index > 12) {
-          setState(() {});
-          _timer.cancel();
-        } else {
-          setState(() {});
-        }
-      });
-    });
+  //關閉
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 }
 
