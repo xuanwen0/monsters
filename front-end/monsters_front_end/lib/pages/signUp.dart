@@ -51,36 +51,46 @@ class _SignUpState extends State<SignUp> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     //上一頁
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child:
-                          // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                          PageLink(
-                        links: [
-                          PageLinkInfo(
-                            transition: LinkTransition.Fade,
-                            ease: Curves.easeOut,
-                            duration: 0.3,
-                            pageBuilder: () => LoginPage(),
+                    Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child:
+                              // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
+                              Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 12, 0, 0),
+                            child: PageLink(
+                              links: [
+                                PageLinkInfo(
+                                  transition: LinkTransition.Fade,
+                                  ease: Curves.easeOut,
+                                  duration: 0.3,
+                                  pageBuilder: () => LoginPage(),
+                                ),
+                              ],
+                              child: SvgPicture.string(
+                                _svg_ryq30,
+                                allowDrawingOutsideViewBox: true,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
                           ),
-                        ],
-                        child: SvgPicture.string(
-                          _svg_ryq30,
-                          allowDrawingOutsideViewBox: true,
-                          fit: BoxFit.fill,
                         ),
-                      ),
+                        //標題
+                        Center(
+                          child: Text(
+                            '註冊',
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 40,
+                              color: Color.fromRGBO(160, 82, 45, 1),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    //標題
-                    Text(
-                      '註冊',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 47,
-                        color: Color.fromRGBO(160, 82, 45, 1),
-                      ),
-                    ),
-                    SizedBox(height: 50.0),
+
+                    SizedBox(height: 10.0),
                     //帳號
                     TextFormField(
                       autofocus: false,
@@ -339,7 +349,7 @@ class _SignUpState extends State<SignUp> {
                             )),
                       ],
                     ),
-                    SizedBox(height: 50.0),
+                    SizedBox(height: 10.0),
                     //註冊
                     SizedBox(
                       width: 150.0,
@@ -365,7 +375,7 @@ class _SignUpState extends State<SignUp> {
                         },
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 10.0),
                     //登入
                     Align(
                       alignment: Alignment.bottomCenter,
