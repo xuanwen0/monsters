@@ -76,48 +76,6 @@ class _Edit_personalInfoState extends State<Edit_personalInfo> {
                           }
                         }),
                     SizedBox(height: 20.0),
-                    //生日
-                    Row(
-                      children: [
-                        Text(
-                          '生日  :',
-                          style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 30,
-                            color: Colors.grey[700],
-                          ),
-                          softWrap: false,
-                        ),
-                        SizedBox(width: 5.0),
-                        TextButton.icon(
-                          onPressed: () async {
-                            DateTime? newDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime(2100),
-                            );
-                            if (newDate == null) return;
-                            setState(() => date = newDate);
-                          },
-                          icon: Icon(
-                            Icons.calendar_month,
-                            color: Colors.grey[700],
-                            size: 30,
-                          ),
-                          label: Text(
-                            '${date.year}/${date.month}/${date.day}',
-                            style: TextStyle(
-                              fontFamily: 'Segoe UI',
-                              fontSize: 30,
-                              color: Color.fromRGBO(160, 82, 45, 1),
-                            ),
-                            softWrap: false,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 50.0),
                     //儲存or取消
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

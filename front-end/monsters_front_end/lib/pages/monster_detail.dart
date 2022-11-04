@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/manual.dart';
+import 'package:monsters_front_end/pages/style.dart';
 
 class Monster_detail extends StatefulWidget {
   @override
@@ -14,321 +17,168 @@ class _Monster_detailState extends State<Monster_detail> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
-      body: Stack(
+      appBar: secondAppBar("圖鑑"),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          //標題Name
-          Pinned.fromPins(
-            Pin(size: 124.0, middle: 0.5),
-            Pin(size: 63.0, start: 11.0),
-            child: Text(
-              '圖鑑',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 47,
-                color: const Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
           //monster圖框
-          Pinned.fromPins(
-            Pin(start: 41.0, end: 40.0),
-            Pin(size: 290.0, middle: 0.2707),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(22.0),
-                    border:
-                        Border.all(width: 1.0, color: const Color(0xffa0522d)),
-                  ),
+          Expanded(
+            flex: 55,
+            child: Container(
+              // margin: const EdgeInsets.symmetric(horizontal: 60, vertical: 30),
+              margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 70),
+              decoration: BoxDecoration(
+                color: const Color(0xffffffff),
+                borderRadius: BorderRadius.circular(22.0),
+                border: Border.all(width: 1.0, color: const Color(0xffa0522d)),
+                image: const DecorationImage(
+                  image: AssetImage('assets/image/monster_Baku.png'),
+                  fit: BoxFit.fill,
                 ),
-                // Adobe XD layer: 'monster1' (shape)
-                Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: const AssetImage(
-                          'assets/image/monster_Baku.png'),
-                      fit: BoxFit.fill,
-                    ),
-                    borderRadius: BorderRadius.circular(24.0),
-                  ),
-                ),
-                /*
-                //星星
-                Pinned.fromPins(
-                  Pin(size: 163.5, end: 15.3),
-                  Pin(size: 46.5, end: 14.9),
-                  child: Stack(
-                    children: <Widget>[
-                      Pinned.fromPins(
-                        Pin(size: 48.6, start: 0.0),
-                        Pin(start: 0.0, end: 0.0),
-                        child:
-                            // Adobe XD layer: 'Icon awesome-star' (shape)
-                            SvgPicture.string(
-                          _svg_m5gacg,
-                          allowDrawingOutsideViewBox: true,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      Pinned.fromPins(
-                        Pin(size: 48.6, middle: 0.5),
-                        Pin(start: 0.0, end: 0.0),
-                        child:
-                            // Adobe XD layer: 'Icon awesome-star' (shape)
-                            SvgPicture.string(
-                          _svg_hjs34o,
-                          allowDrawingOutsideViewBox: true,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      Pinned.fromPins(
-                        Pin(size: 48.6, end: 0.0),
-                        Pin(start: 0.0, end: 0.0),
-                        child:
-                            // Adobe XD layer: 'Icon awesome-star' (shape)
-                            SvgPicture.string(
-                          _svg_so5uno,
-                          allowDrawingOutsideViewBox: true,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              */
-              ],
-            ),
-          ),
-          //monster Name
-          Align(
-            alignment: Alignment(-0.115, 0.277),
-            child: SizedBox(
-              width: 168.0,
-              height: 60.0,
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromPins(
-                    Pin(size: 106.0, middle: 0.5),
-                    Pin(start: 0.0, end: 0.0),
-                    child: const Text(
-                      '巴古',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 40,
-                        color: Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                  //share圖上方箭頭(變圓)
-                  Pinned.fromPins(
-                    Pin(start: 0.0, end: 0.0),
-                    Pin(size: 1.0, end: 1.0),
-                    child: SvgPicture.string(
-                      _svg_cy6c6e,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  //share圖底部(變圓)
-                  Pinned.fromPins(
-                    Pin(start: 0.0, end: 0.0),
-                    Pin(size: 1.0, end: 1.0),
-                    child: SvgPicture.string(
-                      _svg_uh9wt,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ],
               ),
             ),
+            // Adobe XD layer: 'monster1' (shape)
+
+            /*
+              //星星
+              Pinned.fromPins(
+                Pin(size: 163.5, end: 15.3),
+                Pin(size: 46.5, end: 14.9),
+                child: Stack(
+                  children: <Widget>[
+                    Pinned.fromPins(
+                      Pin(size: 48.6, start: 0.0),
+                      Pin(start: 0.0, end: 0.0),
+                      child:
+                          // Adobe XD layer: 'Icon awesome-star' (shape)
+                          SvgPicture.string(
+                        _svg_m5gacg,
+                        allowDrawingOutsideViewBox: true,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    Pinned.fromPins(
+                      Pin(size: 48.6, middle: 0.5),
+                      Pin(start: 0.0, end: 0.0),
+                      child:
+                          // Adobe XD layer: 'Icon awesome-star' (shape)
+                          SvgPicture.string(
+                        _svg_hjs34o,
+                        allowDrawingOutsideViewBox: true,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    Pinned.fromPins(
+                      Pin(size: 48.6, end: 0.0),
+                      Pin(start: 0.0, end: 0.0),
+                      child:
+                          // Adobe XD layer: 'Icon awesome-star' (shape)
+                          SvgPicture.string(
+                        _svg_so5uno,
+                        allowDrawingOutsideViewBox: true,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            */
           ),
-          //下方衣服選項列
-          Pinned.fromPins(
-            Pin(start: 58.0, end: 58.0),
-            Pin(size: 72.0, middle: 0.8201),
+          //monster名稱和分享
+          Expanded(
+            flex: 15,
             child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 72.0, start: 0.0),
-                  Pin(start: 0.0, end: 0.0),
+              children: [
+                Align(
+                  alignment: Alignment.center,
                   child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                      border: Border.all(
-                          width: 1.0, color: const Color(0xffa0522d)),
-                    ),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 72.0, middle: 0.5),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                      border: Border.all(
-                          width: 1.0, color: const Color(0xffa0522d)),
-                    ),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 72.0, end: 0.0),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                      border: Border.all(
-                          width: 1.0, color: const Color(0xffa0522d)),
-                    ),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 45.0, start: 13.5),
-                  Pin(size: 34.1, middle: 0.5),
-                  child:
-                      // Adobe XD layer: 'Icon map-clothing-s…' (shape)
-                      SvgPicture.string(
-                    _svg_qxppl0,
-                    allowDrawingOutsideViewBox: true,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                Center(
-                  child: SizedBox(
-                    width: 36.0,
-                    height: 27.0,
-                    child:
-                        // Adobe XD layer: 'Icon awesome-redhat' (shape)
-                        SvgPicture.string(
-                      _svg_b2x6,
-                      allowDrawingOutsideViewBox: true,
-                    ),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 36.9, end: 15.5),
-                  Pin(size: 23.7, middle: 0.5),
-                  child:
-                      // Adobe XD layer: 'Icon ionic-ios-bowt…' (group)
-                      Stack(
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment(0.033, 0.115),
-                        child: SizedBox(
-                          width: 8.0,
-                          height: 10.0,
-                          child: SvgPicture.string(
-                            _svg_w4f3m,
-                            allowDrawingOutsideViewBox: true,
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      width: 200,
+                      height: 60,
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            width: 1,
+                            color: BackgroundColorWarm,
                           ),
                         ),
                       ),
-                      Pinned.fromPins(
-                        Pin(size: 14.5, start: 0.0),
-                        Pin(start: 0.0, end: 0.0),
-                        child: SvgPicture.string(
-                          _svg_bnhgh,
-                          allowDrawingOutsideViewBox: true,
-                          fit: BoxFit.fill,
+                      child: const Text(
+                        '巴古',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 40,
+                          color: Color(0xffa0522d),
+                        ),
+                        softWrap: false,
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: GestureDetector(
+                    onTap: () => shareManualtoSocial(),
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      margin: const EdgeInsets.only(bottom: 50, right: 10),
+                      alignment: Alignment.topRight,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/image/icon_share.jpg'),
                         ),
                       ),
-                      Pinned.fromPins(
-                        Pin(size: 14.1, end: 0.0),
-                        Pin(start: 0.0, end: 0.0),
-                        child: SvgPicture.string(
-                          _svg_dlqz9c,
-                          allowDrawingOutsideViewBox: true,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          //share圖
-          Align(
-            alignment: Alignment(0.657, 0.276),
-            child: SizedBox(
-              width: 25.0,
-              height: 25.0,
-              child:
-                  // Adobe XD layer: 'Icon feather-share' (group)
-                  Stack(
-                children: <Widget>[
-                  //share圖底部
-                  Pinned.fromPins(
-                    Pin(start: 0.0, end: 0.0),
-                    Pin(size: 13.8, end: 0.0),
-                    child: SvgPicture.string(
-                      _svg_krlxbt,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
+          //配件選項
+          Expanded(
+              flex: 30,
+              child: Wrap(
+                spacing: 20,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: BackgroundColorWarm,
+                    radius: 45.0,
+                    child: CircleAvatar(
+                      backgroundImage:
+                          AssetImage('assets/image/accessories_1.png'),
+                      radius: 40.0,
                     ),
                   ),
-                  //share圖上方箭頭
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: SizedBox(
-                      width: 11.0,
-                      height: 6.0,
-                      child: SvgPicture.string(
-                        _svg_na99y,
-                        allowDrawingOutsideViewBox: true,
-                      ),
+                  CircleAvatar(
+                    backgroundColor: BackgroundColorWarm,
+                    radius: 45.0,
+                    child: CircleAvatar(
+                      backgroundImage:
+                          AssetImage('assets/image/accessories_2.png'),
+                      radius: 40.0,
                     ),
                   ),
-                  //share圖中間直線
-                  Pinned.fromPins(
-                    Pin(size: 1.0, middle: 0.5336),
-                    Pin(size: 15.9, start: 3.0),
-                    child: SvgPicture.string(
-                      _svg_gv3pne,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
+                  CircleAvatar(
+                    backgroundColor: BackgroundColorWarm,
+                    radius: 45.0,
+                    child: CircleAvatar(
+                      backgroundImage:
+                          AssetImage('assets/image/accessories_3.png'),
+                      radius: 40.0,
                     ),
                   ),
                 ],
-              ),
-            ),
-          ),
-          //箭頭
-          Pinned.fromPins(
-            Pin(size: 45.6, start: 14.4),
-            Pin(size: 41.1, start: 23.4),
-            child:
-                // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => Manual(),
-                ),
-              ],
-              child: SvgPicture.string(
-                _svg_ryq30,
-                allowDrawingOutsideViewBox: true,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
+              ))
         ],
       ),
     );
+  }
+
+  shareManualtoSocial() {
+    log("123");
   }
 }
 
