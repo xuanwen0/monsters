@@ -74,6 +74,7 @@ class _InteractionPageState extends State<InteractionPage>
       endDrawer: GetDrawer(context),
       body: Stack(
         children: <Widget>[
+          //TODO:互動區的標題位置改正確
           //標題
           Pinned.fromPins(
             Pin(size: 150.0, middle: 0.5),
@@ -97,10 +98,10 @@ class _InteractionPageState extends State<InteractionPage>
           Align(
             alignment: Alignment.topRight,
             child: IconButton(
-              alignment: Alignment.center,
-              iconSize: 57.0,
-              icon: Icon(Icons.menu_rounded),
-              color: Color(0xffffbb00),
+              iconSize: 60.0,
+              icon: const Icon(Icons.menu_rounded),
+              color: const Color(0xffffbb00),
+              padding: const EdgeInsets.fromLTRB(0, 10, 10, 5),
               onPressed: () => _scaffoldKEy.currentState?.openEndDrawer(),
             ),
           ),
@@ -130,7 +131,7 @@ class _InteractionPageState extends State<InteractionPage>
                               color: const Color(0xffffffff),
                               borderRadius: BorderRadius.circular(23.0),
                               border: Border.all(
-                                  width: 1.0, color: const Color(0xffa0522d)),
+                                  width: 2, color: const Color(0xffa0522d)),
                             ),
                           ),
                           Pinned.fromPins(
@@ -151,6 +152,7 @@ class _InteractionPageState extends State<InteractionPage>
                         ],
                       )),
                 ),
+                //TODO: 拉寬 或是 置中
                 //每日測驗
                 Pinned.fromPins(
                   Pin(start: 0.0, end: 0.0),
@@ -171,7 +173,7 @@ class _InteractionPageState extends State<InteractionPage>
                               color: const Color(0xffffffff),
                               borderRadius: BorderRadius.circular(23.0),
                               border: Border.all(
-                                  width: 1.0, color: const Color(0xffa0522d)),
+                                  width: 2, color: const Color(0xffa0522d)),
                             ),
                           ),
                           Pinned.fromPins(
@@ -213,7 +215,7 @@ class _InteractionPageState extends State<InteractionPage>
                               color: const Color(0xffffffff),
                               borderRadius: BorderRadius.circular(23.0),
                               border: Border.all(
-                                  width: 1.0, color: const Color(0xffa0522d)),
+                                  width: 2, color: const Color(0xffa0522d)),
                             ),
                           ),
                           Pinned.fromPins(
@@ -255,7 +257,7 @@ class _InteractionPageState extends State<InteractionPage>
                               color: const Color(0xffffffff),
                               borderRadius: BorderRadius.circular(23.0),
                               border: Border.all(
-                                  width: 1.0, color: const Color(0xffa0522d)),
+                                  width: 2, color: const Color(0xffa0522d)),
                             ),
                           ),
                           Pinned.fromPins(
@@ -297,7 +299,7 @@ class _InteractionPageState extends State<InteractionPage>
                               color: const Color(0xffffffff),
                               borderRadius: BorderRadius.circular(23.0),
                               border: Border.all(
-                                  width: 1.0, color: const Color(0xffa0522d)),
+                                  width: 2, color: const Color(0xffa0522d)),
                             ),
                           ),
                           Pinned.fromPins(
@@ -436,7 +438,7 @@ class _InteractionPageState extends State<InteractionPage>
               ),
             ),
           ),
-          //歷史紀錄
+          //歷史記錄
           Pinned.fromPins(
             Pin(size: 69.0, middle: 0.7347),
             Pin(size: 68.0, end: 5.0),
@@ -466,7 +468,7 @@ class _InteractionPageState extends State<InteractionPage>
                     Pin(size: 48.0, end: 9.0),
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
-                      '歷史紀錄',
+                      '歷史記錄',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',

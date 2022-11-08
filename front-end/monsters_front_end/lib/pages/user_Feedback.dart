@@ -62,7 +62,7 @@ class _user_FeedbackState extends State<user_Feedback> {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(20.0)),
                         border:
-                            Border.all(width: 8, color: BackgroundColorSoft),
+                            Border.all(width: 5, color: BackgroundColorWarm),
                       ),
                       child: TextFormField(
                           textInputAction: TextInputAction.done,
@@ -75,6 +75,7 @@ class _user_FeedbackState extends State<user_Feedback> {
                             fillColor: Color.fromRGBO(255, 255, 255, 1),
                           ),
                           autovalidateMode: AutovalidateMode.onUserInteraction,
+                          style: TextStyle(fontSize: 22, color: Colors.black),
                           validator: (value) {
                             if (value!.length < 5) {
                               return '回饋至少五個字喔';
@@ -86,7 +87,7 @@ class _user_FeedbackState extends State<user_Feedback> {
                       padding: const EdgeInsets.only(top: 100.0, bottom: 100.0),
                       child: Container(
                         height: 15 * 24.0,
-                        margin: const EdgeInsets.all(20),
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
                         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                         width: 350,
                         decoration: BoxDecoration(
@@ -94,7 +95,7 @@ class _user_FeedbackState extends State<user_Feedback> {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(20.0)),
                           border:
-                              Border.all(width: 8, color: BackgroundColorSoft),
+                              Border.all(width: 5, color: BackgroundColorWarm),
                         ),
                         child: Center(
                           child: Text(
@@ -104,7 +105,7 @@ class _user_FeedbackState extends State<user_Feedback> {
                         ),
                       ),
                     ),
-              const SizedBox(height: 30),
+              sent == false ? const SizedBox(height: 30) : Container(),
               sent == false
                   ? FlatButton(
                       minWidth: 150,
@@ -128,7 +129,25 @@ class _user_FeedbackState extends State<user_Feedback> {
                         ),
                         softWrap: false,
                       ))
-                  : Container()
+                  : FlatButton(
+                      minWidth: 150,
+                      height: 60,
+                      color: Color.fromRGBO(255, 237, 151, 1),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(9999.0)),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        '不客氣',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 36,
+                          color: Color(0xffa0522d),
+                        ),
+                        softWrap: false,
+                      ))
             ],
           ),
         ));

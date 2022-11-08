@@ -207,7 +207,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                                   color: Color.fromRGBO(255, 255, 255, 1),
                                   borderRadius: BorderRadius.circular(11.0),
                                   border: Border.all(
-                                      width: 1.0,
+                                      width: 1.8,
                                       color: const Color(0xffa0522d)),
                                 ),
                                 margin:
@@ -377,7 +377,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
               ),
             ),
           ),
-          //歷史紀錄
+          //歷史記錄
           Pinned.fromPins(
             Pin(size: 69.0, middle: 0.7347),
             Pin(size: 68.0, end: 5.0),
@@ -407,7 +407,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     Pin(size: 48.0, end: 9.0),
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
-                      '歷史紀錄',
+                      '歷史記錄',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',

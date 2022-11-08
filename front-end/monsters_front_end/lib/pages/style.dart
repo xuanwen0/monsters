@@ -64,7 +64,7 @@ const AppBarTextStyle = TextStyle(
 );
 const TitleTextStyle = TextStyle(
   fontFamily: FontNameDefault,
-  fontWeight: FontWeight.w300,
+  fontWeight: FontWeight.w500,
   fontSize: mediumTextSize,
   color: BackgroundColorWarm,
 );

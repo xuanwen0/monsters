@@ -91,7 +91,7 @@ class _Daily_testState extends State<Daily_test> {
                         color: Colors.white,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(30.0)),
-                        border: Border.all(width: 1, color: Colors.white),
+                        border: Border.all(width: 2, color: Colors.grey),
                       ),
                       child: Container(
                           alignment: Alignment.center,

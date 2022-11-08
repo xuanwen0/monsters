@@ -30,7 +30,7 @@ class _Monster_detailState extends State<Monster_detail> {
               decoration: BoxDecoration(
                 color: const Color(0xffffffff),
                 borderRadius: BorderRadius.circular(22.0),
-                border: Border.all(width: 1.0, color: const Color(0xffa0522d)),
+                border: Border.all(width: 2.65, color: const Color(0xffa0522d)),
                 image: const DecorationImage(
                   image: AssetImage('assets/image/monster_Baku.png'),
                   fit: BoxFit.fill,
@@ -99,7 +99,7 @@ class _Monster_detailState extends State<Monster_detail> {
                       decoration: const BoxDecoration(
                         border: Border(
                           bottom: BorderSide(
-                            width: 1,
+                            width: 2.5,
                             color: BackgroundColorWarm,
                           ),
                         ),
@@ -117,23 +117,24 @@ class _Monster_detailState extends State<Monster_detail> {
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: GestureDetector(
-                    onTap: () => shareManualtoSocial(),
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      margin: const EdgeInsets.only(bottom: 50, right: 10),
-                      alignment: Alignment.topRight,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/image/icon_share.jpg'),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                // Align(
+                //   alignment: Alignment.topRight,
+                //   child: GestureDetector(
+                //     onTap: () => shareManualtoSocial(),
+                //     child: Container(
+                //       width: 100,
+                //       height: 100,
+                //       margin: const EdgeInsets.only(bottom: 50, right: 10),
+                //       alignment: Alignment.topRight,
+                //       //TODO: 分享
+                //       decoration: const BoxDecoration(
+                //         image: DecorationImage(
+                //           image: AssetImage('assets/image/icon_share.jpg'),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
