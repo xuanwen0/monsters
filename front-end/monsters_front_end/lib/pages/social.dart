@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:async';
-import 'dart:developer';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -10,8 +9,6 @@ import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/annoyanceModel.dart';
-import 'package:monsters_front_end/pages/drawer_setting.dart';
-import 'package:monsters_front_end/pages/drawer_personalInfo.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';

@@ -4,10 +4,8 @@ import 'dart:io';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/audio_model/audio_player.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
-import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:video_player/video_player.dart';
 import 'package:monsters_front_end/pages/audio_main.dart';
@@ -30,8 +28,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
   int acceptShare = 0;
   var userAnswers = [];
 
-  File? _media;
-  File? _moodImage;
+  File? contentFile;
 
   //新增煩惱-照相
   takePhoto() async {
@@ -39,10 +36,10 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
     if (media == null) return;
     final imageTemporary = File(media.path);
 
-    this._media = imageTemporary;
-    if (_media != null) {
-      messages.insert(0, {"data": 2, "image": _media});
-      response(null, _media);
+    contentFile = imageTemporary;
+    if (contentFile != null) {
+      messages.insert(0, {"data": 2, "image": contentFile});
+      response(null, contentFile);
     }
     setState(() {});
   }
@@ -52,12 +49,12 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
     XFile? recordedVideo = await ImagePicker().pickVideo(
         source: ImageSource.camera, maxDuration: Duration(seconds: 15));
     if (recordedVideo == null) return;
-    _media = File(recordedVideo.path);
-    _videoPlayerController = VideoPlayerController.file(_media!)
+    contentFile = File(recordedVideo.path);
+    _videoPlayerController = VideoPlayerController.file(contentFile!)
       ..initialize().then((_) {
-        messages.insert(0, {"data": 3, "video": _media});
+        messages.insert(0, {"data": 3, "video": contentFile});
         _videoPlayerController.play();
-        response(null, _media);
+        response(null, contentFile);
       });
     setState(() {});
   }
@@ -68,10 +65,10 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
     if (media == null) return;
     final imageTemporary = File(media.path);
 
-    this._media = imageTemporary;
-    if (_media != null) {
-      messages.insert(0, {"data": 2, "image": _media});
-      response(null, _media);
+    contentFile = imageTemporary;
+    if (contentFile != null) {
+      messages.insert(0, {"data": 2, "image": contentFile});
+      response(null, contentFile);
     }
     setState(() {});
   }
@@ -81,12 +78,12 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
     XFile? pickedVideo =
         await ImagePicker().pickVideo(source: ImageSource.gallery);
     if (pickedVideo == null) return;
-    _media = File(pickedVideo.path);
-    _videoPlayerController = VideoPlayerController.file(_media!)
+    contentFile = File(pickedVideo.path);
+    _videoPlayerController = VideoPlayerController.file(contentFile!)
       ..initialize().then((_) {
-        messages.insert(0, {"data": 3, "video": _media});
+        messages.insert(0, {"data": 3, "video": contentFile});
         _videoPlayerController.play();
-        response(null, _media);
+        response(null, contentFile);
       });
     setState(() {});
   }
@@ -100,10 +97,10 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
 
     if (media == null) return;
     final audioTemporary = File(media);
-    this._media = audioTemporary;
-    if (_media != null) {
-      messages.insert(0, {"data": 4, "audio": _media});
-      response(null, _media);
+    contentFile = audioTemporary;
+    if (contentFile != null) {
+      messages.insert(0, {"data": 4, "audio": contentFile});
+      response(null, contentFile);
     }
     setState(() {});
   }
@@ -307,12 +304,14 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                           onPressed: () {
                             log(userAnswers.toString());
 //後端修改
-/*
+/* 
+  多媒體資料變數已改成contentFile
                             annoyanceRepository.createAnnoyance(
                               Annoyance(
                                   id: 0,
                                   account: user_Account,
                                   content: userAnswers[1],
+                                  contentFile: contentFile,
                                   monsterId: 1,
                                   type: userAnswers[0],
                                   mood: userAnswers[2],
@@ -428,7 +427,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                         ),
                         Flexible(
                             child: Container(
-                                child: Image.file(_media!,
+                                child: Image.file(contentFile!,
                                     width: (MediaQuery.of(context).size.width >
                                             MediaQuery.of(context).size.height)
                                         ? 288
@@ -578,7 +577,6 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
 
   //怪獸訊息(提示輸入格式)
   void hint() {
-    String hintEmotionGrade = "[請擇一輸入]\n1 / 2 / 3 / 4 / 5";
     String hintAccept = "[請擇一輸入]\n是 / 否";
     String hintDiaryMethod = "請用以下幾種方式記錄：\n★以文字記錄日記\n★點選左下角圖示新增";
     if (chatRound == 1) {
@@ -586,7 +584,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
       pickable = true;
       reply(hintDiaryMethod);
     } else if (chatRound == 3) {
-      reply(hintEmotionGrade);
+      replyImage();
     } else if (chatRound == 4) {
       reply(hintAccept);
     } else {
@@ -679,6 +677,49 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
   //怪獸回覆
   void reply(String text) {
     messages.insert(0, {"data": 0, "message": text});
+  }
+
+  void replyImage() {
+    messages.insert(0, {"data": 6, "message": "print image"});
+  }
+
+  Row emotionPointRow() {
+    Row annoyancePointRow = Row();
+    annoyancePointRow = Row(
+      children: [
+        emotionPointColumn("1"),
+        Spacer(),
+        emotionPointColumn("2"),
+        Spacer(),
+        emotionPointColumn("3"),
+        Spacer(),
+        emotionPointColumn("4"),
+        Spacer(),
+        emotionPointColumn("5"),
+        Spacer(),
+      ],
+    );
+
+    return annoyancePointRow;
+  }
+
+  Column emotionPointColumn(String point) {
+    Column annoyanceImageColumn = Column();
+    annoyanceImageColumn = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CircleAvatar(
+          radius: 19,
+          backgroundImage: AssetImage('assets/image/mood/moodPoint_$point.png'),
+        ),
+        SizedBox(height: 1),
+        Text(point,
+            style:
+                TextStyle(fontSize: 17, color: Color.fromRGBO(160, 82, 45, 1)))
+      ],
+    );
+
+    return annoyanceImageColumn;
   }
 }
 

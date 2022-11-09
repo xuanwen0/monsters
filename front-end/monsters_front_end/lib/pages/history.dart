@@ -87,6 +87,8 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
               Expanded(
                   flex: 10,
                   child: Stack(children: [
+                    
+                    mainAppBarTitleContainer("歷史紀錄"),
                     GestureDetector(
                       child: Container(
                           margin: const EdgeInsets.fromLTRB(20, 20, 0, 15),
@@ -116,7 +118,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                           MaterialPageRoute(
                               builder: (context) => MoodLineChart())),
                     ),
-                    mainAppBarTitleContainer("歷史紀錄")
                   ])),
               //標籤
               Expanded(
@@ -302,16 +303,19 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                             ),
                             alignment: Alignment.center,
                             child: ListTile(
-                                leading: SizedBox(
-                                  height: double.infinity,
+                                leading: Container(
+                                  decoration: BoxDecoration(
+                                    color: BackgroundColorLight,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.elliptical(9999.0, 9999.0)),
+                                    border: Border.all(
+                                        width: 1,
+                                        color: const Color(0xffa0522d)),
+                                  ),
                                   child: CircleAvatar(
-                                    radius: 35,
-                                    backgroundColor: Colors.white,
-                                    child: CircleAvatar(
-                                      radius: 35,
-                                      backgroundImage: AssetImage(
-                                          'assets/image/Avatar_Baku_JPG.jpg'),
-                                    ),
+                                    radius: 30,
+                                    backgroundImage: AssetImage(
+                                        'assets/image/Avatar_Baku_JPG.jpg'),
                                   ),
                                 ),
                                 title: Text(
@@ -339,8 +343,13 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                             style: TextStyle(fontSize: 14))),
                                   ],
                                 ),
-                                onTap: () =>
-                                    print(snapshot.data["result $index"]["id"])
+                                onTap: () => print("type: " +
+                                    snapshot.data["result $index"]["type"] +
+                                    "\n" +
+                                    "id: " +
+                                    snapshot.data["result $index"]["id"]
+                                        .toString() +
+                                    "\n")
 
                                 // Navigator.push(
                                 //     context,

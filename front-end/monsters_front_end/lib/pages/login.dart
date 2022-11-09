@@ -14,8 +14,6 @@ import '../model/memberModel.dart';
 import '../repository/memberRepo.dart';
 import 'package:date_format/date_format.dart';
 
-var User_Name;
-
 class LoginPage extends StatefulWidget {
   @override
   _loginState createState() => _loginState();

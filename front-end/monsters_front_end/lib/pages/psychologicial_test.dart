@@ -1,11 +1,5 @@
-import 'dart:developer';
-
-import 'package:adobe_xd/page_link.dart';
-import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:monsters_front_end/pages/interaction.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/psychologicial_result.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -35,7 +29,7 @@ class _Psychologicial_testState extends State<Psychologicial_test> {
             loop: false,
             forceHD: true,
             autoPlay: false,
-            controlsVisibleAtStart: false));
+            controlsVisibleAtStart: true));
   }
 
   @override
@@ -187,7 +181,7 @@ class _Psychologicial_testState extends State<Psychologicial_test> {
       total += score;
     }
 
-    Navigator.pushReplacement(context,
+    Navigator.push(context,
         MaterialPageRoute(builder: (context) => Psychologicial_result(total)));
   }
 }

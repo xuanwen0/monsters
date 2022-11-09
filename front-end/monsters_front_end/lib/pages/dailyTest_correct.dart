@@ -1,11 +1,6 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:adobe_xd/pinned.dart';
-import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monsters_front_end/pages/daily_test.dart';
-import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -56,14 +51,15 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
                 ),
                 child: Container(
                   margin: const EdgeInsets.only(left: 30),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    '恭喜答對！',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 60,
-                      color: Color(0xffffbb00),
+                  child: const Center(
+                    child: Text(
+                      '恭喜答對！',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 50,
+                        color: Color(0xffffbb00),
+                      ),
                     ),
                   ),
                 ),
@@ -119,14 +115,14 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
                 border: Border.all(width: 1, color: Colors.grey),
               ),
               child: Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                  margin: const EdgeInsets.all(20),
                   child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
                       child: Text(
                         learn,
                         textAlign: TextAlign.justify,
                         style: const TextStyle(
+                          letterSpacing: -1,
                           color: BackgroundColorWarm,
                           fontSize: 22,
                         ),

@@ -44,34 +44,46 @@ class _Login_selfacountState extends State<Login_selfacount> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   //上一頁
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child:
-                        // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                        PageLink(
-                      links: [
-                        PageLinkInfo(
-                          transition: LinkTransition.Fade,
-                          ease: Curves.easeOut,
-                          duration: 0.3,
-                          pageBuilder: () => LoginPage(),
+                  Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 12, 0, 0),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child:
+                              // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
+                              PageLink(
+                            links: [
+                              PageLinkInfo(
+                                transition: LinkTransition.Fade,
+                                ease: Curves.easeOut,
+                                duration: 0.3,
+                                pageBuilder: () => LoginPage(),
+                              ),
+                            ],
+                            child: SvgPicture.string(
+                              _svg_ryq30,
+                              allowDrawingOutsideViewBox: true,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
                         ),
-                      ],
-                      child: SvgPicture.string(
-                        _svg_ryq30,
-                        allowDrawingOutsideViewBox: true,
-                        fit: BoxFit.fill,
                       ),
-                    ),
-                  ),
-                  //標題
-                  const Text(
-                    '登入',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 47,
-                      color: Color.fromRGBO(160, 82, 45, 1),
-                    ),
+                      //標題
+                      const Padding(
+                        padding: EdgeInsets.only(top: 8.0),
+                        child: Center(
+                          child: Text(
+                            '登入',
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 40,
+                              color: Color.fromRGBO(160, 82, 45, 1),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 50.0),
                   //帳號
