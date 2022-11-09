@@ -47,6 +47,7 @@ class _Edit_personalInfoState extends State<Edit_personalInfo> {
                     const SizedBox(height: 70.0),
                     //暱稱
                     TextFormField(
+                        style: const TextStyle(color: Colors.black),
                         autofocus: false,
                         controller: _nicknameController,
                         decoration: const InputDecoration(
@@ -107,10 +108,10 @@ class _Edit_personalInfoState extends State<Edit_personalInfo> {
                           ),
                           label: Text(
                             '${date.year}/${date.month}/${date.day}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Segoe UI',
                               fontSize: 30,
-                              color: Color.fromRGBO(160, 82, 45, 1),
+                              color: Colors.black,
                             ),
                             softWrap: false,
                           ),
