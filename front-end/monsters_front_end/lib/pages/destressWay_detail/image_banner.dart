@@ -7,13 +7,13 @@ class ImageBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(0, 8, 0, 5),
+      padding: const EdgeInsets.all(8),
       constraints: const BoxConstraints.expand(
         height: 250.0,
       ),
       child: Image.asset(
         _assetsPath,
-        fit: BoxFit.fitHeight,
+        fit: BoxFit.contain,
       ),
     );
   }

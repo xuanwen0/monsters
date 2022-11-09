@@ -115,7 +115,7 @@ class _AnswerbookPageState extends State<AnswerbookPage> {
                       style: const TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 27,
-                        color: Color.fromARGB(255, 185, 40, 83),
+                        color: BackgroundColorWarm,
                       ),
                       softWrap: false,
                     ),

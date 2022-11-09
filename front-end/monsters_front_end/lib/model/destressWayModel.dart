@@ -15,11 +15,11 @@ class DestressWay {
       DestressWay(1, '深呼吸', '臨床運動心理學家表示，這能幫助平靜壓力時刻混亂的心靈。將注意力放在呼吸...',
           'assets/image/destress_item/way1.png', [
         DestressWayIntro(
-            '臨床運動心理學家表示，這能幫助平靜壓力時刻混亂的心靈。將注意力放在呼吸上休息5分鐘！心理學家Judith Tutin博士說，深呼吸能將氧氣提供至大腦，刺激副交感神經系統，透過降低心率與血壓的方式以抵銷壓力。美國專家研究更將深.content'),
+            '臨床運動心理學家表示，這能幫助平靜壓力時刻混亂的心靈。將注意力放在呼吸上休息5分鐘！心理學專家Judith Tutin博士說，深呼吸能將氧氣提供至大腦，刺激副交感神經系統，透過降低心率與血壓的方式以抵銷壓力。.content'),
         DestressWayIntro('Power 10 呼吸法.title'),
         DestressWayIntro(
             '吸氣4秒，專注在焦慮和壓力的感受上；呼氣6秒，專注在放鬆的感覺，並將它釋放。以這樣的方式呼吸10次。.content'),
-        DestressWayIntro('538深呼吸法.title'),
+        DestressWayIntro('538 深呼吸法.title'),
         DestressWayIntro(
             '1．首先，請先聳起雙肩，之後再一次放鬆力道，使雙手自然垂落。\n\n2．接著將雙手放在膝蓋處，手掌朝上。.content'),
         DestressWayIntro('way1_1.png'),

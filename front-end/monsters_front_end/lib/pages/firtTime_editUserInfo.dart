@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monsters_front_end/pages/home.dart';
+import 'package:monsters_front_end/pages/style.dart';
 
 class FirstTime_editUserInfo extends StatefulWidget {
   @override
@@ -157,7 +158,7 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                           style: TextStyle(
                             fontFamily: 'Segoe UI',
                             fontSize: 30,
-                            color: Colors.grey[700],
+                            color: BackgroundColorWarm,
                           ),
                           softWrap: false,
                         ),

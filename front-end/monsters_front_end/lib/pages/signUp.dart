@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:monsters_front_end/pages/login.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/login_selfacount.dart';
+import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/repository/memberRepo.dart';
 import 'package:date_format/date_format.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -282,7 +283,7 @@ class _SignUpState extends State<SignUp> {
                           style: TextStyle(
                             fontFamily: 'Segoe UI',
                             fontSize: 30,
-                            color: Colors.grey[700],
+                            color: BackgroundColorWarm,
                           ),
                           softWrap: false,
                         ),

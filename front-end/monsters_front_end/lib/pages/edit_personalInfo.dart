@@ -77,7 +77,6 @@ class _Edit_personalInfoState extends State<Edit_personalInfo> {
                           }
                         }),
                     SizedBox(height: 20.0),
-                    //生日
                     Row(
                       children: [
                         Text(
@@ -108,17 +107,6 @@ class _Edit_personalInfoState extends State<Edit_personalInfo> {
                           ),
                           label: Text(
                             '${date.year}/${date.month}/${date.day}',
-                            style: const TextStyle(
-                              fontFamily: 'Segoe UI',
-                              fontSize: 30,
-                              color: Colors.black,
-                            ),
-                            softWrap: false,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 50.0),
                     //儲存or取消
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
