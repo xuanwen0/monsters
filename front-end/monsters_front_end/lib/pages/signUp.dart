@@ -90,10 +90,10 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ],
                     ),
-
                     SizedBox(height: 10.0),
                     //帳號
                     TextFormField(
+                      style: const TextStyle(color: Colors.black),
                       autofocus: false,
                       controller: _accountController,
                       decoration: const InputDecoration(
@@ -134,6 +134,7 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(height: 20.0),
                     //密碼
                     TextFormField(
+                        style: const TextStyle(color: Colors.black),
                         controller: _pwdController,
                         decoration: const InputDecoration(
                           labelText: "密碼",
@@ -171,6 +172,7 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(height: 20.0),
                     //確認密碼
                     TextFormField(
+                        style: const TextStyle(color: Colors.black),
                         autofocus: false,
                         controller: _checkpwdController,
                         decoration: const InputDecoration(
@@ -209,6 +211,7 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(height: 20.0),
                     //email
                     TextFormField(
+                      style: const TextStyle(color: Colors.black),
                       autofocus: false,
                       controller: _mailController,
                       decoration: const InputDecoration(
@@ -242,6 +245,7 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(height: 20.0),
                     //暱稱
                     TextFormField(
+                        style: const TextStyle(color: Colors.black),
                         autofocus: false,
                         controller: _nicknameController,
                         decoration: const InputDecoration(
@@ -305,7 +309,7 @@ class _SignUpState extends State<SignUp> {
                             style: TextStyle(
                               fontFamily: 'Segoe UI',
                               fontSize: 30,
-                              color: Color.fromRGBO(160, 82, 45, 1),
+                              color: Colors.black,
                             ),
                             softWrap: false,
                           ),

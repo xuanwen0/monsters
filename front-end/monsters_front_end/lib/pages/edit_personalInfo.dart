@@ -47,6 +47,7 @@ class _Edit_personalInfoState extends State<Edit_personalInfo> {
                     const SizedBox(height: 70.0),
                     //暱稱
                     TextFormField(
+                        style: const TextStyle(color: Colors.black),
                         autofocus: false,
                         controller: _nicknameController,
                         decoration: const InputDecoration(
@@ -76,6 +77,36 @@ class _Edit_personalInfoState extends State<Edit_personalInfo> {
                           }
                         }),
                     SizedBox(height: 20.0),
+                    Row(
+                      children: [
+                        Text(
+                          '生日  :',
+                          style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 30,
+                            color: Colors.grey[700],
+                          ),
+                          softWrap: false,
+                        ),
+                        SizedBox(width: 5.0),
+                        TextButton.icon(
+                          onPressed: () async {
+                            DateTime? newDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime(2100),
+                            );
+                            if (newDate == null) return;
+                            setState(() => date = newDate);
+                          },
+                          icon: Icon(
+                            Icons.calendar_month,
+                            color: Colors.grey[700],
+                            size: 30,
+                          ),
+                          label: Text(
+                            '${date.year}/${date.month}/${date.day}',
                     //儲存or取消
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

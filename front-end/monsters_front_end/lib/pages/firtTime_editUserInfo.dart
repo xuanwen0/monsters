@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:flutter/services.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/style.dart';
 
@@ -123,6 +120,7 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                     */
                     //暱稱
                     TextFormField(
+                        style: const TextStyle(color: Colors.black),
                         autofocus: false,
                         controller: _nicknameController,
                         decoration: const InputDecoration(
@@ -183,10 +181,10 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                           ),
                           label: Text(
                             '${date.year}/${date.month}/${date.day}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Segoe UI',
                               fontSize: 30,
-                              color: Color.fromRGBO(160, 82, 45, 1),
+                              color: Colors.black,
                             ),
                             softWrap: false,
                           ),

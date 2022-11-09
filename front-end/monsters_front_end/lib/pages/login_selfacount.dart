@@ -88,6 +88,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                   const SizedBox(height: 50.0),
                   //帳號
                   TextFormField(
+                    style: const TextStyle(color: Colors.black),
                     autofocus: false,
                     controller: _accountController,
                     decoration: const InputDecoration(
@@ -128,6 +129,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                   const SizedBox(height: 20.0),
                   //密碼
                   TextFormField(
+                      style: const TextStyle(color: Colors.black),
                       controller: _pwdController,
                       decoration: const InputDecoration(
                         labelText: "密碼",

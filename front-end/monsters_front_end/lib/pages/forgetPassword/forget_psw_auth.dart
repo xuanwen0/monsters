@@ -100,6 +100,7 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                   SizedBox(height: 50.0),
                   //信箱
                   TextFormField(
+                    style: const TextStyle(color: Colors.black),
                     autofocus: false,
                     controller: _mailController,
                     decoration: const InputDecoration(
@@ -144,6 +145,7 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                   SizedBox(height: 10.0),
                   //認證碼
                   TextFormField(
+                    style: const TextStyle(color: Colors.black),
                     controller: _otpController,
                     decoration: const InputDecoration(
                       labelText: "認證碼",
