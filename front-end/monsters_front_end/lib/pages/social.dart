@@ -1082,18 +1082,18 @@ class _HeartWidgetState extends State<HeartWidget> {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          SvgPicture.string(
-            _svg_fb6j2b,
-            width: 25,
-            color: Colors.red,
-            fit: BoxFit.fill,
-          ),
           Center(
-            child: SvgPicture.string(
-              _svg_fb6j2b,
-              width: 21,
-              color: (_like) ? Colors.red : Colors.white,
-              fit: BoxFit.fill,
+            child: Container(
+              width: 100.00,
+              height: 100.00,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: (_like == false)
+                      ? AssetImage('assets/image/heart_1.png')
+                      : AssetImage('assets/image/heart_2.png'),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
             ),
           ),
         ],
