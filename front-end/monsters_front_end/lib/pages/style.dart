@@ -23,7 +23,14 @@ Container mainAppBarTitleContainer(String name) {
 
 //第二種AppBar的格式 如紓壓方法內
 AppBar secondAppBar(String name) {
-  return AppBar(centerTitle: true, toolbarHeight: 70, title: Text(name));
+  return AppBar(
+    centerTitle: true,
+    toolbarHeight: 70,
+    title: Text(name),
+    iconTheme: IconThemeData(
+      size: 40,
+    ),
+  );
 }
 
 //回傳抽屜按鈕
