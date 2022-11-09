@@ -344,8 +344,7 @@ class _InteractionPageState extends State<InteractionPage>
                 children: <Widget>[
                   Container(
                     decoration: const BoxDecoration(
-                      color: Color(0xffffffff),
-                      // color: BackgroundColorWarm,
+                      color: BackgroundColorWarm,
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
@@ -359,8 +358,7 @@ class _InteractionPageState extends State<InteractionPage>
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 12,
-                        color: const Color(0xffa0522d),
-                        //color: Colors.white,
+                        color: Colors.white,
                       ),
                       softWrap: false,
                     ),
@@ -374,7 +372,7 @@ class _InteractionPageState extends State<InteractionPage>
                           // Adobe XD layer: 'Icon material-gamep…' (shape)
                           SvgPicture.string(
                         _svg_a3julx,
-                        // color:Colors.white,
+                        color: Colors.white,
                         allowDrawingOutsideViewBox: true,
                       ),
                     ),

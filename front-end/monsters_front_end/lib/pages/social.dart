@@ -632,7 +632,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                   children: <Widget>[
                     Container(
                       decoration: const BoxDecoration(
-                        color: Color(0xffffffff),
+                        color: BackgroundColorWarm,
                         borderRadius:
                             BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                       ),
@@ -643,10 +643,9 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                       child: Text(
                         '社群',
                         style: TextStyle(
-                          fontFamily: 'Segoe UI',
-                          fontSize: 12,
-                          color: const Color(0xffa0522d),
-                        ),
+                            fontFamily: 'Segoe UI',
+                            fontSize: 12,
+                            color: Colors.white),
                         softWrap: false,
                       ),
                     ),
@@ -657,6 +656,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                           // Adobe XD layer: 'Icon material-people' (shape)
                           SvgPicture.string(
                         _svg_kzt9m,
+                        color: Colors.white,
                         allowDrawingOutsideViewBox: true,
                         fit: BoxFit.fill,
                       ),

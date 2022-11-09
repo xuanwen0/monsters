@@ -341,7 +341,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                 children: <Widget>[
                   Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
+                      // color: const Color(0xffffffff),
+                      color: BackgroundColorWarm,
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
@@ -355,6 +356,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                           // Adobe XD layer: 'Icon awesome-book' (shape)
                           SvgPicture.string(
                         _svg_i02mi2,
+                        color: Colors.white,
                         allowDrawingOutsideViewBox: true,
                       ),
                     ),
@@ -368,7 +370,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 12,
-                        color: const Color(0xffa0522d),
+                        // color: const Color(0xffa0522d),
+                        color: Colors.white,
                       ),
                       softWrap: false,
                     ),
