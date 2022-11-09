@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/pages/style.dart';
@@ -112,7 +111,7 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                border: Border.all(width: 1, color: Colors.grey),
+                border: Border.all(width: 2.5, color: Colors.grey),
               ),
               child: Container(
                   margin: const EdgeInsets.all(20),

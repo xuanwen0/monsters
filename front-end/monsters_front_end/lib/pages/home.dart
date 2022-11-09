@@ -181,7 +181,7 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
-          //歷史紀錄
+          //歷史記錄
           Pinned.fromPins(
             Pin(size: 69.0, middle: 0.7347),
             Pin(size: 68.0, end: 5.0),
@@ -207,7 +207,7 @@ class _MainPageState extends State<MainPage>
                     Pin(size: 48.0, end: 9.0),
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
-                      '歷史紀錄',
+                      '歷史記錄',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',

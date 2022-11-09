@@ -97,8 +97,8 @@ class _Psychologicial_result extends State<Psychologicial_result> {
       content = "想要更開心嗎？玩一下心情小遊戲吧！";
     } else if (total < 15) {
       title = "最近有些憂鬱嗎？";
-      subTitle = "請多喝水並充分休息，\n一切都會更好的～";
-      content = "歡迎使用貘nsters提供的紓壓管道！";
+      subTitle = "請多喝水並充分休息，\n一切都會更好的～\n歡迎使用貘nsters的紓壓管道！";
+      content = "";
     } else {
       title = "您的情況較嚴重";
       subTitle = "我們關心您，\n建議尋求專家幫助！\n\n歡迎使用貘nsters的互動功能，\n也歡迎撥打以下免費專線！";
@@ -126,12 +126,18 @@ class _Psychologicial_result extends State<Psychologicial_result> {
                   color: BackgroundColorWarm,
                   fontWeight: FontWeight.bold),
             ),
+            const SizedBox(
+              height: 10,
+            ),
             Text(
               subTitle,
               style: const TextStyle(fontSize: 22, color: Colors.black),
             ),
             Text(content,
                 style: const TextStyle(fontSize: 18, color: Colors.black)),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ));
   }
