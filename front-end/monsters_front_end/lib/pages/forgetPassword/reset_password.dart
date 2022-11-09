@@ -60,6 +60,7 @@ class _Reset_PasswordState extends State<Reset_Password> {
                   SizedBox(height: 50.0),
                   //密碼
                   TextFormField(
+                    style: const TextStyle(color: Colors.black),
                     autofocus: false,
                     controller: _pwdController,
                     decoration: const InputDecoration(
@@ -95,6 +96,7 @@ class _Reset_PasswordState extends State<Reset_Password> {
                   SizedBox(height: 10.0),
                   //確認密碼
                   TextFormField(
+                      style: const TextStyle(color: Colors.black),
                       controller: _checkpwdController,
                       decoration: const InputDecoration(
                         labelText: "確認密碼",
