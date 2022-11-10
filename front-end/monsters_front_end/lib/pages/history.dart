@@ -533,7 +533,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                 children: <Widget>[
                   Container(
                     decoration: const BoxDecoration(
-                      color: Color(0xffffffff),
+                      color: BackgroundColorWarm,
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
@@ -545,10 +545,9 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       '歷史記錄',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 12,
-                        color: const Color(0xffa0522d),
-                      ),
+                          fontFamily: 'Segoe UI',
+                          fontSize: 12,
+                          color: Colors.white),
                       softWrap: false,
                     ),
                   ),
@@ -561,6 +560,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                           // Adobe XD layer: 'Icon awesome-history' (shape)
                           SvgPicture.string(
                         _svg_uat9w,
+                        color: Colors.white,
                         allowDrawingOutsideViewBox: true,
                       ),
                     ),
