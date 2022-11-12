@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/style.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class FirstTime_editUserInfo extends StatefulWidget {
   @override
@@ -14,7 +15,8 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
 
   //生日
   DateTime date = DateTime.now();
-
+  bool isCheck = false;
+  bool read = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -31,8 +33,11 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const SizedBox(
+                      height: 50,
+                    ),
                     //標題
-                    Text(
+                    const Text(
                       '初次設定個人資料',
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
@@ -40,84 +45,7 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                         color: Color.fromRGBO(160, 82, 45, 1),
                       ),
                     ),
-                    SizedBox(height: 50.0),
-                    /* 
-                   //密碼
-                    TextFormField(
-                        controller: _pwdController,
-                        decoration: const InputDecoration(
-                          labelText: "密碼",
-                          hintText: '請輸入密碼',
-                          prefixIcon: Icon(Icons.password),
-                          border: OutlineInputBorder(
-                            ///設定邊框四個角的弧度
-                            borderRadius: BorderRadius.all(Radius.circular(90)),
-
-                            ///用來配置邊框的樣式
-                            borderSide: BorderSide(
-                              ///設定邊框的顏色
-                              color: Color.fromRGBO(160, 82, 45, 1),
-                              width: 2.0,
-                            ),
-                          ),
-                          fillColor: Color.fromRGBO(255, 255, 255, 1),
-                          filled: true,
-                        ),
-                        obscureText: true,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(
-                              RegExp("[a-zA-Z]|[0-9]")),
-                        ],
-                        validator: (value) {
-                          if (value!.isNotEmpty && value.length == 8) {
-                            return null;
-                          } else if (value.isEmpty) {
-                            return '密碼不得空白';
-                          } else {
-                            return '密碼須為8位元';
-                          }
-                        }),
-                    SizedBox(height: 20.0),
-                    //確認密碼
-                    TextFormField(
-                        autofocus: false,
-                        controller: _checkpwdController,
-                        decoration: const InputDecoration(
-                          labelText: "確認密碼",
-                          hintText: '請再次輸入密碼',
-                          prefixIcon: Icon(Icons.password),
-                          border: OutlineInputBorder(
-                            ///設定邊框四個角的弧度
-                            borderRadius: BorderRadius.all(Radius.circular(90)),
-
-                            ///用來配置邊框的樣式
-                            borderSide: BorderSide(
-                              ///設定邊框的顏色
-                              color: Color.fromRGBO(160, 82, 45, 1),
-                              width: 2.0,
-                            ),
-                          ),
-                          fillColor: Color.fromRGBO(255, 255, 255, 1),
-                          filled: true,
-                        ),
-                        obscureText: true,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(
-                              RegExp("[a-zA-Z]|[0-9]")),
-                        ],
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return '確認密碼不得空白';
-                          } else if (value == _pwdController.text) {
-                            return null;
-                          } else {
-                            return '與密碼不一致';
-                          }
-                        }),
-                    SizedBox(height: 20.0),
-                    */
+                    const SizedBox(height: 30.0),
                     //暱稱
                     TextFormField(
                         style: const TextStyle(color: Colors.black),
@@ -149,9 +77,10 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                             return '暱稱不得空白';
                           }
                         }),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 30.0),
                     //生日
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           '生日  :',
@@ -191,8 +120,49 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 50.0),
-                    //完成
+                    const SizedBox(height: 20.0),
+                    //使用條款與隱私權政策
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Checkbox(
+                            value: isCheck,
+                            onChanged: (value) {
+                              if (read) {
+                                setState(() {
+                                  isCheck = value!;
+                                });
+                              }
+                            }),
+                        Text(
+                          '同意遵守',
+                          style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 20,
+                            color: Colors.grey[700],
+                          ),
+                          softWrap: false,
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              launchUrlString(
+                                  "https://docs.google.com/document/d/1XD3QLIDcEqYx2Zy9F0QHipRkf6KpcblE/edit?usp=share_link&ouid=100075254026289201699&rtpof=true&sd=true");
+                              read = true;
+                              setState(() {});
+                            },
+                            child: const Text(
+                              '使用條款',
+                              style: TextStyle(
+                                fontFamily: 'Segoe UI',
+                                fontSize: 20,
+                                color: Colors.blueAccent,
+                              ),
+                              softWrap: false,
+                            )),
+                      ],
+                    ),
+                    const SizedBox(height: 20.0),
+                    //完成按鈕
                     SizedBox(
                       width: 150.0,
                       height: 50.0,
@@ -212,10 +182,12 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                         onPressed: () {
                           final isValidForm = _formKey.currentState!.validate();
                           if (isValidForm) {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MainPage()));
+                            if (read) {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MainPage()));
+                            }
                           }
                         },
                       ),

@@ -40,7 +40,7 @@ class _Edit_personalInfoState extends State<Edit_personalInfo> {
                               '編輯個人資料',
                               style: TextStyle(
                                 fontFamily: 'Segoe UI',
-                                fontSize: 47,
+                                fontSize: 40,
                                 color: Color.fromRGBO(160, 82, 45, 1),
                               ),
                             ),

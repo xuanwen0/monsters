@@ -36,7 +36,7 @@ class _CheckLockPageState extends State<CheckLockPage> {
               '再次確認',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 40,
                 color: Color(0xffa0522d),
               ),
               softWrap: false,

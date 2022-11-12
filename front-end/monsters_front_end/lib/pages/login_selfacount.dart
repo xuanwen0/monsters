@@ -43,36 +43,41 @@ class _Login_selfacountState extends State<Login_selfacount> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  //上一頁
-                  Stack(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 12, 0, 0),
-                        child: Align(
-                          alignment: Alignment.topLeft,
+                  //上一頁與註冊標題
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 30,
+                    ),
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
                           child:
                               // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                              PageLink(
-                            links: [
-                              PageLinkInfo(
-                                transition: LinkTransition.Fade,
-                                ease: Curves.easeOut,
-                                duration: 0.3,
-                                pageBuilder: () => LoginPage(),
+                              Padding(
+                            padding: const EdgeInsets.only(
+                              left: 5,
+                              top: 10,
+                            ),
+                            child: PageLink(
+                              links: [
+                                PageLinkInfo(
+                                  transition: LinkTransition.Fade,
+                                  ease: Curves.easeOut,
+                                  duration: 0.3,
+                                  pageBuilder: () => LoginPage(),
+                                ),
+                              ],
+                              child: SvgPicture.string(
+                                _svg_ryq30,
+                                allowDrawingOutsideViewBox: true,
+                                fit: BoxFit.fill,
                               ),
-                            ],
-                            child: SvgPicture.string(
-                              _svg_ryq30,
-                              allowDrawingOutsideViewBox: true,
-                              fit: BoxFit.fill,
                             ),
                           ),
                         ),
-                      ),
-                      //標題
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8.0),
-                        child: Center(
+                        //標題
+                        const Center(
                           child: Text(
                             '登入',
                             style: TextStyle(
@@ -82,8 +87,8 @@ class _Login_selfacountState extends State<Login_selfacount> {
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 50.0),
                   //帳號
@@ -164,7 +169,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                           return '密碼須為8位元';
                         }
                       }),
-                  const SizedBox(height: 50.0),
+                  const SizedBox(height: 30.0),
                   //忘記密碼
                   TextButton(
                       onPressed: () {

@@ -37,7 +37,7 @@ class _SettingLockPageState extends State<SettingLockPage> {
               '設定密碼',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 40,
                 color: Color(0xffa0522d),
               ),
               softWrap: false,
