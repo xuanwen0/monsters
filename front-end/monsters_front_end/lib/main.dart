@@ -3,13 +3,10 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:monsters_front_end/pages/drawer_personalInfo.dart';
-import 'package:monsters_front_end/pages/home.dart';
-import 'package:monsters_front_end/pages/login.dart';
 import 'package:monsters_front_end/routes.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/style.dart';
 
+var user_Account = 'Lin';
 void main() async {
   runApp(Monsters());
 }

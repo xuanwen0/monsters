@@ -1,0 +1,8 @@
+Baku
+X
+Cloud
+v
+Sticky
+v
+
+monsters\front-end\monsters_front_end\assets\image\animatedImage

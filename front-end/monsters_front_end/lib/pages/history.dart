@@ -87,8 +87,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
               Expanded(
                   flex: 10,
                   child: Stack(children: [
-                    
-                    mainAppBarTitleContainer("歷史紀錄"),
+                    mainAppBarTitleContainer("歷史記錄"),
                     GestureDetector(
                       child: Container(
                           margin: const EdgeInsets.fromLTRB(20, 20, 0, 15),
@@ -96,8 +95,8 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                           height: 45,
                           decoration: BoxDecoration(
                               border: Border.all(
-                                  color: Colors.black,
-                                  width: 1,
+                                  color: BackgroundColorWarm,
+                                  width: 2,
                                   style: BorderStyle.solid),
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(10))),
@@ -315,7 +314,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                   child: CircleAvatar(
                                     radius: 30,
                                     backgroundImage: AssetImage(
-                                        'assets/image/Avatar_Baku_JPG.jpg'),
+                                        'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
                                   ),
                                 ),
                                 title: Text(
@@ -328,19 +327,48 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Expanded(
-                                      flex: 7,
-                                      child: Text(
-                                          snapshot.data["result $index"]["type"]
-                                              .toString(),
-                                          style: TextStyle(fontSize: 20)),
+                                      flex: 59,
+                                      child: Container(
+                                        width: 55,
+                                        decoration: BoxDecoration(
+                                          color:
+                                              Color.fromARGB(255, 174, 108, 32),
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.elliptical(10.0, 10.0)),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            snapshot.data["result $index"]
+                                                    ["type"]
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255)),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                     Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                            snapshot.data["result $index"]
-                                                    ["time"]
-                                                .toString(),
-                                            style: TextStyle(fontSize: 14))),
+                                      flex: 5,
+                                      child: SizedBox(),
+                                    ),
+                                    Expanded(
+                                        flex: 39,
+                                        child: Container(
+                                          width: 55,
+                                          child: Center(
+                                            child: Text(
+                                                snapshot.data["result $index"]
+                                                        ["time"]
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                    color:
+                                                        BackgroundColorWarm)),
+                                          ),
+                                        )),
                                   ],
                                 ),
                                 onTap: () => print("type: " +
@@ -484,7 +512,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
               ),
             ),
           ),
-          //歷史紀錄
+          //歷史記錄
           Pinned.fromPins(
             Pin(size: 69.0, middle: 0.7347),
             Pin(size: 68.0, end: 5.0),
@@ -505,7 +533,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                 children: <Widget>[
                   Container(
                     decoration: const BoxDecoration(
-                      color: Color(0xffffffff),
+                      color: BackgroundColorWarm,
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
@@ -514,13 +542,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                     Pin(size: 48.0, end: 9.0),
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
-                      '歷史紀錄',
+                      '歷史記錄',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 12,
-                        color: const Color(0xffa0522d),
-                      ),
+                          fontFamily: 'Segoe UI',
+                          fontSize: 12,
+                          color: Colors.white),
                       softWrap: false,
                     ),
                   ),
@@ -533,6 +560,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                           // Adobe XD layer: 'Icon awesome-history' (shape)
                           SvgPicture.string(
                         _svg_uat9w,
+                        color: Colors.white,
                         allowDrawingOutsideViewBox: true,
                       ),
                     ),

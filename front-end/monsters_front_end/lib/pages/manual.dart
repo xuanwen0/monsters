@@ -207,7 +207,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                                   color: Color.fromRGBO(255, 255, 255, 1),
                                   borderRadius: BorderRadius.circular(11.0),
                                   border: Border.all(
-                                      width: 1.0,
+                                      width: 1.8,
                                       color: const Color(0xffa0522d)),
                                 ),
                                 margin:
@@ -341,7 +341,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                 children: <Widget>[
                   Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
+                      // color: const Color(0xffffffff),
+                      color: BackgroundColorWarm,
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
@@ -355,6 +356,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                           // Adobe XD layer: 'Icon awesome-book' (shape)
                           SvgPicture.string(
                         _svg_i02mi2,
+                        color: Colors.white,
                         allowDrawingOutsideViewBox: true,
                       ),
                     ),
@@ -368,7 +370,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 12,
-                        color: const Color(0xffa0522d),
+                        // color: const Color(0xffa0522d),
+                        color: Colors.white,
                       ),
                       softWrap: false,
                     ),
@@ -377,7 +380,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
               ),
             ),
           ),
-          //歷史紀錄
+          //歷史記錄
           Pinned.fromPins(
             Pin(size: 69.0, middle: 0.7347),
             Pin(size: 68.0, end: 5.0),
@@ -407,7 +410,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     Pin(size: 48.0, end: 9.0),
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
-                      '歷史紀錄',
+                      '歷史記錄',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',

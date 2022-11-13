@@ -282,7 +282,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                             }
                           }),
                     )
-                  //前往歷史紀錄
+                  //前往歷史記錄
                   : ListTile(
                       title: Container(
                         child: TextButton(
@@ -295,7 +295,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(50.0))),
                             child: Text(
-                              "前往歷史紀錄",
+                              "前往歷史記錄",
                               textAlign: TextAlign.center,
                               style:
                                   TextStyle(fontSize: 30, color: Colors.black),
@@ -321,7 +321,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                                   share: acceptShare),
                             );
                             */
-/* 前往歷史紀錄                           
+/* 前往歷史記錄                           
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -358,7 +358,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                     width: 50,
                     child: CircleAvatar(
                       backgroundImage:
-                          AssetImage('assets/image/Avatar_Baku_PNG.png'),
+                          AssetImage('assets/image/Avatar/Avatar_Baku_JPG.png'),
                     ),
                   )
                 : Container(),

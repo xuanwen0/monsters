@@ -43,39 +43,57 @@ class _Login_selfacountState extends State<Login_selfacount> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  //上一頁
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child:
-                        // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                        PageLink(
-                      links: [
-                        PageLinkInfo(
-                          transition: LinkTransition.Fade,
-                          ease: Curves.easeOut,
-                          duration: 0.3,
-                          pageBuilder: () => LoginPage(),
+                  //上一頁與註冊標題
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 30,
+                    ),
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child:
+                              // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
+                              Padding(
+                            padding: const EdgeInsets.only(
+                              left: 5,
+                              top: 10,
+                            ),
+                            child: PageLink(
+                              links: [
+                                PageLinkInfo(
+                                  transition: LinkTransition.Fade,
+                                  ease: Curves.easeOut,
+                                  duration: 0.3,
+                                  pageBuilder: () => LoginPage(),
+                                ),
+                              ],
+                              child: SvgPicture.string(
+                                _svg_ryq30,
+                                allowDrawingOutsideViewBox: true,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
+                        //標題
+                        const Center(
+                          child: Text(
+                            '登入',
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 40,
+                              color: Color.fromRGBO(160, 82, 45, 1),
+                            ),
+                          ),
                         ),
                       ],
-                      child: SvgPicture.string(
-                        _svg_ryq30,
-                        allowDrawingOutsideViewBox: true,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                  //標題
-                  const Text(
-                    '登入',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 47,
-                      color: Color.fromRGBO(160, 82, 45, 1),
                     ),
                   ),
                   const SizedBox(height: 50.0),
                   //帳號
                   TextFormField(
+                    style: const TextStyle(color: Colors.black),
                     autofocus: false,
                     controller: _accountController,
                     decoration: const InputDecoration(
@@ -116,6 +134,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                   const SizedBox(height: 20.0),
                   //密碼
                   TextFormField(
+                      style: const TextStyle(color: Colors.black),
                       controller: _pwdController,
                       decoration: const InputDecoration(
                         labelText: "密碼",
@@ -150,7 +169,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
                           return '密碼須為8位元';
                         }
                       }),
-                  const SizedBox(height: 50.0),
+                  const SizedBox(height: 30.0),
                   //忘記密碼
                   TextButton(
                       onPressed: () {

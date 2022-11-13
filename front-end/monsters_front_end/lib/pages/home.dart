@@ -1,4 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, avoid_print, prefer_const_constructors_in_immutables, sized_box_for_whitespace
+import 'dart:async';
+import 'dart:math';
+import 'dart:developer' as dev;
+
 import 'package:adobe_xd/page_link.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +23,25 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
+  late GlobalKey<ScaffoldState> _scaffoldKEy;
   //新增的浮出按鈕動畫用
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
   StateSetter? animationState;
+  //動畫相關設定
+  static const double maxSize = 380;
+  double height = maxSize;
+  double width = maxSize;
+  final random = Random();
+  static const double originPosition = (maxSize - 100) / 2;
+  double _marginL = originPosition;
+  double _marginT = originPosition;
+  static String monsterName = "Baku"; //資料庫拿怪獸名稱
+  int moveingDirection = 1;
+  static const moveSpeed = 30;
+  bool visited = false;
+  late Timer _timer;
 
   LocalStorage storage = LocalStorage('current_tab');
 
@@ -35,6 +53,7 @@ class _MainPageState extends State<MainPage>
   @override
   void dispose() {
     animationController.dispose();
+    _timer.cancel();
     super.dispose();
   }
 
@@ -56,15 +75,22 @@ class _MainPageState extends State<MainPage>
     ]).animate(animationController);
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
+    _timer = Timer.periodic(const Duration(milliseconds: 619), (timer) {
+      doAnimation();
+    });
     super.initState();
   }
 
+  String showImage = "assets/image/animatedImage/$monsterName" "_left.gif";
   @override
   Widget build(BuildContext context) {
-    GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
+    if (!visited) {
+      visited = true;
+      _scaffoldKEy = GlobalKey<ScaffoldState>();
+    }
     return Scaffold(
-      backgroundColor: const Color(0xfffffed4),
       key: _scaffoldKEy,
+      backgroundColor: const Color(0xfffffed4),
       endDrawer: GetDrawer(context),
       body: Stack(
         children: <Widget>[
@@ -90,21 +116,37 @@ class _MainPageState extends State<MainPage>
             ),
           ),
           //巴古
-          Align(
-            alignment: Alignment(0.0, 0.256),
-            child:
-                // Adobe XD layer: 'monster1' (shape)
-                Container(
-              width: 150.0,
-              height: 158.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage('assets/image/monster_Baku.png'),
-                  fit: BoxFit.cover,
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 260),
+              child: Container(
+                // color: Colors.red,
+                height: maxSize * 1.1,
+                width: maxSize,
+                child: Container(
+                  alignment: Alignment.topLeft,
+                  child: AnimatedContainer(
+                    child: Container(
+                      height: 120,
+                      width: 120,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(showImage),
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ),
+                    ),
+                    margin: EdgeInsets.only(
+                      left: _marginL,
+                      top: _marginT,
+                    ),
+                    duration: const Duration(milliseconds: 811),
+                  ),
                 ),
               ),
             ),
           ),
+
           //底部
           Pinned.fromPins(
             Pin(start: 0.0, end: 0.0),
@@ -140,7 +182,9 @@ class _MainPageState extends State<MainPage>
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => Manual(),
+                  pageBuilder: () {
+                    Manual();
+                  },
                 ),
               ],
               child: Stack(
@@ -181,7 +225,7 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
-          //歷史紀錄
+          //歷史記錄
           Pinned.fromPins(
             Pin(size: 69.0, middle: 0.7347),
             Pin(size: 68.0, end: 5.0),
@@ -191,7 +235,9 @@ class _MainPageState extends State<MainPage>
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => History(),
+                  pageBuilder: () {
+                    History();
+                  },
                 ),
               ],
               child: Stack(
@@ -207,7 +253,7 @@ class _MainPageState extends State<MainPage>
                     Pin(size: 48.0, end: 9.0),
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
-                      '歷史紀錄',
+                      '歷史記錄',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
@@ -239,11 +285,12 @@ class _MainPageState extends State<MainPage>
             child: PageLink(
               links: [
                 PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => Social(),
-                ),
+                    transition: LinkTransition.Fade,
+                    ease: Curves.easeOut,
+                    duration: 0.3,
+                    pageBuilder: () {
+                      Social();
+                    }),
               ],
               child: Stack(
                 children: <Widget>[
@@ -288,11 +335,12 @@ class _MainPageState extends State<MainPage>
             child: PageLink(
               links: [
                 PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => InteractionPage(),
-                ),
+                    transition: LinkTransition.Fade,
+                    ease: Curves.easeOut,
+                    duration: 0.3,
+                    pageBuilder: () {
+                      InteractionPage();
+                    }),
               ],
               child: Stack(
                 children: <Widget>[
@@ -441,6 +489,70 @@ class _MainPageState extends State<MainPage>
         ],
       ),
     );
+  }
+
+  doAnimation() {
+    setState(() {
+      int randomNum = random.nextInt(4) + 1; //1 2 3 4
+      // int randomNum = 3; //1 2 3 4
+      if (randomNum == 1) {
+        _marginL += moveSpeed;
+        moveingDirection = 2;
+        dev.log("go Right");
+        checker();
+      }
+      if (randomNum == 2) {
+        _marginL -= moveSpeed;
+        moveingDirection = 1;
+        dev.log("go left");
+        checker();
+      }
+      if (randomNum == 3) {
+        _marginT -= moveSpeed;
+        dev.log("go top");
+        checker();
+      }
+      if (randomNum == 4) {
+        _marginT += moveSpeed;
+        dev.log("go bottom");
+        checker();
+      }
+    });
+  }
+
+  checker() {
+    if (_marginL <= 0 || _marginL > maxSize - 100) {
+      changeDirectionLeft();
+    }
+    if (_marginT <= 0 || _marginT > maxSize - 80) {
+      changeDirectionTop();
+    }
+
+    if (moveingDirection == 1) {
+      showImage = "assets/image/animatedImage/$monsterName" "_left.gif";
+    }
+    if (moveingDirection == 2) {
+      showImage = "assets/image/animatedImage/$monsterName" "_right.gif";
+    }
+    setState(() {});
+  }
+
+  changeDirectionTop() {
+    if (moveingDirection == 1) {
+      moveingDirection = 2;
+    } else {
+      moveingDirection = 1;
+    }
+    _marginT = originPosition;
+  }
+
+  changeDirectionLeft() {
+    if (moveingDirection == 1) {
+      moveingDirection = 2;
+    } else {
+      moveingDirection = 1;
+    }
+    _marginL = originPosition;
   }
 }
 

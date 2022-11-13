@@ -9,6 +9,7 @@ import 'package:monsters_front_end/model/audio_Model/audio_player.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
+import 'package:monsters_front_end/pages/style.dart';
 import 'package:video_player/video_player.dart';
 import '../model/annoyanceModel.dart';
 import '../repository/annoyanceRepo.dart';
@@ -211,7 +212,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                                       leading: Icon(Icons.camera_alt_rounded),
                                       title: Text("照相"),
                                       onTap: () => {
-                                            ////照相選項
+                                            //照相選項
                                             takePhoto(),
                                             Navigator.pop(context)
                                           }),
@@ -316,23 +317,29 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                             }
                           }),
                     )
-                  //前往歷史紀錄
+                  //前往歷史記錄
                   : ListTile(
                       title: Container(
                         child: TextButton(
                           child: Container(
                             width: 250,
                             decoration: BoxDecoration(
+                                color: Colors.white,
                                 border: Border.all(
-                                    color: Color.fromARGB(255, 255, 255, 229),
-                                    width: 3),
+                                    color: BackgroundColorWarm, width: 2),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(50.0))),
-                            child: Text(
-                              "前往歷史紀錄",
-                              textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(fontSize: 30, color: Colors.black),
+                            child: Center(
+                              child: Container(
+                                margin: const EdgeInsets.only(bottom: 3),
+                                child: Text(
+                                  //TODO: 加陰影
+                                  "前往歷史記錄",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 28, color: BackgroundColorWarm),
+                                ),
+                              ),
                             ),
                           ),
                           onPressed: () {
@@ -396,7 +403,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                     width: 50,
                     child: CircleAvatar(
                       backgroundImage:
-                          AssetImage('assets/image/Avatar_Baku_PNG.png'),
+                          AssetImage('assets/image/Avatar/Avatar_Baku_JPG.png'),
                     ),
                   )
                 : Container(),
@@ -669,7 +676,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
               height: 50,
               width: 50,
               child: CircleAvatar(
-                backgroundImage: AssetImage('assets/image/Avatar_Baku_PNG.png'),
+                backgroundImage:
+                    AssetImage('assets/image/Avatar/Avatar_Baku_JPG.png'),
               ),
             ),
             //訊息框

@@ -18,8 +18,9 @@ class _SettingLockPageState extends State<SettingLockPage> {
       body: Stack(
         children: [
           //上一頁
-          Align(
+          Container(
               alignment: Alignment.topLeft,
+              padding: const EdgeInsets.only(top: 10, left: 10),
               child: IconButton(
                 icon: Icon(Icons.arrow_back_rounded),
                 color: Color.fromRGBO(255, 187, 0, 1),
@@ -29,13 +30,14 @@ class _SettingLockPageState extends State<SettingLockPage> {
                 },
               )),
           //標題
-          const Align(
+          Container(
             alignment: Alignment.topCenter,
+            padding: const EdgeInsets.only(top: 10),
             child: Text(
               '設定密碼',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 40,
                 color: Color(0xffa0522d),
               ),
               softWrap: false,

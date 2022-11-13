@@ -170,7 +170,10 @@ class _Psychologicial_testState extends State<Psychologicial_test> {
       child: Text(
         question,
         textAlign: TextAlign.left,
-        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: BackgroundColorWarm),
       ),
     );
   }

@@ -326,7 +326,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                               9999.0, 9999.0)),
                                                   image: DecorationImage(
                                                     image: const AssetImage(
-                                                        'assets/image/Avatar_Baku_JPG.jpg'),
+                                                        'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
                                                     fit: BoxFit.fill,
                                                   ),
                                                 ),
@@ -557,7 +557,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                 ),
               ),
             ),
-            //歷史紀錄
+            //歷史記錄
             Pinned.fromPins(
               Pin(size: 69.0, middle: 0.7347),
               Pin(size: 68.0, end: 5.0),
@@ -587,7 +587,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                       Pin(size: 48.0, end: 9.0),
                       Pin(size: 16.0, end: 9.0),
                       child: Text(
-                        '歷史紀錄',
+                        '歷史記錄',
                         style: TextStyle(
                           fontFamily: 'Segoe UI',
                           fontSize: 12,
@@ -632,7 +632,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                   children: <Widget>[
                     Container(
                       decoration: const BoxDecoration(
-                        color: Color(0xffffffff),
+                        color: BackgroundColorWarm,
                         borderRadius:
                             BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                       ),
@@ -643,10 +643,9 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                       child: Text(
                         '社群',
                         style: TextStyle(
-                          fontFamily: 'Segoe UI',
-                          fontSize: 12,
-                          color: const Color(0xffa0522d),
-                        ),
+                            fontFamily: 'Segoe UI',
+                            fontSize: 12,
+                            color: Colors.white),
                         softWrap: false,
                       ),
                     ),
@@ -657,6 +656,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                           // Adobe XD layer: 'Icon material-people' (shape)
                           SvgPicture.string(
                         _svg_kzt9m,
+                        color: Colors.white,
                         allowDrawingOutsideViewBox: true,
                         fit: BoxFit.fill,
                       ),
@@ -849,7 +849,8 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                         Expanded(
                           flex: 3,
                           child: Container(
-                            margin: const EdgeInsets.only(left: 30, right: 30),
+                            margin: const EdgeInsets.only(
+                                left: 30, right: 30, top: 10),
                             decoration: BoxDecoration(
                               color: BackgroundColorLight,
                               borderRadius: BorderRadius.all(
@@ -860,7 +861,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                             child: CircleAvatar(
                               radius: 30,
                               backgroundImage: AssetImage(
-                                  'assets/image/Avatar_Baku_JPG.jpg'),
+                                  'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
                             ),
                           ),
                         ),
@@ -907,7 +908,6 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                       ],
                     ),
                   ),
-
                   //分享內容
                   Container(
                     alignment: Alignment.topLeft,
@@ -956,7 +956,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                   child: CircleAvatar(
                                     radius: 30,
                                     backgroundImage: AssetImage(
-                                        'assets/image/Avatar_Baku_JPG.jpg'),
+                                        'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
                                   ),
                                 ),
                                 title: Text(
@@ -970,7 +970,10 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                     style: TextStyle(fontSize: 16),
                                   ),
                                 ),
-                                trailing: Text(times[index]),
+                                trailing: Text(
+                                  times[index],
+                                  style: TextStyle(color: BackgroundColorWarm),
+                                ),
                               ),
                             );
                           })),
@@ -978,7 +981,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                   Container(
                       alignment: Alignment.centerLeft,
                       color: BackgroundColorSoft,
-                      height: 60,
+                      height: 80,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -997,7 +1000,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                               child: CircleAvatar(
                                 radius: 30,
                                 backgroundImage: AssetImage(
-                                    'assets/image/Avatar_Baku_JPG.jpg'),
+                                    'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
                               ),
                             ),
                           ),
@@ -1015,17 +1018,20 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 border: Border.all(
                                     width: 1, color: BackgroundColorWarm),
                               ),
-                              padding: EdgeInsets.only(left: 20),
-                              child: TextFormField(
-                                textAlign: TextAlign.left,
-                                controller: _messageController,
-                                decoration: InputDecoration(
-                                  hintText: "Enter a Message...",
-                                  hintStyle: TextStyle(color: Colors.grey),
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Center(
+                                child: TextFormField(
+                                  textAlign: TextAlign.left,
+                                  controller: _messageController,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: "Enter a message...",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                  ),
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.black),
+                                  onChanged: (value) {},
                                 ),
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black),
-                                onChanged: (value) {},
                               ),
                             ),
                           ),
@@ -1075,17 +1081,19 @@ class _HeartWidgetState extends State<HeartWidget> {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          SvgPicture.string(
-            _svg_fb6j2b,
-            width: 25,
-            color: Colors.red,
-            fit: BoxFit.fill,
-          ),
-          SvgPicture.string(
-            _svg_fb6j2b,
-            width: 22,
-            color: (_like) ? Colors.red : BackgroundColorLight,
-            fit: BoxFit.fill,
+          Center(
+            child: Container(
+              width: 100.00,
+              height: 100.00,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: (_like == false)
+                      ? AssetImage('assets/image/heart_1.png')
+                      : AssetImage('assets/image/heart_2.png'),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
           ),
         ],
       ),

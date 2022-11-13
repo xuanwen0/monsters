@@ -52,10 +52,6 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
 
   @override
   Widget build(BuildContext context) {
-    const String userNickname = '阿翔';
-    const String userBirthday = '08/22';
-    const String userMail = '10846028@ntub.edu.tw';
-
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: secondAppBar("個人資料"),
@@ -77,27 +73,51 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
                   //頭貼
                   Expanded(
                       flex: 4,
-                      child: Center(
-                        child: Container(
-                          width: 250,
-                          margin: const EdgeInsets.only(top: 50, bottom: 10),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 1.5, color: const Color(0xffa0522d)),
-                              color: Colors.white),
-                          child: Container(
-                            margin: const EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                  Radius.elliptical(9999.0, 9999.0)),
-                              image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/image/Avatar_Baku_JPG.jpg'),
-                                fit: BoxFit.scaleDown,
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: Container(
+                              width: 250,
+                              margin:
+                                  const EdgeInsets.only(top: 50, bottom: 10),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 1.5,
+                                      color: const Color(0xffa0522d)),
+                                  color: Colors.white),
+                              child: Container(
+                                margin: const EdgeInsets.all(10),
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.elliptical(9999.0, 9999.0)),
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                          Center(
+                              child: GestureDetector(
+                            onTap: changeAvatar(),
+                            child: Container(
+                                width: 250,
+                                margin: const EdgeInsets.only(
+                                    bottom: 25, right: 20),
+                                child: Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Image(
+                                    width: 35,
+                                    height: 35,
+                                    image: AssetImage(
+                                        'assets/image/personalInfo_edit.png'),
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                )),
+                          )),
+                        ],
                       )),
                   //使用者資訊
                   Expanded(
@@ -215,6 +235,8 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
               );
             }));
   }
+
+  changeAvatar() {}
 }
 
 const String _svg_pjak95 =

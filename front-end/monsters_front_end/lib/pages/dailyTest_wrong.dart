@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:monsters_front_end/pages/style.dart';
 
@@ -113,7 +112,7 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                border: Border.all(width: 1, color: Colors.grey),
+                border: Border.all(width: 2.5, color: Colors.grey),
               ),
               child: Container(
                   margin: const EdgeInsets.all(20),
