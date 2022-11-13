@@ -34,7 +34,7 @@ class _MainPageState extends State<MainPage>
   double height = maxSize;
   double width = maxSize;
   final random = Random();
-  static const double originPosition = (maxSize - 120) / 2;
+  static const double originPosition = (maxSize - 100) / 2;
   double _marginL = originPosition;
   double _marginT = originPosition;
   String monsterName = "Cloud";
@@ -124,28 +124,31 @@ class _MainPageState extends State<MainPage>
             ),
           ),
           //巴古
-          Container(
-            margin: const EdgeInsets.fromLTRB(10, 400, 10, 80),
-            height: maxSize,
-            width: maxSize,
+          Padding(
+            padding: const EdgeInsets.only(top: 300),
             child: Container(
-              alignment: Alignment.topLeft,
-              child: AnimatedContainer(
-                child: Container(
-                  height: 120,
-                  width: 120,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(showImage),
-                      fit: BoxFit.scaleDown,
+              margin: const EdgeInsets.all(10),
+              height: maxSize * 1.1,
+              width: maxSize,
+              child: Container(
+                alignment: Alignment.topLeft,
+                child: AnimatedContainer(
+                  child: Container(
+                    height: 120,
+                    width: 120,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(showImage),
+                        fit: BoxFit.scaleDown,
+                      ),
                     ),
                   ),
+                  margin: EdgeInsets.only(
+                    left: _marginL,
+                    top: _marginT,
+                  ),
+                  duration: const Duration(milliseconds: 811),
                 ),
-                margin: EdgeInsets.only(
-                  left: _marginL,
-                  top: _marginT,
-                ),
-                duration: const Duration(milliseconds: 811),
               ),
             ),
           ),
@@ -491,6 +494,7 @@ class _MainPageState extends State<MainPage>
   doAnimation() {
     setState(() {
       int randomNum = random.nextInt(4) + 1; //1 2 3 4
+      // int randomNum = 1; //1 2 3 4
       if (randomNum == 1) {
         _marginL += moveSpeed;
         moveingDirection = 2;
@@ -517,10 +521,10 @@ class _MainPageState extends State<MainPage>
   }
 
   checker() {
-    if (_marginL <= moveSpeed || _marginL > maxSize - moveSpeed) {
+    if (_marginL <= 80 || _marginL > maxSize - 80) {
       changeDirectionLeft();
     }
-    if (_marginT <= moveSpeed || _marginT > maxSize - moveSpeed) {
+    if (_marginT <= 0 || _marginT > maxSize) {
       changeDirectionTop();
     }
     setState(() {});
@@ -536,10 +540,9 @@ class _MainPageState extends State<MainPage>
   }
 
   changeDirectionLeft() {
-    if (_marginL <= moveSpeed) {
+    if (moveingDirection == 1) {
       moveingDirection = 2;
-    }
-    if (_marginL > maxSize - moveSpeed) {
+    } else {
       moveingDirection = 1;
     }
     _marginL = originPosition;
