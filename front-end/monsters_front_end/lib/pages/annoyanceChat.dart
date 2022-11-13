@@ -403,7 +403,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                     width: 50,
                     child: CircleAvatar(
                       backgroundImage:
-                          AssetImage('assets/image/Avatar_Baku_PNG.png'),
+                          AssetImage('assets/image/Avatar/Avatar_Baku_JPG.png'),
                     ),
                   )
                 : Container(),
@@ -676,7 +676,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
               height: 50,
               width: 50,
               child: CircleAvatar(
-                backgroundImage: AssetImage('assets/image/Avatar_Baku_PNG.png'),
+                backgroundImage:
+                    AssetImage('assets/image/Avatar/Avatar_Baku_JPG.png'),
               ),
             ),
             //訊息框

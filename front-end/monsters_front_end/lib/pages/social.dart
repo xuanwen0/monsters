@@ -326,7 +326,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                               9999.0, 9999.0)),
                                                   image: DecorationImage(
                                                     image: const AssetImage(
-                                                        'assets/image/Avatar_Baku_JPG.jpg'),
+                                                        'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
                                                     fit: BoxFit.fill,
                                                   ),
                                                 ),
@@ -861,7 +861,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                             child: CircleAvatar(
                               radius: 30,
                               backgroundImage: AssetImage(
-                                  'assets/image/Avatar_Baku_JPG.jpg'),
+                                  'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
                             ),
                           ),
                         ),
@@ -908,7 +908,6 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                       ],
                     ),
                   ),
-
                   //分享內容
                   Container(
                     alignment: Alignment.topLeft,
@@ -957,7 +956,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                   child: CircleAvatar(
                                     radius: 30,
                                     backgroundImage: AssetImage(
-                                        'assets/image/Avatar_Baku_JPG.jpg'),
+                                        'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
                                   ),
                                 ),
                                 title: Text(
@@ -1001,7 +1000,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                               child: CircleAvatar(
                                 radius: 30,
                                 backgroundImage: AssetImage(
-                                    'assets/image/Avatar_Baku_JPG.jpg'),
+                                    'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
                               ),
                             ),
                           ),
