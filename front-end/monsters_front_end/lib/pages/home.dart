@@ -1,4 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, avoid_print, prefer_const_constructors_in_immutables, sized_box_for_whitespace
+import 'dart:async';
+import 'dart:math';
+import 'dart:developer' as dev;
+
 import 'package:adobe_xd/page_link.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +23,25 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
+  final GlobalKey<ScaffoldState> state = GlobalKey();
   //新增的浮出按鈕動畫用
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
   StateSetter? animationState;
+
+  static const double maxSize = 400;
+  double height = maxSize;
+  double width = maxSize;
+  final random = Random();
+  static const double originPosition = (maxSize - 120) / 2;
+  double _marginL = originPosition;
+  double _marginT = originPosition;
+  String monsterName = "Cloud";
+  int moveingDirection = 1;
+  late String showImage;
+  static const moveSpeed = 30;
+  bool visited = false;
 
   LocalStorage storage = LocalStorage('current_tab');
 
@@ -56,15 +74,31 @@ class _MainPageState extends State<MainPage>
     ]).animate(animationController);
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
+
     super.initState();
   }
 
+  late GlobalKey<ScaffoldState> _scaffoldKEy;
   @override
   Widget build(BuildContext context) {
-    GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
+    if (!visited) {
+      visited = true;
+      Timer.periodic(const Duration(milliseconds: 619), (timer) {
+        doAnimation();
+      });
+      _scaffoldKEy = GlobalKey<ScaffoldState>();
+    }
+    setState(() {
+      if (moveingDirection == 1) {
+        showImage = "assets/image/animatedImage/$monsterName" "_left.gif";
+      }
+      if (moveingDirection == 2) {
+        showImage = "assets/image/animatedImage/$monsterName" "_right.gif";
+      }
+    });
     return Scaffold(
-      backgroundColor: const Color(0xfffffed4),
       key: _scaffoldKEy,
+      backgroundColor: const Color(0xfffffed4),
       endDrawer: GetDrawer(context),
       body: Stack(
         children: <Widget>[
@@ -90,21 +124,32 @@ class _MainPageState extends State<MainPage>
             ),
           ),
           //巴古
-          Align(
-            alignment: Alignment(0.0, 0.256),
-            child:
-                // Adobe XD layer: 'monster1' (shape)
-                Container(
-              width: 150.0,
-              height: 158.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage('assets/image/monster_Baku.png'),
-                  fit: BoxFit.cover,
+          Container(
+            margin: const EdgeInsets.fromLTRB(10, 400, 10, 80),
+            height: maxSize,
+            width: maxSize,
+            child: Container(
+              alignment: Alignment.topLeft,
+              child: AnimatedContainer(
+                child: Container(
+                  height: 120,
+                  width: 120,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(showImage),
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
                 ),
+                margin: EdgeInsets.only(
+                  left: _marginL,
+                  top: _marginT,
+                ),
+                duration: const Duration(milliseconds: 811),
               ),
             ),
           ),
+
           //底部
           Pinned.fromPins(
             Pin(start: 0.0, end: 0.0),
@@ -441,6 +486,63 @@ class _MainPageState extends State<MainPage>
         ],
       ),
     );
+  }
+
+  doAnimation() {
+    setState(() {
+      int randomNum = random.nextInt(4) + 1; //1 2 3 4
+      if (randomNum == 1) {
+        _marginL += moveSpeed;
+        moveingDirection = 2;
+        dev.log("go Right");
+        checker();
+      }
+      if (randomNum == 2) {
+        _marginL -= moveSpeed;
+        moveingDirection = 1;
+        dev.log("go left");
+        checker();
+      }
+      if (randomNum == 3) {
+        _marginT -= moveSpeed;
+        dev.log("go top");
+        checker();
+      }
+      if (randomNum == 4) {
+        _marginT += moveSpeed;
+        dev.log("go bottom");
+        checker();
+      }
+    });
+  }
+
+  checker() {
+    if (_marginL <= moveSpeed || _marginL > maxSize - moveSpeed) {
+      changeDirectionLeft();
+    }
+    if (_marginT <= moveSpeed || _marginT > maxSize - moveSpeed) {
+      changeDirectionTop();
+    }
+    setState(() {});
+  }
+
+  changeDirectionTop() {
+    if (moveingDirection == 1) {
+      moveingDirection = 2;
+    } else {
+      moveingDirection = 1;
+    }
+    _marginT = originPosition;
+  }
+
+  changeDirectionLeft() {
+    if (_marginL <= moveSpeed) {
+      moveingDirection = 2;
+    }
+    if (_marginL > maxSize - moveSpeed) {
+      moveingDirection = 1;
+    }
+    _marginL = originPosition;
   }
 }
 

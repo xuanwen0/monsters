@@ -20,9 +20,8 @@ class _dev_animationState extends State<dev_animation> {
   String monsterName = "Cloud";
   int moveingDirection = 1;
   late String showImage;
-
   static const moveSpeed = 30;
-
+  bool visited = false;
   @override
   void dispose() {
     super.dispose();
@@ -30,6 +29,13 @@ class _dev_animationState extends State<dev_animation> {
 
   @override
   Widget build(BuildContext context) {
+    if (!visited) {
+      visited = true;
+
+      Timer.periodic(const Duration(milliseconds: 619), (timer) {
+        doAnimation();
+      });
+    }
     setState(() {
       if (moveingDirection == 1) {
         showImage = "assets/image/animatedImage/$monsterName" "_left.gif";
