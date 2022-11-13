@@ -23,25 +23,25 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
-  final GlobalKey<ScaffoldState> state = GlobalKey();
+  late GlobalKey<ScaffoldState> _scaffoldKEy;
   //新增的浮出按鈕動畫用
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
   StateSetter? animationState;
-
-  static const double maxSize = 400;
+  //動畫相關設定
+  static const double maxSize = 380;
   double height = maxSize;
   double width = maxSize;
   final random = Random();
   static const double originPosition = (maxSize - 100) / 2;
   double _marginL = originPosition;
   double _marginT = originPosition;
-  String monsterName = "Cloud";
+  static String monsterName = "Baku"; //資料庫拿怪獸名稱
   int moveingDirection = 1;
-  late String showImage;
   static const moveSpeed = 30;
   bool visited = false;
+  late Timer _timer;
 
   LocalStorage storage = LocalStorage('current_tab');
 
@@ -53,6 +53,7 @@ class _MainPageState extends State<MainPage>
   @override
   void dispose() {
     animationController.dispose();
+    _timer.cancel();
     super.dispose();
   }
 
@@ -74,28 +75,19 @@ class _MainPageState extends State<MainPage>
     ]).animate(animationController);
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
-
+    _timer = Timer.periodic(const Duration(milliseconds: 619), (timer) {
+      doAnimation();
+    });
     super.initState();
   }
 
-  late GlobalKey<ScaffoldState> _scaffoldKEy;
+  String showImage = "assets/image/animatedImage/$monsterName" "_left.gif";
   @override
   Widget build(BuildContext context) {
     if (!visited) {
       visited = true;
-      Timer.periodic(const Duration(milliseconds: 619), (timer) {
-        doAnimation();
-      });
       _scaffoldKEy = GlobalKey<ScaffoldState>();
     }
-    setState(() {
-      if (moveingDirection == 1) {
-        showImage = "assets/image/animatedImage/$monsterName" "_left.gif";
-      }
-      if (moveingDirection == 2) {
-        showImage = "assets/image/animatedImage/$monsterName" "_right.gif";
-      }
-    });
     return Scaffold(
       key: _scaffoldKEy,
       backgroundColor: const Color(0xfffffed4),
@@ -124,30 +116,32 @@ class _MainPageState extends State<MainPage>
             ),
           ),
           //巴古
-          Padding(
-            padding: const EdgeInsets.only(top: 300),
-            child: Container(
-              margin: const EdgeInsets.all(10),
-              height: maxSize * 1.1,
-              width: maxSize,
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 260),
               child: Container(
-                alignment: Alignment.topLeft,
-                child: AnimatedContainer(
-                  child: Container(
-                    height: 120,
-                    width: 120,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(showImage),
-                        fit: BoxFit.scaleDown,
+                // color: Colors.red,
+                height: maxSize * 1.1,
+                width: maxSize,
+                child: Container(
+                  alignment: Alignment.topLeft,
+                  child: AnimatedContainer(
+                    child: Container(
+                      height: 120,
+                      width: 120,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(showImage),
+                          fit: BoxFit.scaleDown,
+                        ),
                       ),
                     ),
+                    margin: EdgeInsets.only(
+                      left: _marginL,
+                      top: _marginT,
+                    ),
+                    duration: const Duration(milliseconds: 811),
                   ),
-                  margin: EdgeInsets.only(
-                    left: _marginL,
-                    top: _marginT,
-                  ),
-                  duration: const Duration(milliseconds: 811),
                 ),
               ),
             ),
@@ -188,7 +182,9 @@ class _MainPageState extends State<MainPage>
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => Manual(),
+                  pageBuilder: () {
+                    Manual();
+                  },
                 ),
               ],
               child: Stack(
@@ -239,7 +235,9 @@ class _MainPageState extends State<MainPage>
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => History(),
+                  pageBuilder: () {
+                    History();
+                  },
                 ),
               ],
               child: Stack(
@@ -287,11 +285,12 @@ class _MainPageState extends State<MainPage>
             child: PageLink(
               links: [
                 PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => Social(),
-                ),
+                    transition: LinkTransition.Fade,
+                    ease: Curves.easeOut,
+                    duration: 0.3,
+                    pageBuilder: () {
+                      Social();
+                    }),
               ],
               child: Stack(
                 children: <Widget>[
@@ -336,11 +335,12 @@ class _MainPageState extends State<MainPage>
             child: PageLink(
               links: [
                 PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => InteractionPage(),
-                ),
+                    transition: LinkTransition.Fade,
+                    ease: Curves.easeOut,
+                    duration: 0.3,
+                    pageBuilder: () {
+                      InteractionPage();
+                    }),
               ],
               child: Stack(
                 children: <Widget>[
@@ -494,7 +494,7 @@ class _MainPageState extends State<MainPage>
   doAnimation() {
     setState(() {
       int randomNum = random.nextInt(4) + 1; //1 2 3 4
-      // int randomNum = 1; //1 2 3 4
+      // int randomNum = 3; //1 2 3 4
       if (randomNum == 1) {
         _marginL += moveSpeed;
         moveingDirection = 2;
@@ -521,11 +521,18 @@ class _MainPageState extends State<MainPage>
   }
 
   checker() {
-    if (_marginL <= 80 || _marginL > maxSize - 80) {
+    if (_marginL <= 0 || _marginL > maxSize - 100) {
       changeDirectionLeft();
     }
-    if (_marginT <= 0 || _marginT > maxSize) {
+    if (_marginT <= 0 || _marginT > maxSize - 80) {
       changeDirectionTop();
+    }
+
+    if (moveingDirection == 1) {
+      showImage = "assets/image/animatedImage/$monsterName" "_left.gif";
+    }
+    if (moveingDirection == 2) {
+      showImage = "assets/image/animatedImage/$monsterName" "_right.gif";
     }
     setState(() {});
   }
