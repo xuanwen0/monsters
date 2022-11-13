@@ -13,7 +13,7 @@ import 'package:monsters_front_end/pages/login_selfacount.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/repository/memberRepo.dart';
 import 'package:date_format/date_format.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../model/memberModel.dart';
 
@@ -33,6 +33,7 @@ class _SignUpState extends State<SignUp> {
   DateTime date = DateTime.now();
   //條款
   bool isCheck = false;
+  bool read = false;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final MemberRepository memberRepository = MemberRepository();
@@ -40,66 +41,108 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: const Color(0xfffffed4),
-        body: SafeArea(
-            child: SingleChildScrollView(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: const Color(0xfffffed4),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Form(
             key: _formKey,
             child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //上一頁
-                    Stack(
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child:
-                              // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                              Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 12, 0, 0),
-                            child: PageLink(
-                              links: [
-                                PageLinkInfo(
-                                  transition: LinkTransition.Fade,
-                                  ease: Curves.easeOut,
-                                  duration: 0.3,
-                                  pageBuilder: () => LoginPage(),
-                                ),
-                              ],
-                              child: SvgPicture.string(
-                                _svg_ryq30,
-                                allowDrawingOutsideViewBox: true,
-                                fit: BoxFit.fill,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 15.0),
+                  //上一頁與註冊標題
+                  Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child:
+                            // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
+                            Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 12, 0, 0),
+                          child: PageLink(
+                            links: [
+                              PageLinkInfo(
+                                transition: LinkTransition.Fade,
+                                ease: Curves.easeOut,
+                                duration: 0.3,
+                                pageBuilder: () => LoginPage(),
                               ),
+                            ],
+                            child: SvgPicture.string(
+                              _svg_ryq30,
+                              allowDrawingOutsideViewBox: true,
+                              fit: BoxFit.fill,
                             ),
                           ),
                         ),
-                        //標題
-                        Center(
-                          child: Text(
-                            '註冊',
-                            style: TextStyle(
-                              fontFamily: 'Segoe UI',
-                              fontSize: 40,
-                              color: Color.fromRGBO(160, 82, 45, 1),
-                            ),
+                      ),
+                      //標題
+                      const Center(
+                        child: Text(
+                          '註冊',
+                          style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 40,
+                            color: Color.fromRGBO(160, 82, 45, 1),
                           ),
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 15.0),
+                  //帳號
+                  TextFormField(
+                    style: const TextStyle(color: Colors.black),
+                    autofocus: false,
+                    controller: _accountController,
+                    decoration: const InputDecoration(
+                      labelText: "帳號",
+                      hintText: '請輸入帳號',
+                      prefixIcon: Icon(Icons.person),
+                      border: OutlineInputBorder(
+                        ///設定邊框四個角的弧度
+                        borderRadius: BorderRadius.all(Radius.circular(90)),
+
+                        ///用來配置邊框的樣式
+                        borderSide: BorderSide(
+                          ///設定邊框的顏色
+                          color: Color.fromRGBO(160, 82, 45, 1),
+                          width: 2.0,
+                        ),
+                      ),
+                      fillColor: Color.fromRGBO(255, 255, 255, 1),
+                      filled: true,
                     ),
-                    SizedBox(height: 10.0),
-                    //帳號
-                    TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp("[a-zA-Z]|[0-9]")),
+                    ],
+                    validator: (value) {
+                      if (value!.isNotEmpty &&
+                          value.length > 5 &&
+                          value.length < 9) {
+                        return null;
+                      } else if (value.isNotEmpty) {
+                        return '帳號須為6-8位元';
+                      } else {
+                        return '帳號不得空白';
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 15.0),
+                  //密碼
+                  TextFormField(
                       style: const TextStyle(color: Colors.black),
-                      autofocus: false,
-                      controller: _accountController,
+                      controller: _pwdController,
                       decoration: const InputDecoration(
-                        labelText: "帳號",
-                        hintText: '請輸入帳號',
-                        prefixIcon: Icon(Icons.person),
+                        labelText: "密碼",
+                        hintText: '請輸入密碼',
+                        prefixIcon: Icon(Icons.password),
                         border: OutlineInputBorder(
                           ///設定邊框四個角的弧度
                           borderRadius: BorderRadius.all(Radius.circular(90)),
@@ -114,110 +157,104 @@ class _SignUpState extends State<SignUp> {
                         fillColor: Color.fromRGBO(255, 255, 255, 1),
                         filled: true,
                       ),
+                      obscureText: true,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
                             RegExp("[a-zA-Z]|[0-9]")),
                       ],
                       validator: (value) {
-                        if (value!.isNotEmpty &&
-                            value.length > 5 &&
-                            value.length < 9) {
+                        if (value!.isNotEmpty && value.length == 8) {
                           return null;
-                        } else if (value.isNotEmpty) {
-                          return '帳號須為6-8位元';
+                        } else if (value.isEmpty) {
+                          return '密碼不得空白';
                         } else {
-                          return '帳號不得空白';
+                          return '密碼須為8位元';
                         }
-                      },
-                    ),
-                    SizedBox(height: 20.0),
-                    //密碼
-                    TextFormField(
-                        style: const TextStyle(color: Colors.black),
-                        controller: _pwdController,
-                        decoration: const InputDecoration(
-                          labelText: "密碼",
-                          hintText: '請輸入密碼',
-                          prefixIcon: Icon(Icons.password),
-                          border: OutlineInputBorder(
-                            ///設定邊框四個角的弧度
-                            borderRadius: BorderRadius.all(Radius.circular(90)),
-
-                            ///用來配置邊框的樣式
-                            borderSide: BorderSide(
-                              ///設定邊框的顏色
-                              color: Color.fromRGBO(160, 82, 45, 1),
-                              width: 2.0,
-                            ),
-                          ),
-                          fillColor: Color.fromRGBO(255, 255, 255, 1),
-                          filled: true,
-                        ),
-                        obscureText: true,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(
-                              RegExp("[a-zA-Z]|[0-9]")),
-                        ],
-                        validator: (value) {
-                          if (value!.isNotEmpty && value.length == 8) {
-                            return null;
-                          } else if (value.isEmpty) {
-                            return '密碼不得空白';
-                          } else {
-                            return '密碼須為8位元';
-                          }
-                        }),
-                    SizedBox(height: 20.0),
-                    //確認密碼
-                    TextFormField(
-                        style: const TextStyle(color: Colors.black),
-                        autofocus: false,
-                        controller: _checkpwdController,
-                        decoration: const InputDecoration(
-                          labelText: "確認密碼",
-                          hintText: '請再次輸入密碼',
-                          prefixIcon: Icon(Icons.password),
-                          border: OutlineInputBorder(
-                            ///設定邊框四個角的弧度
-                            borderRadius: BorderRadius.all(Radius.circular(90)),
-
-                            ///用來配置邊框的樣式
-                            borderSide: BorderSide(
-                              ///設定邊框的顏色
-                              color: Color.fromRGBO(160, 82, 45, 1),
-                              width: 2.0,
-                            ),
-                          ),
-                          fillColor: Color.fromRGBO(255, 255, 255, 1),
-                          filled: true,
-                        ),
-                        obscureText: true,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(
-                              RegExp("[a-zA-Z]|[0-9]")),
-                        ],
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return '確認密碼不得空白';
-                          } else if (value == _pwdController.text) {
-                            return null;
-                          } else {
-                            return '與密碼不一致';
-                          }
-                        }),
-                    SizedBox(height: 20.0),
-                    //email
-                    TextFormField(
+                      }),
+                  const SizedBox(height: 15.0),
+                  //確認密碼
+                  TextFormField(
                       style: const TextStyle(color: Colors.black),
                       autofocus: false,
-                      controller: _mailController,
+                      controller: _checkpwdController,
                       decoration: const InputDecoration(
-                        labelText: "信箱",
-                        hintText: '請輸入信箱',
-                        prefixIcon: Icon(Icons.mail),
+                        labelText: "確認密碼",
+                        hintText: '請再次輸入密碼',
+                        prefixIcon: Icon(Icons.password),
+                        border: OutlineInputBorder(
+                          ///設定邊框四個角的弧度
+                          borderRadius: BorderRadius.all(Radius.circular(90)),
+
+                          ///用來配置邊框的樣式
+                          borderSide: BorderSide(
+                            ///設定邊框的顏色
+                            color: Color.fromRGBO(160, 82, 45, 1),
+                            width: 2.0,
+                          ),
+                        ),
+                        fillColor: Color.fromRGBO(255, 255, 255, 1),
+                        filled: true,
+                      ),
+                      obscureText: true,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp("[a-zA-Z]|[0-9]")),
+                      ],
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return '確認密碼不得空白';
+                        } else if (value == _pwdController.text) {
+                          return null;
+                        } else {
+                          return '與密碼不一致';
+                        }
+                      }),
+                  const SizedBox(height: 15.0),
+                  //email
+                  TextFormField(
+                    style: const TextStyle(color: Colors.black),
+                    autofocus: false,
+                    controller: _mailController,
+                    decoration: const InputDecoration(
+                      labelText: "信箱",
+                      hintText: '請輸入信箱',
+                      prefixIcon: Icon(Icons.mail),
+                      border: OutlineInputBorder(
+                        ///設定邊框四個角的弧度
+                        borderRadius: BorderRadius.all(Radius.circular(90)),
+
+                        ///用來配置邊框的樣式
+                        borderSide: BorderSide(
+                          ///設定邊框的顏色
+                          color: Color.fromRGBO(160, 82, 45, 1),
+                          width: 2.0,
+                        ),
+                      ),
+                      fillColor: Color.fromRGBO(255, 255, 255, 1),
+                      filled: true,
+                    ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp("[a-zA-Z]|[0-9]|[@]|[.]")),
+                    ],
+                    validator: (email) =>
+                        email != null && !EmailValidator.validate(email)
+                            ? '請輸入正確的信箱格式'
+                            : null,
+                  ),
+                  const SizedBox(height: 15.0),
+                  //暱稱
+                  TextFormField(
+                      style: const TextStyle(color: Colors.black),
+                      autofocus: false,
+                      controller: _nicknameController,
+                      decoration: const InputDecoration(
+                        labelText: "暱稱",
+                        hintText: '請輸入暱稱',
+                        prefixIcon: Icon(Icons.person_pin),
                         border: OutlineInputBorder(
                           ///設定邊框四個角的弧度
                           borderRadius: BorderRadius.all(Radius.circular(90)),
@@ -233,178 +270,151 @@ class _SignUpState extends State<SignUp> {
                         filled: true,
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp("[a-zA-Z]|[0-9]|[@]|[.]")),
-                      ],
-                      validator: (email) =>
-                          email != null && !EmailValidator.validate(email)
-                              ? '請輸入正確的信箱格式'
-                              : null,
-                    ),
-                    SizedBox(height: 20.0),
-                    //暱稱
-                    TextFormField(
-                        style: const TextStyle(color: Colors.black),
-                        autofocus: false,
-                        controller: _nicknameController,
-                        decoration: const InputDecoration(
-                          labelText: "暱稱",
-                          hintText: '請輸入暱稱',
-                          prefixIcon: Icon(Icons.person_pin),
-                          border: OutlineInputBorder(
-                            ///設定邊框四個角的弧度
-                            borderRadius: BorderRadius.all(Radius.circular(90)),
-
-                            ///用來配置邊框的樣式
-                            borderSide: BorderSide(
-                              ///設定邊框的顏色
-                              color: Color.fromRGBO(160, 82, 45, 1),
-                              width: 2.0,
-                            ),
-                          ),
-                          fillColor: Color.fromRGBO(255, 255, 255, 1),
-                          filled: true,
+                      validator: (value) {
+                        if (value!.isNotEmpty) {
+                          return null;
+                        } else {
+                          return '暱稱不得空白';
+                        }
+                      }),
+                  const SizedBox(height: 10.0),
+                  //生日
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        '生日  :',
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 30,
+                          color: BackgroundColorWarm,
                         ),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value!.isNotEmpty) {
-                            return null;
-                          } else {
-                            return '暱稱不得空白';
-                          }
-                        }),
-                    SizedBox(height: 20.0),
-                    //生日
-                    Row(
-                      children: [
-                        Text(
-                          '生日  :',
-                          style: TextStyle(
+                        softWrap: false,
+                      ),
+                      const SizedBox(width: 5.0),
+                      TextButton.icon(
+                        onPressed: () async {
+                          DateTime? newDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime(2100),
+                          );
+                          if (newDate == null) return;
+                          setState(() => date = newDate);
+                        },
+                        icon: Icon(
+                          Icons.calendar_month,
+                          color: Colors.grey[700],
+                          size: 30,
+                        ),
+                        label: Text(
+                          '${date.year}/${date.month}/${date.day}',
+                          style: const TextStyle(
                             fontFamily: 'Segoe UI',
                             fontSize: 30,
-                            color: BackgroundColorWarm,
+                            color: Colors.black,
                           ),
                           softWrap: false,
                         ),
-                        SizedBox(width: 5.0),
-                        TextButton.icon(
-                          onPressed: () async {
-                            DateTime? newDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime(2100),
-                            );
-                            if (newDate == null) return;
-                            setState(() => date = newDate);
-                          },
-                          icon: Icon(
-                            Icons.calendar_month,
-                            color: Colors.grey[700],
-                            size: 30,
-                          ),
-                          label: Text(
-                            '${date.year}/${date.month}/${date.day}',
-                            style: TextStyle(
-                              fontFamily: 'Segoe UI',
-                              fontSize: 30,
-                              color: Colors.black,
-                            ),
-                            softWrap: false,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20.0),
-                    //使用條款與隱私權政策
-                    Row(
-                      children: [
-                        Checkbox(
-                            value: isCheck,
-                            onChanged: (value) {
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5.0),
+                  //使用條款與隱私權政策
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Checkbox(
+                          value: isCheck,
+                          onChanged: (value) {
+                            if (read) {
                               setState(() {
                                 isCheck = value!;
                               });
-                            }),
-                        Text(
-                          '同意遵守',
-                          style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 20,
-                            color: Colors.grey[700],
-                          ),
-                          softWrap: false,
+                            }
+                          }),
+                      Text(
+                        '同意遵守',
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 20,
+                          color: Colors.grey[700],
                         ),
-                        TextButton(
-                            onPressed: () {
-                              launch(
-                                  "https://docs.google.com/document/d/1XD3QLIDcEqYx2Zy9F0QHipRkf6KpcblE/edit");
-                              isCheck = true;
-                              setState(() {});
-                            },
-                            child: const Text(
-                              '使用條款',
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 20,
-                                color: Colors.blueAccent,
-                              ),
-                              softWrap: false,
-                            )),
-                      ],
-                    ),
-                    SizedBox(height: 10.0),
-                    //註冊
-                    SizedBox(
-                      width: 150.0,
-                      height: 50.0,
-                      child: RaisedButton(
-                        color: Color.fromRGBO(160, 82, 45, 1),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(22.0)),
-                        child: const Text(
-                          '註冊',
-                          style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 30,
-                            color: Color.fromRGBO(255, 255, 255, 1),
-                          ),
-                          softWrap: false,
-                        ),
-                        onPressed: () {
-                          final isValidForm = _formKey.currentState!.validate();
-                          if (isValidForm) {
-                            signUp();
-                          }
-                        },
+                        softWrap: false,
                       ),
-                    ),
-                    SizedBox(height: 10.0),
-                    //登入
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: TextButton(
-                        child: const Text(
-                          "已經有帳號了嗎?  登入",
-                          style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 25,
-                            color: Color.fromRGBO(160, 82, 45, 1),
-                          ),
+                      TextButton(
+                          onPressed: () {
+                            launchUrlString(
+                                "https://docs.google.com/document/d/1XD3QLIDcEqYx2Zy9F0QHipRkf6KpcblE/edit?usp=share_link&ouid=100075254026289201699&rtpof=true&sd=true");
+                            read = true;
+                            setState(() {});
+                          },
+                          child: const Text(
+                            '使用條款',
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 20,
+                              color: Colors.blueAccent,
+                            ),
+                            softWrap: false,
+                          )),
+                    ],
+                  ),
+                  const SizedBox(height: 5.0),
+                  //註冊
+                  SizedBox(
+                    width: 150.0,
+                    height: 50.0,
+                    child: RaisedButton(
+                      color: const Color.fromRGBO(160, 82, 45, 1),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(22.0)),
+                      child: const Text(
+                        '註冊',
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 30,
+                          color: Color.fromRGBO(255, 255, 255, 1),
                         ),
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Login_selfacount()));
-                        },
+                        softWrap: false,
                       ),
+                      onPressed: () {
+                        final isValidForm = _formKey.currentState!.validate();
+                        if (isValidForm) {
+                          signUp();
+                        }
+                      },
                     ),
-                  ],
-                )),
+                  ),
+                  const SizedBox(height: 5.0),
+                  //登入
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: TextButton(
+                      child: const Text(
+                        "已經有帳號了嗎?  登入",
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 25,
+                          color: Color.fromRGBO(160, 82, 45, 1),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Login_selfacount()));
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        )));
+        ),
+      ),
+    );
   }
 
   void signUp() async {

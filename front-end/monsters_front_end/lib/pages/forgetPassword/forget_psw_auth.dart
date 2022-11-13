@@ -67,37 +67,55 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  //上一頁
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child:
-                        // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                        PageLink(
-                      links: [
-                        PageLinkInfo(
-                          transition: LinkTransition.Fade,
-                          ease: Curves.easeOut,
-                          duration: 0.3,
-                          pageBuilder: () => Login_selfacount(),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 30,
+                    ),
+                    child: Stack(
+                      children: [
+                        //上一頁
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child:
+                              // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
+                              Container(
+                            padding: const EdgeInsets.only(
+                              left: 5,
+                              top: 10,
+                            ),
+                            child: PageLink(
+                              links: [
+                                PageLinkInfo(
+                                  transition: LinkTransition.Fade,
+                                  ease: Curves.easeOut,
+                                  duration: 0.3,
+                                  pageBuilder: () => Login_selfacount(),
+                                ),
+                              ],
+                              child: SvgPicture.string(
+                                _svg_ryq30,
+                                allowDrawingOutsideViewBox: true,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
+                        //標題
+                        const Center(
+                          child: Text(
+                            '忘記密碼',
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 40,
+                              color: Color.fromRGBO(160, 82, 45, 1),
+                            ),
+                          ),
                         ),
                       ],
-                      child: SvgPicture.string(
-                        _svg_ryq30,
-                        allowDrawingOutsideViewBox: true,
-                        fit: BoxFit.fill,
-                      ),
                     ),
                   ),
-                  //標題
-                  const Text(
-                    '忘記密碼',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 47,
-                      color: Color.fromRGBO(160, 82, 45, 1),
-                    ),
-                  ),
-                  SizedBox(height: 50.0),
+
+                  const SizedBox(height: 50.0),
                   //信箱
                   TextFormField(
                     style: const TextStyle(color: Colors.black),
@@ -127,7 +145,7 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                             ? '請輸入正確的信箱格式'
                             : null,
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   //傳送認證碼
                   Align(
                     alignment: Alignment.centerRight,
@@ -142,7 +160,7 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                           ),
                         )),
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   //認證碼
                   TextFormField(
                     style: const TextStyle(color: Colors.black),
@@ -177,7 +195,7 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                       }
                     },
                   ),
-                  SizedBox(height: 50.0),
+                  const SizedBox(height: 50.0),
                   //認證
                   SizedBox(
                     width: 200.0,

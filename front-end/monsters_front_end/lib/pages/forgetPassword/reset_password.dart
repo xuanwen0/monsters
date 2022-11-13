@@ -53,7 +53,7 @@ class _Reset_PasswordState extends State<Reset_Password> {
                     '重新設密碼',
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
-                      fontSize: 47,
+                      fontSize: 40,
                       color: Color.fromRGBO(160, 82, 45, 1),
                     ),
                   ),

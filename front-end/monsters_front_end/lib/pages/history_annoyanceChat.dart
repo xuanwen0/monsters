@@ -147,7 +147,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
                   width: 50,
                   child: CircleAvatar(
                     backgroundImage:
-                        AssetImage('assets/image/Avatar_Baku_PNG.png'),
+                        AssetImage('assets/image/Avatar/Avatar_Baku_JPG.png'),
                   ),
                 )
               : Container(),

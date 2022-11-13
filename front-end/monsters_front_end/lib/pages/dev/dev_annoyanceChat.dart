@@ -13,12 +13,12 @@ import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/repository/annoyanceRepo.dart';
 import 'package:video_player/video_player.dart';
 
-class devPage extends StatefulWidget {
+class dev_annoyanceChat extends StatefulWidget {
   @override
-  _devPageState createState() => _devPageState();
+  _dev_annoyanceChatState createState() => _dev_annoyanceChatState();
 }
 
-class _devPageState extends State<devPage> {
+class _dev_annoyanceChatState extends State<dev_annoyanceChat> {
   final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
   final timerController = TimerController();
   final player = AudioPlayer();

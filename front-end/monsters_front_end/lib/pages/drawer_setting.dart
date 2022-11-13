@@ -57,7 +57,7 @@ class _Drawer_settingsState extends State<Drawer_settings> {
               '設定',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 40,
                 color: const Color(0xffa0522d),
               ),
               softWrap: false,

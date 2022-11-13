@@ -92,7 +92,7 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
                                       Radius.elliptical(9999.0, 9999.0)),
                                   image: DecorationImage(
                                     image: AssetImage(
-                                        'assets/image/Avatar_Baku_JPG.jpg'),
+                                        'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
                                     fit: BoxFit.scaleDown,
                                   ),
                                 ),
@@ -101,8 +101,7 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
                           ),
                           Center(
                               child: GestureDetector(
-                            //TODO: 編輯個人頭像
-                            onTap: null,
+                            onTap: changeAvatar(),
                             child: Container(
                                 width: 250,
                                 margin: const EdgeInsets.only(
@@ -236,6 +235,8 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
               );
             }));
   }
+
+  changeAvatar() {}
 }
 
 const String _svg_pjak95 =

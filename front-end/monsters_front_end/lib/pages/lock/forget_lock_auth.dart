@@ -79,7 +79,7 @@ class _Forget_Lock_AuthState extends State<Forget_Lock_Auth> {
                     '忘記密碼',
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
-                      fontSize: 47,
+                      fontSize: 40,
                       color: Color.fromRGBO(160, 82, 45, 1),
                     ),
                   ),
