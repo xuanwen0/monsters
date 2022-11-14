@@ -2,10 +2,10 @@ project:
   root: com.example.demo
   name: monsters
 database:
-  name: monsters
+  name: 111- monsters
   driver: com.mysql.cj.jdbc.Driver
 file:
-  path: ./monsters/back-end/file
+  path: D:/monsters/back-end/file
 spring:
   main:
     allow-bean-definition-overriding: true
@@ -19,6 +19,7 @@ spring:
     open-in-view: true
     show-sql: false
     generate-ddl: false
+    format-sql: false
     hibernate:
       dialect: org.hibernate.dialect.MySQLDialect
       ddl-auto: none
@@ -34,13 +35,10 @@ spring:
         maxFileSize: 100Mb
         maxRequestSize: 100Mb
 server:
-  port: 8080
-  delegate-port: 8080
   servlet:
     encoding:
       charset: UTF-8
   cores:
-    origins: http://localhost:8080
     http-methods:
       - 'GET'
       - 'POST'

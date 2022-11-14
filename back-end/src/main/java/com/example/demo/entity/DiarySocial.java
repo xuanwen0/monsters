@@ -3,7 +3,6 @@ package com.example.demo.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -17,9 +16,6 @@ public class DiarySocial {
     @Column(name = "diary_id", nullable = false)
     private Integer diaryId;
 
-    @Column(name = "like", nullable = false)
-    private Integer like;
-
-    @Column(name = "date", nullable = false)
-    private LocalDateTime date;
+    @Column(name = "account", nullable = false)
+    private String account;
 }

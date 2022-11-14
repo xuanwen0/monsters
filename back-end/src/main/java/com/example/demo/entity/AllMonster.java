@@ -13,12 +13,21 @@ public class AllMonster {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "name_chinese", nullable = false)
+    private String nameChinese;
 
-    @Column(name = "rarity", nullable = false)
-    private Integer rarity;
+    @Column(name = "name_english", nullable = false)
+    private String nameEnglish;
 
-    @Column(name = "gif", nullable = false)
-    private String gif;
+    @Column(name = "photo", nullable = false)
+    private String photo;
+
+    @Column(name = "avatar", nullable = false)
+    private String avatar;
+
+    @Column(name = "gif_right", nullable = false)
+    private String gifRight;
+
+    @Column(name = "gif_left", nullable = false)
+    private String gitLeft;
 }

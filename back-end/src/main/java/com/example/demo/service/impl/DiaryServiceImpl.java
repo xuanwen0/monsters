@@ -7,6 +7,9 @@ import com.example.demo.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,12 +23,35 @@ public class DiaryServiceImpl extends BaseServiceImplement<DiaryDAO, Diary, Diar
         this.diaryDAO = baseDAO;
     }
 
+    @Transactional
     @Override
     public DiaryBean createAndReturnBean(DiaryBean bean) {
-        return null;
+        Diary diary = createVO(bean);
+        diary.setUpdateDate(LocalDateTime.now());
+        diaryDAO.insert(diary);
+        bean = createBean(diary);
+        return bean;
     }
-    public List<Diary> find(){
-        return diaryDAO.searchAll();
+
+    @Override
+    public List<DiaryBean> searchAnnoyanceByAccount(String account) {
+        List<Diary> userList = diaryDAO.findByAccount(account);
+        List<DiaryBean> diaryBeanList = new ArrayList<>();
+        for (Diary diary : userList) {
+            diaryBeanList.add(createBean(diary));
+        }
+        return diaryBeanList;
+    }
+
+
+    @Override
+    public List<DiaryBean> searchAnnoyanceByShare() {
+        List<Diary> userList = diaryDAO.findByShare();
+        List<DiaryBean> diaryBeanList = new ArrayList<>();
+        for (Diary diary : userList) {
+            diaryBeanList.add(createBean(diary));
+        }
+        return diaryBeanList;
     }
 
     @Override
