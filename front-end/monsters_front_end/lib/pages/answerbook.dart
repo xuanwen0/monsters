@@ -2,10 +2,9 @@
 
 import 'package:adobe_xd/adobe_xd.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:monsters_front_end/pages/answerbook_forAns.dart';
-
-import 'interaction.dart';
+import 'package:monsters_front_end/model/answerbookModel.dart';
+import 'package:monsters_front_end/pages/style.dart';
+import 'package:monsters_front_end/repository/answerBookRepo.dart';
 
 class AnswerbookPage extends StatefulWidget {
   @override
@@ -13,187 +12,115 @@ class AnswerbookPage extends StatefulWidget {
 }
 
 class _AnswerbookPageState extends State<AnswerbookPage> {
+  final AnswerbookRepository answerbookRepository = AnswerbookRepository();
+  String answer = '歡迎來到解答之書，請\n閉上眼睛並深呼吸，心\n中想著現在的煩惱或疑\n問，準備好就可以按下\n解答的按鈕獲得答案。';
+  bool pressed = false;
+  Future<Answerbook> getAnswer() {
+    Future<Answerbook> answers = answerbookRepository
+        .searchAnswerbook()
+        .then((value) => Answerbook.fromMap(value));
+    return answers;
+  }
+
   @override
   Widget build(BuildContext context) {
+    getAnswer().then((value) => answer = value.content);
     return Scaffold(
-      backgroundColor: const Color(0xfffffed4),
+      backgroundColor: BackgroundColorLight,
+      appBar: secondAppBar("解答之書"),
       body: Stack(
         children: <Widget>[
-          Pinned.fromPins(
-            Pin(size: 188.0, middle: 0.5),
-            Pin(size: 63.0, start: 9.0),
-            child: Text(
-              '解答之書',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 30,
-                color: const Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
-          Pinned.fromPins(
-            Pin(size: 41.0, end: 15.0),
-            Pin(size: 36.0, start: 25.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(start: 0.0, end: 0.0),
-                  Pin(size: 4.0, start: 0.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffbb00),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(start: 0.0, end: 0.0),
-                  Pin(size: 4.0, middle: 0.5),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffbb00),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(start: 0.0, end: 0.0),
-                  Pin(size: 5.0, end: 0.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffbb00),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Pinned.fromPins(
-            Pin(size: 45.6, start: 14.4),
-            Pin(size: 41.1, start: 23.4),
-            child:
-                // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => InteractionPage(),
-                ),
-              ],
-              child: SvgPicture.string(
-                _svg_ryq30,
-                allowDrawingOutsideViewBox: true,
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image:
+                    const AssetImage('assets/image/background_answerBook.png'),
                 fit: BoxFit.fill,
+                colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.45), BlendMode.dstIn),
               ),
             ),
           ),
-          Pinned.fromPins(
-            Pin(start: -8.0, end: -9.0),
-            Pin(size: 555.0, end: 105.0),
-            child:
-                // Adobe XD layer: '14253' (shape)
-                Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage(
-                      'assets/image/background_answerBook.png'),
-                  fit: BoxFit.fill,
-                  colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.45), BlendMode.dstIn),
-                ),
-              ),
-            ),
-          ),
+          //取得解答按鈕
           Pinned.fromPins(
             Pin(size: 136.0, middle: 0.5),
             Pin(size: 64.0, end: 73.0),
             child: Stack(
               children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    Pinned.fromPins(
-                      Pin(size: 66.0, middle: 0.5),
-                      Pin(start: 0.0, end: 0.0),
-                      child: Container(
-                        color: const Color(0xffffed97),
-                      ),
-                    ),
-                    Pinned.fromPins(
-                      Pin(size: 70.0, start: 0.0),
-                      Pin(start: 0.0, end: 0.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xffffed97),
-                          borderRadius: BorderRadius.all(
-                              Radius.elliptical(9999.0, 9999.0)),
-                        ),
-                      ),
-                    ),
-                    Pinned.fromPins(
-                      Pin(size: 70.0, end: 0.0),
-                      Pin(start: 0.0, end: 0.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xffffed97),
-                          borderRadius: BorderRadius.all(
-                              Radius.elliptical(9999.0, 9999.0)),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                //解答按鈕
                 Pinned.fromPins(
-                  Pin(size: 100.0, middle: 0.5),
-                  Pin(start: 6.0, end: 4.0),
-                  child: PageLink(
-                    links: [
-                      PageLinkInfo(
-                        transition: LinkTransition.Fade,
-                        ease: Curves.easeOut,
-                        duration: 0.3,
-                        pageBuilder: () => AnswerbookforAnsPage(),
-                      ),
-                    ],
-                    child: Text(
-                      '解答',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 23,
-                        color: const Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
+                  Pin(size: 136.0, middle: 0.5),
+                  Pin(size: 64.0, end: 73.0),
+                  child: FlatButton(
+                    color: Color.fromRGBO(255, 237, 151, 1),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(9999.0)),
+                    onPressed: () {
+                      pressed = true;
+                      setState(() {
+                        Future<Answerbook> answers = getAnswer();
+                        answers.then((value) => answer = value.content);
+                      });
+                    },
+                    //是否第一次按(按鈕文字)
+                    child: pressed == false
+                        ? Text(
+                            '解答',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 30,
+                              color: const Color(0xffa0522d),
+                            ),
+                            softWrap: false,
+                          )
+                        : Text('再一次',
+                            style: TextStyle(
+                                fontFamily: 'Segoe UI',
+                                fontSize: 30,
+                                color: Color(0xffa0522d))),
                   ),
                 ),
               ],
             ),
           ),
+          //提示框
           Pinned.fromPins(
             Pin(start: 32.0, end: 31.0),
-            Pin(size: 251.0, middle: 0.3491),
+            Pin(size: 251.0, middle: 0.32),
             child: Container(
               color: const Color(0xc9ffffff),
             ),
           ),
-          Pinned.fromPins(
-            Pin(start: 52.0, end: 52.0),
-            Pin(size: 185.0, middle: 0.3659),
-            child: Text(
-              '歡迎來到解答之書，請閉上\n眼睛並深呼吸，心中想著現\n在的煩惱或疑問，準備好了就\n可以按下解答的按鈕獲得\n答案。',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 18,
-                color: Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
+          //是否第一次按(提示框內容再次取得解答)
+          pressed == false
+              ? Pinned.fromPins(
+                  Pin(start: 52.0, end: 52.0), Pin(size: 185.0, middle: 0.34),
+                  child: Center(
+                    child: Text(
+                      answer,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 25,
+                        color: Color(0xffa0522d),
+                      ),
+                      softWrap: false,
+                    ),
+                  ))
+              : Pinned.fromPins(
+                  Pin(start: 50.0, end: 50.0), Pin(size: 185.0, middle: 0.35),
+                  child: Center(
+                    child: Text(
+                      answer,
+                      style: const TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 27,
+                        color: BackgroundColorWarm,
+                      ),
+                      softWrap: false,
+                    ),
+                  )),
+          //書圖
           Pinned.fromPins(
             Pin(start: 64.0, end: 64.0),
             Pin(size: 154.0, middle: 0.726),

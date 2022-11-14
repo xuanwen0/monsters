@@ -1,16 +1,24 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls, prefer_const_constructors
+
+import 'dart:async';
+import 'dart:developer';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monsters_front_end/pages/annoyance.dart';
-import 'package:monsters_front_end/pages/history_detail.dart';
+import 'package:monsters_front_end/main.dart';
+import 'package:monsters_front_end/model/annoyanceModel.dart';
+import 'package:monsters_front_end/pages/annoyanceChat.dart';
+import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/manual.dart';
+import 'package:monsters_front_end/pages/moodLineChart.dart';
 import 'package:monsters_front_end/pages/social.dart';
+import 'package:monsters_front_end/pages/style.dart';
+import 'package:monsters_front_end/repository/annoyanceRepo.dart';
 import 'package:monsters_front_end/state/drawer.dart';
-
-import 'annoyanceChat.dart';
 
 class History extends StatefulWidget {
   const History({Key? key}) : super(key: key);
@@ -24,653 +32,372 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
+  StateSetter? animationState;
 
-  double getRadiansFromDegree(double degree) {
-    double unitRadian = 57.295779513;
-    return degree / unitRadian;
-  }
+  //控制標籤
+  //1:全部 2:煩惱 3:日記
+  int selectionTab_type = 1;
+  //當selectedSolve開啟已解決標籤
+  int selectionTab_solve = 0;
+  //當selectionTab_solve_enabled解鎖後兩個標籤
+  bool selectionTab_solve_enabled = false;
 
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 250));
-    degOneTranslationAnimation = TweenSequence([
-      TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0.0, end: 1.2), weight: 75.0),
-      TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 1.2, end: 1.0), weight: 25.0),
-    ]).animate(animationController);
-    degTwoTranslationAnimation = TweenSequence([
-      TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0.0, end: 1.4), weight: 55.0),
-      TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 1.4, end: 1.0), weight: 45.0),
-    ]).animate(animationController);
-    rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
-        CurvedAnimation(parent: animationController, curve: Curves.easeOut));
-    super.initState();
-    animationController.addListener(() {
-      setState(() {});
-    });
-  }
-
+  late Future _future;
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
+    //TODO: Level 1
+    //計算不同歷史類別的數量
+    /*
+    int itemCounter 
+    int annoyanceCounter 
+    int diaryCounter 
+
+    iterate the History and doing so =>
+    itemCounter:
+      在搜尋到一個History時加一，計算總數
+    annoyanceCounter & diaryCounter:
+      在搜尋到一個History後annoyance時++，否則diaryCounter++
+    */
+
+    //畫面呈現
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
-      key: _scaffoldKEy,
       endDrawer: GetDrawer(context),
+      key: _scaffoldKEy,
       body: Stack(
         children: <Widget>[
-          //標題
-          Pinned.fromPins(
-            Pin(size: 188.0, middle: 0.5),
-            Pin(size: 63.0, start: 11.0),
-            child: const Text(
-              '歷史紀錄',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 40,
-                color: Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
-          //底部
-          Pinned.fromPins(
-            Pin(start: 0.0, end: 0.0),
-            Pin(size: 78.0, end: 0.0),
-            child: Container(
-              color: const Color(0xffffed97),
-            ),
-          ),
           //抽屜
           Align(
             alignment: Alignment.topRight,
             child: IconButton(
-              alignment: Alignment.center,
-              iconSize: 57.0,
+              iconSize: 60.0,
               icon: const Icon(Icons.menu_rounded),
               color: const Color(0xffffbb00),
+              padding: const EdgeInsets.fromLTRB(0, 10, 10, 5),
               onPressed: () => _scaffoldKEy.currentState?.openEndDrawer(),
             ),
           ),
-          //類別:全部
-          Pinned.fromPins(
-            Pin(size: 44.8, start: 24.5),
-            Pin(size: 27.0, start: 93.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 70.0, middle: 0.5385),
-                  Pin(start: 0.0, end: 0.0),
+          //整體布局
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //標題 完成
+              Expanded(
+                  flex: 10,
+                  child: Stack(children: [
+                    mainAppBarTitleContainer("歷史記錄"),
+                    GestureDetector(
+                      child: Container(
+                          margin: const EdgeInsets.fromLTRB(20, 20, 0, 15),
+                          width: 45,
+                          height: 45,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: BackgroundColorWarm,
+                                  width: 2,
+                                  style: BorderStyle.solid),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10))),
+                          child: Center(
+                            child: Container(
+                                width: 35,
+                                height: 35,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image:
+                                        AssetImage('assets/image/barChart.png'),
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                )),
+                          )),
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MoodLineChart())),
+                    ),
+                  ])),
+              //標籤
+              Expanded(
+                  flex: 5,
+                  child: Center(
+                      child: Container(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: Wrap(
+                      spacing: 7,
+                      //標籤設定
+                      children: [
+                        //全部標籤
+                        InkWell(
+                            child: Container(
+                              width: 50,
+                              decoration: BoxDecoration(
+                                color: selectionTab_type == 1
+                                    ? const Color(0xffa0522d)
+                                    : const Color(0xffffed97),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.elliptical(9999.0, 9999.0)),
+                              ),
+                              child: Text(
+                                '全部',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: 'Segoe UI',
+                                    fontSize: 20,
+                                    color: selectionTab_type == 1 //點按後更新文字顏色
+                                        ? const Color(0xffffffff)
+                                        : const Color(0xffa0522d)),
+                              ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selectionTab_type = 1;
+                                selectionTab_solve_enabled = false;
+                                selectionTab_solve = 0;
+                              });
+                            }),
+                        //煩惱標籤
+                        InkWell(
+                            child: Container(
+                              width: 50,
+                              decoration: BoxDecoration(
+                                color: selectionTab_type == 2
+                                    ? const Color(0xffa0522d)
+                                    : const Color(0xffffed97),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.elliptical(100.0, 100.0)),
+                              ),
+                              child: Text(
+                                '煩惱',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: 'Segoe UI',
+                                    fontSize: 20,
+                                    color: selectionTab_type == 2 //點按後更新文字顏色
+                                        ? const Color(0xffffffff)
+                                        : const Color(0xffa0522d)),
+                              ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selectionTab_type = 2;
+                                selectionTab_solve_enabled = true;
+                                selectionTab_solve = 1;
+                              });
+                            }),
+                        //日記標籤
+                        InkWell(
+                            child: Container(
+                              width: 50,
+                              decoration: BoxDecoration(
+                                color: selectionTab_type == 3
+                                    ? const Color(0xffa0522d)
+                                    : const Color(0xffffed97),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.elliptical(100.0, 100.0)),
+                              ),
+                              child: Text(
+                                '日記',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: 'Segoe UI',
+                                    fontSize: 20,
+                                    color: selectionTab_type == 3 //點按後更新文字顏色
+                                        ? const Color(0xffffffff)
+                                        : const Color(0xffa0522d)),
+                              ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selectionTab_type = 3;
+                                selectionTab_solve_enabled = false;
+                                selectionTab_solve = 0;
+                              });
+                            }),
+                        //未解決標籤
+                        InkWell(
+                            child: Container(
+                              width: 70,
+                              decoration: BoxDecoration(
+                                color: selectionTab_solve == 1
+                                    ? const Color(0xffa0522d)
+                                    : const Color(0xffffed97),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.elliptical(100.0, 100.0)),
+                              ),
+                              child: Text(
+                                '未解決',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: 'Segoe UI',
+                                    fontSize: 20,
+                                    color: selectionTab_solve == 1 //點按後更新文字顏色
+                                        ? const Color(0xffffffff)
+                                        : const Color(0xffa0522d)),
+                              ),
+                            ),
+                            onTap: () {
+                              if (selectionTab_solve_enabled == true) {
+                                selectionTab_solve = 1;
+                                setState(() {});
+                              }
+                            }),
+                        //已解決標籤
+                        InkWell(
+                            child: Container(
+                              width: 70,
+                              decoration: BoxDecoration(
+                                color: selectionTab_solve == 2
+                                    ? const Color(0xffa0522d)
+                                    : const Color(0xffffed97),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.elliptical(100.0, 100.0)),
+                              ),
+                              child: Text(
+                                '已解決',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: 'Segoe UI',
+                                    fontSize: 20,
+                                    color: selectionTab_solve == 2 //點按後更新文字顏色
+                                        ? const Color(0xffffffff)
+                                        : const Color(0xffa0522d)),
+                              ),
+                            ),
+                            onTap: () {
+                              if (selectionTab_solve_enabled == true) {
+                                selectionTab_solve = 2;
+                                setState(() {});
+                              }
+                            }),
+                      ],
+                    ),
+                  ))),
+              //歷史清單
+              Expanded(
+                  flex: 75,
+                  child: FutureBuilder<dynamic>(
+                      future: _future,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        if (snapshot.data == null) {
+                          return Center(
+                              child: Text(
+                            "Loading...",
+                            style: TextStyle(fontSize: 30),
+                          ));
+                        }
+                        return ListView.builder(
+                          itemCount: snapshot.data["itemCounter"],
+                          itemBuilder: (BuildContext context, int index) =>
+                              Container(
+                            height: 110,
+                            decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                width: 1.0,
+                                color: BackgroundColorWarm,
+                              )),
+                            ),
+                            alignment: Alignment.center,
+                            child: ListTile(
+                                leading: Container(
+                                  decoration: BoxDecoration(
+                                    color: BackgroundColorLight,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.elliptical(9999.0, 9999.0)),
+                                    border: Border.all(
+                                        width: 1,
+                                        color: const Color(0xffa0522d)),
+                                  ),
+                                  child: CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: AssetImage(
+                                        'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
+                                  ),
+                                ),
+                                title: Text(
+                                  snapshot.data["result $index"]["content"],
+                                  style: TextStyle(fontSize: BodyTextSize),
+                                  textAlign: TextAlign.left,
+                                ),
+                                trailing: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Expanded(
+                                      flex: 59,
+                                      child: Container(
+                                        width: 55,
+                                        decoration: BoxDecoration(
+                                          color:
+                                              Color.fromARGB(255, 174, 108, 32),
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.elliptical(10.0, 10.0)),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            snapshot.data["result $index"]
+                                                    ["type"]
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255)),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 5,
+                                      child: SizedBox(),
+                                    ),
+                                    Expanded(
+                                        flex: 39,
+                                        child: Container(
+                                          width: 55,
+                                          child: Center(
+                                            child: Text(
+                                                snapshot.data["result $index"]
+                                                        ["time"]
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                    color:
+                                                        BackgroundColorWarm)),
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                                onTap: () => print("type: " +
+                                    snapshot.data["result $index"]["type"] +
+                                    "\n" +
+                                    "id: " +
+                                    snapshot.data["result $index"]["id"]
+                                        .toString() +
+                                    "\n")
+
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) =>
+                                //             historyAnnoyanceChat(
+                                //                 data: snapshot
+                                //                     .data["result $index"])))
+
+                                ),
+                          ),
+                        );
+                      })),
+              //底部
+              Expanded(
+                  flex: 10,
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
-                  child: SizedBox.expand(
-                      child: Text(
-                    '全部',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color(0xffa0522d),
-                    ),
-                    softWrap: false,
+                    color: BackgroundColorSoft,
                   )),
-                ),
-              ],
-            ),
-          ),
-          //類別:煩惱
-          Pinned.fromPins(
-            Pin(size: 44.8, middle: 0.2846),
-            Pin(size: 27.0, start: 93.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 70.0, middle: 0.5385),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffa0522d),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 3.8, 0.0),
-                  child: SizedBox.expand(
-                      child: Text(
-                    '煩惱',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                    softWrap: false,
-                  )),
-                ),
-              ],
-            ),
-          ),
-          //類別:日記
-          Pinned.fromPins(
-            Pin(size: 44.8, middle: 0.5025),
-            Pin(size: 27.0, start: 93.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 70.0, middle: 0.5385),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(1.5, 0.0, 3.3, 0.0),
-                  child: SizedBox.expand(
-                      child: Text(
-                    '日記',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color(0xffa0522d),
-                    ),
-                    softWrap: false,
-                  )),
-                ),
-              ],
-            ),
-          ),
-          //類別:已解決
-          Pinned.fromPins(
-            Pin(size: 60.0, middle: 0.7298),
-            Pin(size: 27.0, start: 93.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 75.0, middle: 0.5385),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                const SizedBox.expand(
-                    child: Text(
-                  '已解決',
-                  style: TextStyle(
-                    fontFamily: 'Segoe UI',
-                    fontSize: 20,
-                    color: Color(0xffa0522d),
-                  ),
-                  softWrap: false,
-                )),
-              ],
-            ),
-          ),
-          //類別:未解決
-          Pinned.fromPins(
-            Pin(size: 60.0, end: 15.1),
-            Pin(size: 27.0, start: 93.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 75.0, middle: 0.5385),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffa0522d),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                const SizedBox.expand(
-                    child: Text(
-                  '未解決',
-                  style: TextStyle(
-                    fontFamily: 'Segoe UI',
-                    fontSize: 20,
-                    color: Color.fromARGB(255, 255, 255, 255),
-                  ),
-                  softWrap: false,
-                )),
-              ],
-            ),
-          ),
-          //歷史紀錄1
-          Pinned.fromPins(
-            Pin(start: 24.0, end: 23.0),
-            Pin(size: 105.0, middle: 0.2259),
-            child: PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => const History_detail(),
-                ),
-              ],
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      borderRadius: BorderRadius.circular(13.0),
-                      border: Border.all(
-                          width: 1.0, color: const Color(0xffa0522d)),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 69.0, start: 25.0),
-                    Pin(start: 19.0, end: 18.0),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Color(0xfff4a460),
-                        borderRadius:
-                            BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                      ),
-                    ),
-                  ),
-                  const Align(
-                    alignment: Alignment(0.029, 0.0),
-                    child: SizedBox(
-                      width: 155.0,
-                      height: 27.0,
-                      child: Text(
-                        '使用者的煩惱........',
-                        style: TextStyle(
-                          fontFamily: 'Segoe UI',
-                          fontSize: 20,
-                          color: Color(0xffa0522d),
-                        ),
-                        softWrap: false,
-                      ),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 53.0, end: 16.0),
-                    Pin(size: 21.0, start: 12.0),
-                    child: const Text(
-                      'mm/dd',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 16,
-                        color: Color(0xff613018),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          //歷史紀錄2
-          Pinned.fromPins(
-            Pin(start: 24.0, end: 23.0),
-            Pin(size: 105.0, middle: 0.4294),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(13.0),
-                    border:
-                        Border.all(width: 1.0, color: const Color(0xffa0522d)),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 69.0, start: 25.0),
-                  Pin(start: 19.0, end: 18.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xfff4a460),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                const Align(
-                  alignment: Alignment(0.029, 0.0),
-                  child: SizedBox(
-                    width: 155.0,
-                    height: 27.0,
-                    child: Text(
-                      '使用者的煩惱........',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 20,
-                        color: Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 53.0, end: 16.0),
-                  Pin(size: 21.0, start: 12.0),
-                  child: const Text(
-                    'mm/dd',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 16,
-                      color: Color(0xff613018),
-                    ),
-                    softWrap: false,
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 69.0, start: 25.0),
-                  Pin(start: 19.0, end: 18.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xfff4a460),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          //歷史紀錄3
-          Pinned.fromPins(
-            Pin(start: 24.0, end: 23.0),
-            Pin(size: 105.0, middle: 0.633),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(13.0),
-                    border:
-                        Border.all(width: 1.0, color: const Color(0xffa0522d)),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 69.0, start: 25.0),
-                  Pin(start: 19.0, end: 18.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xfff4a460),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                const Align(
-                  alignment: Alignment(0.029, 0.0),
-                  child: SizedBox(
-                    width: 155.0,
-                    height: 27.0,
-                    child: Text(
-                      '使用者的煩惱........',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 20,
-                        color: Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 53.0, end: 16.0),
-                  Pin(size: 21.0, start: 12.0),
-                  child: const Text(
-                    'mm/dd',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 16,
-                      color: Color(0xff613018),
-                    ),
-                    softWrap: false,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          //歷史紀錄4
-          Pinned.fromPins(
-            Pin(start: 24.0, end: 23.0),
-            Pin(size: 105.0, end: 110.0),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(13.0),
-                    border:
-                        Border.all(width: 1.0, color: const Color(0xffa0522d)),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 69.0, start: 25.0),
-                  Pin(start: 19.0, end: 18.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xfff4a460),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                const Align(
-                  alignment: Alignment(0.029, 0.0),
-                  child: SizedBox(
-                    width: 155.0,
-                    height: 27.0,
-                    child: Text(
-                      '使用者的煩惱........',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 20,
-                        color: Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 53.0, end: 16.0),
-                  Pin(size: 21.0, start: 12.0),
-                  child: const Text(
-                    'mm/dd',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 16,
-                      color: Color(0xff613018),
-                    ),
-                    softWrap: false,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          //圖鑑
-          Pinned.fromPins(
-            Pin(size: 69.0, middle: 0.2624),
-            Pin(size: 68.0, end: 5.0),
-            child:
-                // Adobe XD layer: 'book' (group)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => Manual(),
-                ),
-              ],
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffffff),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                  Align(
-                    alignment: const Alignment(-0.015, -0.398),
-                    child: SizedBox(
-                      width: 24.0,
-                      height: 27.0,
-                      child:
-                          // Adobe XD layer: 'Icon awesome-book' (shape)
-                          SvgPicture.string(
-                        _svg_i02mi2,
-                        allowDrawingOutsideViewBox: true,
-                      ),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 24.0, middle: 0.4889),
-                    Pin(size: 16.0, end: 9.0),
-                    child: const Text(
-                      '圖鑑',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 10,
-                        color: Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          //歷史紀錄
-          Pinned.fromPins(
-            Pin(size: 69.0, middle: 0.7347),
-            Pin(size: 68.0, end: 5.0),
-            child:
-                // Adobe XD layer: 'book' (group)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => MainPage(),
-                ),
-              ],
-              child:
-                  // Adobe XD layer: 'history' (group)
-                  Stack(
-                children: <Widget>[
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffffff),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 48.0, end: 9.0),
-                    Pin(size: 16.0, end: 9.0),
-                    child: const Text(
-                      '歷史紀錄',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 10,
-                        color: Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                  Align(
-                    alignment: const Alignment(0.073, -0.408),
-                    child: SizedBox(
-                      width: 28.0,
-                      height: 28.0,
-                      child:
-                          // Adobe XD layer: 'Icon awesome-history' (shape)
-                          SvgPicture.string(
-                        _svg_uat9w,
-                        allowDrawingOutsideViewBox: true,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          //社群
-          Pinned.fromPins(
-            Pin(size: 69.0, end: 10.0),
-            Pin(size: 68.0, end: 5.0),
-            child:
-                // Adobe XD layer: 'social' (group)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => const Social(),
-                ),
-              ],
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffffff),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 24.0, middle: 0.5111),
-                    Pin(size: 16.0, end: 9.0),
-                    child: const Text(
-                      '社群',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 10,
-                        color: Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(start: 17.0, end: 17.0),
-                    Pin(size: 22.3, middle: 0.3217),
-                    child:
-                        // Adobe XD layer: 'Icon material-people' (shape)
-                        SvgPicture.string(
-                      _svg_kzt9m,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            ],
           ),
           //互動
           Pinned.fromPins(
@@ -692,6 +419,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   Container(
                     decoration: const BoxDecoration(
                       color: Color(0xffffffff),
+                      // color: BackgroundColorWarm,
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
@@ -699,18 +427,20 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   Pinned.fromPins(
                     Pin(size: 24.0, middle: 0.5111),
                     Pin(size: 16.0, end: 9.0),
-                    child: const Text(
+                    child: Text(
                       '互動',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
-                        color: Color(0xffa0522d),
+                        fontSize: 12,
+                        color: const Color(0xffa0522d),
+                        //color: Colors.white,
                       ),
                       softWrap: false,
                     ),
                   ),
                   Align(
-                    alignment: const Alignment(-0.008, -0.415),
+                    alignment: Alignment(-0.008, -0.415),
                     child: SizedBox(
                       width: 29.0,
                       height: 29.0,
@@ -718,8 +448,174 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                           // Adobe XD layer: 'Icon material-gamep…' (shape)
                           SvgPicture.string(
                         _svg_a3julx,
+                        // color:Colors.white,
                         allowDrawingOutsideViewBox: true,
                       ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          //圖鑑
+          Pinned.fromPins(
+            Pin(size: 69.0, middle: 0.2624),
+            Pin(size: 68.0, end: 5.0),
+            child:
+                // Adobe XD layer: 'book' (group)
+                PageLink(
+              links: [
+                PageLinkInfo(
+                  transition: LinkTransition.Fade,
+                  ease: Curves.easeOut,
+                  duration: 0.3,
+                  pageBuilder: () => Manual(),
+                ),
+              ],
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xffffffff),
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(-0.015, -0.398),
+                    child: SizedBox(
+                      width: 24.0,
+                      height: 27.0,
+                      child:
+                          // Adobe XD layer: 'Icon awesome-book' (shape)
+                          SvgPicture.string(
+                        _svg_i02mi2,
+                        allowDrawingOutsideViewBox: true,
+                      ),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 24.0, middle: 0.4889),
+                    Pin(size: 16.0, end: 9.0),
+                    child: Text(
+                      '圖鑑',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 12,
+                        color: const Color(0xffa0522d),
+                      ),
+                      softWrap: false,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          //歷史記錄
+          Pinned.fromPins(
+            Pin(size: 69.0, middle: 0.7347),
+            Pin(size: 68.0, end: 5.0),
+            child:
+                // Adobe XD layer: 'book' (group)
+                PageLink(
+              links: [
+                PageLinkInfo(
+                  transition: LinkTransition.Fade,
+                  ease: Curves.easeOut,
+                  duration: 0.3,
+                  pageBuilder: () => MainPage(),
+                ),
+              ],
+              child:
+                  // Adobe XD layer: 'history' (group)
+                  Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: BackgroundColorWarm,
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 48.0, end: 9.0),
+                    Pin(size: 16.0, end: 9.0),
+                    child: Text(
+                      '歷史記錄',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 12,
+                          color: Colors.white),
+                      softWrap: false,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(0.073, -0.408),
+                    child: SizedBox(
+                      width: 28.0,
+                      height: 28.0,
+                      child:
+                          // Adobe XD layer: 'Icon awesome-history' (shape)
+                          SvgPicture.string(
+                        _svg_uat9w,
+                        color: Colors.white,
+                        allowDrawingOutsideViewBox: true,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          //社群
+          Pinned.fromPins(
+            Pin(size: 69.0, end: 10.0),
+            Pin(size: 68.0, end: 5.0),
+            child:
+                // Adobe XD layer: 'social' (group)
+                PageLink(
+              links: [
+                PageLinkInfo(
+                  transition: LinkTransition.Fade,
+                  ease: Curves.easeOut,
+                  duration: 0.3,
+                  pageBuilder: () => Social(),
+                ),
+              ],
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xffffffff),
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 24.0, middle: 0.5111),
+                    Pin(size: 16.0, end: 9.0),
+                    child: Text(
+                      '社群',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 12,
+                        color: const Color(0xffa0522d),
+                      ),
+                      softWrap: false,
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(start: 17.0, end: 17.0),
+                    Pin(size: 22.3, middle: 0.3217),
+                    child:
+                        // Adobe XD layer: 'Icon material-people' (shape)
+                        SvgPicture.string(
+                      _svg_kzt9m,
+                      allowDrawingOutsideViewBox: true,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ],
@@ -730,100 +626,196 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           Pinned.fromPins(
             Pin(size: 150.0, middle: 0.5),
             Pin(size: 150.0, end: 5.0),
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                Positioned(
-                    child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: <Widget>[
-                    IgnorePointer(
-                      child: Container(
-                        color: Colors.transparent,
-                        height: 150.0,
-                        width: 150.0,
-                      ),
-                    ),
-                    Transform(
-                      transform: Matrix4.rotationZ(
-                          getRadiansFromDegree(rotationAnimation.value)),
-                      alignment: Alignment.center,
-                      child: CircularButton(
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                        width: 70,
-                        height: 70,
-                        icon: const Icon(
-                          Icons.add_rounded,
-                          color: Color.fromRGBO(255, 187, 0, 1),
-                          size: 50,
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              animationState = setState;
+              return Stack(
+                alignment: Alignment.bottomCenter,
+                children: <Widget>[
+                  Positioned(
+                      child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: <Widget>[
+                      IgnorePointer(
+                        child: Container(
+                          color: Colors.transparent,
+                          height: 150.0,
+                          width: 150.0,
                         ),
-                        onClick: () {
-                          if (animationController.isCompleted) {
-                            animationController.reverse();
-                          } else {
-                            animationController.forward();
-                          }
-                        },
                       ),
-                    ),
-                    Transform.translate(
-                      offset: Offset.fromDirection(getRadiansFromDegree(235),
-                          degOneTranslationAnimation.value * 80),
-                      child: Transform(
+                      Transform(
                         transform: Matrix4.rotationZ(
-                            getRadiansFromDegree(rotationAnimation.value))
-                          ..scale(degOneTranslationAnimation.value),
+                            getRadiansFromDegree(rotationAnimation.value)),
                         alignment: Alignment.center,
                         child: CircularButton(
-                          color: Colors.blueAccent,
+                          color: Color.fromRGBO(255, 255, 255, 1),
                           width: 70,
                           height: 70,
                           icon: const Icon(
-                            Icons.sentiment_dissatisfied,
-                            color: Colors.white,
-                            size: 40,
+                            Icons.add_rounded,
+                            color: Color.fromRGBO(255, 187, 0, 1),
+                            size: 50,
                           ),
                           onClick: () {
-                            animationController.reverse();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AnnoyanceChat()));
+                            if (animationController.isCompleted) {
+                              animationController.reverse();
+                            } else {
+                              animationController.forward();
+                              animationController.addListener(() {
+                                animationState!(() {});
+                              });
+                            }
                           },
                         ),
                       ),
-                    ),
-                    Transform.translate(
-                      offset: Offset.fromDirection(getRadiansFromDegree(305),
-                          degTwoTranslationAnimation.value * 80),
-                      child: Transform(
-                        transform: Matrix4.rotationZ(
-                            getRadiansFromDegree(rotationAnimation.value))
-                          ..scale(degTwoTranslationAnimation.value),
-                        alignment: Alignment.center,
-                        child: CircularButton(
-                          color: Colors.orangeAccent,
-                          width: 70,
-                          height: 70,
-                          icon: const Icon(
-                            Icons.import_contacts,
-                            color: Colors.white,
-                            size: 40,
+                      Transform.translate(
+                        offset: Offset.fromDirection(getRadiansFromDegree(235),
+                            degOneTranslationAnimation.value * 80),
+                        child: Transform(
+                          transform: Matrix4.rotationZ(
+                              getRadiansFromDegree(rotationAnimation.value))
+                            ..scale(degOneTranslationAnimation.value),
+                          alignment: Alignment.center,
+                          child: CircularButton(
+                            color: Colors.blueAccent,
+                            width: 70,
+                            height: 70,
+                            icon: const Icon(
+                              Icons.sentiment_dissatisfied,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                            onClick: () {
+                              animationController.reverse();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AnnoyanceChat()));
+                            },
                           ),
-                          onClick: () {
-                            animationController.reverse();
-                          },
                         ),
                       ),
-                    ),
-                  ],
-                ))
-              ],
-            ),
+                      Transform.translate(
+                        offset: Offset.fromDirection(getRadiansFromDegree(305),
+                            degTwoTranslationAnimation.value * 80),
+                        child: Transform(
+                          transform: Matrix4.rotationZ(
+                              getRadiansFromDegree(rotationAnimation.value))
+                            ..scale(degTwoTranslationAnimation.value),
+                          alignment: Alignment.center,
+                          child: CircularButton(
+                            color: Colors.orangeAccent,
+                            width: 70,
+                            height: 70,
+                            icon: const Icon(
+                              Icons.import_contacts,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                            onClick: () {
+                              animationController.reverse();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ))
+                ],
+              );
+            }),
           ),
         ],
       ),
     );
+  }
+
+  Future<Map> getHistoryMapByAccount() async {
+    Map socialResult = {};
+    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
+    Future<Data> annoyances = annoyanceRepository
+        .searchAnnoyanceByAccount(user_Account)
+        .then((value) => Data.fromJson(value!));
+    await annoyances.then((value) async {
+      await socialResult.putIfAbsent(
+        "itemCounter",
+        () => value.data.length,
+      );
+      for (int index = 0; index < min(value.data.length, 20); index++) {
+        String type = "";
+        switch (value.data.elementAt(index).type) {
+          case 1:
+            type = "課業";
+            break;
+          case 2:
+            type = "事業";
+            break;
+          case 3:
+            type = "愛情";
+            break;
+          case 4:
+            type = "友情";
+            break;
+          case 5:
+            type = "親情";
+            break;
+          case 6:
+            type = "其他";
+            break;
+          default:
+            break;
+        }
+
+        socialResult.putIfAbsent(
+          "result $index",
+          () => {
+            'id': value.data.elementAt(index).id,
+            'avatar': value.data.elementAt(index).monsterId,
+            'content': value.data.elementAt(index).content,
+            'type': type,
+            'time': value.data.elementAt(index).time,
+          },
+        );
+      }
+    });
+
+    return socialResult;
+  }
+
+  //介面設計
+  double getRadiansFromDegree(double degree) {
+    double unitRadian = 57.295779513;
+    return degree / unitRadian;
+  }
+
+  //初始化
+  @override
+  void initState() {
+    animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 250));
+    degOneTranslationAnimation = TweenSequence([
+      TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0.0, end: 1.2), weight: 75.0),
+      TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 1.2, end: 1.0), weight: 25.0),
+    ]).animate(animationController);
+    degTwoTranslationAnimation = TweenSequence([
+      TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0.0, end: 1.4), weight: 55.0),
+      TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 1.4, end: 1.0), weight: 45.0),
+    ]).animate(animationController);
+    rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
+        CurvedAnimation(parent: animationController, curve: Curves.easeOut));
+
+    _future = getHistoryMapByAccount();
+    super.initState();
+  }
+
+  //關閉
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 }
 

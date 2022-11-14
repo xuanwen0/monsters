@@ -1,8 +1,18 @@
+project:
+  root: com.example.demo
+  name: monsters
+database:
+  name: monsters
+  driver: com.mysql.cj.jdbc.Driver
+file:
+  path: ./monsters/back-end/file
 spring:
+  main:
+    allow-bean-definition-overriding: true
   datasource:
-    url: jdbc:mysql://localhost:3306/monsters?useSSL=false&serverTimezone=Asia/Taipei&characterEncoding=utf-8
-    username: root
-    password: czb96800528
+    url: jdbc:mysql://140.131.114.242:3306/111- monsters?useSSL=false&serverTimezone=Asia/Taipei
+    username: monsters
+    password: MONsters@ntub108
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -19,6 +29,10 @@ spring:
           auto: ${spring.jpa.hibernate.ddl-auto}
         show_sql: ${spring.jpa.show-sql}
         format_sql: ${spring.jpa.show-sql}
+    http:
+      multipart:
+        maxFileSize: 100Mb
+        maxRequestSize: 100Mb
 server:
   port: 8080
   delegate-port: 8080

@@ -7,4 +7,8 @@ public enum AnnoyanceTypeEnum {
     AnnoyanceTypeEnum(int id) {
         this.id = id;
     }
+
+    public int getId() {
+        return id;
+    }
 }

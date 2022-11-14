@@ -1,15 +1,17 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monsters_front_end/pages/annoyance.dart';
-import 'package:monsters_front_end/pages/drawer_setting.dart';
-import 'package:monsters_front_end/pages/drawer_userInformation.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/monster_detail.dart';
 import 'package:monsters_front_end/pages/social.dart';
+import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/state/drawer.dart';
 
 import 'annoyanceChat.dart';
@@ -24,419 +26,300 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
+  StateSetter? animationState;
+  //TODO:用user_Account傳入圖鑑API獲得圖鑑資訊
 
-  double getRadiansFromDegree(double degree) {
-    double unitRadian = 57.295779513;
-    return degree / unitRadian;
-  }
+  List<int> UnlockMonsterId = [1, 3];
+  int TotalMonsters = 8; //總共20個，若是未取得顯示問號"?"
+  List<String> monsterNames = ['A', '???', 'C', '???', 'E', 'F', 'G', 'H'];
+  List<String> monsterPics = [
+    'assets/image/monster_Baku.png',
+    'assets/image/unknow.png',
+    'assets/image/monster_Baku.png',
+    'assets/image/unknow.png',
+    'assets/image/monster_Baku.png',
+    'assets/image/monster_Baku.png',
+    'assets/image/monster_Baku.png',
+    'assets/image/monster_Baku.png',
+  ];
+  List<String> showNames = ['A', '???', 'C', '???', 'E', 'F', 'G', 'H'];
+  List<String> showPics = [
+    'assets/image/monster_Baku.png',
+    'assets/image/unknow.png',
+    'assets/image/monster_Baku.png',
+    'assets/image/unknow.png',
+    'assets/image/unknow.png',
+    'assets/image/unknow.png',
+    'assets/image/unknow.png',
+    'assets/image/unknow.png',
+  ];
+  int selectionTab_type = 1;
 
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 250));
-    degOneTranslationAnimation = TweenSequence([
-      TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0.0, end: 1.2), weight: 75.0),
-      TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 1.2, end: 1.0), weight: 25.0),
-    ]).animate(animationController);
-    degTwoTranslationAnimation = TweenSequence([
-      TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0.0, end: 1.4), weight: 55.0),
-      TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 1.4, end: 1.0), weight: 45.0),
-    ]).animate(animationController);
-    rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
-        CurvedAnimation(parent: animationController, curve: Curves.easeOut));
-    super.initState();
-    animationController.addListener(() {
-      setState(() {});
-    });
+  void changeUI() {
+    //get Unlocked id
+    showNames = [];
+    showPics = [];
+    for (int i = 0; i < monsterNames.length; i++) {
+      if (UnlockMonsterId.contains(i + 1)) {
+        showNames.add(monsterNames[i]);
+        showPics.add('assets/image/monster_Baku.png');
+        log("ID= " + i.toString());
+      } else {
+        if (selectionTab_type == 1) {
+          showNames.add("???");
+          showPics.add(
+            'assets/image/unknow.png',
+          );
+        }
+      }
+    }
+    TotalMonsters = showNames.length;
+    log("SHOWNAME: " + showNames.toString());
+    log("SHOWPic: " + showPics.toString());
+    setState(() {});
+    //go through data when touch UnlockedMonsterId then save MonsterName and monsterPics
   }
 
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
+
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       key: _scaffoldKEy,
       endDrawer: GetDrawer(context),
       body: Stack(
         children: <Widget>[
-          //標題
-          Pinned.fromPins(
-            Pin(size: 94.0, middle: 0.5),
-            Pin(size: 63.0, start: 11.0),
-            child: Text(
-              '圖鑑',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 47,
-                color: const Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
-          //類別:已解鎖
-          Pinned.fromPins(
-            Pin(size: 60.0, middle: 0.5),
-            Pin(size: 27.0, start: 91.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 72.0, middle: 0.5),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                const SizedBox.expand(
-                    child: Text(
-                  '已解鎖',
-                  style: TextStyle(
-                    fontFamily: 'Segoe UI',
-                    fontSize: 20,
-                    color: Color(0xffa0522d),
-                  ),
-                  softWrap: false,
-                )),
-              ],
-            ),
-          ),
-          //類別:全部
-          Pinned.fromPins(
-            Pin(size: 49.0, middle: 0.1915),
-            Pin(size: 27.0, start: 91.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 72.0, middle: 0.5),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffa0522d),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 4.5, vertical: 0.0),
-                  child: SizedBox.expand(
-                      child: Text(
-                    '全部',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 20,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                    softWrap: false,
-                  )),
-                ),
-              ],
-            ),
-          ),
-          //類別:未解鎖
-          Pinned.fromPins(
-            Pin(size: 60.0, middle: 0.821),
-            Pin(size: 27.0, start: 91.0),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 72.0, middle: 0.5),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffed97),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                ),
-                const SizedBox.expand(
-                    child: Text(
-                  '未解鎖',
-                  style: TextStyle(
-                    fontFamily: 'Segoe UI',
-                    fontSize: 20,
-                    color: Color(0xffa0522d),
-                  ),
-                  softWrap: false,
-                )),
-              ],
-            ),
-          ),
-          //底部
-          Pinned.fromPins(
-            Pin(start: 0.0, end: 0.0),
-            Pin(size: 78.0, end: 0.0),
-            child: Container(
-              color: const Color(0xffffed97),
-            ),
-          ),
           //抽屜
           Align(
             alignment: Alignment.topRight,
             child: IconButton(
-              alignment: Alignment.center,
-              iconSize: 57.0,
-              icon: Icon(Icons.menu_rounded),
-              color: Color(0xffffbb00),
+              iconSize: 60.0,
+              icon: const Icon(Icons.menu_rounded),
+              color: const Color(0xffffbb00),
+              padding: const EdgeInsets.fromLTRB(0, 10, 10, 5),
               onPressed: () => _scaffoldKEy.currentState?.openEndDrawer(),
             ),
           ),
-          //怪獸1
+          //整體布局
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              //標題 完成
+              Expanded(flex: 10, child: mainAppBarTitleContainer("圖鑑")),
+              //標籤
+              Expanded(
+                  flex: 5,
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.only(left: 15, bottom: 10),
+                    child: Center(
+                      child: Wrap(
+                        spacing: 20,
+                        //標籤設定
+                        children: [
+                          //全部標籤
+                          InkWell(
+                              child: Container(
+                                width: 60,
+                                decoration: BoxDecoration(
+                                  color: selectionTab_type == 1
+                                      ? const Color(0xffa0522d)
+                                      : const Color(0xffffed97),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.elliptical(9999.0, 9999.0)),
+                                ),
+                                child: Text(
+                                  '全部',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: 'Segoe UI',
+                                      fontSize: 20,
+                                      color: selectionTab_type == 1 //點按後更新文字顏色
+                                          ? const Color(0xffffffff)
+                                          : const Color(0xffa0522d)),
+                                ),
+                              ),
+                              onTap: () {
+                                selectionTab_type = 1;
+                                changeUI();
+                              }),
+                          //已解鎖標籤
+                          InkWell(
+                              child: Container(
+                                width: 80,
+                                decoration: BoxDecoration(
+                                  color: selectionTab_type == 2
+                                      ? const Color(0xffa0522d)
+                                      : const Color(0xffffed97),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.elliptical(100.0, 100.0)),
+                                ),
+                                child: Text(
+                                  '已解鎖',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: 'Segoe UI',
+                                      fontSize: 20,
+                                      color: selectionTab_type == 2 //點按後更新文字顏色
+                                          ? const Color(0xffffffff)
+                                          : const Color(0xffa0522d)),
+                                ),
+                              ),
+                              onTap: () {
+                                selectionTab_type = 2;
+                                changeUI();
+                              }),
+                        ],
+                      ),
+                    ),
+                  )),
+
+              Expanded(
+                flex: 80,
+                child: GridView(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 20,
+                      crossAxisSpacing: 2),
+                  children: List.generate(
+                    TotalMonsters,
+                    (index) => Container(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: 160.0,
+                        height: 180.0,
+                        child: PageLink(
+                          links: [
+                            PageLinkInfo(
+                              transition: LinkTransition.Fade,
+                              ease: Curves.easeOut,
+                              duration: 0.3,
+                              pageBuilder: () => Monster_detail(),
+                            ),
+                          ],
+                          child: Stack(
+                            children: <Widget>[
+                              //border
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(255, 255, 255, 1),
+                                  borderRadius: BorderRadius.circular(11.0),
+                                  border: Border.all(
+                                      width: 1.8,
+                                      color: const Color(0xffa0522d)),
+                                ),
+                                margin:
+                                    EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 32.0),
+                              ),
+                              //image
+                              Pinned.fromPins(
+                                Pin(start: 10.0, end: 10.0),
+                                Pin(size: 120.0, start: 15.0),
+                                child:
+                                    // Adobe XD layer: 'monster1' (shape)
+                                    Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(showPics[index]),
+                                      fit: BoxFit.scaleDown,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              //name
+                              Pinned.fromPins(
+                                Pin(size: 80.0, middle: 0.5),
+                                Pin(size: 80.0, middle: 1.55),
+                                child: Text(
+                                  showNames[index],
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Segoe UI',
+                                    fontSize: 32,
+                                    color: const Color(0xffa0522d),
+                                  ),
+                                  softWrap: false,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              ///
+              ///
+              ///
+              Expanded(
+                flex: 10,
+                child: Container(
+                  color: BackgroundColorSoft,
+                ),
+              )
+            ],
+          ),
+
+          //互動
           Pinned.fromPins(
-            Pin(size: 180.0, start: 13.0),
-            Pin(size: 231.0, middle: 0.2651),
-            child: PageLink(
+            Pin(size: 69.0, start: 9.0),
+            Pin(size: 68.0, end: 5.0),
+            child:
+                // Adobe XD layer: 'interactive' (group)
+                PageLink(
               links: [
                 PageLinkInfo(
                   transition: LinkTransition.Fade,
                   ease: Curves.easeOut,
                   duration: 0.3,
-                  pageBuilder: () => Monster_detail(),
+                  pageBuilder: () => InteractionPage(),
                 ),
               ],
               child: Stack(
                 children: <Widget>[
                   Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      borderRadius: BorderRadius.circular(11.0),
-                      border: Border.all(
-                          width: 1.0, color: const Color(0xffa0522d)),
-                    ),
-                    margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 51.0),
-                  ),
-                  Pinned.fromPins(
-                    Pin(start: 15.0, end: 15.0),
-                    Pin(size: 158.3, start: 11.0),
-                    child:
-                        // Adobe XD layer: 'monster1' (shape)
-                        Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: const AssetImage(
-                              'assets/image/monsters_book_monster.png'),
-                          fit: BoxFit.scaleDown,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment(0.012, 1.0),
-                    child: SizedBox(
-                      width: 95.0,
-                      height: 48.0,
-                      child: Text(
-                        '巴古',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Segoe UI',
-                          fontSize: 36,
-                          color: const Color(0xffa0522d),
-                        ),
-                        softWrap: false,
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment(-0.109, 0.433),
-                    child: SizedBox(
-                      width: 33.0,
-                      height: 32.0,
-                      child:
-                          // Adobe XD layer: 'Icon awesome-star' (shape)
-                          SvgPicture.string(
-                        _svg_xvbnb,
-                        allowDrawingOutsideViewBox: true,
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment(0.422, 0.433),
-                    child: SizedBox(
-                      width: 33.0,
-                      height: 32.0,
-                      child:
-                          // Adobe XD layer: 'Icon awesome-star' (shape)
-                          SvgPicture.string(
-                        _svg_tn4ajf,
-                        allowDrawingOutsideViewBox: true,
-                      ),
+                    decoration: const BoxDecoration(
+                      color: Color(0xffffffff),
+                      // color: BackgroundColorWarm,
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
                   ),
                   Pinned.fromPins(
-                    Pin(size: 33.0, end: 3.5),
-                    Pin(size: 31.6, middle: 0.7167),
-                    child:
-                        // Adobe XD layer: 'Icon awesome-star' (shape)
-                        SvgPicture.string(
-                      _svg_bx5ln,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
+                    Pin(size: 24.0, middle: 0.5111),
+                    Pin(size: 16.0, end: 9.0),
+                    child: Text(
+                      '互動',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 12,
+                        color: const Color(0xffa0522d),
+                        //color: Colors.white,
+                      ),
+                      softWrap: false,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(-0.008, -0.415),
+                    child: SizedBox(
+                      width: 29.0,
+                      height: 29.0,
+                      child:
+                          // Adobe XD layer: 'Icon material-gamep…' (shape)
+                          SvgPicture.string(
+                        _svg_a3julx,
+                        // color:Colors.white,
+                        allowDrawingOutsideViewBox: true,
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
-          ),
-          //怪獸2
-          Pinned.fromPins(
-            Pin(size: 180.0, end: 12.0),
-            Pin(size: 231.0, middle: 0.2651),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(11.0),
-                    border:
-                        Border.all(width: 1.0, color: const Color(0xffa0522d)),
-                  ),
-                  margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 51.0),
-                ),
-                Pinned.fromPins(
-                  Pin(start: 15.0, end: 15.0),
-                  Pin(size: 158.3, start: 11.0),
-                  child:
-                      // Adobe XD layer: 'monster1' (shape)
-                      Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: const AssetImage('assets/image/unknow.png'),
-                        fit: BoxFit.scaleDown,
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment(0.012, 1.0),
-                  child: SizedBox(
-                    width: 95.0,
-                    height: 48.0,
-                    child: Text(
-                      '???',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 36,
-                        color: const Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          //怪獸3
-          Pinned.fromPins(
-            Pin(size: 180.0, start: 13.0),
-            Pin(size: 231.0, middle: 0.7239),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(11.0),
-                    border:
-                        Border.all(width: 1.0, color: const Color(0xffa0522d)),
-                  ),
-                  margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 51.0),
-                ),
-                Pinned.fromPins(
-                  Pin(start: 15.0, end: 15.0),
-                  Pin(size: 158.3, start: 11.0),
-                  child:
-                      // Adobe XD layer: 'monster1' (shape)
-                      Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: const AssetImage('assets/image/unknow.png'),
-                        fit: BoxFit.scaleDown,
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment(0.012, 1.0),
-                  child: SizedBox(
-                    width: 95.0,
-                    height: 48.0,
-                    child: Text(
-                      '???',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 36,
-                        color: const Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          //怪獸4
-          Pinned.fromPins(
-            Pin(size: 180.0, end: 12.0),
-            Pin(size: 231.0, middle: 0.7239),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(11.0),
-                    border:
-                        Border.all(width: 1.0, color: const Color(0xffa0522d)),
-                  ),
-                  margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 51.0),
-                ),
-                Pinned.fromPins(
-                  Pin(start: 15.0, end: 15.0),
-                  Pin(size: 158.3, start: 11.0),
-                  child:
-                      // Adobe XD layer: 'monster1' (shape)
-                      Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: const AssetImage('assets/image/unknow.png'),
-                        fit: BoxFit.scaleDown,
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment(0.012, 1.0),
-                  child: SizedBox(
-                    width: 95.0,
-                    height: 48.0,
-                    child: Text(
-                      '???',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 36,
-                        color: const Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                ),
-              ],
             ),
           ),
           //圖鑑
@@ -458,7 +341,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                 children: <Widget>[
                   Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
+                      // color: const Color(0xffffffff),
+                      color: BackgroundColorWarm,
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     ),
@@ -472,6 +356,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                           // Adobe XD layer: 'Icon awesome-book' (shape)
                           SvgPicture.string(
                         _svg_i02mi2,
+                        color: Colors.white,
                         allowDrawingOutsideViewBox: true,
                       ),
                     ),
@@ -481,10 +366,12 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '圖鑑',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
-                        color: const Color(0xffa0522d),
+                        fontSize: 12,
+                        // color: const Color(0xffa0522d),
+                        color: Colors.white,
                       ),
                       softWrap: false,
                     ),
@@ -493,7 +380,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
               ),
             ),
           ),
-          //歷史紀錄
+          //歷史記錄
           Pinned.fromPins(
             Pin(size: 69.0, middle: 0.7347),
             Pin(size: 68.0, end: 5.0),
@@ -523,10 +410,11 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     Pin(size: 48.0, end: 9.0),
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
-                      '歷史紀錄',
+                      '歷史記錄',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -578,9 +466,10 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '社群',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -601,158 +490,147 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
               ),
             ),
           ),
-          //互動
-          Pinned.fromPins(
-            Pin(size: 69.0, start: 9.0),
-            Pin(size: 68.0, end: 5.0),
-            child:
-                // Adobe XD layer: 'interactive' (group)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => InteractionPage(),
-                ),
-              ],
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffffff),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 24.0, middle: 0.5111),
-                    Pin(size: 16.0, end: 9.0),
-                    child: Text(
-                      '互動',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 10,
-                        color: const Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment(-0.008, -0.415),
-                    child: SizedBox(
-                      width: 29.0,
-                      height: 29.0,
-                      child:
-                          // Adobe XD layer: 'Icon material-gamep…' (shape)
-                          SvgPicture.string(
-                        _svg_a3julx,
-                        allowDrawingOutsideViewBox: true,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
           //新增
           Pinned.fromPins(
             Pin(size: 150.0, middle: 0.5),
             Pin(size: 150.0, end: 5.0),
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                Positioned(
-                    child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: <Widget>[
-                    IgnorePointer(
-                      child: Container(
-                        color: Colors.transparent,
-                        height: 150.0,
-                        width: 150.0,
-                      ),
-                    ),
-                    Transform(
-                      transform: Matrix4.rotationZ(
-                          getRadiansFromDegree(rotationAnimation.value)),
-                      alignment: Alignment.center,
-                      child: CircularButton(
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                        width: 70,
-                        height: 70,
-                        icon: const Icon(
-                          Icons.add_rounded,
-                          color: Color.fromRGBO(255, 187, 0, 1),
-                          size: 50,
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              animationState = setState;
+              return Stack(
+                alignment: Alignment.bottomCenter,
+                children: <Widget>[
+                  Positioned(
+                      child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: <Widget>[
+                      IgnorePointer(
+                        child: Container(
+                          color: Colors.transparent,
+                          height: 150.0,
+                          width: 150.0,
                         ),
-                        onClick: () {
-                          if (animationController.isCompleted) {
-                            animationController.reverse();
-                          } else {
-                            animationController.forward();
-                          }
-                        },
                       ),
-                    ),
-                    Transform.translate(
-                      offset: Offset.fromDirection(getRadiansFromDegree(235),
-                          degOneTranslationAnimation.value * 80),
-                      child: Transform(
+                      Transform(
                         transform: Matrix4.rotationZ(
-                            getRadiansFromDegree(rotationAnimation.value))
-                          ..scale(degOneTranslationAnimation.value),
+                            getRadiansFromDegree(rotationAnimation.value)),
                         alignment: Alignment.center,
                         child: CircularButton(
-                          color: Colors.blueAccent,
+                          color: Color.fromRGBO(255, 255, 255, 1),
                           width: 70,
                           height: 70,
                           icon: const Icon(
-                            Icons.sentiment_dissatisfied,
-                            color: Colors.white,
-                            size: 40,
+                            Icons.add_rounded,
+                            color: Color.fromRGBO(255, 187, 0, 1),
+                            size: 50,
                           ),
                           onClick: () {
-                            animationController.reverse();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AnnoyanceChat()));
+                            if (animationController.isCompleted) {
+                              animationController.reverse();
+                            } else {
+                              animationController.forward();
+                              animationController.addListener(() {
+                                animationState!(() {});
+                              });
+                            }
                           },
                         ),
                       ),
-                    ),
-                    Transform.translate(
-                      offset: Offset.fromDirection(getRadiansFromDegree(305),
-                          degTwoTranslationAnimation.value * 80),
-                      child: Transform(
-                        transform: Matrix4.rotationZ(
-                            getRadiansFromDegree(rotationAnimation.value))
-                          ..scale(degTwoTranslationAnimation.value),
-                        alignment: Alignment.center,
-                        child: CircularButton(
-                          color: Colors.orangeAccent,
-                          width: 70,
-                          height: 70,
-                          icon: const Icon(
-                            Icons.import_contacts,
-                            color: Colors.white,
-                            size: 40,
+                      Transform.translate(
+                        offset: Offset.fromDirection(getRadiansFromDegree(235),
+                            degOneTranslationAnimation.value * 80),
+                        child: Transform(
+                          transform: Matrix4.rotationZ(
+                              getRadiansFromDegree(rotationAnimation.value))
+                            ..scale(degOneTranslationAnimation.value),
+                          alignment: Alignment.center,
+                          child: CircularButton(
+                            color: Colors.blueAccent,
+                            width: 70,
+                            height: 70,
+                            icon: const Icon(
+                              Icons.sentiment_dissatisfied,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                            onClick: () {
+                              animationController.reverse();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AnnoyanceChat()));
+                            },
                           ),
-                          onClick: () {
-                            animationController.reverse();
-                          },
                         ),
                       ),
-                    ),
-                  ],
-                ))
-              ],
-            ),
+                      Transform.translate(
+                        offset: Offset.fromDirection(getRadiansFromDegree(305),
+                            degTwoTranslationAnimation.value * 80),
+                        child: Transform(
+                          transform: Matrix4.rotationZ(
+                              getRadiansFromDegree(rotationAnimation.value))
+                            ..scale(degTwoTranslationAnimation.value),
+                          alignment: Alignment.center,
+                          child: CircularButton(
+                            color: Colors.orangeAccent,
+                            width: 70,
+                            height: 70,
+                            icon: const Icon(
+                              Icons.import_contacts,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                            onClick: () {
+                              animationController.reverse();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ))
+                ],
+              );
+            }),
           ),
         ],
       ),
     );
+  }
+
+  //介面設計
+  double getRadiansFromDegree(double degree) {
+    double unitRadian = 57.295779513;
+    return degree / unitRadian;
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 250));
+    degOneTranslationAnimation = TweenSequence([
+      TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0.0, end: 1.2), weight: 75.0),
+      TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 1.2, end: 1.0), weight: 25.0),
+    ]).animate(animationController);
+    degTwoTranslationAnimation = TweenSequence([
+      TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0.0, end: 1.4), weight: 55.0),
+      TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 1.4, end: 1.0), weight: 45.0),
+    ]).animate(animationController);
+    rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
+        CurvedAnimation(parent: animationController, curve: Curves.easeOut));
+    super.initState();
+    animationController.addListener(() {
+      setState(() {});
+    });
   }
 }
 
@@ -785,8 +663,6 @@ const String _svg_xvbnb =
     '<svg viewBox="100.5 230.9 33.0 31.6" ><path transform="translate(99.06, 230.92)" d="M 16.17111015319824 1.097833633422852 L 12.1432638168335 9.264556884765625 L 3.131494522094727 10.57838726043701 C 1.515420794487 10.81277942657471 0.8677577972412109 12.80511474609375 2.039719343185425 13.94623565673828 L 8.559527397155762 20.29950141906738 L 7.017472743988037 29.27426147460938 C 6.739902973175049 30.89650535583496 8.44849967956543 32.11164093017578 9.87952709197998 31.35295104980469 L 17.9413890838623 27.11538505554199 L 26.00325393676758 31.35295104980469 C 27.43428039550781 32.10547256469727 29.14287567138672 30.8965015411377 28.86530685424805 29.27426147460938 L 27.32325172424316 20.29950141906738 L 33.84305953979492 13.94623470306396 C 35.01502227783203 12.80511379241943 34.36735916137695 10.81277942657471 32.75128555297852 10.5783863067627 L 23.73951530456543 9.264556884765625 L 19.71166801452637 1.097833633422852 C 18.98998641967773 -0.357866108417511 16.89896202087402 -0.3763708472251892 16.17111206054688 1.097833633422852 Z" fill="#ffff00" stroke="#a0522d" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';
 const String _svg_tn4ajf =
     '<svg viewBox="139.5 230.9 33.0 31.6" ><path transform="translate(138.06, 230.92)" d="M 16.17111015319824 1.097833633422852 L 12.1432638168335 9.264556884765625 L 3.131494522094727 10.57838726043701 C 1.515420794487 10.81277942657471 0.8677577972412109 12.80511474609375 2.039719343185425 13.94623565673828 L 8.559527397155762 20.29950141906738 L 7.017472743988037 29.27426147460938 C 6.739902973175049 30.89650535583496 8.44849967956543 32.11164093017578 9.87952709197998 31.35295104980469 L 17.9413890838623 27.11538505554199 L 26.00325393676758 31.35295104980469 C 27.43428039550781 32.10547256469727 29.14287567138672 30.8965015411377 28.86530685424805 29.27426147460938 L 27.32325172424316 20.29950141906738 L 33.84305953979492 13.94623470306396 C 35.01502227783203 12.80511379241943 34.36735916137695 10.81277942657471 32.75128555297852 10.5783863067627 L 23.73951530456543 9.264556884765625 L 19.71166801452637 1.097833633422852 C 18.98998641967773 -0.357866108417511 16.89896202087402 -0.3763708472251892 16.17111206054688 1.097833633422852 Z" fill="#ffff00" stroke="#a0522d" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';
-const String _svg_bx5ln =
-    '<svg viewBox="178.5 230.9 33.0 31.6" ><path transform="translate(177.06, 230.92)" d="M 16.17111015319824 1.097833633422852 L 12.1432638168335 9.264556884765625 L 3.131494522094727 10.57838726043701 C 1.515420794487 10.81277942657471 0.8677577972412109 12.80511474609375 2.039719343185425 13.94623565673828 L 8.559527397155762 20.29950141906738 L 7.017472743988037 29.27426147460938 C 6.739902973175049 30.89650535583496 8.44849967956543 32.11164093017578 9.87952709197998 31.35295104980469 L 17.9413890838623 27.11538505554199 L 26.00325393676758 31.35295104980469 C 27.43428039550781 32.10547256469727 29.14287567138672 30.8965015411377 28.86530685424805 29.27426147460938 L 27.32325172424316 20.29950141906738 L 33.84305953979492 13.94623470306396 C 35.01502227783203 12.80511379241943 34.36735916137695 10.81277942657471 32.75128555297852 10.5783863067627 L 23.73951530456543 9.264556884765625 L 19.71166801452637 1.097833633422852 C 18.98998641967773 -0.357866108417511 16.89896202087402 -0.3763708472251892 16.17111206054688 1.097833633422852 Z" fill="#ffff00" stroke="#a0522d" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';
 const String _svg_i02mi2 =
     '<svg viewBox="112.3 717.3 23.7 27.1" ><path transform="translate(112.33, 717.32)" d="M 23.66897201538086 19.01971054077148 L 23.66897201538086 1.267980933189392 C 23.66897201538086 0.5653080940246582 23.10366439819336 0 22.40099143981934 0 L 5.071923732757568 0 C 2.271798849105835 0 0 2.271798849105835 0 5.071923732757568 L 0 21.97833633422852 C 0 24.7784595489502 2.271798849105835 27.05025482177734 5.071923732757568 27.05025482177734 L 22.40099143981934 27.05025482177734 C 23.10366439819336 27.05025482177734 23.66897201538086 26.48495101928711 23.66897201538086 25.78227424621582 L 23.66897201538086 24.93695259094238 C 23.66897201538086 24.54071044921875 23.48405838012695 24.18144989013672 23.19876289367676 23.94898414611816 C 22.97686576843262 23.13536262512207 22.97686576843262 20.81601715087891 23.19876289367676 20.00239562988281 C 23.48405838012695 19.77521514892578 23.66897201538086 19.41595458984375 23.66897201538086 19.01971054077148 Z M 6.762563705444336 7.079558849334717 C 6.762563705444336 6.905211925506592 6.905211925506592 6.762563705444336 7.079558849334717 6.762563705444336 L 18.28005599975586 6.762563705444336 C 18.45440292358398 6.762563705444336 18.59705352783203 6.905211925506592 18.59705352783203 7.079558849334717 L 18.59705352783203 8.136210441589355 C 18.59705352783203 8.310558319091797 18.45440292358398 8.453206062316895 18.28005599975586 8.453206062316895 L 7.079558849334717 8.453206062316895 C 6.905211925506592 8.453206062316895 6.762563705444336 8.310558319091797 6.762563705444336 8.136210441589355 L 6.762563705444336 7.079558849334717 Z M 6.762563705444336 10.46084022521973 C 6.762563705444336 10.28649425506592 6.905211925506592 10.14384746551514 7.079558849334717 10.14384746551514 L 18.28005599975586 10.14384746551514 C 18.45440292358398 10.14384746551514 18.59705352783203 10.28649425506592 18.59705352783203 10.46084022521973 L 18.59705352783203 11.51749134063721 C 18.59705352783203 11.69183731079102 18.45440292358398 11.83448600769043 18.28005599975586 11.83448600769043 L 7.079558849334717 11.83448600769043 C 6.905211925506592 11.83448600769043 6.762563705444336 11.69183731079102 6.762563705444336 11.51749134063721 L 6.762563705444336 10.46084022521973 Z M 20.15032768249512 23.66897201538086 L 5.071923732757568 23.66897201538086 C 4.136787414550781 23.66897201538086 3.381281852722168 22.9134693145752 3.381281852722168 21.97833633422852 C 3.381281852722168 21.04848289489746 4.142070293426514 20.28769493103027 5.071923732757568 20.28769493103027 L 20.15032768249512 20.28769493103027 C 20.04994583129883 21.19112586975098 20.04994583129883 22.76553916931152 20.15032768249512 23.66897201538086 Z" fill="#a0522d" stroke="none" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';
 const String _svg_uat9w =

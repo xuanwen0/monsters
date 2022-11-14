@@ -3,17 +3,15 @@
 import 'package:adobe_xd/page_link.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
-import 'package:monsters_front_end/pages/annoyance.dart';
 import 'package:monsters_front_end/pages/daily_test.dart';
-import 'package:monsters_front_end/pages/destress.dart';
-import 'package:monsters_front_end/pages/drawer_setting.dart';
-import 'package:monsters_front_end/pages/drawer_userInformation.dart';
+import 'package:monsters_front_end/pages/destressWays_list/destressWays_list.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/manual.dart';
-import 'package:monsters_front_end/pages/psychologicial_game.dart';
+import 'package:monsters_front_end/pages/mind_game.dart';
 import 'package:monsters_front_end/pages/psychologicial_test.dart';
 import 'package:monsters_front_end/pages/social.dart';
+import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/state/drawer.dart';
 import 'annoyanceChat.dart';
 import 'answerbook.dart';
@@ -30,6 +28,7 @@ class _InteractionPageState extends State<InteractionPage>
   late AnimationController animationController;
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
+  StateSetter? animationState;
 
   double getRadiansFromDegree(double degree) {
     double unitRadian = 57.295779513;
@@ -70,22 +69,20 @@ class _InteractionPageState extends State<InteractionPage>
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     return Scaffold(
-      backgroundColor: const Color(0xfffffed4),
+      backgroundColor: BackgroundColorLight,
       key: _scaffoldKEy,
       endDrawer: GetDrawer(context),
       body: Stack(
         children: <Widget>[
+          //TODO:互動區的標題位置改正確
           //標題
           Pinned.fromPins(
-            Pin(size: 141.0, middle: 0.5018),
-            Pin(size: 63.0, start: 11.0),
+            Pin(size: 150.0, middle: 0.5),
+            Pin(size: 63.0, start: 20.0),
             child: Text(
               '互動區',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 40,
-                color: const Color(0xffa0522d),
-              ),
+              textAlign: TextAlign.center,
+              style: WidgeTitleTextStyle,
               softWrap: false,
             ),
           ),
@@ -101,10 +98,10 @@ class _InteractionPageState extends State<InteractionPage>
           Align(
             alignment: Alignment.topRight,
             child: IconButton(
-              alignment: Alignment.center,
-              iconSize: 57.0,
-              icon: Icon(Icons.menu_rounded),
-              color: Color(0xffffbb00),
+              iconSize: 60.0,
+              icon: const Icon(Icons.menu_rounded),
+              color: const Color(0xffffbb00),
+              padding: const EdgeInsets.fromLTRB(0, 10, 10, 5),
               onPressed: () => _scaffoldKEy.currentState?.openEndDrawer(),
             ),
           ),
@@ -134,26 +131,28 @@ class _InteractionPageState extends State<InteractionPage>
                               color: const Color(0xffffffff),
                               borderRadius: BorderRadius.circular(23.0),
                               border: Border.all(
-                                  width: 1.0, color: const Color(0xffa0522d)),
+                                  width: 2, color: const Color(0xffa0522d)),
                             ),
                           ),
                           Pinned.fromPins(
                             Pin(size: 144.0, middle: 0.5),
                             Pin(size: 48.0, start: 10.0),
-                            child: const Text(
-                              '解答之書',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 22,
-                                color: Color(0xffa0522d),
+                            child: Center(
+                              child: const Text(
+                                '解答之書',
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 30,
+                                  color: Color(0xffa0522d),
+                                ),
+                                softWrap: false,
                               ),
-                              softWrap: false,
                             ),
                           ),
                         ],
                       )),
                 ),
+                //TODO: 拉寬 或是 置中
                 //每日測驗
                 Pinned.fromPins(
                   Pin(start: 0.0, end: 0.0),
@@ -174,21 +173,23 @@ class _InteractionPageState extends State<InteractionPage>
                               color: const Color(0xffffffff),
                               borderRadius: BorderRadius.circular(23.0),
                               border: Border.all(
-                                  width: 1.0, color: const Color(0xffa0522d)),
+                                  width: 2, color: const Color(0xffa0522d)),
                             ),
                           ),
                           Pinned.fromPins(
                             Pin(size: 144.0, middle: 0.5),
                             Pin(size: 48.0, end: 10.0),
-                            child: const Text(
-                              '每日測驗',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 22,
-                                color: Color(0xffa0522d),
+                            child: Center(
+                              child: const Text(
+                                '每日測驗',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 30,
+                                  color: Color(0xffa0522d),
+                                ),
+                                softWrap: false,
                               ),
-                              softWrap: false,
                             ),
                           ),
                         ],
@@ -197,7 +198,7 @@ class _InteractionPageState extends State<InteractionPage>
                 //深度心理測驗
                 Pinned.fromPins(
                   Pin(start: 0.0, end: 0.0),
-                  Pin(size: 68.0, middle: 0.5),
+                  Pin(size: 70.0, middle: 0.5),
                   child: PageLink(
                       links: [
                         PageLinkInfo(
@@ -214,21 +215,23 @@ class _InteractionPageState extends State<InteractionPage>
                               color: const Color(0xffffffff),
                               borderRadius: BorderRadius.circular(23.0),
                               border: Border.all(
-                                  width: 1.0, color: const Color(0xffa0522d)),
+                                  width: 2, color: const Color(0xffa0522d)),
                             ),
                           ),
                           Pinned.fromPins(
-                            Pin(start: 43.0, end: 43.0),
-                            Pin(size: 48.0, middle: 0.5),
-                            child: const Text(
-                              '深度心理測驗',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 22,
-                                color: Color(0xffa0522d),
+                            Pin(start: 40.0, end: 40.0),
+                            Pin(size: 40.0, middle: 0.5),
+                            child: Center(
+                              child: const Text(
+                                '深度心理測驗',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 28,
+                                  color: Color(0xffa0522d),
+                                ),
+                                softWrap: false,
                               ),
-                              softWrap: false,
                             ),
                           ),
                         ],
@@ -254,21 +257,23 @@ class _InteractionPageState extends State<InteractionPage>
                               color: const Color(0xffffffff),
                               borderRadius: BorderRadius.circular(23.0),
                               border: Border.all(
-                                  width: 1.0, color: const Color(0xffa0522d)),
+                                  width: 2, color: const Color(0xffa0522d)),
                             ),
                           ),
                           Pinned.fromPins(
                             Pin(start: 0.0, end: 0.0),
                             Pin(size: 40.0, middle: 0.5),
-                            child: const Text(
-                              '心理小遊戲',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 22,
-                                color: Color(0xffa0522d),
+                            child: Center(
+                              child: const Text(
+                                '心理小遊戲',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 30,
+                                  color: Color(0xffa0522d),
+                                ),
+                                softWrap: false,
                               ),
-                              softWrap: false,
                             ),
                           ),
                         ],
@@ -284,7 +289,7 @@ class _InteractionPageState extends State<InteractionPage>
                           transition: LinkTransition.Fade,
                           ease: Curves.easeOut,
                           duration: 0.3,
-                          pageBuilder: () => Destress(),
+                          pageBuilder: () => DestressWaysList(),
                         ),
                       ],
                       child: Stack(
@@ -294,27 +299,86 @@ class _InteractionPageState extends State<InteractionPage>
                               color: const Color(0xffffffff),
                               borderRadius: BorderRadius.circular(23.0),
                               border: Border.all(
-                                  width: 1.0, color: const Color(0xffa0522d)),
+                                  width: 2, color: const Color(0xffa0522d)),
                             ),
                           ),
                           Pinned.fromPins(
                             Pin(size: 144.0, middle: 0.5),
                             Pin(size: 48.0, end: 10.0),
-                            child: const Text(
-                              '紓壓方法',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 22,
-                                color: Color(0xffa0522d),
+                            child: Center(
+                              child: const Text(
+                                '紓壓方法',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 30,
+                                  color: Color(0xffa0522d),
+                                ),
+                                softWrap: false,
                               ),
-                              softWrap: false,
                             ),
                           ),
                         ],
                       )),
                 ),
               ],
+            ),
+          ),
+
+          //互動
+          Pinned.fromPins(
+            Pin(size: 69.0, start: 9.0),
+            Pin(size: 68.0, end: 5.0),
+            child:
+                // Adobe XD layer: 'interactive' (group)
+                PageLink(
+              links: [
+                PageLinkInfo(
+                  transition: LinkTransition.Fade,
+                  ease: Curves.easeOut,
+                  duration: 0.3,
+                  pageBuilder: () => MainPage(),
+                ),
+              ],
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: BackgroundColorWarm,
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                    ),
+                  ),
+                  Pinned.fromPins(
+                    Pin(size: 24.0, middle: 0.5111),
+                    Pin(size: 16.0, end: 9.0),
+                    child: Text(
+                      '互動',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 12,
+                        color: Colors.white,
+                      ),
+                      softWrap: false,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(-0.008, -0.415),
+                    child: SizedBox(
+                      width: 29.0,
+                      height: 29.0,
+                      child:
+                          // Adobe XD layer: 'Icon material-gamep…' (shape)
+                          SvgPicture.string(
+                        _svg_a3julx,
+                        color: Colors.white,
+                        allowDrawingOutsideViewBox: true,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           //圖鑑
@@ -359,9 +423,10 @@ class _InteractionPageState extends State<InteractionPage>
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '圖鑑',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -371,7 +436,7 @@ class _InteractionPageState extends State<InteractionPage>
               ),
             ),
           ),
-          //歷史紀錄
+          //歷史記錄
           Pinned.fromPins(
             Pin(size: 69.0, middle: 0.7347),
             Pin(size: 68.0, end: 5.0),
@@ -401,10 +466,11 @@ class _InteractionPageState extends State<InteractionPage>
                     Pin(size: 48.0, end: 9.0),
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
-                      '歷史紀錄',
+                      '歷史記錄',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -456,9 +522,10 @@ class _InteractionPageState extends State<InteractionPage>
                     Pin(size: 16.0, end: 9.0),
                     child: Text(
                       '社群',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: const Color(0xffa0522d),
                       ),
                       softWrap: false,
@@ -479,154 +546,107 @@ class _InteractionPageState extends State<InteractionPage>
               ),
             ),
           ),
-          //互動
-          Pinned.fromPins(
-            Pin(size: 69.0, start: 9.0),
-            Pin(size: 68.0, end: 5.0),
-            child:
-                // Adobe XD layer: 'interactive' (group)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => MainPage(),
-                ),
-              ],
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xffffffff),
-                      borderRadius:
-                          BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 24.0, middle: 0.5111),
-                    Pin(size: 16.0, end: 9.0),
-                    child: Text(
-                      '互動',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 10,
-                        color: const Color(0xffa0522d),
-                      ),
-                      softWrap: false,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment(-0.008, -0.415),
-                    child: SizedBox(
-                      width: 29.0,
-                      height: 29.0,
-                      child:
-                          // Adobe XD layer: 'Icon material-gamep…' (shape)
-                          SvgPicture.string(
-                        _svg_a3julx,
-                        allowDrawingOutsideViewBox: true,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
           //新增
           Pinned.fromPins(
             Pin(size: 150.0, middle: 0.5),
             Pin(size: 150.0, end: 5.0),
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                Positioned(
-                    child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: <Widget>[
-                    IgnorePointer(
-                      child: Container(
-                        color: Colors.transparent,
-                        height: 150.0,
-                        width: 150.0,
-                      ),
-                    ),
-                    Transform(
-                      transform: Matrix4.rotationZ(
-                          getRadiansFromDegree(rotationAnimation.value)),
-                      alignment: Alignment.center,
-                      child: CircularButton(
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                        width: 70,
-                        height: 70,
-                        icon: const Icon(
-                          Icons.add_rounded,
-                          color: Color.fromRGBO(255, 187, 0, 1),
-                          size: 50,
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              animationState = setState;
+              return Stack(
+                alignment: Alignment.bottomCenter,
+                children: <Widget>[
+                  Positioned(
+                      child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: <Widget>[
+                      IgnorePointer(
+                        child: Container(
+                          color: Colors.transparent,
+                          height: 150.0,
+                          width: 150.0,
                         ),
-                        onClick: () {
-                          if (animationController.isCompleted) {
-                            animationController.reverse();
-                          } else {
-                            animationController.forward();
-                          }
-                        },
                       ),
-                    ),
-                    Transform.translate(
-                      offset: Offset.fromDirection(getRadiansFromDegree(235),
-                          degOneTranslationAnimation.value * 80),
-                      child: Transform(
+                      Transform(
                         transform: Matrix4.rotationZ(
-                            getRadiansFromDegree(rotationAnimation.value))
-                          ..scale(degOneTranslationAnimation.value),
+                            getRadiansFromDegree(rotationAnimation.value)),
                         alignment: Alignment.center,
                         child: CircularButton(
-                          color: Colors.blueAccent,
+                          color: Color.fromRGBO(255, 255, 255, 1),
                           width: 70,
                           height: 70,
                           icon: const Icon(
-                            Icons.sentiment_dissatisfied,
-                            color: Colors.white,
-                            size: 40,
+                            Icons.add_rounded,
+                            color: Color.fromRGBO(255, 187, 0, 1),
+                            size: 50,
                           ),
                           onClick: () {
-                            animationController.reverse();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AnnoyanceChat()));
+                            if (animationController.isCompleted) {
+                              animationController.reverse();
+                            } else {
+                              animationController.forward();
+                              animationController.addListener(() {
+                                animationState!(() {});
+                              });
+                            }
                           },
                         ),
                       ),
-                    ),
-                    Transform.translate(
-                      offset: Offset.fromDirection(getRadiansFromDegree(305),
-                          degTwoTranslationAnimation.value * 80),
-                      child: Transform(
-                        transform: Matrix4.rotationZ(
-                            getRadiansFromDegree(rotationAnimation.value))
-                          ..scale(degTwoTranslationAnimation.value),
-                        alignment: Alignment.center,
-                        child: CircularButton(
-                          color: Colors.orangeAccent,
-                          width: 70,
-                          height: 70,
-                          icon: const Icon(
-                            Icons.import_contacts,
-                            color: Colors.white,
-                            size: 40,
+                      Transform.translate(
+                        offset: Offset.fromDirection(getRadiansFromDegree(235),
+                            degOneTranslationAnimation.value * 80),
+                        child: Transform(
+                          transform: Matrix4.rotationZ(
+                              getRadiansFromDegree(rotationAnimation.value))
+                            ..scale(degOneTranslationAnimation.value),
+                          alignment: Alignment.center,
+                          child: CircularButton(
+                            color: Colors.blueAccent,
+                            width: 70,
+                            height: 70,
+                            icon: const Icon(
+                              Icons.sentiment_dissatisfied,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                            onClick: () {
+                              animationController.reverse();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AnnoyanceChat()));
+                            },
                           ),
-                          onClick: () {
-                            animationController.reverse();
-                          },
                         ),
                       ),
-                    ),
-                  ],
-                ))
-              ],
-            ),
+                      Transform.translate(
+                        offset: Offset.fromDirection(getRadiansFromDegree(305),
+                            degTwoTranslationAnimation.value * 80),
+                        child: Transform(
+                          transform: Matrix4.rotationZ(
+                              getRadiansFromDegree(rotationAnimation.value))
+                            ..scale(degTwoTranslationAnimation.value),
+                          alignment: Alignment.center,
+                          child: CircularButton(
+                            color: Colors.orangeAccent,
+                            width: 70,
+                            height: 70,
+                            icon: const Icon(
+                              Icons.import_contacts,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                            onClick: () {
+                              animationController.reverse();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ))
+                ],
+              );
+            }),
           ),
         ],
       ),

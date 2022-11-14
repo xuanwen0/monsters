@@ -1,388 +1,132 @@
 import 'package:flutter/material.dart';
-import 'package:adobe_xd/pinned.dart';
-import 'package:adobe_xd/page_link.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monsters_front_end/pages/daily_test.dart';
+import 'package:monsters_front_end/pages/style.dart';
 
 class DailyTest_wrong extends StatefulWidget {
-  DailyTest_wrong({
-    Key? key,
-  }) : super(key: key);
+  String correctChoice;
+  String answer;
+  String learn;
+  DailyTest_wrong(this.correctChoice, this.answer, this.learn);
   @override
-  _DailyTest_wrongState createState() => _DailyTest_wrongState();
+  _DailyTest_wrongState createState() =>
+      _DailyTest_wrongState(correctChoice, answer, learn);
 }
 
 class _DailyTest_wrongState extends State<DailyTest_wrong> {
+  var learn;
+  var showChoice;
+  var showAnswer;
+
+  _DailyTest_wrongState(this.showChoice, this.showAnswer, this.learn);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
-      body: Stack(
+      appBar: secondAppBar("每日測驗"),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Pinned.fromPins(
-            Pin(size: 188.0, middle: 0.5),
-            Pin(size: 63.0, start: 11.0),
-            child: Text(
-              '每日測驗',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 47,
-                color: const Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
-          Pinned.fromPins(
-            Pin(start: 34.0, end: 34.0),
-            Pin(size: 219.0, end: 64.0),
+          //答錯囉
+          Expanded(
+            flex: 30,
             child: Container(
+              margin: const EdgeInsets.fromLTRB(30, 70, 30, 20),
               decoration: BoxDecoration(
                 color: const Color(0xffffffff),
                 borderRadius: BorderRadius.circular(22.0),
               ),
-            ),
-          ),
-          Pinned.fromPins(
-            Pin(size: 45.6, start: 13.7),
-            Pin(size: 41.1, start: 21.9),
-            child:
-                // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                PageLink(
-              links: [
-                PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () => Daily_test(),
-                ),
-              ],
-              child: SvgPicture.string(
-                _svg_ryq30,
-                allowDrawingOutsideViewBox: true,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-          Pinned.fromPins(
-            Pin(start: 34.0, end: 34.0),
-            Pin(size: 112.0, middle: 0.3168),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(22.0),
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 180.0, middle: 0.5),
-                  Pin(start: 16.0, end: 16.0),
-                  child: Text(
+              child: Container(
+                  alignment: Alignment.center,
+                  child: const Text(
                     '答錯囉',
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
                       fontSize: 60,
-                      color: const Color(0xff979797),
+                      color: Color(0xff979797),
                     ),
                     softWrap: false,
-                  ),
-                ),
-              ],
+                  )),
             ),
           ),
-          Pinned.fromPins(
-            Pin(start: 36.2, end: 36.2),
-            Pin(size: 66.0, middle: 0.5941),
-            child: Stack(
-              children: <Widget>[
-                Pinned.fromPins(
-                  Pin(size: 48.5, middle: 0.3333),
-                  Pin(start: 0.0, end: 0.0),
+          //正確選項
+          Expanded(
+            flex: 15,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 25,
                   child: Stack(
-                    children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          Pinned.fromPins(
-                            Pin(start: 0.0, end: 0.0),
-                            Pin(size: 23.2, start: 0.0),
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(7.0),
-                                  ),
-                                ),
-                              ],
-                            ),
+                    children: [
+                      Container(
+                        height: 100,
+                        width: 100,
+                        margin: const EdgeInsets.fromLTRB(20, 10, 0, 10),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(40.0),
                           ),
-                          Pinned.fromPins(
-                            Pin(size: 9.0, middle: 0.5),
-                            Pin(start: 0.0, end: 0.0),
-                            child: Text(
-                              '3\n\n',
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 17,
-                                color: const Color(0xffa0522d),
-                              ),
-                              softWrap: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 48.5, middle: 0.5),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Stack(
-                    children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          Pinned.fromPins(
-                            Pin(start: 0.0, end: 0.0),
-                            Pin(size: 23.2, start: 0.0),
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(7.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Pinned.fromPins(
-                            Pin(size: 9.0, middle: 0.4951),
-                            Pin(start: 0.0, end: 0.0),
-                            child: Text(
-                              '4\n\n',
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 17,
-                                color: const Color(0xffa0522d),
-                              ),
-                              softWrap: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 48.5, start: 48.5),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Stack(
-                    children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          Pinned.fromPins(
-                            Pin(start: 0.0, end: 0.0),
-                            Pin(size: 23.2, start: 0.0),
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(7.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Pinned.fromPins(
-                            Pin(size: 9.0, middle: 0.4984),
-                            Pin(start: 0.0, end: 0.0),
-                            child: Text(
-                              '2\n\n',
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 17,
-                                color: const Color(0xffa0522d),
-                              ),
-                              softWrap: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: SizedBox(
-                    width: 49.0,
-                    height: 44.0,
-                    child: Stack(
-                      children: <Widget>[
-                        Stack(
-                          children: <Widget>[
-                            Pinned.fromPins(
-                              Pin(start: 0.0, end: 0.0),
-                              Pin(size: 23.2, start: 0.0),
-                              child: Stack(
-                                children: <Widget>[
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xffffffff),
-                                      borderRadius: BorderRadius.circular(7.0),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Pinned.fromPins(
-                              Pin(size: 9.0, middle: 0.5),
-                              Pin(start: 0.0, end: 0.0),
-                              child: Text(
-                                '1\n',
-                                style: TextStyle(
-                                  fontFamily: 'Segoe UI',
-                                  fontSize: 17,
-                                  color: const Color(0xffa0522d),
-                                ),
-                                softWrap: false,
-                              ),
-                            ),
-                          ],
                         ),
-                      ],
+                        child: Center(
+                          child: Text(
+                            showChoice,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 25, color: BackgroundColorWarm),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 75,
+                  child: Container(
+                    height: 90,
+                    margin: const EdgeInsets.only(right: 25),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.horizontal(
+                          left: Radius.circular(30.0),
+                          right: Radius.circular(30.0)),
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        showAnswer,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 24, color: BackgroundColorWarm),
+                      ),
                     ),
                   ),
                 ),
-                Pinned.fromPins(
-                  Pin(size: 48.5, middle: 0.6667),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Stack(
-                    children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          Pinned.fromPins(
-                            Pin(start: 0.0, end: 0.0),
-                            Pin(size: 23.2, start: 0.0),
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(7.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Pinned.fromPins(
-                            Pin(size: 9.0, middle: 0.5),
-                            Pin(start: 0.0, end: 0.0),
-                            child: Text(
-                              '5\n\n',
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 17,
-                                color: const Color(0xffa0522d),
-                              ),
-                              softWrap: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 48.5, end: 48.5),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Stack(
-                    children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          Pinned.fromPins(
-                            Pin(start: 0.0, end: 0.0),
-                            Pin(size: 23.2, start: 0.0),
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(7.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Pinned.fromPins(
-                            Pin(size: 9.0, middle: 0.5),
-                            Pin(start: 0.0, end: 0.0),
-                            child: Text(
-                              '6\n\n',
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 17,
-                                color: const Color(0xffa0522d),
-                              ),
-                              softWrap: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Pinned.fromPins(
-                  Pin(size: 48.5, end: 0.0),
-                  Pin(start: 0.0, end: 0.0),
-                  child: Stack(
-                    children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          Pinned.fromPins(
-                            Pin(start: 0.0, end: 0.0),
-                            Pin(size: 23.2, start: 0.0),
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffffffff),
-                                    borderRadius: BorderRadius.circular(7.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Pinned.fromPins(
-                            Pin(size: 9.0, middle: 0.5),
-                            Pin(start: 0.0, end: 0.0),
-                            child: Text(
-                              '7\n\n',
-                              style: TextStyle(
-                                fontFamily: 'Segoe UI',
-                                fontSize: 17,
-                                color: const Color(0xffa0522d),
-                              ),
-                              softWrap: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
           ),
-          Pinned.fromPins(
-            Pin(size: 30.4, start: 3.6),
-            Pin(size: 38.2, middle: 0.5123),
-            child:
-                // Adobe XD layer: 'Icon material-direc…' (shape)
-                SvgPicture.string(
-              _svg_u6ihw,
-              allowDrawingOutsideViewBox: true,
-              fit: BoxFit.fill,
+          //解釋
+          Expanded(
+            flex: 60,
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(20, 20, 20, 30),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+                border: Border.all(width: 2.5, color: Colors.grey),
+              ),
+              child: Container(
+                  margin: const EdgeInsets.all(20),
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Text(
+                        learn,
+                        textAlign: TextAlign.justify,
+                        style: const TextStyle(
+                          letterSpacing: -1,
+                          color: BackgroundColorWarm,
+                          fontSize: 22,
+                        ),
+                      ))),
             ),
           ),
         ],

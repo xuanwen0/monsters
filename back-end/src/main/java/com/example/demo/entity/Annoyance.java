@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.entity.enumerate.AnnoyanceTypeEnum;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,19 +16,17 @@ public class Annoyance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "account", referencedColumnName = "account", nullable = false)
-    @Column(name = "`account`", nullable = false)
+    @Column(name = "`account`", nullable = false, length = 45)
     private String account;
 
-    @Column(name = "`contant`", nullable = false)
-    private String context;
+    @Column(name = "`content`", nullable = false)
+    private String content;
 
     @Column(name = "`type`", nullable = false)
-    private com.example.demo.entity.enumerate.AnnoyanceTypeEnum type;
+    private AnnoyanceTypeEnum type;
 
-    @Column(name = "`dall_id`")
-    private int dallId;
+    @Column(name = "`monster_id`")
+    private Integer monsterId;
 
     @Column(name = "`mood`", nullable = false)
     private String mood;
@@ -39,8 +38,8 @@ public class Annoyance {
     private LocalDateTime time;
 
     @Column(name = "`solve`")
-    private int solve;
+    private Integer solve;
 
     @Column(name = "`share`")
-    private int share;
+    private Integer share;
 }

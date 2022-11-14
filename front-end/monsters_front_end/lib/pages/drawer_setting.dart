@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_switch/flutter_switch.dart';
+import 'package:monsters_front_end/pages/lock/close_lock_page.dart';
+import 'package:monsters_front_end/pages/lock/setting_lock_page.dart';
+import 'package:monsters_front_end/pages/style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Drawer_settings extends StatefulWidget {
   Drawer_settings({
@@ -10,7 +14,17 @@ class Drawer_settings extends StatefulWidget {
   _Drawer_settingsState createState() => _Drawer_settingsState();
 }
 
+bool lock = false;
+
 class _Drawer_settingsState extends State<Drawer_settings> {
+  bool notice = false;
+  bool music = false;
+  @override
+  void initState() {
+    checkLock();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,16 +38,18 @@ class _Drawer_settingsState extends State<Drawer_settings> {
               color: const Color(0xffffffff),
             ),
           ),
+          //上一頁
           Align(
               alignment: Alignment.topLeft,
               child: IconButton(
                 icon: Icon(Icons.arrow_back_rounded),
-                color: Color(0xffffbb00),
+                color: Color.fromRGBO(255, 187, 0, 1),
                 iconSize: 57.0,
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               )),
+          //標題
           Pinned.fromPins(
             Pin(size: 94.0, middle: 0.5),
             Pin(size: 63.0, start: 11.0),
@@ -41,217 +57,155 @@ class _Drawer_settingsState extends State<Drawer_settings> {
               '設定',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
-                fontSize: 47,
+                fontSize: 40,
                 color: const Color(0xffa0522d),
               ),
               softWrap: false,
             ),
           ),
-          Align(
-            alignment: Alignment(0.0, -0.443),
-            child: SizedBox(
-              width: 265.0,
-              height: 53.0,
-              child: Stack(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              //通知
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Pinned.fromPins(
-                    Pin(size: 80.0, start: 0.0),
-                    Pin(start: 0.0, end: 0.0),
-                    child: Text(
-                      '通知',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 40,
-                        color: const Color(0xffa0522d),
-                      ),
-                      softWrap: false,
+                  const Text(
+                    '通知',
+                    style: TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 40,
+                      color: Color(0xffa0522d),
                     ),
+                    softWrap: false,
                   ),
-                  Pinned.fromPins(
-                    Pin(size: 88.6, middle: 0.6175),
-                    Pin(start: 1.0, end: 2.0),
-                    child: SvgPicture.string(
-                      _svg_l96ld,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 88.6, end: 0.0),
-                    Pin(start: 1.0, end: 2.0),
-                    child: SvgPicture.string(
-                      _svg_gnu,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
-                    ),
+                  FlutterSwitch(
+                    activeColor: const Color.fromRGBO(255, 187, 0, 1),
+                    activeTextColor: BackgroundColorLight,
+                    width: 125.0,
+                    height: 45.0,
+                    valueFontSize: 20.0,
+                    toggleSize: 45.0,
+                    value: notice,
+                    borderRadius: 30.0,
+                    padding: 8.0,
+                    showOnOff: true,
+                    onToggle: (val) {
+                      setState(() {
+                        notice = val;
+                      });
+                    },
                   ),
                 ],
               ),
-            ),
-          ),
-          Align(
-            alignment: Alignment(0.0, -0.241),
-            child: SizedBox(
-              width: 265.0,
-              height: 53.0,
-              child: Stack(
+              SizedBox(height: 20),
+              //鎖定
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Pinned.fromPins(
-                    Pin(size: 80.0, start: 0.0),
-                    Pin(start: 0.0, end: 0.0),
-                    child: Text(
-                      '鎖定',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 40,
-                        color: const Color(0xffa0522d),
-                      ),
-                      softWrap: false,
+                  const Text(
+                    '鎖定',
+                    style: TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 40,
+                      color: Color(0xffa0522d),
                     ),
+                    softWrap: false,
                   ),
-                  Pinned.fromPins(
-                    Pin(size: 88.6, middle: 0.6175),
-                    Pin(start: 1.0, end: 2.0),
-                    child: SvgPicture.string(
-                      _svg_l96ld,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 88.6, end: 0.0),
-                    Pin(start: 1.0, end: 2.0),
-                    child: SvgPicture.string(
-                      _svg_gnu,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
-                    ),
+                  FlutterSwitch(
+                    activeColor: Color.fromRGBO(255, 187, 0, 1),
+                    activeTextColor: BackgroundColorLight,
+                    width: 125.0,
+                    height: 45.0,
+                    valueFontSize: 20.0,
+                    toggleSize: 45.0,
+                    value: lock,
+                    borderRadius: 30.0,
+                    padding: 8.0,
+                    showOnOff: true,
+                    onToggle: (val) {
+                      setState(() {
+                        lock = val;
+                        if (lock == true) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SettingLockPage()));
+                        } else {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CloseLockPage()));
+                        }
+                      });
+                    },
                   ),
                 ],
               ),
-            ),
-          ),
-          Align(
-            alignment: Alignment(0.0, -0.04),
-            child: SizedBox(
-              width: 265.0,
-              height: 53.0,
-              child: Stack(
+              SizedBox(height: 20),
+              //音樂
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Pinned.fromPins(
-                    Pin(size: 80.0, start: 0.0),
-                    Pin(start: 0.0, end: 0.0),
-                    child: Text(
-                      '音樂',
-                      style: TextStyle(
-                        fontFamily: 'Segoe UI',
-                        fontSize: 40,
-                        color: const Color(0xffa0522d),
-                      ),
-                      softWrap: false,
+                  const Text(
+                    '音樂',
+                    style: TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 40,
+                      color: Color(0xffa0522d),
                     ),
+                    softWrap: false,
                   ),
-                  Pinned.fromPins(
-                    Pin(size: 88.6, middle: 0.6175),
-                    Pin(start: 1.0, end: 2.0),
-                    child: SvgPicture.string(
-                      _svg_l96ld,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  Pinned.fromPins(
-                    Pin(size: 88.6, end: 0.0),
-                    Pin(start: 1.0, end: 2.0),
-                    child: SvgPicture.string(
-                      _svg_gnu,
-                      allowDrawingOutsideViewBox: true,
-                      fit: BoxFit.fill,
-                    ),
+                  FlutterSwitch(
+                    activeColor: Color.fromRGBO(255, 187, 0, 1),
+                    activeTextColor: BackgroundColorLight,
+                    width: 125.0,
+                    height: 45.0,
+                    valueFontSize: 20.0,
+                    toggleSize: 45.0,
+                    value: music,
+                    borderRadius: 30.0,
+                    padding: 8.0,
+                    showOnOff: true,
+                    onToggle: (val) {
+                      setState(() {
+                        music = val;
+                      });
+                    },
                   ),
                 ],
               ),
-            ),
-          ),
-          Align(
-            alignment: Alignment(0.492, -0.434),
-            child: SizedBox(
-              width: 30.0,
-              height: 40.0,
-              child: Text(
-                '開',
-                style: TextStyle(
-                  fontFamily: 'Segoe UI',
-                  fontSize: 30,
-                  color: const Color(0xffffffff),
-                ),
-                softWrap: false,
+              SizedBox(height: 20),
+              //顏色
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const <Widget>[
+                  Text(
+                    '顏色',
+                    style: TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 40,
+                      color: Color(0xffa0522d),
+                    ),
+                    softWrap: false,
+                  ),
+                ],
               ),
-            ),
-          ),
-          Align(
-            alignment: Alignment(0.492, -0.238),
-            child: SizedBox(
-              width: 30.0,
-              height: 40.0,
-              child: Text(
-                '開',
-                style: TextStyle(
-                  fontFamily: 'Segoe UI',
-                  fontSize: 30,
-                  color: const Color(0xffffffff),
-                ),
-                softWrap: false,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const <Widget>[
+                  Text(
+                    '音樂',
+                    style: TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 40,
+                      color: Color(0xffa0522d),
+                    ),
+                    softWrap: false,
+                  ),
+                ],
               ),
-            ),
-          ),
-          Align(
-            alignment: Alignment(0.492, -0.434),
-            child: SizedBox(
-              width: 30.0,
-              height: 40.0,
-              child: Text(
-                '開',
-                style: TextStyle(
-                  fontFamily: 'Segoe UI',
-                  fontSize: 30,
-                  color: const Color(0xffffffff),
-                ),
-                softWrap: false,
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment(0.492, -0.043),
-            child: SizedBox(
-              width: 30.0,
-              height: 40.0,
-              child: Text(
-                '開',
-                style: TextStyle(
-                  fontFamily: 'Segoe UI',
-                  fontSize: 30,
-                  color: const Color(0xffffffff),
-                ),
-                softWrap: false,
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment(-0.554, 0.164),
-            child: SizedBox(
-              width: 80.0,
-              height: 53.0,
-              child: Text(
-                '顏色',
-                style: TextStyle(
-                  fontFamily: 'Segoe UI',
-                  fontSize: 40,
-                  color: const Color(0xffa0522d),
-                ),
-                softWrap: false,
-              ),
-            ),
+            ],
           ),
         ],
       ),
@@ -259,7 +213,17 @@ class _Drawer_settingsState extends State<Drawer_settings> {
   }
 }
 
-const String _svg_l96ld =
-    '<svg viewBox="167.7 203.0 88.6 50.0" ><path transform="translate(167.68, 160.66)" d="M 69.41712188720703 92.33885192871094 L 69.41736602783203 92.33821105957031 L 2.44140608174348e-07 92.33821105957031 L 2.44140608174348e-07 42.33780670166016 L 88.63800048828125 42.33780670166016 L 69.41736602783203 92.33821105957031 L 69.41712188720703 92.33885192871094 Z" fill="#ffffff" stroke="#a0522d" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';
-const String _svg_gnu =
-    '<svg viewBox="235.0 203.0 88.6 50.0" ><path transform="matrix(-1.0, 0.0, 0.0, -1.0, 323.64, 253.0)" d="M 69.41717529296875 50.00104522705078 L 69.41741943359375 50.00040435791016 L 0 50.00040435791016 L 0 0 L 88.6380615234375 0 L 69.41741943359375 50.00040435791016 L 69.41717529296875 50.00104522705078 Z" fill="#ffbb00" stroke="#a0522d" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';
+void saveLock(String lock) async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  await pref.setString("lock", lock);
+}
+
+void checkLock() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  String? val = pref.getString("lock");
+  if (val == 'true') {
+    lock = true;
+  } else {
+    lock = false;
+  }
+}
