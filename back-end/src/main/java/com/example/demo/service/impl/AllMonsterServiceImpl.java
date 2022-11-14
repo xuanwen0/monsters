@@ -32,9 +32,12 @@ public class AllMonsterServiceImpl extends BaseServiceImplement<AllMonsterDAO, A
     protected AllMonster createVO(AllMonsterBean bean) {
         AllMonster entity = new AllMonster();
         entity.setId(bean.getId());
-        entity.setName(bean.getName());
-        entity.setRarity(bean.getRarity());
-        entity.setGif(bean.getGif());
+        entity.setNameChinese(bean.getNameChinese());
+        entity.setNameEnglish(bean.getNameEnglish());
+        entity.setPhoto(bean.getPhoto());
+        entity.setAvatar(bean.getAvatar());
+        entity.setGifRight(bean.getGifRight());
+        entity.setGitLeft(bean.getGitLeft());
         return entity;
     }
 
@@ -42,9 +45,12 @@ public class AllMonsterServiceImpl extends BaseServiceImplement<AllMonsterDAO, A
     protected AllMonsterBean createBean(AllMonster entity) {
         AllMonsterBean bean = new AllMonsterBean();
         bean.setId(entity.getId());
-        bean.setName(entity.getName());
-        bean.setRarity(entity.getRarity());
-        bean.setGif(entity.getGif());
+        bean.setNameChinese(entity.getNameChinese());
+        bean.setNameEnglish(entity.getNameEnglish());
+        bean.setPhoto(entity.getPhoto());
+        bean.setAvatar(entity.getAvatar());
+        bean.setGifRight(entity.getGifRight());
+        bean.setGitLeft(entity.getGitLeft());
         return bean;
     }
 }

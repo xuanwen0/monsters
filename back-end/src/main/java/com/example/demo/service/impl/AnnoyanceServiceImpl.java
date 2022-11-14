@@ -3,7 +3,6 @@ package com.example.demo.service.impl;
 import com.example.demo.bean.AnnoyanceBean;
 import com.example.demo.dao.AnnoyanceDAO;
 import com.example.demo.entity.Annoyance;
-import com.example.demo.entity.enumerate.AnnoyanceTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,6 @@ public class AnnoyanceServiceImpl extends BaseServiceImplement<AnnoyanceDAO, Ann
     public AnnoyanceBean createAndReturnBean(AnnoyanceBean bean) {
         Annoyance annoyance = createVO(bean);
         annoyance.setTime(LocalDateTime.now());
-        annoyance.setType(AnnoyanceTypeEnum.CAUSE);
         annoyanceDAO.insert(annoyance);
         bean = createBean(annoyance);
         return bean;

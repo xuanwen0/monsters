@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.config.DatabaseConfig;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -10,7 +11,7 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-@Table(name = "personal_info")
+@Table(name = "personal_info", schema = DatabaseConfig.DATA_BASE_NAME)
 public class PersonalInfo {
     @Id
     @Column(name = "`account`", nullable = false, length = 45)
@@ -33,9 +34,6 @@ public class PersonalInfo {
 
     @Column(name = "`photo`")
     private String photo;
-
-    @Column(name = "`theme`")
-    private int theme;
 
     @Column(name = "daily_test")
     private int dailyTest;

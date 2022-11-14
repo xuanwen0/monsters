@@ -24,7 +24,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableJpaRepositories
 public class DatabaseConfig {
-    public static final String DATA_BASE_NAME = "monsters";
+    public static final String DATA_BASE_NAME = "111- monsters";
 
     @Value("${project.root}")
     private String root;
@@ -38,9 +38,9 @@ public class DatabaseConfig {
     private String account;
     @Value("${spring.datasource.password}")
     private String password;
-    @Value("${spring.jpa.properties.hibernate.show_sql}")
+    @Value("${spring.jpa.show-sql}")
     private boolean isShowSQL;
-    @Value("${spring.jpa.properties.hibernate.format_sql}")
+    @Value("${spring.jpa.format-sql}")
     private boolean isFormatSQL;
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String ddlStatus;
@@ -136,7 +136,7 @@ public class DatabaseConfig {
 	public DefaultPointcutAdvisor defaultPointcutAdvisor() {
 		// AOP advisor：AOP 切入點，在 service method 增加交易
 		AspectJExpressionPointcut expression = new AspectJExpressionPointcut();
-		expression.setExpression("execution(* com.example.demo" + projectName + ".service.*.*(..))");
+		expression.setExpression("execution(* com.example.demo." + projectName + ".service.*.*(..))");
 		return new DefaultPointcutAdvisor(expression, transactionInterceptor());
 	}
 }

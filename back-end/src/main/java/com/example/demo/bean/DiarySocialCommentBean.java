@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 @Data
 public class DiarySocialCommentBean {
     private Integer id;
+    private String commentUser;
     private Integer diarySocialId;
     private String content;
-    private Integer like;
     private LocalDateTime date = LocalDateTime.now();
 }
