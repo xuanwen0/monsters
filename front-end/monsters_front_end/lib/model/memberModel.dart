@@ -35,17 +35,6 @@ class Data {
 }
 
 class Member {
-  Member({
-    required this.account,
-    required this.password,
-    this.birthday,
-    this.nickName,
-    this.mail,
-    this.lock,
-    this.photo,
-    this.theme,
-  });
-
   String? account;
   String? password;
   String? birthday;
@@ -53,27 +42,39 @@ class Member {
   String? mail;
   String? lock;
   String? photo;
-  int? theme;
+  int? dailyTest;
+
+  Member(
+      {required this.account,
+      required this.password,
+      this.birthday,
+      this.mail,
+      this.nickName,
+      this.lock,
+      this.photo,
+      this.dailyTest});
 
   factory Member.fromJson(Map<String, dynamic> json) => Member(
-        account: json["account"],
-        password: json["password"],
-        nickName: json["nickName"],
-        birthday: json["birthday"],
-        mail: json["mail"],
-        lock: json["lock"],
-        photo: json["photo"],
-        theme: json["theme"],
+        account: json['account'],
+        birthday: json['birthday'],
+        mail: json['mail'],
+        nickName: json['nickName'],
+        password: json['password'],
+        lock: json['lock'],
+        photo: json['photo'],
+        dailyTest: json['dailyTest'],
       );
 
-  Map<String, dynamic> toJson() => {
-        "account": account,
-        "password": password,
-        "birthday": birthday,
-        "nickName": nickName,
-        "mail": mail,
-        "lock": lock,
-        "photo": photo,
-        "theme": theme,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['account'] = account;
+    data['birthday'] = birthday;
+    data['mail'] = mail;
+    data['nickName'] = nickName;
+    data['password'] = password;
+    data['lock'] = lock;
+    data['photo'] = photo;
+    data['dailyTest'] = dailyTest;
+    return data;
+  }
 }

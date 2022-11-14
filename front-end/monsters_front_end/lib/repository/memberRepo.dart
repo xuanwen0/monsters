@@ -3,13 +3,14 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:monsters_front_end/repository/annoyanceRepo.dart';
+
 import '../API/memberAPI.dart';
 import '../model/memberModel.dart';
 import 'package:http/http.dart' as http;
 
 class MemberRepository implements MemberApiDataSource {
   final client = http.Client();
-  final String domain = "http://10.0.2.2:8080";
   @override
   Future<String> createMember(Member member) {
     return _createMember(Uri.parse('$domain/member/create'), member);
@@ -72,7 +73,6 @@ class MemberRepository implements MemberApiDataSource {
     return _searchPersonalInfoByAccount(
         Uri.parse('$domain/member/search?account=$account'));
   }
-
   Future<Map<String, dynamic>?> _searchPersonalInfoByAccount(Uri url) async {
     try {
       final request =

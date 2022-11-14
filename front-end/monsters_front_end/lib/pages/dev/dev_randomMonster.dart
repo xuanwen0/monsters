@@ -7,13 +7,11 @@ const List monsterNamesList = [
   "Donut",
   "Fuwa",
   "Ghost",
-  "Ika",
+  // "Ika",
   "Kila",
   "Kungfu",
   "Lizi",
   "Lory",
-  "Magic",
-  "Pen",
   "Magic",
   "Pen",
   "Pina",
@@ -22,7 +20,7 @@ const List monsterNamesList = [
   "Sticky",
   "Three",
 ];
-
+String choosenAvatar = "";
 String getRandomMonsterName() {
   return monsterNamesList.elementAt(Random().nextInt(monsterNamesList.length));
 }

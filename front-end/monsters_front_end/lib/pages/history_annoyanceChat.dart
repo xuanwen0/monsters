@@ -1,12 +1,17 @@
 // ignore_for_file: use_key_in_widget_constructors, unnecessary_string_interpolations, prefer_const_constructors, file_names, avoid_unnecessary_containers, sized_box_for_whitespace, non_constant_identifier_names, camel_case_types
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monsters_front_end/model/annoyanceModel.dart';
+import 'package:monsters_front_end/pages/Timer_Widget.dart';
+import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
 import 'package:monsters_front_end/pages/history.dart';
+import 'package:video_player/video_player.dart';
 
+import '../model/audio_Model/audio_player.dart';
 import '../repository/annoyanceRepo.dart';
 
 class historyAnnoyanceChat extends StatefulWidget {
@@ -14,65 +19,60 @@ class historyAnnoyanceChat extends StatefulWidget {
   historyAnnoyanceChat({required this.data});
 
   @override
-  //int getindex;
-  //historyAnnoyanceChat(this.getindex);
-  //_historyAnnoyanceChat createState() => _historyAnnoyanceChat(getindex);
   _historyAnnoyanceChat createState() => _historyAnnoyanceChat(data);
 }
 
 class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
+  final messageInsert = TextEditingController();
+  final timerController = TimerController();
+  final player = AudioPlayer();
+  late final VideoPlayerController _videoPlayerController;
   var data;
   //int choosedId;
   _historyAnnoyanceChat(this.data);
-
-  final messageInsert = TextEditingController();
   int chatRound = 0;
-  String username = "Lin";
   bool firstSpeaking = true;
   bool lastSpeaking = false;
   bool robotSpeakable = false;
-  List<Map> messsages = [];
+  List<Map> messages = [];
   String hintAnnoyType = "[請擇一輸入]\n課業 / 事業 / 愛情 \n友情 / 親情 / 其他";
   String hintEmotionGrade = "[請擇一輸入]\n1 / 2 / 3 / 4 / 5";
   String hintAccept = "[請擇一輸入]\n是 / 否";
   String hintAnnoyMethod =
       "請選擇以下幾種方式開始記錄：\n★以文字記錄煩惱\n★按麥克風開始錄音\n★按相簿從手機存取\n★按相機開始照相或錄影";
-  String hintCannotRead = "員工手冊上沒有這個選項耶...麻煩你確認一下答案好嗎？";
-  String secHintAnnoyType = "煩惱是關於什麼的呢？";
-  String secHintEmotionGrade = "煩惱指數有多高呢？\n1分是最低的喔！";
-  String secHintDrawingAcception = "要不要把你的心情畫下來呢？";
-  String secHintSharingAcception = "想分享給別人看看嗎？";
   int finalId = 0;
   int solve = 0;
-  var userAns = [];
+  List userAnswers = [];
+  File? contentFile;
+  File? moodFile;
 
-  //資料庫 抓annoyance[solve]
-
-  //資料庫 抓annoyance_type[value], annoyance[content], annoyance[mood], annoyance[index], annoyance[share]
   //再個別轉成字串存在陣列userAns
-  void storeItem(String content, String time, String type, String monsterId,
-      String mood, String index, String solve, String share) {
-    userAns = [type, content, mood, index, share];
-  }
-
   @override
   Widget build(BuildContext context) {
-    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-    userAns.add(data["type"]);
-
-    for (int i = 0; i < 5; i++) {
-      insert(data[i]);
-      response(userAns[i]);
-    }
-    //getAnnoyanceByID(choosedId);
-
     response();
-    // for (int i = 0; i < 5; i++) {
-    //   insert(data[i]);
-    //   response(userAns[i]);
-    // }
+    /**
+     * 
+            'id': value.data.elementAt(index).id,
+            'avatar': value.data.elementAt(index).monsterId,
+            'content': value.data.elementAt(index).content,
+            'type': type,
+            'monsterId': value.data.elementAt(index).monsterId,
+            'time': value.data.elementAt(index).time,
+            'solve': value.data.elementAt(index).solve,
+     */
+    response(data["type"]);
+    response(data["content"]);
+    response(data["mood"]);
+    response(data["index"].toString());
+    if (data["share"] == 0) {
+      response("否");
+    } else {
+      response("是");
+    }
 
+    debugPrint(data["type"]);
+    setState(() {});
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
@@ -92,10 +92,10 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
             Flexible(
                 child: ListView.builder(
                     reverse: true,
-                    itemCount: messsages.length,
+                    itemCount: messages.length,
                     itemBuilder: (context, index) => chat(
-                        messsages[index]["message"].toString(),
-                        messsages[index]["data"]))),
+                        messages[index]["message"].toString(),
+                        messages[index]["data"]))),
             SizedBox(
               height: 10,
             ),
@@ -134,61 +134,339 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
     );
   }
 
+  //聊天功能
   Widget chat(String message, int data) {
-    return Container(
-      padding: EdgeInsets.only(left: 20, right: 20),
-      child: Row(
-        mainAxisAlignment:
-            data == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
-        children: [
-          data == 0
-              ? Container(
-                  height: 50,
-                  width: 50,
-                  child: CircleAvatar(
-                    backgroundImage:
-                        AssetImage('assets/image/Avatar/Avatar_Baku_JPG.png'),
-                  ),
-                )
-              : Container(),
-          Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Bubble(
-                radius: Radius.circular(15.0),
-                color:
-                    data == 0 ? Colors.white : Color.fromRGBO(255, 237, 151, 1),
-                elevation: 2.0,
-                child: Padding(
-                  padding: EdgeInsets.all(2.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 3.0,
-                      ),
-                      Flexible(
-                          child: Container(
-                        constraints: BoxConstraints(maxWidth: 200),
-                        child: Text(
-                          message,
-                          style: TextStyle(
-                              color: data == 0
-                                  ? Color.fromRGBO(160, 82, 45, 1)
-                                  : Colors.black,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 17),
+    Container chatContainer = Container();
+    //text container
+    if (data < 2) {
+      chatContainer = Container(
+        padding: EdgeInsets.only(left: 20, right: 20),
+        child: Row(
+          mainAxisAlignment:
+              data == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
+          children: [
+            data == 0
+                //巴古頭貼
+                ? Container(
+                    height: 50,
+                    width: 50,
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage(getMonsterAvatarPath("Baku")),
+                    ),
+                  )
+                : Container(),
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: data == 0
+                      ? Colors.white
+                      : Color.fromRGBO(255, 237, 151, 1),
+                  elevation: 2.0,
+                  //訊息文字格式
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
                         ),
-                      ))
-                    ],
-                  ),
-                )),
-          ),
-        ],
-      ),
-    );
+                        Flexible(
+                            child: Container(
+                          constraints: BoxConstraints(maxWidth: 200),
+                          child: Text(
+                            message,
+                            style: TextStyle(
+                                color: data == 0
+                                    ? Color.fromRGBO(160, 82, 45, 1)
+                                    : Colors.black,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 17),
+                          ),
+                        ))
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+
+    //picture container
+    if (data == 2) {
+      //TODO: Level 2
+      //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
+      ///wrap by something make it clickable
+      chatContainer = Container(
+        padding: EdgeInsets.only(left: 10, right: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: Color.fromRGBO(255, 237, 151, 1),
+                  elevation: 2.0,
+                  //訊息文字格式
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                        Flexible(
+                            child: Container(
+                                child: Image.file(contentFile!,
+                                    width: (MediaQuery.of(context).size.width >
+                                            MediaQuery.of(context).size.height)
+                                        ? 288
+                                        : 162,
+                                    height: (MediaQuery.of(context).size.width <
+                                            MediaQuery.of(context).size.height)
+                                        ? 240
+                                        : 162,
+                                    filterQuality: FilterQuality.medium))),
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+
+    //video container
+    if (data == 3) {
+      ///TODO: Level 2
+      ///ADD HERO https://youtu.be/1xipg02Wu8s?t=657
+      ///wrap by something make it clickable
+      chatContainer = Container(
+        padding: EdgeInsets.only(left: 10, right: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: Color.fromRGBO(255, 237, 151, 1),
+                  elevation: 2.0,
+                  //訊息文字格式
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                        Flexible(
+                            child: Container(
+                                width:
+                                    (_videoPlayerController.value.size.width >
+                                            _videoPlayerController
+                                                .value.size.height)
+                                        ? 288
+                                        : 162,
+                                height:
+                                    (_videoPlayerController.value.size.width >
+                                            _videoPlayerController
+                                                .value.size.height)
+                                        ? 162
+                                        : 288,
+                                alignment: Alignment.centerRight,
+                                child: AspectRatio(
+                                  aspectRatio:
+                                      (_videoPlayerController.value.size.width >
+                                              _videoPlayerController
+                                                  .value.size.height)
+                                          ? 16 / 9
+                                          : 9 / 16,
+                                  child:
+                                      _videoPlayerController.value.isInitialized
+                                          ? VideoPlayer(_videoPlayerController)
+                                          : Container(),
+                                ))),
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+
+    //audio container
+    if (data == 4) {
+      chatContainer = Container(
+        padding: EdgeInsets.only(left: 10, right: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: Color.fromRGBO(255, 237, 151, 1),
+                  elevation: 2.0,
+                  //訊息文字格式
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                        Flexible(
+                            child: Container(
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'The Audio',
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 20),
+                              CircleAvatar(
+                                radius: 35,
+                                child: IconButton(
+                                  icon: Icon(Icons.play_circle_fill),
+                                  iconSize: 30,
+                                  onPressed: () async {
+                                    await player.togglePlaying(
+                                        whenFinished: () => {setState(() {})});
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                        )),
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+
+    //painting container
+    if (data == 5) {
+      //TODO: Level 2
+      ///ADD HERO https://youtu.be/1xipg02Wu8s?t=657
+      ///wrap by something make it clickable to watch
+      chatContainer = Container(
+        padding: EdgeInsets.only(left: 10, right: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: Color.fromRGBO(255, 237, 151, 1),
+                  elevation: 2.0,
+                  //訊息文字格式
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                        Flexible(
+                            child: Container(
+                                child: Image.file(moodFile!,
+                                    width: 200,
+                                    height: 200,
+                                    filterQuality: FilterQuality.medium))),
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+
+    //moodImage container
+    if (data == 6) {
+      chatContainer = Container(
+        padding: EdgeInsets.only(left: 20, right: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: 50,
+              width: 50,
+              child: CircleAvatar(
+                backgroundImage: AssetImage(getMonsterAvatarPath("Baku")),
+              ),
+            ),
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: Colors.white,
+                  elevation: 2.0,
+                  //訊息格式 以圖表示煩惱指數
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                        Flexible(
+                            child: Container(
+                                constraints: BoxConstraints(maxWidth: 200),
+                                child: annoyancePointRow()))
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return chatContainer;
   }
 
+  //怪獸訊息(提示輸入格式)
   void hint() {
+    String hintAnnoyType = "[請擇一輸入]\n課業 / 事業 / 愛情 \n友情 / 親情 / 其他";
+    String hintAccept = "[請擇一輸入]\n是 / 否";
+    String hintAnnoyMethod = "請用以下幾種方式記錄：\n★以文字記錄煩惱\n★點選左下角圖示新增";
+
     if (chatRound == 0) {
       reply(hintAnnoyType);
     } else if (chatRound == 1) {
@@ -196,7 +474,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
     } else if (chatRound == 2) {
       reply(hintAccept);
     } else if (chatRound == 3) {
-      reply(hintEmotionGrade);
+      replyImage();
     } else if (chatRound == 4) {
       reply(hintAccept);
     } else {
@@ -204,51 +482,112 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
     }
   }
 
-  void response([String? text]) async {
-    setState(() {
-      if (chatRound == 1) {
-        var userAns;
-        reply("關於" + userAns[1] + "的煩惱嗎？跟我說發生什麼事了吧！");
+  //確認是否符合選擇格式，符合->回覆 不符合->提示再次輸入
+  Future<void> response([String? text, File? media]) async {
+    //進入時自動訊息問安
+    if (chatRound == 0) {
+      int hourNow = DateTime.now().hour.toInt();
+      if (hourNow < 5) {
+        reply("凌晨睡不好嗎？\n有甚麼煩惱都可以跟我說"); //0~5點
+      } else if (hourNow < 12) {
+        reply("早上好啊！\n發生甚麼事情都可以跟我說"); //5~12點
+      } else if (hourNow < 14) {
+        reply("中午好啊！\n午餐吃了嗎？發生任何事都可以找我聊聊"); //12~14點
+      } else {
+        reply("下午好，今天過得如何呀！正在煩惱什麼事情嗎?"); //14~24點
       }
-      if (chatRound == 2) {
-        reply("真是辛苦你了，想做一幅畫表達你的感受嗎？");
-      }
-      if (chatRound == 3) {
-        reply("給煩惱程度打一個分數～\n5分是最煩惱的喔！");
-      }
-      if (chatRound == 4) {
-        reply("想不想把這件事分享給別人呢？");
-      }
-      if (chatRound == 5) {
-        reply("解決煩惱請馬上跟我說！我已經迫不及待想吃飯了！");
-      }
+      reply("什麼樣子的煩惱呢？");
+    }
 
-      if (firstSpeaking == true) {
-        firstSpeaking = false;
-        int hourNow = DateTime.now()
-            .hour
-            .toInt(); //資料庫 抓annoyance[time]，此行hourNow只存放"小時(0~24)"
-        if (hourNow < 5) {
-          reply("凌晨睡不好嗎？\n有甚麼煩惱都可以跟我說"); //0~5點
-        } else if (hourNow < 12) {
-          reply("早上好啊！\n發生甚麼事情都可以跟我說"); //5~12點
-        } else if (hourNow < 14) {
-          reply("中午好啊！\n午餐吃了嗎？發生任何事都可以找我聊聊"); //12~14點
-        } else {
-          reply("下午好，今天過得如何呀！正在煩惱什麼事情嗎?"); //14~24點
+    if (chatRound < 7) {
+      if (robotSpeakable == false) {
+        //取得類別
+        if (chatRound == 1) {
+          insert(text!);
+          debugPrint("DEBUG");
+          debugPrint(text);
+          reply("關於" + text + "的煩惱嗎？跟我說發生什麼事了吧！");
         }
-        reply("什麼樣子的煩惱呢？");
+        //取得內容
+        if (chatRound == 2) {
+          insert(text!);
+          reply("真是辛苦你了，想做一幅畫表達你的感受嗎？");
+        }
+        //取得是否畫心情
+        if (chatRound == 3) {
+          insert(text!);
+          reply("給煩惱程度打一個分數～");
+        }
+        //取得心情分數
+        if (chatRound == 4) {
+          insert(text!);
+          reply("想不想把這件事分享給別人呢？");
+          log("--完成心情分數");
+        }
+        //取得是否分享
+        if (chatRound == 5) {
+          insert(text!);
+          lastSpeaking = true;
+          reply("解決煩惱請馬上跟我說！我已經迫不及待想吃飯了！");
+        }
       }
-      hint();
-      chatRound++;
-    });
+    }
+
+    hint();
+    chatRound++;
+    setState(() {});
   }
 
+  //怪獸文字回覆
   void reply(String text) {
-    messsages.insert(0, {"data": 0, "message": text});
+    messages.insert(0, {"data": 0, "message": text});
   }
 
+  //歷史文字回覆
   void insert(String text) {
-    messsages.insert(0, {"data": 1, "message": text});
+    messages.insert(0, {"data": 1, "message": text});
+  }
+
+  void replyImage() {
+    messages.insert(0, {"data": 6, "message": "print image"});
+  }
+
+  Row annoyancePointRow() {
+    Row annoyancePointRow = Row();
+    annoyancePointRow = Row(
+      children: [
+        annoyancePointColumn("1"),
+        Spacer(),
+        annoyancePointColumn("2"),
+        Spacer(),
+        annoyancePointColumn("3"),
+        Spacer(),
+        annoyancePointColumn("4"),
+        Spacer(),
+        annoyancePointColumn("5"),
+        Spacer(),
+      ],
+    );
+
+    return annoyancePointRow;
+  }
+
+  Column annoyancePointColumn(String point) {
+    Column annoyanceImageColumn = Column();
+    annoyanceImageColumn = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CircleAvatar(
+          radius: 19,
+          backgroundImage: AssetImage('assets/image/mood/moodPoint_$point.png'),
+        ),
+        SizedBox(height: 1),
+        Text(point,
+            style:
+                TextStyle(fontSize: 17, color: Color.fromRGBO(160, 82, 45, 1)))
+      ],
+    );
+
+    return annoyanceImageColumn;
   }
 }

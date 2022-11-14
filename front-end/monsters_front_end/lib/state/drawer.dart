@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:monsters_front_end/API/google_sign_in_API.dart';
 import 'package:monsters_front_end/pages/instructions.dart';
+import 'package:monsters_front_end/pages/lock/check_lock_page.dart';
 import 'package:monsters_front_end/pages/user_Feedback.dart';
 import 'package:monsters_front_end/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../pages/drawer_setting.dart';
 import '../pages/drawer_personalInfo.dart';
 
 Widget GetDrawer(BuildContext context) {
@@ -33,7 +33,7 @@ Widget GetDrawer(BuildContext context) {
             ),
             ListTile(
               title: const Text(
-                "設定",
+                "密碼鎖",
                 style: TextStyle(
                   fontFamily: 'Segoe UI',
                   fontSize: 35.0,
@@ -42,7 +42,7 @@ Widget GetDrawer(BuildContext context) {
               ),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Drawer_settings()));
+                    MaterialPageRoute(builder: (context) => CheckLockPage()));
               },
             ),
             ListTile(

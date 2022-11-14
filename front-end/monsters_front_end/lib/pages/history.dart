@@ -10,6 +10,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/annoyanceModel.dart';
 import 'package:monsters_front_end/pages/annoyanceChat.dart';
+import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
+import 'package:monsters_front_end/pages/diaryChat.dart';
 import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
@@ -128,7 +130,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                       spacing: 7,
                       //標籤設定
                       children: [
-                        //全部標籤
+                        //全部標籤  selectionTab_type == 1
                         InkWell(
                             child: Container(
                               width: 50,
@@ -157,7 +159,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                 selectionTab_solve = 0;
                               });
                             }),
-                        //煩惱標籤
+                        //煩惱標籤 selectionTab_type == 2
                         InkWell(
                             child: Container(
                               width: 50,
@@ -186,7 +188,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                 selectionTab_solve = 1;
                               });
                             }),
-                        //日記標籤
+                        //日記標籤 selectionTab_type == 2
                         InkWell(
                             child: Container(
                               width: 50,
@@ -215,7 +217,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                 selectionTab_solve = 0;
                               });
                             }),
-                        //未解決標籤
+                        //未解決標籤 selectionTab_solve == 1
                         InkWell(
                             child: Container(
                               width: 70,
@@ -243,7 +245,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                 setState(() {});
                               }
                             }),
-                        //已解決標籤
+                        //已解決標籤 selectionTab_solve == 2
                         InkWell(
                             child: Container(
                               width: 70,
@@ -292,7 +294,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                           itemCount: snapshot.data["itemCounter"],
                           itemBuilder: (BuildContext context, int index) =>
                               Container(
-                            height: 110,
+                            height: 150,
                             decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
@@ -301,93 +303,108 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                               )),
                             ),
                             alignment: Alignment.center,
-                            child: ListTile(
-                                leading: Container(
-                                  decoration: BoxDecoration(
-                                    color: BackgroundColorLight,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.elliptical(9999.0, 9999.0)),
-                                    border: Border.all(
-                                        width: 1,
-                                        color: const Color(0xffa0522d)),
+                            child: Container(
+                              height: 180,
+                              alignment: Alignment.center,
+                              child: ListTile(
+                                  dense: true,
+                                  visualDensity: VisualDensity(vertical: 3),
+                                  leading: Container(
+                                    width: 80,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          width: 1,
+                                          color: const Color(0xffa0522d)),
+                                    ),
+                                    child: CircleAvatar(
+                                      minRadius: 40,
+                                      backgroundImage: AssetImage(
+                                          getMonsterAvatarPath(monsterNamesList[
+                                              snapshot.data["result $index"]
+                                                  ["monsterId"]])),
+                                    ),
                                   ),
-                                  child: CircleAvatar(
-                                    radius: 30,
-                                    backgroundImage: AssetImage(
-                                        'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
+                                  title: Text(
+                                    snapshot.data["result $index"]["content"],
+                                    style: TextStyle(fontSize: BodyTextSize),
+                                    textAlign: TextAlign.left,
                                   ),
-                                ),
-                                title: Text(
-                                  snapshot.data["result $index"]["content"],
-                                  style: TextStyle(fontSize: BodyTextSize),
-                                  textAlign: TextAlign.left,
-                                ),
-                                trailing: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Expanded(
-                                      flex: 59,
-                                      child: Container(
-                                        width: 55,
-                                        decoration: BoxDecoration(
-                                          color:
-                                              Color.fromARGB(255, 174, 108, 32),
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.elliptical(10.0, 10.0)),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            snapshot.data["result $index"]
-                                                    ["type"]
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Color.fromARGB(
-                                                    255, 255, 255, 255)),
+                                  trailing: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        flex: 59,
+                                        child: Container(
+                                          width: 55,
+                                          decoration: BoxDecoration(
+                                            color: Color.fromARGB(
+                                                255, 174, 108, 32),
+                                            borderRadius: const BorderRadius
+                                                    .all(
+                                                Radius.elliptical(10.0, 10.0)),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              snapshot.data["result $index"]
+                                                      ["type"]
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Color.fromARGB(
+                                                      255, 255, 255, 255)),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      flex: 5,
-                                      child: SizedBox(),
-                                    ),
-                                    Expanded(
-                                        flex: 39,
-                                        child: Container(
-                                          width: 55,
-                                          child: Center(
-                                            child: Text(
-                                                snapshot.data["result $index"]
-                                                        ["time"]
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
-                                                    color:
-                                                        BackgroundColorWarm)),
-                                          ),
-                                        )),
-                                  ],
-                                ),
-                                onTap: () => print("type: " +
-                                    snapshot.data["result $index"]["type"] +
-                                    "\n" +
-                                    "id: " +
-                                    snapshot.data["result $index"]["id"]
-                                        .toString() +
-                                    "\n")
+                                      Expanded(
+                                        flex: 5,
+                                        child: SizedBox(),
+                                      ),
+                                      Expanded(
+                                          flex: 39,
+                                          child: Container(
+                                            width: 55,
+                                            child: Center(
+                                              child: Text(
+                                                  snapshot.data["result $index"]
+                                                          ["time"]
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color:
+                                                          BackgroundColorWarm)),
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    print(
+                                      "type: " +
+                                          snapshot.data["result $index"]
+                                              ["type"] +
+                                          "\n" +
+                                          "id: " +
+                                          snapshot.data["result $index"]["id"]
+                                              .toString() +
+                                          "\n" +
+                                          snapshot.data["result $index"]
+                                                  ["monsterId"]
+                                              .toString() +
+                                          "\n",
+                                    );
 
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) =>
-                                //             historyAnnoyanceChat(
-                                //                 data: snapshot
-                                //                     .data["result $index"])))
-
-                                ),
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                historyAnnoyanceChat(
+                                                    data: snapshot.data[
+                                                        "result $index"])));
+                                  }),
+                            ),
                           ),
                         );
                       })),
@@ -714,6 +731,10 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                             ),
                             onClick: () {
                               animationController.reverse();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => diaryChat()));
                             },
                           ),
                         ),
@@ -772,7 +793,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
             'avatar': value.data.elementAt(index).monsterId,
             'content': value.data.elementAt(index).content,
             'type': type,
+            'monsterId': value.data.elementAt(index).monsterId,
             'time': value.data.elementAt(index).time,
+            'solve': value.data.elementAt(index).solve,
+            'mood': value.data.elementAt(index).mood,
+            'index': value.data.elementAt(index).index,
+            'share': value.data.elementAt(index).share,
           },
         );
       }

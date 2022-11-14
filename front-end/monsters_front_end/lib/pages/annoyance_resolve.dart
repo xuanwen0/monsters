@@ -61,15 +61,15 @@ class _Annoyance_resolveState extends State<Annoyance_resolve> {
                     child: Stack(
                       children: <Widget>[
                         // Adobe XD layer: 'Pencil-Scribble-PNG…' (shape)
-                        Container(
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image:
-                                  AssetImage('assets/image/eaten_badthing.png'),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
+                        // Container(
+                        //   decoration: const BoxDecoration(
+                        //     image: DecorationImage(
+                        //       image:
+                        //           AssetImage('assets/image/eaten_badthing.png'),
+                        //       fit: BoxFit.fill,
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   );

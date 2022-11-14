@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
+import 'package:monsters_front_end/pages/diaryChat.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
@@ -28,41 +30,22 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
   late Animation rotationAnimation;
   StateSetter? animationState;
   //TODO:用user_Account傳入圖鑑API獲得圖鑑資訊
-
-  List<int> UnlockMonsterId = [1, 3];
-  int TotalMonsters = 8; //總共20個，若是未取得顯示問號"?"
-  List<String> monsterNames = ['A', '???', 'C', '???', 'E', 'F', 'G', 'H'];
-  List<String> monsterPics = [
-    'assets/image/monster_Baku.png',
-    'assets/image/unknow.png',
-    'assets/image/monster_Baku.png',
-    'assets/image/unknow.png',
-    'assets/image/monster_Baku.png',
-    'assets/image/monster_Baku.png',
-    'assets/image/monster_Baku.png',
-    'assets/image/monster_Baku.png',
-  ];
-  List<String> showNames = ['A', '???', 'C', '???', 'E', 'F', 'G', 'H'];
-  List<String> showPics = [
-    'assets/image/monster_Baku.png',
-    'assets/image/unknow.png',
-    'assets/image/monster_Baku.png',
-    'assets/image/unknow.png',
-    'assets/image/unknow.png',
-    'assets/image/unknow.png',
-    'assets/image/unknow.png',
-    'assets/image/unknow.png',
-  ];
+  List<int> UnlockMonsterId = [0, 1, 3, 4, 6, 9, 10, 13, 18]; //資料庫取得
+  List<String> showNames = [];
+  List<String> showPics = [];
   int selectionTab_type = 1;
+  static const List monsterNames = monsterNamesList;
+  int TotalMonsters = monsterNames.length;
 
   void changeUI() {
     //get Unlocked id
     showNames = [];
     showPics = [];
+
     for (int i = 0; i < monsterNames.length; i++) {
-      if (UnlockMonsterId.contains(i + 1)) {
+      if (UnlockMonsterId.contains(i)) {
         showNames.add(monsterNames[i]);
-        showPics.add('assets/image/monster_Baku.png');
+        showPics.add(getMonsterImage(monsterNames[i]));
         log("ID= " + i.toString());
       } else {
         if (selectionTab_type == 1) {
@@ -72,8 +55,9 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
           );
         }
       }
+      TotalMonsters = showNames.length;
     }
-    TotalMonsters = showNames.length;
+
     log("SHOWNAME: " + showNames.toString());
     log("SHOWPic: " + showPics.toString());
     setState(() {});
@@ -82,6 +66,15 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    for (int i = 0; i < TotalMonsters; i++) {
+      if (UnlockMonsterId.contains(i)) {
+        showNames.add(monsterNamesList[i]);
+        showPics.add(getMonsterImage(monsterNamesList[i]));
+      } else {
+        showNames.add("???");
+        showPics.add('assets/image/unknow.png');
+      }
+    }
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
 
     return Scaffold(
@@ -101,6 +94,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
               onPressed: () => _scaffoldKEy.currentState?.openEndDrawer(),
             ),
           ),
+
           //整體布局
           Column(
             mainAxisSize: MainAxisSize.max,
@@ -196,7 +190,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                               transition: LinkTransition.Fade,
                               ease: Curves.easeOut,
                               duration: 0.3,
-                              pageBuilder: () => Monster_detail(),
+                              pageBuilder: () => Monster_detail(index),
                             ),
                           ],
                           child: Stack(
@@ -237,7 +231,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: 'Segoe UI',
-                                    fontSize: 32,
+                                    fontSize: 20,
                                     color: const Color(0xffa0522d),
                                   ),
                                   softWrap: false,
@@ -582,6 +576,10 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                             ),
                             onClick: () {
                               animationController.reverse();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => diaryChat()));
                             },
                           ),
                         ),
@@ -627,10 +625,10 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
     ]).animate(animationController);
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
-    super.initState();
     animationController.addListener(() {
       setState(() {});
     });
+    super.initState();
   }
 }
 

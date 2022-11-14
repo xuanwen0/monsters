@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:monsters_front_end/pages//lock/lock_widget.dart';
-import 'package:monsters_front_end/pages/drawer_setting.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,36 +15,13 @@ class _CheckLockPageState extends State<CheckLockPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BackgroundColorLight,
+      appBar: secondAppBar("再次確認"),
       body: Stack(
         children: [
-          //上一頁
-          Align(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                icon: Icon(Icons.arrow_back_rounded),
-                color: Color.fromRGBO(255, 187, 0, 1),
-                iconSize: 57.0,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )),
-          //標題
-          const Align(
-            alignment: Alignment.topCenter,
-            child: Text(
-              '再次確認',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 40,
-                color: Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
           //白底
           Center(
             child: Container(
-              height: 550,
+              height: 600,
               color: Colors.white,
             ),
           ),
@@ -65,10 +41,6 @@ class _CheckLockPageState extends State<CheckLockPage> {
                       String? val = pref.getString("pin");
                       if (val == mPin) {
                         saveLock('true');
-                        // Navigator.pushReplacement(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => Drawer_settings()));
                         Navigator.of(context).pop();
                       } else {
                         mPinController.notifyWrongInput();

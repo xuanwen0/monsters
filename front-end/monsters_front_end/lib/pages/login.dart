@@ -152,6 +152,7 @@ class _loginState extends State<LoginPage> {
         content: Text('從Google登入失敗'),
       ));
     } else {
+      print("帳號為: " + user.displayName.toString());
       //判斷資料庫是否有此帳號
       //if有 => 進行登入
       print("doing signIn()...");
@@ -161,6 +162,7 @@ class _loginState extends State<LoginPage> {
       print("result: " + result + "\n");
       if (result.contains("result") == true) {
         saveGoogleLogin(user.email);
+
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => MainPage()));
       } else {
@@ -185,7 +187,7 @@ class _loginState extends State<LoginPage> {
     //儲存account shared preferences (後用來判斷此裝置是否登入過)
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("googleLogin", account);
-    user_Account = account;
+    // user_Account = account;
   }
 
   void checkLogin() async {
