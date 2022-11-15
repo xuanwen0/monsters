@@ -188,15 +188,16 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       child: SizedBox(
                         width: 160.0,
                         height: 180.0,
-                        child: PageLink(
-                          links: [
-                            PageLinkInfo(
-                              transition: LinkTransition.Fade,
-                              ease: Curves.easeOut,
-                              duration: 0.3,
-                              pageBuilder: () => Monster_detail(index),
-                            ),
-                          ],
+                        child: GestureDetector(
+                          onTap: () {
+                            if (UnlockMonsterId.contains(index)) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Monster_detail(index)));
+                            }
+                          },
                           child: Stack(
                             children: <Widget>[
                               //border
