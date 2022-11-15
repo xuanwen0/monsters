@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:developer' as dv;
 
 const List monsterNamesList = [
   "Baku",
@@ -20,9 +21,34 @@ const List monsterNamesList = [
   "Sticky",
   "Three",
 ];
+
+const List monsterNamesList_CH = [
+  "巴古",
+  "棉花糖",
+  "可琳",
+  "杜那",
+  "乎瓦",
+  "疤比",
+  // "伊咔",
+  "基拉",
+  "赫赫",
+  "栗茲",
+  "酪里",
+  "馬奇",
+  "潘恩",
+  "批奈",
+  "蘿依",
+  "派特",
+  "底迪",
+  "三兄弟",
+];
+
 String choosenAvatar = "";
 String getRandomMonsterName() {
-  return monsterNamesList.elementAt(Random().nextInt(monsterNamesList.length));
+  String random =
+      monsterNamesList.elementAt(Random().nextInt(monsterNamesList.length));
+  dv.log(random.toString());
+  return random.toString();
 }
 
 String getMonsterAvatarPath(String monsterName) {

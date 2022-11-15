@@ -340,6 +340,10 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                   ["content"],
                                               snapshot.data["result $index"]
                                                   ["time"],
+                                                  monsterNamesList[
+                                                        snapshot.data[
+                                                                "result $index"]
+                                                            ["monsterId"]],
                                             ),
                                             child: Stack(
                                               children: [
@@ -828,7 +832,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
   }
 
   Future<dynamic> showComment(
-      int id, String name, String content, String time) {
+      int id, String name, String content, String time,String monsterId) {
     print(id);
     return showDialog(
         context: context,
@@ -860,7 +864,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                             child: CircleAvatar(
                               radius: 30,
                               backgroundImage:
-                                  AssetImage(getMonsterAvatarPath("Baku")),
+                                  AssetImage(getMonsterAvatarPath(monsterId)),
                             ),
                           ),
                         ),

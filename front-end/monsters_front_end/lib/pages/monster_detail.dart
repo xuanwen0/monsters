@@ -23,6 +23,7 @@ class _Monster_detailState extends State<Monster_detail> {
   @override
   Widget build(BuildContext context) {
     String monsterName = monsterNamesList[index];
+    String monsterName_CH = monsterNamesList_CH[index];
     print(index.toString());
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
@@ -73,7 +74,7 @@ class _Monster_detailState extends State<Monster_detail> {
                         ),
                       ),
                       child: Text(
-                        monsterName,
+                        monsterName_CH,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontFamily: 'Segoe UI',

@@ -45,6 +45,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
   List userAnswers = [];
   File? contentFile;
   File? moodFile;
+// String monsterName;
 
   //再個別轉成字串存在陣列userAns
   @override
@@ -65,6 +66,8 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
     response(data["content"]);
     response(data["mood"]);
     response(data["index"].toString());
+    // monsterName = getMonsterAvatarPath(monsterNamesList[data["monsterId"]]);
+
     if (data["share"] == 0) {
       response("否");
     } else {
@@ -146,7 +149,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
               data == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
           children: [
             data == 0
-                //巴古頭貼
+                //左方巴古頭貼
                 ? Container(
                     height: 50,
                     width: 50,

@@ -529,23 +529,23 @@ class _MainPageState extends State<MainPage>
       if (randomNum == 1) {
         _marginL += moveSpeed;
         movingDirection = 2;
-        dev.log("go Right");
+        print("go Right");
         checker();
       }
       if (randomNum == 2) {
         _marginL -= moveSpeed;
         movingDirection = 1;
-        dev.log("go left");
+        print("go left");
         checker();
       }
       if (randomNum == 3) {
         _marginT -= moveSpeed;
-        dev.log("go top");
+        print("go top");
         checker();
       }
       if (randomNum == 4) {
         _marginT += moveSpeed;
-        dev.log("go bottom");
+        print("go bottom");
         checker();
       }
     });
@@ -559,23 +559,23 @@ class _MainPageState extends State<MainPage>
       if (randomNum == 1) {
         _marginL2 += moveSpeed;
         moveingDirection = 2;
-        dev.log("go Right");
+        print("go Right");
         checker();
       }
       if (randomNum == 2) {
         _marginL2 -= moveSpeed;
         moveingDirection = 1;
-        dev.log("go left");
+        print("go left");
         checker();
       }
       if (randomNum == 3) {
         _marginT2 -= moveSpeed;
-        dev.log("go top");
+        print("go top");
         checker();
       }
       if (randomNum == 4) {
         _marginT2 += moveSpeed;
-        dev.log("go bottom");
+        print("go bottom");
         checker();
       }
     });
