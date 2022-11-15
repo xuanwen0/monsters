@@ -3,8 +3,10 @@
 import 'package:adobe_xd/page_link.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:monsters_front_end/pages/daily_test.dart';
 import 'package:monsters_front_end/pages/destressWays_list/destressWays_list.dart';
+import 'package:monsters_front_end/pages/diaryChat.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/manual.dart';
@@ -67,6 +69,7 @@ class _InteractionPageState extends State<InteractionPage>
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     return Scaffold(
       backgroundColor: BackgroundColorLight,
@@ -614,6 +617,10 @@ class _InteractionPageState extends State<InteractionPage>
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
+                                      builder: (context) => diaryChat()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
                                       builder: (context) => AnnoyanceChat()));
                             },
                           ),
@@ -638,6 +645,10 @@ class _InteractionPageState extends State<InteractionPage>
                             ),
                             onClick: () {
                               animationController.reverse();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => diaryChat()));
                             },
                           ),
                         ),

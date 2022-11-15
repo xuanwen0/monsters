@@ -184,7 +184,7 @@ class _Psychologicial_testState extends State<Psychologicial_test> {
       total += score;
     }
 
-    Navigator.push(context,
+    Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (context) => Psychologicial_result(total)));
   }
 }

@@ -3,12 +3,12 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:monsters_front_end/repository/annoyanceRepo.dart';
 
 import '../API/dailyTestAPI.dart';
 
 class DailyTestRepository implements DailyTestApiDataSource {
   final client = http.Client();
-  final String domain = "http://10.0.2.2:8080";
   @override
   Future<Map<String, dynamic>> searchDailyTest() {
     return _getDailyTest(Uri.parse('$domain/dailyTest/search'));
@@ -25,5 +25,4 @@ class DailyTestRepository implements DailyTestApiDataSource {
       return dailyTest;
     }
   }
-
 }

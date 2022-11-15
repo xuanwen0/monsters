@@ -15,38 +15,13 @@ class _SettingLockPageState extends State<SettingLockPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BackgroundColorLight,
+      appBar: secondAppBar("設定密碼鎖"),
       body: Stack(
         children: [
-          //上一頁
-          Container(
-              alignment: Alignment.topLeft,
-              padding: const EdgeInsets.only(top: 10, left: 10),
-              child: IconButton(
-                icon: Icon(Icons.arrow_back_rounded),
-                color: Color.fromRGBO(255, 187, 0, 1),
-                iconSize: 57.0,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )),
-          //標題
-          Container(
-            alignment: Alignment.topCenter,
-            padding: const EdgeInsets.only(top: 10),
-            child: Text(
-              '設定密碼',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 40,
-                color: Color(0xffa0522d),
-              ),
-              softWrap: false,
-            ),
-          ),
           //白底
           Center(
             child: Container(
-              height: 550,
+              height: 600,
               color: Colors.white,
             ),
           ),

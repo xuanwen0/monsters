@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
+import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
 import 'package:monsters_front_end/pages/style.dart';
 
 class dev_animation extends StatefulWidget {
@@ -17,7 +18,7 @@ class _dev_animationState extends State<dev_animation> {
   static const double originPosition = (maxSize - 100) / 2;
   double _marginL = originPosition;
   double _marginT = originPosition;
-  String monsterName = "Cloud";
+  String monsterName = getRandomMonsterName();
   int moveingDirection = 1;
   late String showImage;
   static const moveSpeed = 30;
@@ -29,6 +30,7 @@ class _dev_animationState extends State<dev_animation> {
 
   @override
   Widget build(BuildContext context) {
+  print(monsterName.toString());
     if (!visited) {
       visited = true;
 

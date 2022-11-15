@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:monsters_front_end/pages//lock/lock_widget.dart';
-import 'package:monsters_front_end/pages/drawer_setting.dart';
 import 'package:monsters_front_end/pages/lock/forget_lock_auth.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -66,10 +65,7 @@ class _CloseLockPageState extends State<CloseLockPage> {
                       if (mPin == val) {
                         saveLock('false');
                         await pref.remove("pin");
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Drawer_settings()));
+                        Navigator.pop(context);
                       } else {
                         mPinController.notifyWrongInput();
                       }

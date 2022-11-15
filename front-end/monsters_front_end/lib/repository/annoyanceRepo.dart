@@ -7,9 +7,10 @@ import '../API/annoyanceAPI.dart';
 import '../model/annoyanceModel.dart';
 import 'package:http/http.dart' as http;
 
+const String domain = "http://220.132.124.140:5000";
+
 class AnnoyanceRepository implements AnnoyanceApiDataSource {
   final client = http.Client();
-  final String domain = "http://10.0.2.2:8080";
   @override
   Future<String> createAnnoyance(Annoyance annoyance) {
     return _createAnnoyance(Uri.parse('$domain/annoyance/create'), annoyance);
@@ -18,7 +19,7 @@ class AnnoyanceRepository implements AnnoyanceApiDataSource {
   @override
   Future<Map<String, dynamic>?> searchAnnoyanceByAccount(String account) {
     return _searchAnnoyanceByAccount(
-        Uri.parse('$domain/annoyance/search?account=$account'));
+        Uri.parse('$domain/annoyance/search/$account'));
   }
 
   Future<String> _createAnnoyance(

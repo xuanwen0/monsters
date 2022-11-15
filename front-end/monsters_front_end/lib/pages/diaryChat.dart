@@ -4,9 +4,13 @@ import 'dart:io';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/audio_model/audio_player.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
+import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
+import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
+import 'package:monsters_front_end/pages/style.dart';
 import 'package:video_player/video_player.dart';
 import 'package:monsters_front_end/pages/audio_main.dart';
 
@@ -27,8 +31,8 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
   List<Map> messages = [];
   int acceptShare = 0;
   var userAnswers = [];
-
   File? contentFile;
+  File? moodFile;
 
   //新增煩惱-照相
   takePhoto() async {
@@ -102,6 +106,25 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
       messages.insert(0, {"data": 4, "audio": contentFile});
       response(null, contentFile);
     }
+    setState(() {});
+  }
+
+  //畫心情功能
+  _navigateAndDisplayPaint(BuildContext context) async {
+    //TODO: Level 2
+    //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
+    final moodImage = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Draw_mood()),
+    );
+    if (moodImage == null) {
+      reply("畫心情失敗，請通知官方平台");
+    } else {
+      final imageTemporary = File(moodImage.path);
+      this.moodFile = imageTemporary;
+      messages.insert(0, {"data": 5, "image": moodFile});
+    }
+
     setState(() {});
   }
 
@@ -289,45 +312,57 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                           child: Container(
                             width: 250,
                             decoration: BoxDecoration(
+                                color: Colors.white,
                                 border: Border.all(
-                                    color: Color.fromARGB(255, 255, 255, 229),
-                                    width: 3),
+                                    color: BackgroundColorWarm, width: 2),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(50.0))),
-                            child: Text(
-                              "前往歷史記錄",
-                              textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(fontSize: 30, color: Colors.black),
+                            child: Center(
+                              child: Container(
+                                margin: const EdgeInsets.only(bottom: 3),
+                                child: Text(
+                                  //TODO: 加陰影
+                                  "前往歷史記錄",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 28, color: BackgroundColorWarm),
+                                ),
+                              ),
                             ),
                           ),
                           onPressed: () {
-                            log(userAnswers.toString());
-//後端修改
-/* 
-  多媒體資料變數已改成contentFile
+                            log("user_Account: " + user_Account.toString());
+                            log("type:" + userAnswers[0].toString());
+                            log("content: " + userAnswers[1].toString());
+                            log("mood: " + userAnswers[2].toString());
+                            log("index: " + userAnswers[3].toString());
+                            log("share: " + userAnswers[4].toString());
+                            log("moodFile: " + moodFile.toString());
+                            log("contentFile: " + contentFile.toString());
+                            /* 改成日記
                             annoyanceRepository.createAnnoyance(
                               Annoyance(
-                                  id: 0,
-                                  account: user_Account,
-                                  content: userAnswers[1],
-                                  contentFile: contentFile,
-                                  monsterId: 1,
-                                  type: userAnswers[0],
-                                  mood: userAnswers[2],
-                                  index: userAnswers[3],
-                                  time: '',
-                                  solve: 0,
-                                  share: acceptShare),
+                                id: 0,
+                                account: user_Account, //"Lin"
+                                monsterId: 1,
+                                type: userAnswers[0], //4
+                                content: userAnswers[1], //"純文字不分享無多媒體"
+                                mood: userAnswers[2], //"否"
+                                index: userAnswers[3], //3
+                                share: userAnswers[4], //0
+                                contentFile: contentFile, //null
+                                moodFile: moodFile, //null
+                                time: '',
+                                solve: 0,
+                              ),
                             );
                             */
-/* 前往歷史記錄                           
                             Navigator.pushReplacement(
+                                //TODO: Level 2
+                                //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => History()));
-                          
-*/
                           },
                         ),
                       ),
@@ -357,8 +392,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                     height: 50,
                     width: 50,
                     child: CircleAvatar(
-                      backgroundImage:
-                          AssetImage('assets/image/Avatar/Avatar_Baku_JPG.png'),
+                      backgroundImage: AssetImage(getMonsterAvatarPath("Baku")),
                     ),
                   )
                 : Container(),
@@ -572,37 +606,130 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
       );
     }
 
+    //painting container
+    if (data == 5) {
+      //TODO: Level 2
+      ///ADD HERO https://youtu.be/1xipg02Wu8s?t=657
+      ///wrap by something make it clickable to watch
+      userChatContainer = Container(
+        padding: EdgeInsets.only(left: 10, right: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: Color.fromRGBO(255, 237, 151, 1),
+                  elevation: 2.0,
+                  //訊息文字格式
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                        Flexible(
+                            child: Container(
+                                child: Image.file(moodFile!,
+                                    width: 200,
+                                    height: 200,
+                                    filterQuality: FilterQuality.medium))),
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+
+    //moodImage container
+    if (data == 6) {
+      userChatContainer = Container(
+        padding: EdgeInsets.only(left: 20, right: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: 50,
+              width: 50,
+              child: CircleAvatar(
+                backgroundImage: AssetImage(getMonsterAvatarPath("Baku")),
+              ),
+            ),
+            //訊息框
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Bubble(
+                  radius: Radius.circular(15.0),
+                  color: Colors.white,
+                  elevation: 2.0,
+                  //訊息格式 以圖表示煩惱指數
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3.0,
+                        ),
+                        Flexible(
+                            child: Container(
+                                constraints: BoxConstraints(maxWidth: 200),
+                                child: annoyancePointRow()))
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+
     return userChatContainer;
   }
 
   //怪獸訊息(提示輸入格式)
   void hint() {
-    String hintAccept = "[請擇一輸入]\n是 / 否";
+    debugPrint(chatRound.toString());
     String hintDiaryMethod = "請用以下幾種方式記錄：\n★以文字記錄日記\n★點選左下角圖示新增";
-    if (chatRound == 1) {
-    } else if (chatRound == 2) {
+    String hintAccept = "[請擇一輸入]\n是 / 否";
+    if (chatRound == 0) {
       pickable = true;
       reply(hintDiaryMethod);
-    } else if (chatRound == 3) {
-      replyImage();
-    } else if (chatRound == 4) {
+    } else if (chatRound == 1) {
+      pickable = false;
       reply(hintAccept);
-    } else {
-      reply("還想新增更多日記嗎，再找下一位同伴來幫忙吧！");
+    } else if (chatRound == 2) {
+      replyImage();
+    } else if (chatRound == 3) {
+      reply(hintAccept);
     }
   }
 
   //提示輸入格式錯誤
   void cannotRead() {
     String hintCannotRead = "員工手冊上沒有這個選項耶...麻煩確認一下好嗎？";
-    String secHintEmotionGrade = "心情指數有多高呢？\n1分是最低的喔！";
+    String secHintEmotionGrade = "心情指數有多高呢？\n1分是最高的喔！";
     String secHintSharingAcception = "想分享日記給別人看看嗎？";
+    String secHintDrawingAcception = "要不要把你的心情畫下來呢？";
+
     chatRound--;
     reply(hintCannotRead);
     if (chatRound == 1) {
-      reply(secHintEmotionGrade);
+      reply(secHintDrawingAcception);
     }
     if (chatRound == 2) {
+      reply(secHintEmotionGrade);
+    }
+    if (chatRound == 3) {
       reply(secHintSharingAcception);
     }
   }
@@ -610,6 +737,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
   //確認是否符合選擇格式，符合->回覆 不符合->提示再次輸入
   Future<void> response([String? text, File? media]) async {
     List<String> emotionGradeMembers = ["", "1", "2", "3", "4", "5"];
+    List<String> acceptDrawingMembers = ["是", "否"];
     //進入時自動訊息問安
     if (chatRound == 0) {
       int hourNow = DateTime.now().hour.toInt();
@@ -622,14 +750,13 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
       } else {
         reply("下午好～今天過得如何呀！有發生什麼事情嗎?"); //14~24點
       }
-      reply("什麼樣子的日記呢？");
     }
 
-    if (chatRound < 6) {
+    if (chatRound < 5) {
       if (robotSpeakable == true) {
         //取得內容
         if (chatRound == 1) {
-          log("--完成類別");
+          log("--完成內容");
           if (text != null) {
             userAnswers.add(text);
           }
@@ -641,17 +768,20 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
 
         //取得心情分數
         if (chatRound == 2) {
-          log("--完成內容");
-          if (emotionGradeMembers.contains(text)) {
-            userAnswers.add(emotionGradeMembers.indexOf(text!));
-            reply("想不想把這件事分享給別人呢？");
+          if (acceptDrawingMembers.contains(text)) {
+            if (text == "是") {
+              await _navigateAndDisplayPaint(context);
+              reply("給心情程度打一個分數～");
+            }
+            userAnswers.add(text);
           } else {
             cannotRead();
           }
+          log("--完成畫心情");
         }
         //取得是否分享
         if (chatRound == 3) {
-          log("--完成心情分數");
+          reply("想不想把這件事分享給別人呢？");
           if (acceptShare == 0 || acceptShare == 1) {
             if (text == "是") {
               userAnswers.add(emotionGradeMembers.indexOf("1"));
@@ -660,8 +790,22 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
               acceptShare = 0;
               userAnswers.add(emotionGradeMembers.indexOf("0"));
             }
+          } else {
+            cannotRead();
+          }
+        }
+        if (chatRound == 4) {
+          if (text != "是" || text != "否") {
+            if (text == "是") {
+              userAnswers.add(1);
+            }
+            if (text == "否") {
+              userAnswers.add(0);
+            }
             lastSpeaking = true;
             reply("我幫你記錄下來囉，想回顧的時候隨時跟我說！");
+            setState(() {});
+            log("--完成分享");
           } else {
             cannotRead();
           }
@@ -704,6 +848,45 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
   }
 
   Column emotionPointColumn(String point) {
+    Column annoyanceImageColumn = Column();
+    annoyanceImageColumn = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CircleAvatar(
+          radius: 19,
+          backgroundImage: AssetImage('assets/image/mood/moodPoint_$point.png'),
+        ),
+        SizedBox(height: 1),
+        Text(point,
+            style:
+                TextStyle(fontSize: 17, color: Color.fromRGBO(160, 82, 45, 1)))
+      ],
+    );
+
+    return annoyanceImageColumn;
+  }
+
+  Row annoyancePointRow() {
+    Row annoyancePointRow = Row();
+    annoyancePointRow = Row(
+      children: [
+        annoyancePointColumn("1"),
+        Spacer(),
+        annoyancePointColumn("2"),
+        Spacer(),
+        annoyancePointColumn("3"),
+        Spacer(),
+        annoyancePointColumn("4"),
+        Spacer(),
+        annoyancePointColumn("5"),
+        Spacer(),
+      ],
+    );
+
+    return annoyancePointRow;
+  }
+
+  Column annoyancePointColumn(String point) {
     Column annoyanceImageColumn = Column();
     annoyanceImageColumn = Column(
       mainAxisAlignment: MainAxisAlignment.center,

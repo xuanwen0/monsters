@@ -9,4 +9,3 @@ abstract class MemberApiDataSource {
 
   Future<Map<String, dynamic>?> searchPersonalInfoByAccount(String account);
 }
-//http://192.168.0.178:8080/member/search?account=Lin

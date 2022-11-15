@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/audio_Model/audio_player.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
+import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/style.dart';
@@ -172,7 +173,6 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                 child: ListView.builder(
                     reverse: true,
                     itemCount: messages.length,
-                    //只要回傳直是一個container裡面放照片就好
                     itemBuilder: (context, index) => chat(
                           messages[index]["message"].toString(),
                           messages[index]["data"],
@@ -402,8 +402,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                     height: 50,
                     width: 50,
                     child: CircleAvatar(
-                      backgroundImage:
-                          AssetImage('assets/image/Avatar/Avatar_Baku_JPG.png'),
+                      backgroundImage: AssetImage(getMonsterAvatarPath("Baku")),
                     ),
                   )
                 : Container(),
@@ -562,6 +561,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       );
     }
 
+    //audio container
     if (data == 4) {
       chatContainer = Container(
         padding: EdgeInsets.only(left: 10, right: 10),
@@ -666,6 +666,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       );
     }
 
+    //moodImage container
     if (data == 6) {
       chatContainer = Container(
         padding: EdgeInsets.only(left: 20, right: 20),
@@ -676,8 +677,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
               height: 50,
               width: 50,
               child: CircleAvatar(
-                backgroundImage:
-                    AssetImage('assets/image/Avatar/Avatar_Baku_JPG.png'),
+                backgroundImage: AssetImage(getMonsterAvatarPath("Baku")),
               ),
             ),
             //訊息框
@@ -732,29 +732,6 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
       reply(hintAccept);
     } else {
       reply("還想新增更多煩惱嗎，再找下一位同伴來幫忙吧！");
-    }
-  }
-
-  //提示輸入格式錯誤
-  void cannotRead() {
-    String hintCannotRead = "員工手冊上沒有這個選項耶...麻煩確認一下答案好嗎？";
-    String secHintAnnoyType = "煩惱是關於什麼的呢？";
-    String secHintEmotionGrade = "煩惱指數有多高呢？\n1分是最低的喔！";
-    String secHintDrawingAcception = "要不要把你的心情畫下來呢？";
-    String secHintSharingAcception = "想分享給別人看看嗎？";
-    chatRound--;
-    reply(hintCannotRead);
-    if (chatRound == 0) {
-      reply(secHintAnnoyType);
-    }
-    if (chatRound == 2) {
-      reply(secHintDrawingAcception);
-    }
-    if (chatRound == 3) {
-      reply(secHintEmotionGrade);
-    }
-    if (chatRound == 4) {
-      reply(secHintSharingAcception);
     }
   }
 
@@ -898,6 +875,30 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
     return annoyanceImageColumn;
   }
+
+  //提示輸入格式錯誤
+  void cannotRead() {
+    String hintCannotRead = "員工手冊上沒有這個選項耶...麻煩確認一下答案好嗎？";
+    String secHintAnnoyType = "煩惱是關於什麼的呢？";
+    String secHintEmotionGrade = "煩惱指數有多高呢？\n1分是最低的喔！";
+    String secHintDrawingAcception = "要不要把你的心情畫下來呢？";
+    String secHintSharingAcception = "想分享給別人看看嗎？";
+    chatRound--;
+    reply(hintCannotRead);
+    if (chatRound == 0) {
+      reply(secHintAnnoyType);
+    }
+    if (chatRound == 2) {
+      reply(secHintDrawingAcception);
+    }
+    if (chatRound == 3) {
+      reply(secHintEmotionGrade);
+    }
+    if (chatRound == 4) {
+      reply(secHintSharingAcception);
+    }
+  }
+
 }
 
 //彈出選單設置

@@ -9,6 +9,8 @@ import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/annoyanceModel.dart';
+import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
+import 'package:monsters_front_end/pages/diaryChat.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
@@ -110,6 +112,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
               'name': value.data.elementAt(index).account,
               'content': value.data.elementAt(index).content,
               'time': value.data.elementAt(index).time,
+              'monsterId': value.data.elementAt(index).monsterId,
             },
           );
         }
@@ -310,26 +313,19 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 color: const Color(0xffffffff),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.elliptical(
-                                                        9999.0, 9999.0)),
+                                                shape: BoxShape.circle,
                                                 border: Border.all(
-                                                    width: 0.5,
+                                                    width: 1,
                                                     color: const Color(
                                                         0xffa0522d)),
                                               ),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.elliptical(
-                                                              9999.0, 9999.0)),
-                                                  image: DecorationImage(
-                                                    image: const AssetImage(
-                                                        'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
-                                                    fit: BoxFit.fill,
-                                                  ),
-                                                ),
+                                              child: CircleAvatar(
+                                                minRadius: 40,
+                                                backgroundImage: AssetImage(
+                                                    getMonsterAvatarPath(monsterNamesList[
+                                                        snapshot.data[
+                                                                "result $index"]
+                                                            ["monsterId"]])),
                                               ),
                                             ),
                                           ),
@@ -813,6 +809,10 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                               ),
                               onClick: () {
                                 animationController.reverse();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => diaryChat()));
                               },
                             ),
                           ),
@@ -853,15 +853,14 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 left: 30, right: 30, top: 10),
                             decoration: BoxDecoration(
                               color: BackgroundColorLight,
-                              borderRadius: BorderRadius.all(
-                                  Radius.elliptical(9999.0, 9999.0)),
+                              shape: BoxShape.circle,
                               border: Border.all(
                                   width: 1, color: const Color(0xffa0522d)),
                             ),
                             child: CircleAvatar(
                               radius: 30,
-                              backgroundImage: AssetImage(
-                                  'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
+                              backgroundImage:
+                                  AssetImage(getMonsterAvatarPath("Baku")),
                             ),
                           ),
                         ),
@@ -900,8 +899,12 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 ),
                                 softWrap: false,
                               ),
-                              SizedBox(height: 5),
-                              HeartWidget(),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                child: HeartWidget(),
+                              ),
                             ],
                           ),
                         ),
@@ -947,8 +950,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                 leading: Container(
                                   decoration: BoxDecoration(
                                     color: BackgroundColorLight,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.elliptical(9999.0, 9999.0)),
+                                    shape: BoxShape.circle,
                                     border: Border.all(
                                         width: 0.5,
                                         color: const Color(0xffa0522d)),
@@ -956,7 +958,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                   child: CircleAvatar(
                                     radius: 30,
                                     backgroundImage: AssetImage(
-                                        'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
+                                        getMonsterAvatarPath("Baku")),
                                   ),
                                 ),
                                 title: Text(
@@ -999,8 +1001,8 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                               margin: EdgeInsets.only(left: 15.0),
                               child: CircleAvatar(
                                 radius: 30,
-                                backgroundImage: AssetImage(
-                                    'assets/image/Avatar/Avatar_Baku_JPG.jpg'),
+                                backgroundImage:
+                                    AssetImage(getMonsterAvatarPath("Baku")),
                               ),
                             ),
                           ),
@@ -1078,24 +1080,19 @@ class _HeartWidgetState extends State<HeartWidget> {
       onTap: () => setState(() {
         _like = !_like;
       }),
-      child: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Center(
-            child: Container(
-              width: 100.00,
-              height: 100.00,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: (_like == false)
-                      ? AssetImage('assets/image/heart_1.png')
-                      : AssetImage('assets/image/heart_2.png'),
-                  fit: BoxFit.fitHeight,
-                ),
-              ),
+      child: Center(
+        child: Container(
+          height: 30,
+          width: 30,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: (_like == false)
+                  ? AssetImage('assets/image/heart_1.png')
+                  : AssetImage('assets/image/heart_2.png'),
+              fit: BoxFit.fill,
             ),
           ),
-        ],
+        ),
       ),
     );
   }

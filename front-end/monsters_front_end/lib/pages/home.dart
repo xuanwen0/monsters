@@ -8,6 +8,7 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:monsters_front_end/pages/annoyanceChat.dart';
+import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
 import 'package:monsters_front_end/pages/diaryChat.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
@@ -37,9 +38,13 @@ class _MainPageState extends State<MainPage>
   static const double originPosition = (maxSize - 100) / 2;
   double _marginL = originPosition;
   double _marginT = originPosition;
-  static String monsterName = "Baku"; //資料庫拿怪獸名稱
-  int moveingDirection = 1;
-  static const moveSpeed = 30;
+  // double _marginL2 = originPosition;
+  // double _marginT2 = originPosition;
+  static String monsterName = getRandomMonsterName();
+  // static String monsterName2 = "Cloud";
+  //資料庫拿怪獸名稱
+  int movingDirection = 1;
+  static const moveSpeed = 25;
   bool visited = false;
   late Timer _timer;
 
@@ -77,11 +82,13 @@ class _MainPageState extends State<MainPage>
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
     _timer = Timer.periodic(const Duration(milliseconds: 619), (timer) {
       doAnimation();
+      // doAnimation1();
     });
     super.initState();
   }
 
-  String showImage = "assets/image/animatedImage/$monsterName" "_left.gif";
+  String showImage = getMonsterAnimationPath(monsterName, "left");
+  // String showImage2 = getMonsterAnimationPath(monsterName2, "left");
   @override
   Widget build(BuildContext context) {
     if (!visited) {
@@ -140,13 +147,43 @@ class _MainPageState extends State<MainPage>
                       left: _marginL,
                       top: _marginT,
                     ),
-                    duration: const Duration(milliseconds: 811),
+                    duration: const Duration(milliseconds: 1211),
                   ),
                 ),
               ),
             ),
           ),
-
+/*
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 260),
+              child: Container(
+                height: maxSize * 1.1,
+                width: maxSize,
+                child: Container(
+                  alignment: Alignment.topLeft,
+                  child: AnimatedContainer(
+                    child: Container(
+                      height: 120,
+                      width: 120,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(showImage2),
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ),
+                    ),
+                    margin: EdgeInsets.only(
+                      left: _marginL2,
+                      top: _marginT2,
+                    ),
+                    duration: const Duration(milliseconds: 1211),
+                  ),
+                ),
+              ),
+            ),
+          ),
+*/
           //底部
           Pinned.fromPins(
             Pin(start: 0.0, end: 0.0),
@@ -179,13 +216,10 @@ class _MainPageState extends State<MainPage>
                 PageLink(
               links: [
                 PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () {
-                    Manual();
-                  },
-                ),
+                    transition: LinkTransition.Fade,
+                    ease: Curves.easeOut,
+                    duration: 0.3,
+                    pageBuilder: () => Manual()),
               ],
               child: Stack(
                 children: <Widget>[
@@ -232,13 +266,10 @@ class _MainPageState extends State<MainPage>
             child: PageLink(
               links: [
                 PageLinkInfo(
-                  transition: LinkTransition.Fade,
-                  ease: Curves.easeOut,
-                  duration: 0.3,
-                  pageBuilder: () {
-                    History();
-                  },
-                ),
+                    transition: LinkTransition.Fade,
+                    ease: Curves.easeOut,
+                    duration: 0.3,
+                    pageBuilder: () => History()),
               ],
               child: Stack(
                 children: <Widget>[
@@ -288,9 +319,7 @@ class _MainPageState extends State<MainPage>
                     transition: LinkTransition.Fade,
                     ease: Curves.easeOut,
                     duration: 0.3,
-                    pageBuilder: () {
-                      Social();
-                    }),
+                    pageBuilder: () => Social()),
               ],
               child: Stack(
                 children: <Widget>[
@@ -338,9 +367,7 @@ class _MainPageState extends State<MainPage>
                     transition: LinkTransition.Fade,
                     ease: Curves.easeOut,
                     duration: 0.3,
-                    pageBuilder: () {
-                      InteractionPage();
-                    }),
+                    pageBuilder: () => InteractionPage()),
               ],
               child: Stack(
                 children: <Widget>[
@@ -476,6 +503,10 @@ class _MainPageState extends State<MainPage>
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => diaryChat()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => diaryChat()));
                             },
                           ),
                         ),
@@ -494,16 +525,16 @@ class _MainPageState extends State<MainPage>
   doAnimation() {
     setState(() {
       int randomNum = random.nextInt(4) + 1; //1 2 3 4
-      // int randomNum = 3; //1 2 3 4
+      // int randomNum = 2; //1 2 3 4
       if (randomNum == 1) {
         _marginL += moveSpeed;
-        moveingDirection = 2;
+        movingDirection = 2;
         dev.log("go Right");
         checker();
       }
       if (randomNum == 2) {
         _marginL -= moveSpeed;
-        moveingDirection = 1;
+        movingDirection = 1;
         dev.log("go left");
         checker();
       }
@@ -520,39 +551,73 @@ class _MainPageState extends State<MainPage>
     });
   }
 
+/*
+  doAnimation1() {
+    setState(() {
+      // int randomNum = random.nextInt(4) + 1; //1 2 3 4
+      int randomNum = 2; //1 2 3 4
+      if (randomNum == 1) {
+        _marginL2 += moveSpeed;
+        moveingDirection = 2;
+        dev.log("go Right");
+        checker();
+      }
+      if (randomNum == 2) {
+        _marginL2 -= moveSpeed;
+        moveingDirection = 1;
+        dev.log("go left");
+        checker();
+      }
+      if (randomNum == 3) {
+        _marginT2 -= moveSpeed;
+        dev.log("go top");
+        checker();
+      }
+      if (randomNum == 4) {
+        _marginT2 += moveSpeed;
+        dev.log("go bottom");
+        checker();
+      }
+    });
+  }
+*/
   checker() {
-    if (_marginL <= 0 || _marginL > maxSize - 100) {
+    if (_marginL <= 30 || _marginL > maxSize - 100) {
       changeDirectionLeft();
     }
-    if (_marginT <= 0 || _marginT > maxSize - 80) {
+    if (_marginT <= 30 || _marginT > maxSize - 80) {
       changeDirectionTop();
     }
 
-    if (moveingDirection == 1) {
-      showImage = "assets/image/animatedImage/$monsterName" "_left.gif";
+    if (movingDirection == 1) {
+      showImage = getMonsterAnimationPath(monsterName, "left");
+      // showImage2 = getMonsterAnimationPath(monsterName2, "left");
     }
-    if (moveingDirection == 2) {
-      showImage = "assets/image/animatedImage/$monsterName" "_right.gif";
+    if (movingDirection == 2) {
+      showImage = getMonsterAnimationPath(monsterName, "right");
+      // showImage2 = getMonsterAnimationPath(monsterName2, "right");
     }
     setState(() {});
   }
 
   changeDirectionTop() {
-    if (moveingDirection == 1) {
-      moveingDirection = 2;
+    if (movingDirection == 1) {
+      movingDirection = 2;
     } else {
-      moveingDirection = 1;
+      movingDirection = 1;
     }
     _marginT = originPosition;
+    // _marginT2 = originPosition;
   }
 
   changeDirectionLeft() {
-    if (moveingDirection == 1) {
-      moveingDirection = 2;
+    if (movingDirection == 1) {
+      movingDirection = 2;
     } else {
-      moveingDirection = 1;
+      movingDirection = 1;
     }
     _marginL = originPosition;
+    // _marginL2 = originPosition;
   }
 }
 

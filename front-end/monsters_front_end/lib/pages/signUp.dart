@@ -277,7 +277,7 @@ class _SignUpState extends State<SignUp> {
                           return '暱稱不得空白';
                         }
                       }),
-                  const SizedBox(height: 10.0),
+                  const SizedBox(height: 15.0),
                   //生日
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -285,37 +285,45 @@ class _SignUpState extends State<SignUp> {
                       const Text(
                         '生日  :',
                         style: TextStyle(
-                          fontFamily: 'Segoe UI',
+                          fontWeight: FontWeight.bold,
                           fontSize: 30,
                           color: BackgroundColorWarm,
                         ),
                         softWrap: false,
                       ),
-                      const SizedBox(width: 5.0),
-                      TextButton.icon(
-                        onPressed: () async {
-                          DateTime? newDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(1900),
-                            lastDate: DateTime(2100),
-                          );
-                          if (newDate == null) return;
-                          setState(() => date = newDate);
-                        },
-                        icon: Icon(
-                          Icons.calendar_month,
-                          color: Colors.grey[700],
-                          size: 30,
+                      const SizedBox(width: 10.0),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.rectangle,
+                          border: Border.all(
+                              width: 3, color: const Color(0xffa0522d)),
                         ),
-                        label: Text(
-                          '${date.year}/${date.month}/${date.day}',
-                          style: const TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 30,
-                            color: Colors.black,
+                        child: TextButton.icon(
+                          onPressed: () async {
+                            DateTime? newDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime(2100),
+                            );
+                            if (newDate == null) return;
+                            setState(() => date = newDate);
+                          },
+                          icon: Icon(
+                            Icons.calendar_month,
+                            color: Colors.grey[700],
+                            size: 30,
                           ),
-                          softWrap: false,
+                          label: Text(
+                            '${date.year}/${date.month}/${date.day}',
+                            style: const TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 30,
+                              color: Colors.black,
+                            ),
+                            softWrap: false,
+                          ),
                         ),
                       ),
                     ],
@@ -380,8 +388,25 @@ class _SignUpState extends State<SignUp> {
                         softWrap: false,
                       ),
                       onPressed: () {
+                        debugPrint(DateTime.now().toString().substring(0, 10));
+                        debugPrint(date.toString().substring(0, 10));
+
+                        var fail = false;
+                        if (DateTime.now()
+                                .difference(date)
+                                .toString()
+                                .startsWith("-") ||
+                            DateTime.now().toString().substring(0, 10) ==
+                                date.toString().substring(0, 10)) {
+                          fail = true;
+                        }
+
                         final isValidForm = _formKey.currentState!.validate();
-                        if (isValidForm) {
+                        if (fail) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("請選擇生日")));
+                          return;
+                        } else {
                           signUp();
                         }
                       },

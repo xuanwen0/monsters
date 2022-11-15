@@ -15,7 +15,6 @@ class myRoutes {
   //annoyance and diary
   static const TimerWidget = '/TimerWidget';
   static const Draw_mood = '/Draw_mood';
-  static const Drawer_settings = '/Drawer_settings';
   static const diaryChat = '/diaryChat';
   static const AudioMainPage = '/AudioMainPage';
   static const AnnoyanceChat = '/AnnoyanceChat';

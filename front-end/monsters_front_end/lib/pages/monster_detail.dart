@@ -4,17 +4,26 @@ import 'package:adobe_xd/page_link.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
 import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/style.dart';
 
 class Monster_detail extends StatefulWidget {
+  int index;
+  Monster_detail(this.index);
+
   @override
-  _Monster_detailState createState() => _Monster_detailState();
+  _Monster_detailState createState() => _Monster_detailState(index);
 }
 
 class _Monster_detailState extends State<Monster_detail> {
+  int index;
+  _Monster_detailState(this.index);
+
   @override
   Widget build(BuildContext context) {
+    String monsterName = monsterNamesList[index];
+    print(index.toString());
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       appBar: secondAppBar("圖鑑"),
@@ -25,64 +34,23 @@ class _Monster_detailState extends State<Monster_detail> {
           Expanded(
             flex: 55,
             child: Container(
-              // margin: const EdgeInsets.symmetric(horizontal: 60, vertical: 30),
               margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 70),
               decoration: BoxDecoration(
                 color: const Color(0xffffffff),
                 borderRadius: BorderRadius.circular(22.0),
                 border: Border.all(width: 2.65, color: const Color(0xffa0522d)),
-                image: const DecorationImage(
-                  image: AssetImage('assets/image/monster_Baku.png'),
-                  fit: BoxFit.fill,
+              ),
+              child: Container(
+                margin: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(getMonsterImage(monsterName)),
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),
             // Adobe XD layer: 'monster1' (shape)
-
-            /*
-              //星星
-              Pinned.fromPins(
-                Pin(size: 163.5, end: 15.3),
-                Pin(size: 46.5, end: 14.9),
-                child: Stack(
-                  children: <Widget>[
-                    Pinned.fromPins(
-                      Pin(size: 48.6, start: 0.0),
-                      Pin(start: 0.0, end: 0.0),
-                      child:
-                          // Adobe XD layer: 'Icon awesome-star' (shape)
-                          SvgPicture.string(
-                        _svg_m5gacg,
-                        allowDrawingOutsideViewBox: true,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    Pinned.fromPins(
-                      Pin(size: 48.6, middle: 0.5),
-                      Pin(start: 0.0, end: 0.0),
-                      child:
-                          // Adobe XD layer: 'Icon awesome-star' (shape)
-                          SvgPicture.string(
-                        _svg_hjs34o,
-                        allowDrawingOutsideViewBox: true,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    Pinned.fromPins(
-                      Pin(size: 48.6, end: 0.0),
-                      Pin(start: 0.0, end: 0.0),
-                      child:
-                          // Adobe XD layer: 'Icon awesome-star' (shape)
-                          SvgPicture.string(
-                        _svg_so5uno,
-                        allowDrawingOutsideViewBox: true,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            */
           ),
           //monster名稱和分享
           Expanded(
@@ -104,10 +72,10 @@ class _Monster_detailState extends State<Monster_detail> {
                           ),
                         ),
                       ),
-                      child: const Text(
-                        '巴古',
+                      child: Text(
+                        monsterName,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'Segoe UI',
                           fontSize: 40,
                           color: Color(0xffa0522d),
