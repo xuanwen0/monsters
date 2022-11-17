@@ -5,16 +5,12 @@ import 'dart:io';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:monsters_front_end/model/annoyanceModel.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
-import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/monsters_information.dart';
-import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:video_player/video_player.dart';
 
 import '../model/audio_Model/audio_player.dart';
-import '../repository/annoyanceRepo.dart';
 
 class historyAnnoyanceChat extends StatefulWidget {
   var data;

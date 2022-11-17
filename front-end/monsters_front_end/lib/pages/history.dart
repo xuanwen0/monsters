@@ -807,7 +807,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
             'type': type,
             'monsterId': value.data.elementAt(index).monsterId,
             'time': value.data.elementAt(index).time,
-            'solve': value.data.elementAt(index).solve.toInt(),
+            'solve': value.data.elementAt(index).solve?.toInt(),
             'mood': value.data.elementAt(index).mood,
             'index': value.data.elementAt(index).index,
             'share': value.data.elementAt(index).share,

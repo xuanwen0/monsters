@@ -37,61 +37,60 @@ class Data {
 }
 
 class Annoyance {
-  Annoyance({
-    required this.id,
-    required this.account,
-    required this.content,
-    required this.contentFile,
-    required this.moodFile,
-    required this.type,
-    required this.monsterId,
-    required this.mood,
-    required this.index,
-    required this.time,
-    required this.solve,
-    required this.share,
-  });
-
-  int id;
-  String account;
+  int? id;
+  String? account;
   String? content;
+  int? type;
+  int? monsterId;
+  String? mood;
+  int? index;
+  String? time;
+  int? solve;
+  int? share;
   File? contentFile;
   File? moodFile;
-  int type;
-  int monsterId;
-  String mood;
-  int index;
-  String time;
-  int solve;
-  int share;
+  Annoyance(
+      {this.id,
+      this.account,
+      this.content,
+      this.type,
+      this.monsterId,
+      this.mood,
+      this.index,
+      this.time,
+      this.solve,
+      this.share,
+      this.contentFile,
+      this.moodFile});
 
   factory Annoyance.fromJson(Map<String, dynamic> json) => Annoyance(
-        id: json["id"],
-        account: json["account"],
-        content: json["content"],
-        contentFile: json["contentFile"],
-        moodFile:json["moodFile"],
-        type: json["type"],
-        monsterId: json["monsterId"],
-        mood: json["mood"],
-        index: json["index"],
-        time: json["time"],
-        solve: json["solve"],
-        share: json["share"],
+        id: json['id'],
+        account: json['account'],
+        content: json['content'],
+        type: json['type'],
+        monsterId: json['monsterId'],
+        mood: json['mood'],
+        index: json['index'],
+        time: json['time'],
+        solve: json['solve'],
+        share: json['share'],
+        contentFile: json['contentFile'],
+        moodFile: json['moodFile'],
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "account": account,
-        "content": content,
-        "contentFile": contentFile,
-        "moodFile":moodFile,
-        "type": type,
-        "monsterId": monsterId,
-        "mood": mood,
-        "index": index,
-        "time": time,
-        "solve": solve,
-        "share": share,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['account'] = account;
+    data['content'] = content;
+    data['type'] = type;
+    data['monsterId'] = monsterId;
+    data['mood'] = mood;
+    data['index'] = index;
+    data['time'] = time;
+    data['solve'] = solve;
+    data['share'] = share;
+    data['contentFile'] = contentFile;
+    data['moodFile'] = moodFile;
+    return data;
+  }
 }
