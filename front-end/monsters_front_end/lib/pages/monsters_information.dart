@@ -25,19 +25,19 @@ const List monsterNamesList = [
 const List monsterNamesList_CH = [
   "巴古",
   "棉花糖",
-  "可琳",
+  // "可琳",
   "杜那",
-  "乎瓦",
+  // "乎瓦",
   "疤比",
   // "伊咔",
-  "基拉",
+  // "基拉",
   "赫赫",
-  "栗茲",
+  // "栗茲",
   "酪里",
   "馬奇",
   "潘恩",
-  "批奈",
-  "蘿依",
+  // "批奈",
+  // "蘿依",
   "派特",
   "底迪",
   "三兄弟",
@@ -47,6 +47,13 @@ String choosenAvatar = "";
 String getRandomMonsterName() {
   String random =
       monsterNamesList.elementAt(Random().nextInt(monsterNamesList.length));
+  dv.log(random.toString());
+  return random.toString();
+}
+
+String getRandomMonsterName_CH() {
+  String random =
+      monsterNamesList_CH.elementAt(Random().nextInt(monsterNamesList.length));
   dv.log(random.toString());
   return random.toString();
 }

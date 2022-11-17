@@ -8,7 +8,7 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:monsters_front_end/pages/annoyanceChat.dart';
-import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
+import 'package:monsters_front_end/pages/monsters_information.dart';
 import 'package:monsters_front_end/pages/diaryChat.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
@@ -503,10 +503,6 @@ class _MainPageState extends State<MainPage>
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => diaryChat()));
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => diaryChat()));
                             },
                           ),
                         ),
@@ -529,23 +525,23 @@ class _MainPageState extends State<MainPage>
       if (randomNum == 1) {
         _marginL += moveSpeed;
         movingDirection = 2;
-        print("go Right");
+        // print("go Right");
         checker();
       }
       if (randomNum == 2) {
         _marginL -= moveSpeed;
         movingDirection = 1;
-        print("go left");
+        // print("go left");
         checker();
       }
       if (randomNum == 3) {
         _marginT -= moveSpeed;
-        print("go top");
+        // print("go top");
         checker();
       }
       if (randomNum == 4) {
         _marginT += moveSpeed;
-        print("go bottom");
+        // print("go bottom");
         checker();
       }
     });

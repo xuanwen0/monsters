@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
-import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
+import 'package:monsters_front_end/pages/monsters_information.dart';
 import 'package:monsters_front_end/pages/style.dart';
 
 class dev_animation extends StatefulWidget {

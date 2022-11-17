@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
+import 'package:monsters_front_end/pages/monsters_information.dart';
 import 'package:monsters_front_end/pages/diaryChat.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/home.dart';

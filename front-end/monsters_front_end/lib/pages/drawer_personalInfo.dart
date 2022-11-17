@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/memberModel.dart';
-import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
+import 'package:monsters_front_end/pages/monsters_information.dart';
 import 'package:monsters_front_end/pages/edit_personalInfo.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/repository/memberRepo.dart';

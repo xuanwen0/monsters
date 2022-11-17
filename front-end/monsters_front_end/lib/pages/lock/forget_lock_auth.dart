@@ -63,27 +63,39 @@ class _Forget_Lock_AuthState extends State<Forget_Lock_Auth> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  //上一頁
-                  Align(
-                      alignment: Alignment.topLeft,
-                      child: IconButton(
-                        icon: Icon(Icons.arrow_back_rounded),
-                        color: Color.fromRGBO(255, 187, 0, 1),
-                        iconSize: 57.0,
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      )),
-                  //標題
-                  const Text(
-                    '忘記密碼',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 40,
-                      color: Color.fromRGBO(160, 82, 45, 1),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 25.0),
+                    child: Stack(
+                      children: [
+                        //上一頁
+                        Align(
+                            alignment: Alignment.topLeft,
+                            child: IconButton(
+                              icon: const Icon(Icons.arrow_back_rounded),
+                              color: const Color.fromRGBO(255, 187, 0, 1),
+                              iconSize: 57.0,
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            )),
+                        //標題
+                        Container(
+                          alignment: Alignment.topCenter,
+                          padding: const EdgeInsets.only(top: 8),
+                          child: const Text(
+                            '忘記密碼',
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 40,
+                              color: Color.fromRGBO(160, 82, 45, 1),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(height: 50.0),
+
+                  const SizedBox(height: 50.0),
                   //信箱
                   TextFormField(
                     autofocus: false,

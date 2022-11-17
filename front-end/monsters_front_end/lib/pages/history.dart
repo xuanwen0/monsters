@@ -10,7 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/annoyanceModel.dart';
 import 'package:monsters_front_end/pages/annoyanceChat.dart';
-import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
+import 'package:monsters_front_end/pages/monsters_information.dart';
 import 'package:monsters_front_end/pages/diaryChat.dart';
 import 'package:monsters_front_end/pages/history_annoyanceChat.dart';
 import 'package:monsters_front_end/pages/home.dart';
@@ -323,6 +323,18 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                           getMonsterAvatarPath(monsterNamesList[
                                               snapshot.data["result $index"]
                                                   ["monsterId"]])),
+                                      child: (snapshot.data["result $index"]
+                                                  ["solve"] ==
+                                              1)
+                                          ? Container(
+                                              alignment: Alignment.bottomRight,
+                                              child: CircleAvatar(
+                                                radius: 13,
+                                                backgroundImage: AssetImage(
+                                                    'assets/image/done.png'),
+                                              ),
+                                            )
+                                          : Container(),
                                     ),
                                   ),
                                   title: Text(
@@ -795,7 +807,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
             'type': type,
             'monsterId': value.data.elementAt(index).monsterId,
             'time': value.data.elementAt(index).time,
-            'solve': value.data.elementAt(index).solve,
+            'solve': value.data.elementAt(index).solve.toInt(),
             'mood': value.data.elementAt(index).mood,
             'index': value.data.elementAt(index).index,
             'share': value.data.elementAt(index).share,
