@@ -3,6 +3,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
+
 import '../API/annoyanceAPI.dart';
 import '../model/annoyanceModel.dart';
 import 'package:http/http.dart' as http;
@@ -27,10 +29,14 @@ class AnnoyanceRepository implements AnnoyanceApiDataSource {
     Annoyance annoyance,
   ) async {
     try {
-      final request = await client.post(url,
-          headers: {'Content-type': 'application/json'},
-          body: json.encode(annoyance));
-      if (request.statusCode == 200) {
+      var body = json.encode(annoyance);
+      log(annoyance.index.toString());
+      var request = await client.post(url,
+          headers: {'Content-type': 'application/json'}, body: body);
+      // body: annoyance);
+      log(request.statusCode.toString());
+      log(request.body);
+      if (request.statusCode == 201) {
         log(
           request.body,
           name: request.statusCode.toString(),

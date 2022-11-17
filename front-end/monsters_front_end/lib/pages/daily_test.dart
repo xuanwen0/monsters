@@ -72,39 +72,43 @@ class _Daily_testState extends State<Daily_test> {
           children: [
             //題目框
             Expanded(
-              flex: 30,
+              flex: 45,
               child: FutureBuilder<dynamic>(
-                  future: _future,
-                  builder:
-                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                    if (correctChoice == 0) {
-                      //正在讀取資料庫資料
-                      return const Center(
-                          child: Text(
+                future: _future,
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (correctChoice == 0) {
+                    //正在讀取資料庫資料
+                    return const Center(
+                      child: Text(
                         "Loading...",
                         style: TextStyle(fontSize: 30),
-                      ));
-                    }
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(30.0)),
-                        border: Border.all(width: 2, color: Colors.grey),
                       ),
-                      child: Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                          child: SingleChildScrollView(
-                              scrollDirection: Axis.vertical,
-                              child: Text(
-                                daily_question,
-                                style: const TextStyle(
-                                    color: BackgroundColorWarm, fontSize: 24),
-                              ))),
                     );
-                  }),
+                  }
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(30.0)),
+                      border: Border.all(width: 2, color: Colors.grey),
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Text(
+                          daily_question,
+                          style: const TextStyle(
+                              color: BackgroundColorWarm, fontSize: 24),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
             answerBox(option: 1, choice: "A", text: daily_A),
             answerBox(option: 2, choice: "B", text: daily_B),
@@ -159,18 +163,20 @@ class _Daily_testState extends State<Daily_test> {
               flex: 75,
               child: Container(
                 height: 90,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
-                  borderRadius: const BorderRadius.horizontal(
-                      left: Radius.circular(30.0),
-                      right: Radius.circular(30.0)),
+                  borderRadius: BorderRadius.horizontal(
+                    left: Radius.circular(30.0),
+                    right: Radius.circular(30.0),
+                  ),
                 ),
                 child: Container(
                   alignment: Alignment.center,
                   child: Text(
                     text,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 24, color: BackgroundColorWarm),
+                    style: const TextStyle(
+                        fontSize: 24, color: BackgroundColorWarm),
                   ),
                 ),
               ),
@@ -190,20 +196,22 @@ class _Daily_testState extends State<Daily_test> {
 
   getRandomDailyTest() async {
     final DailyTestRepository dailyTestRepository = DailyTestRepository();
-    Future<DailyTest> dailyTest = dailyTestRepository
-        .searchDailyTest()
-        .then((value) => DailyTest.fromMap(value));
+    Future<DailyTest> dailyTest = dailyTestRepository.searchDailyTest().then(
+          (value) => DailyTest.fromMap(value),
+        );
 
-    dailyTest.then((value) {
-      dailyQuesion_ID = value.id;
-      daily_question = value.question;
-      daily_A = value.optionOne;
-      daily_B = value.optionTwo;
-      daily_C = value.optionThree;
-      daily_D = value.optionFour;
-      correctChoice = value.answer;
-      learn = value.learn;
-    }).then((value) => setState(() {}));
+    dailyTest.then(
+      (value) {
+        dailyQuesion_ID = value.id;
+        daily_question = value.question;
+        daily_A = value.optionOne;
+        daily_B = value.optionTwo;
+        daily_C = value.optionThree;
+        daily_D = value.optionFour;
+        correctChoice = value.answer;
+        learn = value.learn;
+      },
+    ).then((value) => setState(() {}));
   }
 }
 

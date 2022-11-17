@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/memberModel.dart';
-import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
+import 'package:monsters_front_end/pages/monsters_information.dart';
 import 'package:monsters_front_end/pages/edit_personalInfo.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/repository/memberRepo.dart';
@@ -82,10 +82,6 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
                               width: 250,
                               margin:
                                   const EdgeInsets.only(top: 50, bottom: 10),
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(width: 1, color: Colors.grey),
-                              ),
                               child: Container(
                                 alignment: Alignment.topCenter,
                                 decoration: BoxDecoration(
@@ -350,6 +346,7 @@ class _AvatarWidget extends State<AvatarWidget> {
                   height: 20,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     avatarButton(false),
                     const Spacer(),
@@ -367,7 +364,9 @@ class _AvatarWidget extends State<AvatarWidget> {
         child: Container(
           width: 100,
           height: 50,
-          margin: const EdgeInsets.symmetric(horizontal: 20),
+          margin: save
+              ? const EdgeInsets.only(right: 20)
+              : const EdgeInsets.only(left: 20),
           decoration: const BoxDecoration(
             color: Color(0xffa0522d),
             borderRadius: BorderRadius.all(Radius.elliptical(80, 80)),

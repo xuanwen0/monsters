@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
+import 'package:monsters_front_end/pages/monsters_information.dart';
 import 'package:monsters_front_end/pages/diaryChat.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/home.dart';
@@ -35,6 +35,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
   List<String> showPics = [];
   int selectionTab_type = 1;
   static const List monsterNames = monsterNamesList;
+  static const List monsterNames_CH = monsterNamesList_CH;
   int TotalMonsters = monsterNames.length;
 
   void changeUI() {
@@ -44,7 +45,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
 
     for (int i = 0; i < monsterNames.length; i++) {
       if (UnlockMonsterId.contains(i)) {
-        showNames.add(monsterNames[i]);
+        showNames.add(monsterNames_CH[i]);
         showPics.add(getMonsterImage(monsterNames[i]));
         log("ID= " + i.toString());
       } else {
@@ -55,6 +56,9 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
           );
         }
       }
+      log("------------");
+      log(showNames.toString());
+      log(showPics.toString());
       TotalMonsters = showNames.length;
     }
 
@@ -68,7 +72,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     for (int i = 0; i < TotalMonsters; i++) {
       if (UnlockMonsterId.contains(i)) {
-        showNames.add(monsterNamesList[i]);
+        showNames.add(monsterNamesList_CH[i]);
         showPics.add(getMonsterImage(monsterNamesList[i]));
       } else {
         showNames.add("???");
@@ -184,15 +188,16 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                       child: SizedBox(
                         width: 160.0,
                         height: 180.0,
-                        child: PageLink(
-                          links: [
-                            PageLinkInfo(
-                              transition: LinkTransition.Fade,
-                              ease: Curves.easeOut,
-                              duration: 0.3,
-                              pageBuilder: () => Monster_detail(index),
-                            ),
-                          ],
+                        child: GestureDetector(
+                          onTap: () {
+                            if (UnlockMonsterId.contains(index)) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Monster_detail(index)));
+                            }
+                          },
                           child: Stack(
                             children: <Widget>[
                               //border
@@ -230,8 +235,8 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
                                   showNames[index],
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontFamily: 'Segoe UI',
-                                    fontSize: 20,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w500,
                                     color: const Color(0xffa0522d),
                                   ),
                                   softWrap: false,

@@ -7,7 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/audio_model/audio_player.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
-import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
+import 'package:monsters_front_end/pages/manual.dart';
+import 'package:monsters_front_end/pages/monsters_information.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/style.dart';
@@ -291,6 +292,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                               setState(() {});
 
                               if (lastSpeaking == true) {
+                                popUp(context);
                                 Container(
                                     color: Colors.black,
                                     height: 100.0,
@@ -331,14 +333,6 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                             ),
                           ),
                           onPressed: () {
-                            log("user_Account: " + user_Account.toString());
-                            log("type:" + userAnswers[0].toString());
-                            log("content: " + userAnswers[1].toString());
-                            log("mood: " + userAnswers[2].toString());
-                            log("index: " + userAnswers[3].toString());
-                            log("share: " + userAnswers[4].toString());
-                            log("moodFile: " + moodFile.toString());
-                            log("contentFile: " + contentFile.toString());
                             /* 改成日記
                             annoyanceRepository.createAnnoyance(
                               Annoyance(
@@ -771,12 +765,12 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
           if (acceptDrawingMembers.contains(text)) {
             if (text == "是") {
               await _navigateAndDisplayPaint(context);
-              reply("給心情程度打一個分數～");
             }
             userAnswers.add(text);
           } else {
             cannotRead();
           }
+          reply("給心情程度打一個分數～");
           log("--完成畫心情");
         }
         //取得是否分享
@@ -904,6 +898,15 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
 
     return annoyanceImageColumn;
   }
+
+  Future<dynamic> popUp(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const PresentWidget();
+      },
+    );
+  }
 }
 
 //彈出選單設置
@@ -920,5 +923,127 @@ class PopUpMen extends StatelessWidget {
       itemBuilder: ((context) => menuList),
       icon: icon,
     );
+  }
+}
+
+class PresentWidget extends StatefulWidget {
+  const PresentWidget({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _PresentWidget();
+  }
+}
+
+class _PresentWidget extends State<PresentWidget> {
+  String present_name = getRandomMonsterName_CH();
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        type: MaterialType.transparency,
+        child: Center(
+          child: Container(
+            height: 420,
+            width: MediaQuery.of(context).size.width * 0.8,
+            decoration: BoxDecoration(
+              color: BackgroundColorLight,
+              border: Border.all(width: 5, color: BackgroundColorWarm),
+              borderRadius: BorderRadius.circular(22.0),
+            ),
+            child: Column(
+              children: [
+                Container(
+                  height: 220,
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  decoration: const BoxDecoration(
+                    color: BackgroundColorLight,
+                  ),
+                  child: Center(
+                    child: Container(
+                      height: 220,
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/image/present.png'),
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Text(
+                  "恭喜你獲得一隻怪獸！ \n",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: BackgroundColorWarm, fontSize: 20),
+                ),
+                Text(
+                  "${present_name}",
+                  style: TextStyle(
+                      color: BackgroundColorWarm,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => Manual())),
+                      child: Container(
+                        width: 105,
+                        height: 45,
+                        margin: EdgeInsets.only(
+                          left: 30,
+                          bottom: 3,
+                        ),
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(
+                            color: BackgroundColorWarm,
+                            border: Border.all(
+                                color: BackgroundColorWarm, width: 2),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0))),
+                        child: Center(
+                          child: Text(
+                            "查看圖鑑",
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        width: 105,
+                        height: 45,
+                        margin: EdgeInsets.only(
+                          right: 30,
+                          bottom: 3,
+                        ),
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(
+                            color: BackgroundColorWarm,
+                            border: Border.all(
+                                color: BackgroundColorWarm, width: 2),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0))),
+                        child: Center(
+                          child: Text(
+                            "謝謝",
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ));
   }
 }

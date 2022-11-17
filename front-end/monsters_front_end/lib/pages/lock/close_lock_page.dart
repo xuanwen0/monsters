@@ -15,107 +15,100 @@ class _CloseLockPageState extends State<CloseLockPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BackgroundColorLight,
-      body: Stack(
-        children: [
-          //上一頁
-          Align(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                icon: Icon(Icons.arrow_back_rounded),
-                color: Color.fromRGBO(255, 187, 0, 1),
-                iconSize: 57.0,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )),
-          //標題
-          const Align(
-            alignment: Alignment.topCenter,
-            child: Text(
-              '密碼',
-              style: TextStyle(
-                fontFamily: 'Segoe UI',
-                fontSize: 40,
-                color: Color(0xffa0522d),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 50.0),
+        child: Stack(
+          children: [
+            //標題
+            const Align(
+              alignment: Alignment.topCenter,
+              child: Text(
+                '驗證密碼鎖',
+                style: TextStyle(
+                  fontFamily: 'Segoe UI',
+                  fontSize: 40,
+                  color: Color(0xffa0522d),
+                ),
+                softWrap: false,
               ),
-              softWrap: false,
             ),
-          ),
-          //白底
-          Center(
-            child: Container(
-              height: 550,
-              color: Colors.white,
+            //白底
+            Center(
+              child: Container(
+                height: 550,
+                color: Colors.white,
+              ),
             ),
-          ),
-          SafeArea(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  //顯示框
-                  MPinWidget(
-                    pinLegth: 4,
-                    controller: mPinController,
-                    onCompleted: (mPin) async {
-                      print('You entered -> $mPin');
-                      SharedPreferences pref =
-                          await SharedPreferences.getInstance();
-                      String? val = pref.getString("pin");
-                      if (mPin == val) {
-                        saveLock('false');
-                        await pref.remove("pin");
-                        Navigator.pop(context);
-                      } else {
-                        mPinController.notifyWrongInput();
-                      }
-                    },
-                  ),
-                  SizedBox(height: 32),
-                  //數字鍵盤
-                  GridView.count(
-                    crossAxisCount: 3,
-                    shrinkWrap: true,
-                    childAspectRatio: 1.6,
-                    children: List.generate(
-                        9, (index) => buildMaterialButton(index + 1)),
-                  ),
-                  GridView.count(
-                    crossAxisCount: 3,
-                    shrinkWrap: true,
-                    childAspectRatio: 1.6,
-                    children: [
-                      MaterialButton(
+            SafeArea(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    //顯示框
+                    MPinWidget(
+                      pinLegth: 4,
+                      controller: mPinController,
+                      onCompleted: (mPin) async {
+                        print('You entered -> $mPin');
+                        SharedPreferences pref =
+                            await SharedPreferences.getInstance();
+                        String? val = pref.getString("pin");
+                        if (mPin == val) {
+                          saveLock('false');
+                          await pref.remove("pin");
+                          Navigator.pop(context);
+                        } else {
+                          mPinController.notifyWrongInput();
+                        }
+                      },
+                    ),
+                    SizedBox(height: 32),
+                    //數字鍵盤
+                    GridView.count(
+                      crossAxisCount: 3,
+                      shrinkWrap: true,
+                      childAspectRatio: 1.6,
+                      children: List.generate(
+                          9, (index) => buildMaterialButton(index + 1)),
+                    ),
+                    GridView.count(
+                      crossAxisCount: 3,
+                      shrinkWrap: true,
+                      childAspectRatio: 1.6,
+                      children: [
+                        MaterialButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Forget_Lock_Auth()));
+                            },
+                            textColor: BackgroundColorWarm,
+                            child: const Text(
+                              '忘記密碼',
+                              style: TextStyle(
+                                fontFamily: 'Segoe UI',
+                                fontSize: 20,
+                                color: Color.fromRGBO(160, 82, 45, 1),
+                              ),
+                            )),
+                        buildMaterialButton(0),
+                        MaterialButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Forget_Lock_Auth()));
+                            mPinController.delete();
                           },
                           textColor: BackgroundColorWarm,
-                          child: const Text(
-                            '忘記密碼',
-                            style: TextStyle(
-                              fontFamily: 'Segoe UI',
-                              fontSize: 20,
-                              color: Color.fromRGBO(160, 82, 45, 1),
-                            ),
-                          )),
-                      buildMaterialButton(0),
-                      MaterialButton(
-                        onPressed: () {
-                          mPinController.delete();
-                        },
-                        textColor: BackgroundColorWarm,
-                        child: Icon(Icons.backspace_rounded),
-                      ),
-                    ],
-                  ),
-                ],
+                          child: Icon(Icons.backspace_rounded),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

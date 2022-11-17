@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:math';
+import 'dart:developer' as dv;
 
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
@@ -9,7 +10,7 @@ import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/annoyanceModel.dart';
-import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
+import 'package:monsters_front_end/pages/monsters_information.dart';
 import 'package:monsters_front_end/pages/diaryChat.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/home.dart';
@@ -36,20 +37,20 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
   final _messageController = TextEditingController();
   StateSetter? animationState;
   var Comments = [
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
+    "老師知道我不會，所以根本不會叫我 ( ´•̥̥̥ω•̥̥̥` )",
+    "沒事啦你很棒的",
+    "NO is NO, it's ok",
+    "大家好友善",
+    "...",
   ];
   var userNames = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
+    "Chun",
+    "Wen",
+    "Jun",
+    "Sean",
+    "Lin",
   ];
-  var times = ["1/1", "2/2", "3/3", "4/4", "5/5"];
+  var times = ["11/13", "11/14", "11/15", "11/15", "11/16"];
   List<String> messages = [];
 
   //異步處理
@@ -94,10 +95,19 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
 
   Future<Map> getSocialMapByAccount() async {
     Map socialResult = {};
+    List temp = [
+      'Lin',
+      'Lin',
+      'Sean',
+      'Wen',
+      'Chun',
+      'Jun',
+    ];
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     Future<Data> annoyances = annoyanceRepository
         .searchAnnoyanceByAccount(user_Account)
         .then((value) => Data.fromJson(value!));
+
     await annoyances.then((value) async {
       if (value != null) {
         await socialResult.putIfAbsent(
@@ -109,7 +119,8 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
             "result $index",
             () => {
               'id': value.data.elementAt(index).id,
-              'name': value.data.elementAt(index).account,
+              // 'name': value.data.elementAt(index).account,
+              'name': temp[index % 5],
               'content': value.data.elementAt(index).content,
               'time': value.data.elementAt(index).time,
               'monsterId': value.data.elementAt(index).monsterId,
@@ -249,7 +260,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                       Radius.elliptical(100.0, 100.0)),
                                 ),
                                 child: Text(
-                                  '怪獸',
+                                  '我的',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontFamily: 'Segoe UI',
@@ -306,7 +317,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                     color: const Color(
                                                         0xffa0522d))),
                                           ),
-                                          //頭貼框 //TODO: 資料庫獲取頭貼
+                                          //頭貼框
                                           Pinned.fromPins(
                                             Pin(size: 53.0, start: 9.0),
                                             Pin(size: 53.0, start: 9.0),
@@ -315,15 +326,17 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                 color: const Color(0xffffffff),
                                                 shape: BoxShape.circle,
                                                 border: Border.all(
-                                                    width: 1,
-                                                    color: const Color(
-                                                        0xffa0522d)),
+                                                  width: 1,
+                                                  color:
+                                                      const Color(0xffa0522d),
+                                                ),
                                               ),
                                               child: CircleAvatar(
                                                 minRadius: 40,
                                                 backgroundImage: AssetImage(
-                                                    getMonsterAvatarPath(monsterNamesList[
-                                                        snapshot.data[
+                                                    getMonsterAvatarPath(
+                                                        monsterNamesList[snapshot
+                                                                    .data[
                                                                 "result $index"]
                                                             ["monsterId"]])),
                                               ),
@@ -340,6 +353,9 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                   ["content"],
                                               snapshot.data["result $index"]
                                                   ["time"],
+                                              monsterNamesList[
+                                                  snapshot.data["result $index"]
+                                                      ["monsterId"]],
                                             ),
                                             child: Stack(
                                               children: [
@@ -828,7 +844,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
   }
 
   Future<dynamic> showComment(
-      int id, String name, String content, String time) {
+      int id, String name, String content, String time, String monsterId) {
     print(id);
     return showDialog(
         context: context,
@@ -860,7 +876,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                             child: CircleAvatar(
                               radius: 30,
                               backgroundImage:
-                                  AssetImage(getMonsterAvatarPath("Baku")),
+                                  AssetImage(getMonsterAvatarPath(monsterId)),
                             ),
                           ),
                         ),
@@ -949,16 +965,16 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                               child: ListTile(
                                 leading: Container(
                                   decoration: BoxDecoration(
-                                    color: BackgroundColorLight,
                                     shape: BoxShape.circle,
                                     border: Border.all(
-                                        width: 0.5,
+                                        width: 1,
                                         color: const Color(0xffa0522d)),
                                   ),
                                   child: CircleAvatar(
                                     radius: 30,
                                     backgroundImage: AssetImage(
-                                        getMonsterAvatarPath("Baku")),
+                                        getMonsterAvatarPath(
+                                            getRandomMonsterName())),
                                   ),
                                 ),
                                 title: Text(
@@ -988,26 +1004,27 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          // Expanded(
+                          //   flex: 2,
+                          //   child: Container(
+                          //     decoration: BoxDecoration(
+                          //       color: BackgroundColorLight,
+                          //       borderRadius: BorderRadius.all(
+                          //           Radius.elliptical(9999.0, 9999.0)),
+                          //       border: Border.all(
+                          //           width: 1, color: const Color(0xffa0522d)),
+                          //     ),
+                          //     margin: EdgeInsets.only(left: 15.0),
+                          //     child: CircleAvatar(
+                          //       radius: 30,
+                          //       backgroundImage: AssetImage(
+                          //           getMonsterAvatarPath(
+                          //               getRandomMonsterName())),
+                          //     ),
+                          //   ),
+                          // ),
                           Expanded(
-                            flex: 2,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: BackgroundColorLight,
-                                borderRadius: BorderRadius.all(
-                                    Radius.elliptical(9999.0, 9999.0)),
-                                border: Border.all(
-                                    width: 1, color: const Color(0xffa0522d)),
-                              ),
-                              margin: EdgeInsets.only(left: 15.0),
-                              child: CircleAvatar(
-                                radius: 30,
-                                backgroundImage:
-                                    AssetImage(getMonsterAvatarPath("Baku")),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 6,
+                            flex: 8,
                             child: Container(
                               width: 70,
                               margin: EdgeInsets.only(

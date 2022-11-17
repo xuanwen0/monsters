@@ -5,14 +5,12 @@ import 'dart:io';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:monsters_front_end/model/annoyanceModel.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
-import 'package:monsters_front_end/pages/dev/dev_randomMonster.dart';
-import 'package:monsters_front_end/pages/history.dart';
+import 'package:monsters_front_end/pages/monsters_information.dart';
+import 'package:monsters_front_end/pages/style.dart';
 import 'package:video_player/video_player.dart';
 
 import '../model/audio_Model/audio_player.dart';
-import '../repository/annoyanceRepo.dart';
 
 class historyAnnoyanceChat extends StatefulWidget {
   var data;
@@ -45,8 +43,6 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
   List userAnswers = [];
   File? contentFile;
   File? moodFile;
-
-  //再個別轉成字串存在陣列userAns
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -65,6 +61,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
     response(data["content"]);
     response(data["mood"]);
     response(data["index"].toString());
+
     if (data["share"] == 0) {
       response("否");
     } else {
@@ -80,7 +77,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
         ),
         backgroundColor: Color.fromRGBO(255, 237, 151, 1),
         elevation: 2.0,
-        title: Text("巴古", //資料庫 all_monster[name] -> annoyance[monster_id]
+        title: Text(getMonsterAvatarName_CH(),
             style: TextStyle(
                 fontSize: 22, color: Color.fromARGB(255, 164, 78, 38))),
         centerTitle: true,
@@ -104,26 +101,95 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
                   BoxDecoration(color: Color.fromRGBO(255, 237, 151, 1)),
               alignment: Alignment.bottomCenter,
               height: 60,
-
               //margin: EdgeInsets.only(bottom: 30),
-              child: ListTile(
-                title: Container(
-                  child: TextButton(
-                    child: Text(
-                      solve == 0 ? "我解決煩惱了！" : "恭喜你，已經解決煩惱了！",
-                      textAlign: TextAlign.center,
-                      style: solve == 0
-                          ? TextStyle(fontSize: 30, color: Colors.black)
-                          : TextStyle(fontSize: 25, color: Colors.orange),
-                    ),
-                    onPressed: () {
-                      if (solve == 0) {
-                        solve = 1; //此行替代為"更新資料庫solve=1"
-                      }
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => History()));
-                    },
-                  ),
+              child: Container(
+                child: TextButton(
+                  child: getSolved() == false
+                      ? Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () => popUp(context),
+                              child: Container(
+                                width: 220,
+                                margin: EdgeInsets.only(
+                                  left: 15,
+                                  bottom: 3,
+                                ),
+                                padding: EdgeInsets.only(left: 13),
+                                alignment: Alignment.centerLeft,
+                                decoration: BoxDecoration(
+                                    color: BackgroundColorWarm,
+                                    border: Border.all(
+                                        color: BackgroundColorWarm, width: 2),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(50.0))),
+                                child: Center(
+                                  child: Text(
+                                    "我解決煩惱了！",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Spacer(),
+                            Container(
+                              width: 110,
+                              margin: EdgeInsets.only(
+                                right: 15,
+                                bottom: 3,
+                              ),
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                  color: getShared()
+                                      ? Colors.white
+                                      : BackgroundColorWarm,
+                                  border: Border.all(
+                                      color: BackgroundColorWarm, width: 2),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(50.0))),
+                              child: Center(
+                                child: Text(
+                                  getShared() ? "取消分享" : "分享",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: getShared()
+                                          ? BackgroundColorWarm
+                                          : Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Center(
+                          child: Container(
+                            width: 110,
+                            margin: EdgeInsets.only(
+                              right: 15,
+                              bottom: 3,
+                            ),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: getShared()
+                                    ? Colors.white
+                                    : BackgroundColorWarm,
+                                border: Border.all(
+                                    color: BackgroundColorWarm, width: 2),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0))),
+                            child: Center(
+                              child: Text(
+                                getShared() ? "取消分享" : "分享",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: getShared()
+                                        ? BackgroundColorWarm
+                                        : Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                  onPressed: () {},
                 ),
               ),
             ),
@@ -146,12 +212,19 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
               data == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
           children: [
             data == 0
-                //巴古頭貼
+                //左方巴古頭貼
                 ? Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border:
+                          Border.all(width: 1, color: const Color(0xffa0522d)),
+                    ),
                     height: 50,
                     width: 50,
                     child: CircleAvatar(
-                      backgroundImage: AssetImage(getMonsterAvatarPath("Baku")),
+                      backgroundImage: AssetImage(
+                        getMonsterAvatarPath(getMonsterAvatarName()),
+                      ),
                     ),
                   )
                 : Container(),
@@ -426,7 +499,8 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
               height: 50,
               width: 50,
               child: CircleAvatar(
-                backgroundImage: AssetImage(getMonsterAvatarPath("Baku")),
+                backgroundImage:
+                    AssetImage(getMonsterAvatarPath(getMonsterAvatarName())),
               ),
             ),
             //訊息框
@@ -463,22 +537,11 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
 
   //怪獸訊息(提示輸入格式)
   void hint() {
-    String hintAnnoyType = "[請擇一輸入]\n課業 / 事業 / 愛情 \n友情 / 親情 / 其他";
-    String hintAccept = "[請擇一輸入]\n是 / 否";
     String hintAnnoyMethod = "請用以下幾種方式記錄：\n★以文字記錄煩惱\n★點選左下角圖示新增";
-
-    if (chatRound == 0) {
-      reply(hintAnnoyType);
-    } else if (chatRound == 1) {
+    if (chatRound == 1) {
       reply(hintAnnoyMethod);
-    } else if (chatRound == 2) {
-      reply(hintAccept);
     } else if (chatRound == 3) {
       replyImage();
-    } else if (chatRound == 4) {
-      reply(hintAccept);
-    } else {
-      reply("還想新增更多煩惱嗎，再找下一位同伴來幫忙吧！");
     }
   }
 
@@ -529,6 +592,11 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
           insert(text!);
           lastSpeaking = true;
           reply("解決煩惱請馬上跟我說！我已經迫不及待想吃飯了！");
+          log(getSolved().toString());
+          if (getSolved()) {
+            insert("我解決煩惱了！");
+            reply("剩下的交給${getMonsterAvatarName_CH()}吧！");
+          }
         }
       }
     }
@@ -589,5 +657,87 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
     );
 
     return annoyanceImageColumn;
+  }
+
+  String getMonsterAvatarName() {
+    return monsterNamesList[data["monsterId"]];
+  }
+
+  String getMonsterAvatarName_CH() {
+    return monsterNamesList_CH[data["monsterId"]];
+  }
+
+  bool getSolved() {
+    bool isSolved;
+    if (data["solve"] == 1) {
+      isSolved = true;
+    } else {
+      isSolved = false;
+    }
+    log("this is: " + isSolved.toString());
+    return isSolved;
+  }
+
+  bool getShared() {
+    bool isShared;
+    if (data["share"] == 1) {
+      isShared = true;
+    } else {
+      isShared = false;
+    }
+    return isShared;
+  }
+
+  Future<dynamic> popUp(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const PresentWidget();
+      },
+    );
+  }
+}
+
+class PresentWidget extends StatefulWidget {
+  const PresentWidget({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _PresentWidget();
+  }
+}
+
+class _PresentWidget extends State<PresentWidget> {
+  String present_name = getRandomMonsterName_CH();
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        type: MaterialType.transparency,
+        child: Center(
+          child: Container(
+            height: 250,
+            width: MediaQuery.of(context).size.width * 0.8,
+            decoration: BoxDecoration(
+              color: BackgroundColorLight,
+              border: Border.all(width: 5, color: BackgroundColorWarm),
+              borderRadius: BorderRadius.circular(22.0),
+            ),
+            child: Center(
+              child: Container(
+                height: 180,
+                alignment: Alignment.center,
+                margin: const EdgeInsets.only(left: 30),
+                width: MediaQuery.of(context).size.width * 0.8,
+                decoration: const BoxDecoration(
+                  color: BackgroundColorLight,
+                  image: DecorationImage(
+                    image: AssetImage('assets/image/animatedImage/eating.gif'),
+                    fit: BoxFit.scaleDown,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ));
   }
 }

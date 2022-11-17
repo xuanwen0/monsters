@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monsters_front_end/pages/manual.dart';
+import 'package:monsters_front_end/pages/monsters_information.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -197,10 +199,142 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
     if (DateTime.now().day.toString() != pref.getString("LastTryDate")) {
       //TODO:使用者解鎖進度+1
     }
+    popUp(context);
   }
 
   Future<bool> getUserDailyTestProgress() async {
     return true;
+  }
+
+  Future<dynamic> popUp(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const DailyPresentWidget();
+      },
+    );
+  }
+}
+
+class DailyPresentWidget extends StatefulWidget {
+  const DailyPresentWidget({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _DailyPresentWidget();
+  }
+}
+
+class _DailyPresentWidget extends State<DailyPresentWidget> {
+  String present_name = getRandomMonsterName_CH();
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        type: MaterialType.transparency,
+        child: Center(
+          child: Container(
+            height: 420,
+            width: MediaQuery.of(context).size.width * 0.8,
+            decoration: BoxDecoration(
+              color: BackgroundColorLight,
+              border: Border.all(width: 5, color: BackgroundColorWarm),
+              borderRadius: BorderRadius.circular(22.0),
+            ),
+            child: Column(
+              children: [
+                Container(
+                  height: 220,
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  decoration: const BoxDecoration(
+                    color: BackgroundColorLight,
+                  ),
+                  child: Center(
+                    child: Container(
+                      height: 220,
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/image/present.png'),
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Text(
+                  "恭喜你獲得一個${present_name}的配件！ \n",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: BackgroundColorWarm, fontSize: 20),
+                ),
+                Text(
+                  "${present_name}",
+                  style: TextStyle(
+                      color: BackgroundColorWarm,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => Manual())),
+                      child: Container(
+                        width: 105,
+                        height: 45,
+                        margin: EdgeInsets.only(
+                          left: 30,
+                          bottom: 3,
+                        ),
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(
+                            color: BackgroundColorWarm,
+                            border: Border.all(
+                                color: BackgroundColorWarm, width: 2),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0))),
+                        child: Center(
+                          child: Text(
+                            "查看圖鑑",
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        width: 105,
+                        height: 45,
+                        margin: EdgeInsets.only(
+                          right: 30,
+                          bottom: 3,
+                        ),
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(
+                            color: BackgroundColorWarm,
+                            border: Border.all(
+                                color: BackgroundColorWarm, width: 2),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0))),
+                        child: Center(
+                          child: Text(
+                            "謝謝",
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ));
   }
 }
 

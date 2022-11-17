@@ -27,36 +27,49 @@ class _Reset_PasswordState extends State<Reset_Password> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  //上一頁
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child:
-                        // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
-                        PageLink(
-                      links: [
-                        PageLinkInfo(
-                          transition: LinkTransition.Fade,
-                          ease: Curves.easeOut,
-                          duration: 0.3,
-                          pageBuilder: () => Login_selfacount(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Stack(
+                      children: [
+                        //上一頁
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child:
+                                // Adobe XD layer: 'Icon ionic-md-arrow…' (shape)
+                                PageLink(
+                              links: [
+                                PageLinkInfo(
+                                  transition: LinkTransition.Fade,
+                                  ease: Curves.easeOut,
+                                  duration: 0.3,
+                                  pageBuilder: () => Login_selfacount(),
+                                ),
+                              ],
+                              child: SvgPicture.string(
+                                _svg_ryq30,
+                                allowDrawingOutsideViewBox: true,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
+                        //標題
+                        const Center(
+                          child: Text(
+                            '設定新密碼',
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 40,
+                              color: Color.fromRGBO(160, 82, 45, 1),
+                            ),
+                          ),
                         ),
                       ],
-                      child: SvgPicture.string(
-                        _svg_ryq30,
-                        allowDrawingOutsideViewBox: true,
-                        fit: BoxFit.fill,
-                      ),
                     ),
                   ),
-                  //標題
-                  const Text(
-                    '重新設密碼',
-                    style: TextStyle(
-                      fontFamily: 'Segoe UI',
-                      fontSize: 40,
-                      color: Color.fromRGBO(160, 82, 45, 1),
-                    ),
-                  ),
+
                   SizedBox(height: 50.0),
                   //密碼
                   TextFormField(
