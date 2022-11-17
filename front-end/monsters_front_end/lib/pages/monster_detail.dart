@@ -112,7 +112,7 @@ class _Monster_detailState extends State<Monster_detail> {
               flex: 30,
               child: Wrap(
                 spacing: 20,
-                children: [
+                children: const [
                   CircleAvatar(
                     backgroundColor: BackgroundColorWarm,
                     radius: 45.0,
@@ -145,10 +145,6 @@ class _Monster_detailState extends State<Monster_detail> {
         ],
       ),
     );
-  }
-
-  shareManualtoSocial() {
-    log("123");
   }
 }
 

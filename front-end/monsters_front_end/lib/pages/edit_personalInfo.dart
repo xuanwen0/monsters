@@ -13,10 +13,6 @@ class Edit_personalInfo extends StatefulWidget {
 
 class _Edit_personalInfoState extends State<Edit_personalInfo> {
   final TextEditingController _nicknameController = TextEditingController();
-
-  //生日
-  DateTime date = DateTime.now();
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final MemberRepository memberRepository = MemberRepository();
 

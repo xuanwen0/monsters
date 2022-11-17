@@ -356,7 +356,9 @@ class _AvatarWidget extends State<AvatarWidget> {
               ],
             ),
           ),
-        ));
+        )
+        
+        );
   }
 
   GestureDetector avatarButton(bool save) {
