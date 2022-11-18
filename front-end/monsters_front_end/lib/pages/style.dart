@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 const BackgroundColorLight = Color.fromRGBO(255, 254, 212, 1);
 const BackgroundColorSoft = Color.fromRGBO(255, 237, 151, 1);
 const BackgroundColorWarm = Color.fromRGBO(160, 82, 45, 1);
+const BackgroundColorWarmOpacity = Color.fromRGBO(160, 82, 45, 0.9);
 
 //AppBar settings
 
