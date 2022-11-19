@@ -13,6 +13,7 @@ import 'package:monsters_front_end/pages/login.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:monsters_front_end/pages/signUp.dart';
+import 'package:monsters_front_end/pages/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../repository/memberRepo.dart';
@@ -255,8 +256,13 @@ class _Login_selfacountState extends State<Login_selfacount> {
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) => MainPage()));
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("登入失敗")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 1),
+          backgroundColor: BackgroundColorWarm,
+          content: Text(
+            "登入失敗",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          )));
     }
   }
 

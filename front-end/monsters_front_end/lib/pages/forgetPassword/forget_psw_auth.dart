@@ -6,6 +6,7 @@ import 'package:email_auth/email_auth.dart';
 import 'package:monsters_front_end/pages/forgetPassword/reset_password.dart';
 
 import 'package:monsters_front_end/pages/login_selfacount.dart';
+import 'package:monsters_front_end/pages/style.dart';
 
 class Forget_password_Auth extends StatefulWidget {
   @override
@@ -31,11 +32,21 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
     emailAuth.sessionName = "貘nsters";
     var res = await emailAuth.sendOtp(recipientMail: _mailController.text);
     if (res) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("認證碼傳送成功")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 1),
+          backgroundColor: BackgroundColorWarm,
+          content: Text(
+            "認證碼傳送成功",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          )));
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("認證碼傳送失敗")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 1),
+          backgroundColor: BackgroundColorWarm,
+          content: Text(
+            "認證碼傳送成功",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          )));
     }
   }
 
@@ -43,13 +54,23 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
     var res = emailAuth.validateOtp(
         recipientMail: _mailController.text, userOtp: _otpController.text);
     if (res) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("認證成功")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 1),
+          backgroundColor: BackgroundColorWarm,
+          content: Text(
+            "認證成功",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          )));
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Reset_Password()));
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("認證失敗")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 1),
+          backgroundColor: BackgroundColorWarm,
+          content: Text(
+            "認證失敗",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          )));
     }
   }
 
@@ -188,7 +209,7 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                     validator: (value) {
                       if (value!.isNotEmpty && value.length == 6) {
                         return null;
-                      } else if (value.isNotEmpty && value.length < 6) {
+                      } else if (value.isNotEmpty && value.length != 6) {
                         return '認證碼為6數';
                       } else {
                         return '認證碼不得空白';

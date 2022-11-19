@@ -77,7 +77,7 @@ class _Reset_PasswordState extends State<Reset_Password> {
                     autofocus: false,
                     controller: _pwdController,
                     decoration: const InputDecoration(
-                      labelText: "密碼",
+                      labelText: "新密碼",
                       hintText: '請輸入新的密碼',
                       prefixIcon: Icon(Icons.password),
                       border: OutlineInputBorder(

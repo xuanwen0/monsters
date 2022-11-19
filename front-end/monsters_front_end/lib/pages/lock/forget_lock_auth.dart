@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:email_auth/email_auth.dart';
 import 'package:monsters_front_end/pages/lock/setting_lock_page.dart';
+import 'package:monsters_front_end/pages/style.dart';
 
 class Forget_Lock_Auth extends StatefulWidget {
   @override
@@ -27,11 +28,22 @@ class _Forget_Lock_AuthState extends State<Forget_Lock_Auth> {
     emailAuth.sessionName = "貘nsters";
     var res = await emailAuth.sendOtp(recipientMail: _mailController.text);
     if (res) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("認證碼傳送成功")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 1),
+          backgroundColor: BackgroundColorWarm,
+          content: Text(
+            "認證碼傳送成功",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          )));
+
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("認證碼傳送失敗")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 1),
+          backgroundColor: BackgroundColorWarm,
+          content: Text(
+            "認證碼傳送失敗",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          )));
     }
   }
 
@@ -39,13 +51,24 @@ class _Forget_Lock_AuthState extends State<Forget_Lock_Auth> {
     var res = emailAuth.validateOtp(
         recipientMail: _mailController.text, userOtp: _otpController.text);
     if (res) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("認證成功")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 1),
+          backgroundColor: BackgroundColorWarm,
+          content: Text(
+            "認證成功",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          )));
+
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => SettingLockPage()));
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("認證失敗")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 1),
+          backgroundColor: BackgroundColorWarm,
+          content: Text(
+            "認證失敗",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          )));
     }
   }
 

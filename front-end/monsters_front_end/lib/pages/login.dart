@@ -7,6 +7,7 @@ import 'package:monsters_front_end/pages/lock/lock_page.dart';
 import 'package:monsters_front_end/pages/login_selfacount.dart';
 import 'package:monsters_front_end/pages/signUp.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:monsters_front_end/pages/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../API/google_sign_in_API.dart';
@@ -149,8 +150,12 @@ class _loginState extends State<LoginPage> {
     final user = await GoogleSignInApi.signin();
     if (user == null) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('從Google登入失敗'),
-      ));
+          duration: Duration(seconds: 1),
+          backgroundColor: BackgroundColorWarm,
+          content: Text(
+            "從Google登入失敗",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          )));
     } else {
       print("帳號為: " + user.displayName.toString());
       //判斷資料庫是否有此帳號
