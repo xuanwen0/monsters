@@ -11,8 +11,16 @@ class MoodLineChart extends StatefulWidget {
 }
 
 class _MoodLineChartState extends State<MoodLineChart> {
-  List<String> dateTimeData = ['9/1', '9/2', '9/3', '9/4', '9/5', '9/6', '9/7'];
-  List<num> moodData = [5, 2, 2, 3, 2, 3, 1];
+  List<String> dateTimeData = [
+    '09/06',
+    '09/07',
+    '09/22',
+    '09/22',
+    '09/24',
+    '11/16',
+    '11/16',
+  ];
+  List<num> moodData = [5, 2, 2, 3, 2, 2, 5];
   List totalCount = [];
 
   @override
@@ -71,7 +79,7 @@ class _MoodLineChartState extends State<MoodLineChart> {
                     decoration: const BoxDecoration(color: Colors.white),
                     child: Container(
                       margin: const EdgeInsets.only(top: 20),
-                      padding: const EdgeInsets.fromLTRB(10, 24, 20, 12),
+                      padding: const EdgeInsets.fromLTRB(20, 24, 30, 12),
                       child: LineChart(
                         mainData(),
                       ),
@@ -100,7 +108,7 @@ class _MoodLineChartState extends State<MoodLineChart> {
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: SizedBox(
-                                  width: 100.0,
+                                  width: 150.0,
                                   height: 40.0,
                                   child: Text(
                                     dateTimeData[0] + '~' + dateTimeData[6],

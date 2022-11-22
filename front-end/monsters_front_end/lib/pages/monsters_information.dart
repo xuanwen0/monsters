@@ -2,24 +2,24 @@ import 'dart:math';
 import 'dart:developer' as dv;
 
 const List monsterNamesList = [
-  "Baku",
-  "Cloud",
+  "Baku", //0
+  "Cloud", //1
   // "Coling",
-  "Donut",
+  "Donut", //2
   // "Fuwa",
-  "Ghost",
+  "Ghost", //3
   // "Ika",
   // "Kila",
-  "Kungfu",
+  "Kungfu", //4
   // "Lizi",
-  "Lory",
-  "Magic",
-  "Pen",
+  "Lory", //5
+  "Magic", //6
+  "Pen", //7
   // "Pina",
   // "Roy",
-  "Spider",
-  "Sticky",
-  "Three",
+  "Spider", //8
+  "Sticky", //9
+  "Three", //10
 ];
 
 const List monsterNamesList_CH = [

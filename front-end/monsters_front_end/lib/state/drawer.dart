@@ -22,7 +22,7 @@ Widget GetDrawer(BuildContext context) {
     );
   }
 
-  var drawer = Container(
+  var drawer = SizedBox(
       width: 250,
       child: Drawer(
           backgroundColor: const Color(0xfffffed4),

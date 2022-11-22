@@ -403,8 +403,16 @@ class _SignUpState extends State<SignUp> {
 
                         final isValidForm = _formKey.currentState!.validate();
                         if (fail) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("請選擇生日")));
+                              
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                duration: Duration(seconds: 1),
+                                backgroundColor: BackgroundColorWarm,
+                                content: Text(
+                                  "請選擇生日",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 30),
+                                )));
                           return;
                         } else {
                           signUp();
@@ -457,8 +465,14 @@ class _SignUpState extends State<SignUp> {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Login_selfacount()));
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("請詳細閱讀使用條款，並勾選同意。")));
+
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 1),
+          backgroundColor: BackgroundColorWarm,
+          content: Text(
+            "請詳細閱讀使用條款，並勾選同意。",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          )));
     }
   }
 }
