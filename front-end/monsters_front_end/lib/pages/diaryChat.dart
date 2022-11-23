@@ -385,6 +385,11 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                 ? Container(
                     height: 50,
                     width: 50,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border:
+                          Border.all(width: 1, color: const Color(0xffa0522d)),
+                    ),
                     child: CircleAvatar(
                       backgroundImage: AssetImage(getMonsterAvatarPath("Baku")),
                     ),
@@ -654,6 +659,11 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
             Container(
               height: 50,
               width: 50,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border:
+                          Border.all(width: 1, color: const Color(0xffa0522d)),
+                    ),
               child: CircleAvatar(
                 backgroundImage: AssetImage(getMonsterAvatarPath("Baku")),
               ),

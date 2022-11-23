@@ -114,7 +114,7 @@ class _MoodLineChartState extends State<MoodLineChart> {
                                     dateTimeData[0] + '~' + dateTimeData[6],
                                     style: const TextStyle(
                                       fontFamily: 'Segoe UI',
-                                      fontSize: 20,
+                                      fontSize: 18,
                                       color: Color(0xffa0522d),
                                     ),
                                   ),
