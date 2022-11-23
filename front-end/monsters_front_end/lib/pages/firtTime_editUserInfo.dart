@@ -38,14 +38,15 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                     ),
                     //標題
                     const Text(
-                      '初次設定個人資料',
+                      '首次Google登入\n設定個人資料',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Segoe UI',
                         fontSize: 40,
                         color: Color.fromRGBO(160, 82, 45, 1),
                       ),
                     ),
-                    const SizedBox(height: 30.0),
+                    const SizedBox(height: 50.0),
                     //暱稱
                     TextFormField(
                         style: const TextStyle(color: Colors.black),

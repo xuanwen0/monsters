@@ -30,7 +30,7 @@ class _MainPageState extends State<MainPage>
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
   StateSetter? animationState;
-  //動畫相關設定
+  //主頁面怪獸動畫相關設定
   static const double maxSize = 380;
   double height = maxSize;
   double width = maxSize;
@@ -38,15 +38,17 @@ class _MainPageState extends State<MainPage>
   static const double originPosition = (maxSize - 100) / 2;
   double _marginL = originPosition;
   double _marginT = originPosition;
-  // double _marginL2 = originPosition;
-  // double _marginT2 = originPosition;
-  static String monsterName = getRandomMonsterName();
-  // static String monsterName2 = "Cloud";
-  //資料庫拿怪獸名稱
   int movingDirection = 1;
   static const moveSpeed = 25;
   bool visited = false;
   late Timer _timer;
+
+  
+  // double _marginL2 = originPosition;
+  // double _marginT2 = originPosition;
+  // static String monsterName2 = "Cloud";
+  //資料庫拿怪獸名稱  
+  static String monsterName = getRandomMonsterName();
 
   LocalStorage storage = LocalStorage('current_tab');
 
@@ -122,7 +124,7 @@ class _MainPageState extends State<MainPage>
               fit: BoxFit.fill,
             ),
           ),
-          //巴古
+          //怪獸
           Center(
             child: Padding(
               padding: const EdgeInsets.only(top: 260),
@@ -517,7 +519,7 @@ class _MainPageState extends State<MainPage>
       ),
     );
   }
-
+  //怪獸動畫主程式-隨機移動XY軸
   doAnimation() {
     setState(() {
       int randomNum = random.nextInt(4) + 1; //1 2 3 4
@@ -595,7 +597,7 @@ class _MainPageState extends State<MainPage>
     }
     setState(() {});
   }
-
+  //怪獸動畫限制區域-X軸
   changeDirectionTop() {
     if (movingDirection == 1) {
       movingDirection = 2;
@@ -605,7 +607,7 @@ class _MainPageState extends State<MainPage>
     _marginT = originPosition;
     // _marginT2 = originPosition;
   }
-
+  //怪獸動畫限制區域-Y軸
   changeDirectionLeft() {
     if (movingDirection == 1) {
       movingDirection = 2;
@@ -615,6 +617,7 @@ class _MainPageState extends State<MainPage>
     _marginL = originPosition;
     // _marginL2 = originPosition;
   }
+
 }
 
 class CircularButton extends StatelessWidget {

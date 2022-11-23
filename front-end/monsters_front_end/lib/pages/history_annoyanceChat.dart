@@ -1,4 +1,5 @@
 // ignore_for_file: use_key_in_widget_constructors, unnecessary_string_interpolations, prefer_const_constructors, file_names, avoid_unnecessary_containers, sized_box_for_whitespace, non_constant_identifier_names, camel_case_types
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
@@ -108,9 +109,16 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
                       ? Row(
                           children: [
                             GestureDetector(
-                              onTap: () => popUp(context),
+                              onTap: () {
+                                data["solve"] = 1;
+                                setState(() {});
+                                insert("我解決煩惱了！");
+                                reply("剩下的交給${getMonsterAvatarName_CH()}吧！");
+                                popUp(context);
+                              },
                               child: Container(
-                                width: 220,
+                                width: 180,
+                                height: 50,
                                 margin: EdgeInsets.only(
                                   left: 15,
                                   bottom: 3,
@@ -498,6 +506,10 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
             Container(
               height: 50,
               width: 50,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(width: 1, color: const Color(0xffa0522d)),
+              ),
               child: CircleAvatar(
                 backgroundImage:
                     AssetImage(getMonsterAvatarPath(getMonsterAvatarName())),
@@ -711,11 +723,14 @@ class _PresentWidget extends State<PresentWidget> {
   String present_name = getRandomMonsterName_CH();
   @override
   Widget build(BuildContext context) {
+    Timer(Duration(seconds: 2), () {
+      Navigator.of(context).pop();
+    });
     return Material(
         type: MaterialType.transparency,
         child: Center(
           child: Container(
-            height: 250,
+            height: 350,
             width: MediaQuery.of(context).size.width * 0.8,
             decoration: BoxDecoration(
               color: BackgroundColorLight,
@@ -723,18 +738,31 @@ class _PresentWidget extends State<PresentWidget> {
               borderRadius: BorderRadius.circular(22.0),
             ),
             child: Center(
-              child: Container(
-                height: 180,
-                alignment: Alignment.center,
-                margin: const EdgeInsets.only(left: 30),
-                width: MediaQuery.of(context).size.width * 0.8,
-                decoration: const BoxDecoration(
-                  color: BackgroundColorLight,
-                  image: DecorationImage(
-                    image: AssetImage('assets/image/animatedImage/eating.gif'),
-                    fit: BoxFit.scaleDown,
+              child: Column(
+                children: [
+                  Container(
+                    height: 240,
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.only(left: 35, right: 30),
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    decoration: const BoxDecoration(
+                      color: BackgroundColorLight,
+                      image: DecorationImage(
+                        image:
+                            AssetImage('assets/image/animatedImage/eating.gif'),
+                        fit: BoxFit.scaleDown,
+                      ),
+                    ),
                   ),
-                ),
+                  Center(
+                    child: Text(
+                      // "太好了，煩惱解決了\n接下來就交給${present_name}吧！",
+                      "太好了，煩惱解決了！\n接下來就交給巴古吧！",
+                      style:
+                          TextStyle(color: BackgroundColorWarm, fontSize: 22),
+                    ),
+                  )
+                ],
               ),
             ),
           ),

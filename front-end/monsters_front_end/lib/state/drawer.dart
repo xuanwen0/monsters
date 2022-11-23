@@ -194,8 +194,7 @@ class _ShareAppWidget extends State<ShareAppWidget> {
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: () => Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => Manual())),
+                      onTap: () => Navigator.pop(context),
                       child: Container(
                         width: 105,
                         height: 45,

@@ -88,11 +88,21 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
                               left: 30,
                             ),
                             alignment: Alignment.topLeft,
-                            child: Text(
-                              "每天只有第一次能挑戰獎勵進度，\n再答對${7 - unlockProgress}次就可以解鎖隱藏獎勵！\n目前解鎖進度 ：",
-                              style: const TextStyle(
-                                  fontSize: 20, color: BackgroundColorWarm),
-                            )), //進度條
+                            child: unlockProgress < 7
+                                ? Text(
+                                    "每天只有第一次能挑戰獎勵進度，\n再答對${7 - unlockProgress}次就可以解鎖隱藏獎勵！\n目前解鎖進度 ：",
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        color: BackgroundColorWarm),
+                                  )
+                                : const Center(
+                                    child: Text(
+                                      "恭喜解鎖隱藏獎勵！",
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          color: BackgroundColorWarm),
+                                    ),
+                                  )), //進度條
                         Expanded(
                           flex: 15,
                           child: Container(
@@ -154,6 +164,7 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
   Expanded singleProgress(int value) {
     String showValue = value.toString();
     Container littleguy = Container();
+    // Color boxColor = Colors.white;
     Color boxColor = Colors.white;
     if (unlockProgress == value) {
       littleguy = Container(
@@ -163,6 +174,8 @@ class _DailyTest_correctState extends State<DailyTest_correct> {
           fit: BoxFit.fill,
         ),
       );
+    }
+    if (value <= unlockProgress) {
       boxColor = BackgroundColorSoft;
     }
     return Expanded(
@@ -263,7 +276,7 @@ class _DailyPresentWidget extends State<DailyPresentWidget> {
                   ),
                 ),
                 Text(
-                  "恭喜你獲得一個${present_name}的配件！ \n",
+                  "恭喜你獲得一個造型！ \n",
                   textAlign: TextAlign.center,
                   style: TextStyle(color: BackgroundColorWarm, fontSize: 20),
                 ),
