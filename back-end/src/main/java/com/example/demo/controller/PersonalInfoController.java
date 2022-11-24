@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -67,10 +66,10 @@ public class PersonalInfoController {
     }
 
     @ResponseBody
-    @GetMapping(path = "search", params = "account", produces = "application/json; charset=UTF-8")
+    @GetMapping(path = "/search", params = "account", produces = "application/json; charset=UTF-8")
     public ResponseEntity SearchPersonalInfoByAccount(@RequestParam(name = "account") String account) {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode result = mapper.createObjectNode();
+            ObjectMapper mapper = new ObjectMapper();
+            ObjectNode result = mapper.createObjectNode();
         ArrayNode dataNode = result.putArray("data");
         try {
             List<PersonalInfoBean> personalInfoList = personalInfoService.searchPersonalInfoByAccount(account);
@@ -91,11 +90,15 @@ public class PersonalInfoController {
     }
 
     @ResponseBody
-    @Transactional(readOnly = true)
     @PatchMapping(value = "/modify")
     public ResponseEntity patch(@RequestBody PersonalInfoBean personalInfoBean){
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode result = mapper.createObjectNode();
+        if(personalInfoBean.getAccount()!=null){
+            personalInfoService.update(personalInfoBean.getAccount(), personalInfoBean);
+        }
         personalInfoService.update(personalInfoBean.getAccount(), personalInfoBean);
-        return ResponseEntity.ok("修改成功");
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
 }

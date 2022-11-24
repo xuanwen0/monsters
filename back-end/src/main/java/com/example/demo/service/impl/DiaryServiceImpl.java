@@ -27,7 +27,8 @@ public class DiaryServiceImpl extends BaseServiceImplement<DiaryDAO, Diary, Diar
     @Override
     public DiaryBean createAndReturnBean(DiaryBean bean) {
         Diary diary = createVO(bean);
-        diary.setUpdateDate(LocalDateTime.now());
+        diary.setTime(LocalDateTime.now());
+        System.out.println(diary);
         diaryDAO.insert(diary);
         bean = createBean(diary);
         return bean;
@@ -61,7 +62,7 @@ public class DiaryServiceImpl extends BaseServiceImplement<DiaryDAO, Diary, Diar
         entity.setAccount(bean.getAccount());
         entity.setContent(bean.getContent());
         entity.setIndex(bean.getIndex());
-        entity.setUpdateDate(bean.getUpdateDate());
+        entity.setTime(bean.getTime());
         entity.setShare(bean.getShare());
         return entity;
     }
@@ -73,7 +74,7 @@ public class DiaryServiceImpl extends BaseServiceImplement<DiaryDAO, Diary, Diar
         bean.setAccount(entity.getAccount());
         bean.setContent(entity.getContent());
         bean.setIndex(entity.getIndex());
-        bean.setUpdateDate(entity.getUpdateDate());
+        bean.setTime(entity.getTime());
         bean.setShare(entity.getShare());
         return bean;
     }

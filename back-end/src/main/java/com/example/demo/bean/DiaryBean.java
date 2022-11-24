@@ -11,7 +11,7 @@ public class DiaryBean extends BaseBean {
     private String account;
     private String content;
     private Integer index;
-    private LocalDateTime updateDate = LocalDateTime.now();
+    private LocalDateTime time = LocalDateTime.now();
     private Integer share;
     private MultipartFile contentFile;
 }

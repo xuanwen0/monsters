@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -25,35 +26,36 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping(value = "/diary")
 public class DiaryController {
 
-    private final DiaryServiceImpl diaryServiceimpl;
+    private final DiaryServiceImpl diaryService;
 
-    private final String CONTENT_FILE = "D:/monsters/back-end/file/history/";
+    private final String CONTENT_FILE = "D:/monsters/back-end/file/diary/";
 
     @ResponseBody
     @PostMapping("/create")
-    public ResponseEntity createAnnoyance(DiaryBean diarybean, RedirectAttributes redirectAttributes) {
+    public ResponseEntity createDiary(@RequestBody DiaryBean diarybean, RedirectAttributes redirectAttributes) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         result.putObject("data");
         try {
-            if (diarybean.getContentFile().isEmpty() && diarybean.getContent() == null) {
+            if (diarybean.getContent() == null && diarybean.getContent().isEmpty() && diarybean.getContentFile().isEmpty() && diarybean.getContentFile() == null) {
                 result.put("result", false);
                 result.put("errorCode", "");
                 result.put("message", "新增失敗");
             } else {
                 try {
-                    if (diarybean.getContent() == null) {
+                    if (diarybean.getContent() == null || diarybean.getContent().isEmpty()) {
                         byte[] contentBytes = diarybean.getContentFile().getBytes();
                         Path contentPath = Paths.get(CONTENT_FILE + LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMdd")) + diarybean.getContentFile().getOriginalFilename());
                         Files.write(contentPath, contentBytes);
                         diarybean.setContent(contentPath.toString());
-
+                        System.out.println(diarybean.getContent());
                     }
-                    diaryServiceimpl.createAndReturnBean(diarybean);
+                    diaryService.createAndReturnBean(diarybean);
                     result.put("result", true);
                     result.put("errorCode", "");
                     result.put("message", "新增成功");
                 } catch (IOException e) {
+                    System.out.println(e);
                     result.put("result", false);
                     result.put("errorCode", "");
                     result.put("message", "新增失敗");

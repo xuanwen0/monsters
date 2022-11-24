@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.bean.AnnoyanceBean;
+import com.example.demo.dto.file.FileUploadServiceImpl;
 import com.example.demo.service.impl.AnnoyanceServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -30,29 +32,30 @@ import java.util.List;
 @RequestMapping(value = "/annoyance")
 public class AnnoyanceController {
     private final AnnoyanceServiceImpl annoyanceService;
+    private final FileUploadServiceImpl fileUploadService;
 
     private final String CONTENT_FILE = "D:/monsters/back-end/file/annoyance/content/";
     private final String MOOD_FILE = "D:/monsters/back-end/file/annoyance/mood/";
 
     @ResponseBody
     @PostMapping("/create")
-    public ResponseEntity createAnnoyance(AnnoyanceBean annoyanceBean, RedirectAttributes redirectAttributes) {
+    public ResponseEntity createAnnoyance(@RequestBody AnnoyanceBean annoyanceBean, RedirectAttributes redirectAttributes) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         result.putObject("data");
         try {
-            if (annoyanceBean.getContentFile().isEmpty() && annoyanceBean.getContent() == null) {
+            if (annoyanceBean.getContent() == null && annoyanceBean.getContent().isEmpty() && annoyanceBean.getContentFile() == null && annoyanceBean.getContentFile().isEmpty()) {
                 result.put("result", false);
                 result.put("errorCode", "");
                 result.put("message", "新增失敗");
             } else {
                 try {
-                    if (annoyanceBean.getContent() == null) {
+                    if (annoyanceBean.getContent() == null || annoyanceBean.getContent().isEmpty()) {
+                        System.out.println(annoyanceBean.getContentFile().getName());
                         byte[] contentBytes = annoyanceBean.getContentFile().getBytes();
                         Path contentPath = Paths.get(CONTENT_FILE + LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMdd")) + annoyanceBean.getContentFile().getOriginalFilename());
                         Files.write(contentPath, contentBytes);
                         annoyanceBean.setContent(contentPath.toString());
-
                     }
                     if (annoyanceBean.getMood().equals("是")) {
                         byte[] moodBytes = annoyanceBean.getMoodFile().getBytes();
@@ -60,6 +63,7 @@ public class AnnoyanceController {
                         Files.write(moodPath, moodBytes);
                         annoyanceBean.setMood(moodPath.toString());
                     }
+                    System.out.println(annoyanceBean.toString());
                     annoyanceService.createAndReturnBean(annoyanceBean);
                     result.put("result", true);
                     result.put("errorCode", "");
@@ -71,6 +75,8 @@ public class AnnoyanceController {
                 }
             }
         } catch (Exception e) {
+            System.out.println(annoyanceBean.toString());
+            System.out.println(e);
             result.put("result", false);
             result.put("errorCode", "");
             result.put("message", "新增失敗");
@@ -84,6 +90,7 @@ public class AnnoyanceController {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         ArrayNode dataNode = result.putArray("data");
+        Resource file = null;
         try {
             List<AnnoyanceBean> annoyanceList = annoyanceService.searchAnnoyanceByAccount(account);
             if (annoyanceList.size() != 0) {
@@ -94,6 +101,8 @@ public class AnnoyanceController {
                     }
                 });
                 for (AnnoyanceBean annoyanceBean : annoyanceList) {
+                    file = fileUploadService.load(annoyanceBean.getContent());
+//                    System.out.println(file.toString());
                     ObjectNode annoyanceNode = dataNode.addObject();
                     annoyanceNode.put("id", annoyanceBean.getId());
                     annoyanceNode.put("account", annoyanceBean.getAccount());
@@ -105,6 +114,7 @@ public class AnnoyanceController {
                     annoyanceNode.put("time", annoyanceBean.getTime().format(DateTimeFormatter.ofPattern("MM/dd")));
                     annoyanceNode.put("solve", annoyanceBean.getSolve());
                     annoyanceNode.put("share", annoyanceBean.getShare());
+                    annoyanceNode.put("contentFile", file.toString());
                 }
                 result.put("result", true);
                 result.put("errorCode", "");

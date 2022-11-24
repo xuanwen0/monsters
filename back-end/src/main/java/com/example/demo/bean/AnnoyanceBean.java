@@ -20,4 +20,5 @@ public class AnnoyanceBean extends BaseBean {
     private int share;
     private MultipartFile contentFile;
     private MultipartFile moodFile;
+
 }

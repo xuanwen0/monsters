@@ -1,7 +1,7 @@
 package com.example.demo.entity.enumerate;
 
 public enum AnnoyanceTypeEnum {
-    LESSONS(0), CAUSE(1), LOVE(2), FRIENDSHIP(3), AFFECTION(4), OTHERS(5);
+    LESSONS(1), CAUSE(2), LOVE(3), FRIENDSHIP(4), AFFECTION(5), OTHERS(6);
     private final int id;
 
     AnnoyanceTypeEnum(int id) {

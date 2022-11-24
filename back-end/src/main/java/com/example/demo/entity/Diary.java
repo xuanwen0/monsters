@@ -11,22 +11,22 @@ import java.time.LocalDateTime;
 @Table(name = "diary")
 public class Diary {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "`id`", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "account", nullable = false, length = 45)
+    @Column(name = "`account`", nullable = false, length = 45)
     private String account;
 
-    @Column(name = "content", nullable = false)
+    @Column(name = "`content`", nullable = false)
     private String content;
 
-    @Column(name = "index", nullable = false)
+    @Column(name = "`index`", nullable = false)
     private Integer index;
 
-    @Column(name = "update_date", nullable = false)
-    private LocalDateTime updateDate;
+    @Column(name = "`time`", nullable = false)
+    private LocalDateTime time;
 
-    @Column(name = "share",nullable = false)
+    @Column(name = "`share`",nullable = false)
     private Integer share;
 }
