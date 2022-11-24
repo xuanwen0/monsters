@@ -45,7 +45,10 @@ class _Monster_detailState extends State<Monster_detail> {
                 margin: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(getMonsterImage(monsterName)),
+                    // image: AssetImage(getMonsterImage(monsterName)),monster_Baku_item1
+                    image: AssetImage(
+                      getMonsterImage("${monsterName}_item1"),
+                    ),
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -118,8 +121,8 @@ class _Monster_detailState extends State<Monster_detail> {
                     radius: 45.0,
                     child: CircleAvatar(
                       backgroundImage:
-                          AssetImage('assets/image/accessories_1.png'),
-                      radius: 40.0,
+                          AssetImage('assets/image/accessories_1_wear.png'),
+                      radius: 42.0,
                     ),
                   ),
                   CircleAvatar(
@@ -127,8 +130,8 @@ class _Monster_detailState extends State<Monster_detail> {
                     radius: 45.0,
                     child: CircleAvatar(
                       backgroundImage:
-                          AssetImage('assets/image/accessories_2.png'),
-                      radius: 40.0,
+                          AssetImage('assets/image/accessories_2_yes.png'),
+                      radius: 42.0,
                     ),
                   ),
                   CircleAvatar(
@@ -136,10 +139,18 @@ class _Monster_detailState extends State<Monster_detail> {
                     radius: 45.0,
                     child: CircleAvatar(
                       backgroundImage:
-                          AssetImage('assets/image/accessories_3.png'),
-                      radius: 40.0,
+                          AssetImage('assets/image/accessories_3_no.png'),
+                      radius: 42.0,
                     ),
                   ),
+                  // CircleAvatar(
+                  //   backgroundColor: BackgroundColorWarm,
+                  //   radius: 45.0,
+                  //   child: CircleAvatar(
+                  //     backgroundImage: AssetImage('assets/image/accessories_3_no.png'),
+                  //     radius: 42.0,
+                  //   ),
+                  // ),
                 ],
               ))
         ],

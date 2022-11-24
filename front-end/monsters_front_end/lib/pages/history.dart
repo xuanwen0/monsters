@@ -763,13 +763,13 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   }
 
   Future<Map> getHistoryMapByAccount() async {
-    Map socialResult = {};
+    Map historyResult = {};
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     Future<Data> annoyances = annoyanceRepository
         .searchAnnoyanceByAccount(user_Account)
         .then((value) => Data.fromJson(value!));
     await annoyances.then((value) async {
-      await socialResult.putIfAbsent(
+      await historyResult.putIfAbsent(
         "itemCounter",
         () => value.data.length,
       );
@@ -798,7 +798,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
             break;
         }
 
-        socialResult.putIfAbsent(
+        historyResult.putIfAbsent(
           "result $index",
           () => {
             'id': value.data.elementAt(index).id,
@@ -815,8 +815,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
         );
       }
     });
-
-    return socialResult;
+    return historyResult;
   }
 
   //介面設計

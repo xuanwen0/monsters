@@ -158,8 +158,8 @@ class _user_FeedbackState extends State<user_Feedback> {
       return;
     }
     sent = true;
-    String email = "tony960281@gmail.com";
-    String name = "tester";
+    String email = "tony960281@gmail.com";//useremail
+    String name = "tester";//username
     const serviceId = "service_iexyh7q";
     const templateId = "template_00dj57j";
     const userId = "x0TtUpsa7W7aHFIbl";

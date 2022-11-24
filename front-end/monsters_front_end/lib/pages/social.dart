@@ -37,20 +37,20 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
   final _messageController = TextEditingController();
   StateSetter? animationState;
   var Comments = [
-    "老師知道我不會，所以根本不會叫我 ( ´•̥̥̥ω•̥̥̥` )",
-    "沒事啦你很棒的",
-    "NO is NO, it's ok",
-    "大家好友善",
+    "如果是我也一樣",
+    "總是學不會",
+    "再聰明一點",
+    "...",
     "...",
   ];
   var userNames = [
-    "Chun",
-    "Wen",
-    "Jun",
-    "Sean",
+    "Wong",
+    "Tsai",
+    "Tim",
+    "Koala",
     "Lin",
   ];
-  var times = ["11/13", "11/14", "11/15", "11/15", "11/16"];
+  var times = ["11/18", "11/18", "11/18", "11/17", "11/16"];
   List<String> messages = [];
 
   //異步處理
@@ -95,14 +95,8 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
 
   Future<Map> getSocialMapByAccount() async {
     Map socialResult = {};
-    List temp = [
-      'Lin',
-      'Lin',
-      'Sean',
-      'Wen',
-      'Chun',
-      'Jun',
-    ];
+    List temp = ['Lin', 'Lin', 'Jun', 'Wen', 'Chun', 'Lin', 'Sean', 'Sean'];
+    List tempN = ['Lin', 'Lin', 'Jun', 'Wen', 'Chun', 'Lin', 'Sean'];
     final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
 
     Future<Data> annoyances = annoyanceRepository
@@ -121,7 +115,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
             () => {
               'id': value.data.elementAt(index).id,
               // 'name': value.data.elementAt(index).account,
-              'name': temp[index % 5],
+              'name': temp[index % 8],
               'content': value.data.elementAt(index).content,
               'time': value.data.elementAt(index).time,
               'monsterId': value.data.elementAt(index).monsterId,
@@ -962,6 +956,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                       child: ListView.builder(
                           itemCount: Comments.length,
                           itemBuilder: (context, int index) {
+                            List tempList = [1, 2, 3, 4, 5];
                             return Card(
                               child: ListTile(
                                 leading: Container(
@@ -975,7 +970,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                     radius: 30,
                                     backgroundImage: AssetImage(
                                         getMonsterAvatarPath(
-                                            getRandomMonsterName())),
+                                            monsterNamesList[tempList[index]])),
                                   ),
                                 ),
                                 title: Text(
