@@ -50,7 +50,6 @@ public class HistoryController {
                 for (AnnoyanceBean annoyanceBean : annoyanceList) {
                     ObjectNode annoyanceNode = dataNode.addObject();
                     annoyanceNode.put("id", annoyanceBean.getId());
-                    annoyanceNode.put("account", annoyanceBean.getAccount());
                     annoyanceNode.put("content", annoyanceBean.getContent());
                     annoyanceNode.put("type", annoyanceBean.getType().getId());
                     annoyanceNode.put("monsterId", annoyanceBean.getMonsterId());
@@ -63,7 +62,6 @@ public class HistoryController {
                 for (DiaryBean diaryBean : diaryList) {
                     ObjectNode diaryNode = dataNode.addObject();
                     diaryNode.put("id", diaryBean.getId());
-                    diaryNode.put("account", diaryBean.getAccount());
                     diaryNode.put("content", diaryBean.getContent());
                     diaryNode.put("index", diaryBean.getIndex());
                     diaryNode.put("time", diaryBean.getTime().format(DateTimeFormatter.ofPattern("MM/dd")));
@@ -101,7 +99,6 @@ public class HistoryController {
                 for (AnnoyanceBean annoyanceBean : annoyanceList) {
                     ObjectNode annoyanceNode = dataNode.addObject();
                     annoyanceNode.put("id", annoyanceBean.getId());
-                    annoyanceNode.put("account", annoyanceBean.getAccount());
                     annoyanceNode.put("content", annoyanceBean.getContent());
                     annoyanceNode.put("type", annoyanceBean.getType().getId());
                     annoyanceNode.put("monsterId", annoyanceBean.getMonsterId());
@@ -143,7 +140,6 @@ public class HistoryController {
                 for (DiaryBean diaryBean : diaryList) {
                     ObjectNode diaryNode = dataNode.addObject();
                     diaryNode.put("id", diaryBean.getId());
-                    diaryNode.put("account", diaryBean.getAccount());
                     diaryNode.put("content", diaryBean.getContent());
                     diaryNode.put("index", diaryBean.getIndex());
                     diaryNode.put("time", diaryBean.getTime().format(DateTimeFormatter.ofPattern("MM/dd")));

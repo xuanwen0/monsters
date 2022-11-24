@@ -1,29 +1,109 @@
-註冊 : 
-http://localhost:8080/member/create
+註冊 : (POST)
+    http://localhost:8080/member/create
+    return data
+        result
+        errorcode
+        message
 
-登入 : 
-http://localhost:8080/member/login
+登入 : (POST)
+    http://localhost:8080/member/login
+    return data
+        account
+        birthday
+        mail
+        nickName
+        lock
+        photo
+        dialyTest
 
-新增煩惱 : 
-http://localhost:8080/annoyance/create
+新增煩惱 : (POST)
+    http://localhost:8080/annoyance/create
+    return data
+        return data
+        result
+        errorcode
+        message
 
-煩惱查詢 : 
-http://localhost:8080/annoyance/search?account=
+新增日記 : (POST)
+    http://localhost:8080/diary/create
+    return data
+        result
+        errorcode
+        message
 
-解答之書 : 
-http://localhost:8080/answerBook/search
+歷史紀錄(全部) : (GET)
+    http://localhost:8080/history/{account}
+    return data
+        id
+        content
+        type
+        monsterId
+        mood
+        index
+        time
+        solved
+        share
+        result
+        errorcode
+        message
 
-歷史:
-http://localhost:8080/annoyance/search?account=
+歷史紀錄(煩惱): (GET)
+    http://localhost:8080/history/annoyance/{account}
+    return data
+        id
+        content
+        type
+        monsterId
+        mood
+        index
+        time
+        solved
+        share
+        result
+        errorcode
+        message
+歷史紀錄(日記): (GET)
+    http://localhost:8080/history/diary/{account}
+    return data
+        id
+        content
+        index
+        time
+        share
+        result
+        errorcode
+        message
 
-//TODO:
-社群:
-http://localhost:8080/social/search
+解答之書 : (GET)
+    http://localhost:8080/interaction/answerBook
+    return data
+        id
+        content
+        result
+        errorcode
+        message    
 
-圖鑑:
-http://localhost:8080/monsters/search?account=
+心理小遊戲 : (GET)
+    http://localhost:8080/inactive/mindGame
+    return data
+        id
+        question
+        optionOne
+        optionTwo
+        optionThree
+        optionFour
+        answer
+        learn
+        result
+        errorcode
+        message    
 
-解決煩惱:
-http://localhost:8080/annoyance/solved
-
-
+每日測驗 : (GET)
+    http://localhost:8080/inactive/dailyTest
+    return data
+        id
+        name
+        web
+        result
+        errorcode
+        message   
