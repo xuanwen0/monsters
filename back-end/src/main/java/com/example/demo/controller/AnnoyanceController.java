@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -83,53 +82,6 @@ public class AnnoyanceController {
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
-
-    @ResponseBody
-    @GetMapping(path = "/search/{account}", produces = "application/json; charset=UTF-8")
-    public ResponseEntity SearchAnnoyanceByAccount(@PathVariable(name = "account") String account) {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode result = mapper.createObjectNode();
-        ArrayNode dataNode = result.putArray("data");
-        Resource file = null;
-        try {
-            List<AnnoyanceBean> annoyanceList = annoyanceService.searchAnnoyanceByAccount(account);
-            if (annoyanceList.size() != 0) {
-                Collections.sort(annoyanceList, new Comparator<AnnoyanceBean>() {
-                    @Override
-                    public int compare(AnnoyanceBean o1, AnnoyanceBean o2) {
-                        return o2.getTime().compareTo(o1.getTime());
-                    }
-                });
-                for (AnnoyanceBean annoyanceBean : annoyanceList) {
-                    file = fileUploadService.load(annoyanceBean.getContent());
-//                    System.out.println(file.toString());
-                    ObjectNode annoyanceNode = dataNode.addObject();
-                    annoyanceNode.put("id", annoyanceBean.getId());
-                    annoyanceNode.put("account", annoyanceBean.getAccount());
-                    annoyanceNode.put("content", annoyanceBean.getContent());
-                    annoyanceNode.put("type", annoyanceBean.getType().getId());
-                    annoyanceNode.put("monsterId", annoyanceBean.getMonsterId());
-                    annoyanceNode.put("mood", annoyanceBean.getMood());
-                    annoyanceNode.put("index", annoyanceBean.getIndex());
-                    annoyanceNode.put("time", annoyanceBean.getTime().format(DateTimeFormatter.ofPattern("MM/dd")));
-                    annoyanceNode.put("solve", annoyanceBean.getSolve());
-                    annoyanceNode.put("share", annoyanceBean.getShare());
-                    annoyanceNode.put("contentFile", file.toString());
-                }
-                result.put("result", true);
-                result.put("errorCode", "");
-                result.put("message", "查詢成功");
-            } else {
-                result.put("result", false);
-                result.put("errorCode", "");
-                result.put("message", "查詢失敗");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
-    }
-
     @ResponseBody
     @GetMapping(path = "/search/social", produces = "application/json; charset=UTF-8")
     public ResponseEntity SearchAnnoyanceByShare() {

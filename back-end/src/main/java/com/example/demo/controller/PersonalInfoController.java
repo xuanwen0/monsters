@@ -89,16 +89,4 @@ public class PersonalInfoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
-    @ResponseBody
-    @PatchMapping(value = "/modify")
-    public ResponseEntity patch(@RequestBody PersonalInfoBean personalInfoBean){
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode result = mapper.createObjectNode();
-        if(personalInfoBean.getAccount()!=null){
-            personalInfoService.update(personalInfoBean.getAccount(), personalInfoBean);
-        }
-        personalInfoService.update(personalInfoBean.getAccount(), personalInfoBean);
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
-    }
-
 }
