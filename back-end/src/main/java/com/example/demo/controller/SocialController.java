@@ -11,7 +11,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -20,20 +22,20 @@ import java.util.List;
 
 @AllArgsConstructor
 @Controller
-@RequestMapping(value = "/history")
-public class HistoryController {
+@RequestMapping(value = "/social")
+public class SocialController {
     private final AnnoyanceServiceImpl annoyanceService;
     private final DiaryServiceImpl diaryServiceimpl;
 
     @ResponseBody
-    @GetMapping(path = "/{account}", produces = "application/json; charset=UTF-8")
-    public ResponseEntity SearchAllByAccount(@PathVariable(name = "account") String account) {
+    @GetMapping(path = "", produces = "application/json; charset=UTF-8")
+    public ResponseEntity SearchAllByAccount() {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         ArrayNode dataNode = result.putArray("data");
         try {
-            List<AnnoyanceBean> annoyanceList = annoyanceService.searchAnnoyanceByAccount(account);
-            List<DiaryBean> diaryList = diaryServiceimpl.searchAnnoyanceByAccount(account);
+            List<AnnoyanceBean> annoyanceList = annoyanceService.searchAnnoyanceByShare();
+            List<DiaryBean> diaryList = diaryServiceimpl.searchAnnoyanceByShare();
             if (annoyanceList.size() != 0 || diaryList.size() != 0) {
                 Collections.sort(annoyanceList, new Comparator<AnnoyanceBean>() {
                     @Override
@@ -82,13 +84,13 @@ public class HistoryController {
     }
 
     @ResponseBody
-    @GetMapping(path = "/annoyance/{account}", produces = "application/json; charset=UTF-8")
-    public ResponseEntity SearchAnnoyanceByAccount(@PathVariable(name = "account") String account) {
+    @GetMapping(path = "/annoyance", produces = "application/json; charset=UTF-8")
+    public ResponseEntity SearchAnnoyanceByAccount() {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         ArrayNode dataNode = result.putArray("data");
         try {
-            List<AnnoyanceBean> annoyanceList = annoyanceService.searchAnnoyanceByAccount(account);
+            List<AnnoyanceBean> annoyanceList = annoyanceService.searchAnnoyanceByShare();
             if (annoyanceList.size() != 0) {
                 Collections.sort(annoyanceList, new Comparator<AnnoyanceBean>() {
                     @Override
@@ -123,13 +125,13 @@ public class HistoryController {
     }
 
     @ResponseBody
-    @GetMapping(path = "/diary/{account}", produces = "application/json; charset=UTF-8")
-    public ResponseEntity SearchDiaryByAccount(@PathVariable(name = "account") String account) {
+    @GetMapping(path = "/diary", produces = "application/json; charset=UTF-8")
+    public ResponseEntity SearchDiaryByAccount() {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         ArrayNode dataNode = result.putArray("data");
         try {
-            List<DiaryBean> diaryList = diaryServiceimpl.searchAnnoyanceByAccount(account);
+            List<DiaryBean> diaryList = diaryServiceimpl.searchAnnoyanceByShare();
             if (diaryList.size() != 0) {
                 Collections.sort(diaryList, new Comparator<DiaryBean>() {
                     @Override

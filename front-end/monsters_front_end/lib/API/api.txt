@@ -62,8 +62,53 @@
         result
         errorcode
         message
+
 歷史紀錄(日記): (GET)
     http://localhost:8080/history/diary/{account}
+    return data
+        id
+        content
+        index
+        time
+        share
+        result
+        errorcode
+        message
+
+社群(全部) : (GET)
+    http://localhost:8080/social
+    return data
+        id
+        content
+        type
+        monsterId
+        mood
+        index
+        time
+        solved
+        share
+        result
+        errorcode
+        message
+
+社群(煩惱): (GET)
+    http://localhost:8080/socila/annoyance
+    return data
+        id
+        content
+        type
+        monsterId
+        mood
+        index
+        time
+        solved
+        share
+        result
+        errorcode
+        message
+
+社群(日記): (GET)
+    http://localhost:8080/socila/diary
     return data
         id
         content
