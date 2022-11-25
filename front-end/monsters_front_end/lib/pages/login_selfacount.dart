@@ -270,7 +270,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
     //儲存account shared preferences (後用來判斷此裝置是否登入過)
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("selfLogin", account);
-    // user_Account = account;
+    user_Account = account;
   }
 }
 

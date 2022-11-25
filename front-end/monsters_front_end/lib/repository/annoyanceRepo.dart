@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
+import 'package:monsters_front_end/main.dart';
 
 import '../API/annoyanceAPI.dart';
 import '../model/annoyanceModel.dart';
@@ -21,7 +21,7 @@ class AnnoyanceRepository implements AnnoyanceApiDataSource {
   @override
   Future<Map<String, dynamic>?> searchAnnoyanceByAccount(String account) {
     return _searchAnnoyanceByAccount(
-        Uri.parse('$domain/annoyance/search/$account'));
+        Uri.parse('$domain/annoyance/search/$user_Account'));
   }
 
   Future<String> _createAnnoyance(

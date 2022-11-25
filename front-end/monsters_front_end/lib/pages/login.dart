@@ -192,7 +192,7 @@ class _loginState extends State<LoginPage> {
     //儲存account shared preferences (後用來判斷此裝置是否登入過)
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("googleLogin", account);
-    // user_Account = account;
+    user_Account = account;
   }
 
   void checkLogin() async {
