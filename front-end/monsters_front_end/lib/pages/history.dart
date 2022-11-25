@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls, prefer_const_constructors
 
 import 'dart:async';
-import 'dart:developer';
+import 'dart:developer' as dv;
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
@@ -19,7 +19,7 @@ import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/moodLineChart.dart';
 import 'package:monsters_front_end/pages/social.dart';
 import 'package:monsters_front_end/pages/style.dart';
-import 'package:monsters_front_end/repository/annoyanceRepo.dart';
+import 'package:monsters_front_end/repository/historyRepo.dart';
 import 'package:monsters_front_end/state/drawer.dart';
 
 class History extends StatefulWidget {
@@ -48,6 +48,8 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
+    _future = getHistoryMapByAccount();
+    setState(() {});
     //TODO: Level 1
     //計算不同歷史類別的數量
     /*
@@ -763,13 +765,20 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   }
 
   Future<Map> getHistoryMapByAccount() async {
-    Map socialResult = {};
-    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
-    Future<Data> annoyances = annoyanceRepository
-        .searchAnnoyanceByAccount(user_Account)
+    //1:全部 2:煩惱 3:日記
+    //selectionTab_type = 1;
+    if (user_Account == "tonyhong") {
+      dv.log(user_Account);
+    }
+    dv.log(selectionTab_type.toString());
+    final HistoryRepository historyRepository = HistoryRepository();
+
+    Future<Data> histories = historyRepository
+        .searchHistoryByType(selectionTab_type)
         .then((value) => Data.fromJson(value!));
-    await annoyances.then((value) async {
-      await socialResult.putIfAbsent(
+    Map historyResult = {};
+    await histories.then((value) async {
+      await historyResult.putIfAbsent(
         "itemCounter",
         () => value.data.length,
       );
@@ -798,7 +807,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
             break;
         }
 
-        socialResult.putIfAbsent(
+        historyResult.putIfAbsent(
           "result $index",
           () => {
             'id': value.data.elementAt(index).id,
@@ -815,8 +824,8 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
         );
       }
     });
-
-    return socialResult;
+    print(historyResult);
+    return historyResult;
   }
 
   //介面設計

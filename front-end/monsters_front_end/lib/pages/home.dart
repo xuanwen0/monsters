@@ -579,6 +579,7 @@ class _MainPageState extends State<MainPage>
     });
   }
 */
+  //怪獸動畫限制區域主程式
   checker() {
     if (_marginL <= 30 || _marginL > maxSize - 100) {
       changeDirectionLeft();

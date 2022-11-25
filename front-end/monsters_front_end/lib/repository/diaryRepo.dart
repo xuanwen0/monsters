@@ -5,35 +5,35 @@ import 'dart:developer';
 
 import 'package:monsters_front_end/main.dart';
 
-import '../API/annoyanceAPI.dart';
-import '../model/annoyanceModel.dart';
+import '../API/diaryAPI.dart';
+import '../model/diaryModel.dart';
 import 'package:http/http.dart' as http;
 
-const String domain = "http://220.132.124.140:5000";
+import 'annoyanceRepo.dart';
 
-class AnnoyanceRepository implements AnnoyanceApiDataSource {
+class DiaryRepository implements DiaryApiDataSource {
   final client = http.Client();
   @override
-  Future<String> createAnnoyance(Annoyance annoyance) {
-    return _createAnnoyance(Uri.parse('$domain/annoyance/create'), annoyance);
+  Future<String> createDiary(Diary diary) {
+    return _createDiary(Uri.parse('$domain/diary/create'), diary);
   }
 
   @override
-  Future<Map<String, dynamic>?> searchAnnoyanceByAccount(String account) {
-    return _searchAnnoyanceByAccount(
-        Uri.parse('$domain/annoyance/search/$user_Account'));
+  Future<Map<String, dynamic>?> searchDiaryByAccount(String account) {
+    return _searchDiaryByAccount(
+        Uri.parse('$domain/diary/search/$user_Account'));
   }
 
-  Future<String> _createAnnoyance(
+  Future<String> _createDiary(
     Uri url,
-    Annoyance annoyance,
+    Diary diary,
   ) async {
     try {
-      var body = json.encode(annoyance);
-      log(annoyance.index.toString());
+      var body = json.encode(diary);
+      log(diary.index.toString());
       var request = await client.post(url,
           headers: {'Content-type': 'application/json'}, body: body);
-      // body: annoyance);
+      // body: diary);
       log(request.statusCode.toString());
       log(request.body);
       if (request.statusCode == 201) {
@@ -51,16 +51,16 @@ class AnnoyanceRepository implements AnnoyanceApiDataSource {
     }
   }
 
-  Future<Map<String, dynamic>?> _searchAnnoyanceByAccount(Uri url) async {
+  Future<Map<String, dynamic>?> _searchDiaryByAccount(Uri url) async {
     try {
       final request =
           await client.get(url, headers: {'Content-type': 'application/json'});
       if (request.statusCode == 200) {
-        Map<String, dynamic> annoyance = jsonDecode(request.body);
-        return Future.value(annoyance);
+        Map<String, dynamic> diary = jsonDecode(request.body);
+        return Future.value(diary);
       } else {
-        Map<String, dynamic> annoyance = jsonDecode(request.body);
-        return annoyance;
+        Map<String, dynamic> diary = jsonDecode(request.body);
+        return diary;
       }
     } catch (e) {
       print(e.toString());

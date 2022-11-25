@@ -344,14 +344,15 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                           ),
                         ),
                         onPressed: () {
-                          // log("user_Account: " + user_Account.toString());
-                          // log("type:" + userAnswers[0].toString());
-                          // log("content: " + userAnswers[1].toString());
-                          // log("mood: " + userAnswers[2].toString());
-                          // log("index: " + userAnswers[3].toString());
-                          // log("share: " + userAnswers[4].toString());
-                          // log("moodFile: " + moodFile.toString());
-                          // log("contentFile: " + contentFile.toString());
+                          log("user_Account: " + user_Account.toString());
+                          log("type:" + userAnswers[0].toString());
+                          log("content: " + userAnswers[1].toString());
+                          log("mood: " + userAnswers[2].toString());
+                          log("index: " + userAnswers[3].toString());
+                          log("share: " + userAnswers[4].toString());
+                          log("moodFile: " + moodFile.toString());
+                          log("contentFile: " + contentFile.toString());
+
                           annoyanceRepository.createAnnoyance(
                             Annoyance(
                               id: 0,
@@ -368,12 +369,12 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                               solve: 0,
                             ),
                           );
-                          // Navigator.pushReplacement(
-                          //     //TODO: Level 2
-                          //     //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => History()));
+                          Navigator.pushReplacement(
+                              //TODO: Level 2
+                              //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => History()));
                         },
                       ),
                     ),
@@ -681,11 +682,10 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
             Container(
               height: 50,
               width: 50,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border:
-                          Border.all(width: 1, color: const Color(0xffa0522d)),
-                    ),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(width: 1, color: const Color(0xffa0522d)),
+              ),
               child: CircleAvatar(
                 backgroundImage: AssetImage(getMonsterAvatarPath("Baku")),
               ),
@@ -839,11 +839,12 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
     setState(() {});
   }
 
-  //怪獸文字回覆
+  //怪獸回覆文字
   void reply(String text) {
     messages.insert(0, {"data": 0, "message": text});
   }
 
+  //怪獸回覆選擇分數圖片
   void replyImage() {
     messages.insert(0, {"data": 6, "message": "print image"});
   }

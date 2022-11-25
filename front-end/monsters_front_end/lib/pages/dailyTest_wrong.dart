@@ -87,8 +87,9 @@ class _DailyTest_wrongState extends State<DailyTest_wrong> {
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.horizontal(
-                          left: Radius.circular(30.0),
-                          right: Radius.circular(30.0)),
+                        left: Radius.circular(30.0),
+                        right: Radius.circular(30.0),
+                      ),
                     ),
                     child: Container(
                       alignment: Alignment.center,

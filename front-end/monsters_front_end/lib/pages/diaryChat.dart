@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/audio_model/audio_player.dart';
+import 'package:monsters_front_end/model/diaryModel.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
 import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/monsters_information.dart';
 import 'package:monsters_front_end/pages/drawing_colors.dart';
 import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/style.dart';
+import 'package:monsters_front_end/repository/diaryRepo.dart';
 import 'package:video_player/video_player.dart';
 import 'package:monsters_front_end/pages/audio_main.dart';
 
@@ -132,9 +134,8 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     //TODO:後端修改
-    /*
-    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
-    */
+
+    final DiaryRepository diaryRepository = DiaryRepository();
 
     if (chatRound == 0) {
       response("get intro"); //intro
@@ -333,30 +334,26 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                             ),
                           ),
                           onPressed: () {
-                            /* 改成日記
-                            annoyanceRepository.createAnnoyance(
-                              Annoyance(
+                            // 內容、是否畫心情、是否畫圖
+                            diaryRepository.createDiary(
+                              Diary(
                                 id: 0,
                                 account: user_Account, //"Lin"
-                                monsterId: 1,
-                                type: userAnswers[0], //4
-                                content: userAnswers[1], //"純文字不分享無多媒體"
-                                mood: userAnswers[2], //"否"
-                                index: userAnswers[3], //3
-                                share: userAnswers[4], //0
-                                contentFile: contentFile, //null
-                                moodFile: moodFile, //null
+                                content: userAnswers[0], //"純文字不分享無多媒體"
+                                index: userAnswers[1], //3
+                                share: userAnswers[2], //0
                                 time: '',
-                                solve: 0,
+                                contentFile: null,
                               ),
                             );
-                            */
-                            Navigator.pushReplacement(
-                                //TODO: Level 2
-                                //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => History()));
+                            log(userAnswers.toString());
+
+                            // Navigator.pushReplacement(
+                            //     //TODO: Level 2
+                            //     //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => History()));
                           },
                         ),
                       ),
@@ -659,11 +656,10 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
             Container(
               height: 50,
               width: 50,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border:
-                          Border.all(width: 1, color: const Color(0xffa0522d)),
-                    ),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(width: 1, color: const Color(0xffa0522d)),
+              ),
               child: CircleAvatar(
                 backgroundImage: AssetImage(getMonsterAvatarPath("Baku")),
               ),
@@ -687,7 +683,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                         Flexible(
                             child: Container(
                                 constraints: BoxConstraints(maxWidth: 200),
-                                child: annoyancePointRow()))
+                                child: emotionPointRows()))
                       ],
                     ),
                   )),
@@ -770,13 +766,13 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
           reply("想畫點甚麼表達你的感受嗎？");
         }
 
-        //取得心情分數
+        //取得是否畫心情
         if (chatRound == 2) {
           if (acceptDrawingMembers.contains(text)) {
             if (text == "是") {
               await _navigateAndDisplayPaint(context);
             }
-            userAnswers.add(text);
+            // userAnswers.add(text);
           } else {
             cannotRead();
           }
@@ -785,21 +781,17 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
         }
         //取得是否分享
         if (chatRound == 3) {
-          reply("想不想把這件事分享給別人呢？");
-          if (acceptShare == 0 || acceptShare == 1) {
-            if (text == "是") {
-              userAnswers.add(emotionGradeMembers.indexOf("1"));
-              acceptShare = 1;
-            } else if (text == "否") {
-              acceptShare = 0;
-              userAnswers.add(emotionGradeMembers.indexOf("0"));
-            }
+          if (emotionGradeMembers.contains(text)) {
+            userAnswers.add(emotionGradeMembers.indexOf(text!));
+            reply("想不想把這件事分享給別人呢？");
+
+            log("--完成心情分數");
           } else {
             cannotRead();
           }
         }
         if (chatRound == 4) {
-          if (text != "是" || text != "否") {
+          if (text == "是" || text == "否") {
             if (text == "是") {
               userAnswers.add(1);
             }
@@ -832,8 +824,8 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
   }
 
   Row emotionPointRow() {
-    Row annoyancePointRow = Row();
-    annoyancePointRow = Row(
+    Row emotionPointRow = Row();
+    emotionPointRow = Row(
       children: [
         emotionPointColumn("1"),
         Spacer(),
@@ -848,12 +840,12 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
       ],
     );
 
-    return annoyancePointRow;
+    return emotionPointRow;
   }
 
-  Column emotionPointColumn(String point) {
-    Column annoyanceImageColumn = Column();
-    annoyanceImageColumn = Column(
+  Column emotionPointColumns(String point) {
+    Column emotionImageColumns = Column();
+    emotionImageColumns = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CircleAvatar(
@@ -867,30 +859,30 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
       ],
     );
 
-    return annoyanceImageColumn;
+    return emotionImageColumns;
   }
 
-  Row annoyancePointRow() {
-    Row annoyancePointRow = Row();
-    annoyancePointRow = Row(
+  Row emotionPointRows() {
+    Row emotionPointRows = Row();
+    emotionPointRows = Row(
       children: [
-        annoyancePointColumn("1"),
+        emotionPointColumn("1"),
         Spacer(),
-        annoyancePointColumn("2"),
+        emotionPointColumn("2"),
         Spacer(),
-        annoyancePointColumn("3"),
+        emotionPointColumn("3"),
         Spacer(),
-        annoyancePointColumn("4"),
+        emotionPointColumn("4"),
         Spacer(),
-        annoyancePointColumn("5"),
+        emotionPointColumn("5"),
         Spacer(),
       ],
     );
 
-    return annoyancePointRow;
+    return emotionPointRows;
   }
 
-  Column annoyancePointColumn(String point) {
+  Column emotionPointColumn(String point) {
     Column annoyanceImageColumn = Column();
     annoyanceImageColumn = Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -947,6 +939,7 @@ class PresentWidget extends StatefulWidget {
 
 class _PresentWidget extends State<PresentWidget> {
   String present_name = getRandomMonsterName_CH();
+  final DiaryRepository diaryRepository = DiaryRepository();
   @override
   Widget build(BuildContext context) {
     return Material(
