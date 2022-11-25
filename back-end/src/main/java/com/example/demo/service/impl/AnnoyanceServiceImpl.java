@@ -57,6 +57,16 @@ public class AnnoyanceServiceImpl extends BaseServiceImplement<AnnoyanceDAO, Ann
     }
 
     @Override
+    public List<AnnoyanceBean> searchAnnoyanceIsSolveByAccount(int solve, String account) {
+        List<Annoyance> userList = annoyanceDAO.findBySolve(solve, account);
+        List<AnnoyanceBean> annoyanceBeanList = new ArrayList<>();
+        for (Annoyance annoyance : userList) {
+            annoyanceBeanList.add(createBean(annoyance));
+        }
+        return annoyanceBeanList;
+    }
+
+    @Override
     protected Annoyance createVO(AnnoyanceBean bean) {
         Annoyance entity = new Annoyance();
         entity.setId(bean.getId());

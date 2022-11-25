@@ -63,6 +63,22 @@
         errorcode
         message
 
+歷史紀錄(煩惱/是否解決): (GET)
+    http://localhost:8080/history/annoyance/{solve}/{account}
+    return data
+        id
+        content
+        type
+        monsterId
+        mood
+        index
+        time
+        solved
+        share
+        result
+        errorcode
+        message
+
 歷史紀錄(日記): (GET)
     http://localhost:8080/history/diary/{account}
     return data

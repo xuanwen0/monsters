@@ -12,4 +12,6 @@ public interface AnnoyanceService extends BaseService<AnnoyanceBean>{
 
     List<AnnoyanceBean> searchAnnoyanceByShare();
 
+    List<AnnoyanceBean> searchAnnoyanceIsSolveByAccount(int solve, String account);
+
 }

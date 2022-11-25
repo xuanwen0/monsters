@@ -24,6 +24,14 @@ public class AnnoyanceDAOImpl extends BaseDAOImplement<Annoyance> implements Ann
         detachedCriteria.add(Restrictions.eq("share", 1));
         return findByCriteria(detachedCriteria);
     }
+
+    @Override
+    public List<Annoyance> findBySolve(int solve, String account) {
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Annoyance.class);
+        detachedCriteria.add(Restrictions.eq("account", account));
+        detachedCriteria.add(Restrictions.eq("solve", solve));
+        return findByCriteria(detachedCriteria);
+    }
 }
 
 
