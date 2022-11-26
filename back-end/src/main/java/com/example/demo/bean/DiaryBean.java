@@ -10,6 +10,7 @@ public class DiaryBean extends BaseBean {
     private Integer id;
     private String account;
     private String content;
+    private int monsterId;
     private Integer index;
     private LocalDateTime time = LocalDateTime.now();
     private Integer share;
