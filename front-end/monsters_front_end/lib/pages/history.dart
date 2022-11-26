@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/annoyanceModel.dart';
 import 'package:monsters_front_end/pages/annoyanceChat.dart';
 import 'package:monsters_front_end/pages/monsters_information.dart';
@@ -190,7 +189,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                 selectionTab_solve = 1;
                               });
                             }),
-                        //日記標籤 selectionTab_type == 2
+                        //日記標籤 selectionTab_type == 3
                         InkWell(
                             child: Container(
                               width: 50,
@@ -327,7 +326,10 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                                   ["monsterId"]])),
                                       child: (snapshot.data["result $index"]
                                                   ["solve"] ==
-                                              1)
+                                                  1 ||
+                                              snapshot.data["result $index"]
+                                                      ["solve"] ==
+                                                  null)
                                           ? Container(
                                               alignment: Alignment.bottomRight,
                                               child: CircleAvatar(
@@ -767,21 +769,35 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   Future<Map> getHistoryMapByAccount() async {
     //1:全部 2:煩惱 3:日記
     //selectionTab_type = 1;
-    if (user_Account == "tonyhong") {
-      dv.log(user_Account);
-    }
-    dv.log(selectionTab_type.toString());
+    int type = 1;
     final HistoryRepository historyRepository = HistoryRepository();
+    if (selectionTab_type == 2) {
+      if (selectionTab_solve == 1) {
+        type = 4;
+      }
+      if (selectionTab_solve == 2) {
+        type = 5;
+      }
+    }
+    if (selectionTab_type == 3) {
+      type = selectionTab_type;
+      print("THIS type: " + type.toString());
+    }
+    print("-------------");
+    print(type.toString());
+    print("-------------");
 
     Future<Data> histories = historyRepository
-        .searchHistoryByType(selectionTab_type)
+        .searchHistoryByType(type)
         .then((value) => Data.fromJson(value!));
     Map historyResult = {};
+
     await histories.then((value) async {
       await historyResult.putIfAbsent(
         "itemCounter",
         () => value.data.length,
       );
+
       for (int index = 0; index < min(value.data.length, 20); index++) {
         String type = "";
         switch (value.data.elementAt(index).type) {
