@@ -73,6 +73,7 @@ public class HistoryController {
                     ObjectNode diaryNode = dataNode.addObject();
                     diaryNode.put("id", diaryBean.getId());
                     diaryNode.put("content", diaryBean.getContent());
+                    diaryNode.put("monsterId", diaryBean.getMonsterId());
                     diaryNode.put("index", diaryBean.getIndex());
                     diaryNode.put("time", diaryBean.getTime().format(DateTimeFormatter.ofPattern("MM/dd")));
                     diaryNode.put("share", diaryBean.getShare());

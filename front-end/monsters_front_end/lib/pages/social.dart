@@ -2,13 +2,10 @@
 
 import 'dart:async';
 import 'dart:math';
-import 'dart:developer' as dv;
-
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/annoyanceModel.dart';
 import 'package:monsters_front_end/pages/monsters_information.dart';
 import 'package:monsters_front_end/pages/diaryChat.dart';
@@ -17,9 +14,9 @@ import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/interaction.dart';
 import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/style.dart';
-import 'package:monsters_front_end/repository/annoyanceRepo.dart';
 import 'package:monsters_front_end/state/drawer.dart';
 
+import '../repository/socialRepo.dart';
 import 'annoyanceChat.dart';
 
 class Social extends StatefulWidget {
@@ -94,37 +91,63 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
   }
 
   Future<Map> getSocialMapByAccount() async {
-    Map socialResult = {};
-    List temp = ['Lin', 'Lin', 'Jun', 'Wen', 'Chun', 'Lin', 'Sean', 'Sean'];
-    List tempN = ['Lin', 'Lin', 'Jun', 'Wen', 'Chun', 'Lin', 'Sean'];
-    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
+    final SocialRepository socialRepository = SocialRepository();
 
-    Future<Data> annoyances = annoyanceRepository
-        .searchAnnoyanceByAccount(user_Account)
+    Future<Data> socials = socialRepository
+        .searchSocialByType(selectionTab_type)
         .then((value) => Data.fromJson(value!));
-    await annoyances.then((value) async {
-      if (value != null) {
-        socialResult = {};
-        await socialResult.putIfAbsent(
-          "itemCounter",
-          () => value.data.length,
-        );
-        for (int index = 0; index < min(value.data.length, 20); index++) {
-          socialResult.putIfAbsent(
-            "result $index",
-            () => {
-              'id': value.data.elementAt(index).id,
-              // 'name': value.data.elementAt(index).account,
-              'name': temp[index % 8],
-              'content': value.data.elementAt(index).content,
-              'time': value.data.elementAt(index).time,
-              'monsterId': value.data.elementAt(index).monsterId,
-            },
-          );
+    Map socialResult = {};
+
+    await socials.then((value) async {
+      await socialResult.putIfAbsent(
+        "itemCounter",
+        () => value.data.length,
+      );
+
+      for (int index = 0; index < min(value.data.length, 20); index++) {
+        String type = "";
+        switch (value.data.elementAt(index).type) {
+          case 1:
+            type = "課業";
+            break;
+          case 2:
+            type = "事業";
+            break;
+          case 3:
+            type = "愛情";
+            break;
+          case 4:
+            type = "友情";
+            break;
+          case 5:
+            type = "親情";
+            break;
+          case 6:
+            type = "其他";
+            break;
+          default:
+            break;
         }
+
+        socialResult.putIfAbsent(
+          "result $index",
+          () => {
+            'id': value.data.elementAt(index).id,
+            // 'name': value.data.elementAt(index).account,
+            'name': "Lin",
+            'avatar': value.data.elementAt(index).monsterId,
+            'content': value.data.elementAt(index).content,
+            'type': type,
+            'time': value.data.elementAt(index).time,
+            'solve': value.data.elementAt(index).solve?.toInt(),
+            'mood': value.data.elementAt(index).mood,
+            'index': value.data.elementAt(index).index,
+            'share': value.data.elementAt(index).share,
+          },
+        );
       }
     });
-
+    print(socialResult);
     return socialResult;
   }
 
@@ -333,7 +356,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                         monsterNamesList[snapshot
                                                                     .data[
                                                                 "result $index"]
-                                                            ["monsterId"]])),
+                                                            ["avatar"]])),
                                               ),
                                             ),
                                           ),
@@ -350,7 +373,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                   ["time"],
                                               monsterNamesList[
                                                   snapshot.data["result $index"]
-                                                      ["monsterId"]],
+                                                      ["avatar"]],
                                             ),
                                             child: Stack(
                                               children: [

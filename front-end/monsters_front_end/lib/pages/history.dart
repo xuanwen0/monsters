@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls, prefer_const_constructors
 
 import 'dart:async';
-import 'dart:developer' as dv;
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
