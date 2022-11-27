@@ -76,7 +76,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
         showPics.add(getMonsterImage(monsterNamesList[i]));
       } else {
         showNames.add("???");
-        showPics.add('assets/image/unknow.png');
+        showPics.add('assets/image/unknown.png');
       }
     }
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
