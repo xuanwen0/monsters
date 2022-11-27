@@ -548,37 +548,6 @@ class _MainPageState extends State<MainPage>
       }
     });
   }
-
-/*
-  doAnimation1() {
-    setState(() {
-      // int randomNum = random.nextInt(4) + 1; //1 2 3 4
-      int randomNum = 2; //1 2 3 4
-      if (randomNum == 1) {
-        _marginL2 += moveSpeed;
-        moveingDirection = 2;
-        print("go Right");
-        checker();
-      }
-      if (randomNum == 2) {
-        _marginL2 -= moveSpeed;
-        moveingDirection = 1;
-        print("go left");
-        checker();
-      }
-      if (randomNum == 3) {
-        _marginT2 -= moveSpeed;
-        print("go top");
-        checker();
-      }
-      if (randomNum == 4) {
-        _marginT2 += moveSpeed;
-        print("go bottom");
-        checker();
-      }
-    });
-  }
-*/
   //怪獸動畫限制區域主程式
   checker() {
     if (_marginL <= 30 || _marginL > maxSize - 100) {

@@ -388,9 +388,6 @@ class _SignUpState extends State<SignUp> {
                         softWrap: false,
                       ),
                       onPressed: () {
-                        debugPrint(DateTime.now().toString().substring(0, 10));
-                        debugPrint(date.toString().substring(0, 10));
-
                         var fail = false;
                         if (DateTime.now()
                                 .difference(date)

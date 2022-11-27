@@ -52,7 +52,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
         if (selectionTab_type == 1) {
           showNames.add("???");
           showPics.add(
-            'assets/image/unknow.png',
+            'assets/image/unknown.png',
           );
         }
       }

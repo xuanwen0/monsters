@@ -44,9 +44,7 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
       personalInfoResult["nick_name"] = value.data.first.nick_name;
       personalInfoResult["birthday"] = value.data.first.birthday;
       personalInfoResult["mail"] = value.data.first.mail;
-      print(personalInfoResult);
     });
-    print(personalInfoResult);
     setState(() {});
     return personalInfoResult;
   }

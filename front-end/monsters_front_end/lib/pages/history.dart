@@ -415,8 +415,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                             ),
                                     ],
                                   ),
-                                  
-                                  
                                   onTap: () {
                                     print(
                                       "type: " +
@@ -802,11 +800,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     }
     if (selectionTab_type == 3) {
       type = selectionTab_type;
-      print("THIS type: " + type.toString());
     }
-    print("-------------");
-    print(type.toString());
-    print("-------------");
 
     Future<Data> histories = historyRepository
         .searchHistoryByType(type)
@@ -861,7 +855,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
         );
       }
     });
-    print(historyResult);
     return historyResult;
   }
 

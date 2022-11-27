@@ -24,7 +24,7 @@ class _Monster_detailState extends State<Monster_detail> {
   Widget build(BuildContext context) {
     String monsterName = monsterNamesList[index];
     String monsterName_CH = monsterNamesList_CH[index];
-    print(index.toString());
+    print("圖鑑查詢怪獸ID為: " + index.toString());
     return Scaffold(
       backgroundColor: const Color(0xfffffed4),
       appBar: secondAppBar("圖鑑"),
