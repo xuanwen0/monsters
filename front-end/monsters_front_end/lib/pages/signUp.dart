@@ -128,7 +128,7 @@ class _SignUpState extends State<SignUp> {
                           value.length < 9) {
                         return null;
                       } else if (value.isNotEmpty) {
-                        return '帳號須為6-8位元';
+                        return '帳號須為英數字混和6-8碼';
                       } else {
                         return '帳號不得空白';
                       }
@@ -169,7 +169,7 @@ class _SignUpState extends State<SignUp> {
                         } else if (value.isEmpty) {
                           return '密碼不得空白';
                         } else {
-                          return '密碼須為8位元';
+                          return '密碼須為英數字混和8碼';
                         }
                       }),
                   const SizedBox(height: 15.0),

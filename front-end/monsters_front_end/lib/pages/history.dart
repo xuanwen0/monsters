@@ -326,10 +326,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                                   ["monsterId"]])),
                                       child: (snapshot.data["result $index"]
                                                   ["solve"] ==
-                                                  1 ||
-                                              snapshot.data["result $index"]
-                                                      ["solve"] ==
-                                                  null)
+                                              1)
                                           ? Container(
                                               alignment: Alignment.bottomRight,
                                               child: CircleAvatar(
@@ -346,12 +343,32 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                     style: TextStyle(fontSize: BodyTextSize),
                                     textAlign: TextAlign.left,
                                   ),
-                                  trailing: Column(
+                                  trailing: (snapshot.data["result $index"]
+                                                  ["type"]
+                                              .toString()
+                                              .length <
+                                          1)
+                                      ? Container(
+                                          width: 55,
+                                          child: Center(
+                                            child: Text(
+                                              snapshot.data["result $index"]
+                                                      ["time"]
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: BackgroundColorWarm),
+                                            ),
+                                          ),
+                                        )
+                                      : Column(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
+                                      
                                       Expanded(
                                         flex: 59,
-                                        child: Container(
+                                                child: Container(
                                           width: 55,
                                           decoration: BoxDecoration(
                                             color: Color.fromARGB(
@@ -371,8 +388,10 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                                       255, 255, 255, 255)),
                                             ),
                                           ),
-                                        ),
+                                                )
+                                            
                                       ),
+                                          
                                       Expanded(
                                         flex: 5,
                                         child: SizedBox(),
@@ -393,9 +412,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                                       color:
                                                           BackgroundColorWarm)),
                                             ),
-                                          )),
+                                              ),
+                                            ),
                                     ],
                                   ),
+                                  
+                                  
                                   onTap: () {
                                     print(
                                       "type: " +
