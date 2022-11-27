@@ -38,7 +38,7 @@ class Member {
   String? account;
   String? password;
   String? birthday;
-  String? nickName;
+  String? nick_name;
   String? mail;
   String? lock;
   String? photo;
@@ -49,7 +49,7 @@ class Member {
       required this.password,
       this.birthday,
       this.mail,
-      this.nickName,
+      this.nick_name,
       this.lock,
       this.photo,
       this.dailyTest});
@@ -58,7 +58,7 @@ class Member {
         account: json['account'],
         birthday: json['birthday'],
         mail: json['mail'],
-        nickName: json['nickName'],
+        nick_name: json['nick_name'],
         password: json['password'],
         lock: json['lock'],
         photo: json['photo'],
@@ -70,7 +70,7 @@ class Member {
     data['account'] = account;
     data['birthday'] = birthday;
     data['mail'] = mail;
-    data['nickName'] = nickName;
+    data['nick_name'] = nick_name;
     data['password'] = password;
     data['lock'] = lock;
     data['photo'] = photo;
