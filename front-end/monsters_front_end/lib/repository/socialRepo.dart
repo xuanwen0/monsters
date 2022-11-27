@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/repository/annoyanceRepo.dart';
 
@@ -19,7 +20,6 @@ class SocialRepository implements SocialApiDataSource {
       searchType = "/annoyance";
     }
     if (type == 3) {
-      // searchType = "diary/$user_Account";
       searchType = "/diary";
     }
     if (type == 4) {

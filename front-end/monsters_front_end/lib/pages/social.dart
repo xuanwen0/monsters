@@ -86,11 +86,11 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
     rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
 
-    _future = getSocialMapByAccount();
+    _future = getSocialMap();
     super.initState();
   }
 
-  Future<Map> getSocialMapByAccount() async {
+  Future<Map> getSocialMap() async {
     final SocialRepository socialRepository = SocialRepository();
 
     Future<Data> socials = socialRepository
@@ -154,6 +154,8 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
+    _future = getSocialMap();
+    setState(() {});
     return Scaffold(
         backgroundColor: const Color(0xfffffed4),
         key: _scaffoldKEy,

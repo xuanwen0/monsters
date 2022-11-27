@@ -29,7 +29,7 @@ public class SocialController {
 
     @ResponseBody
     @GetMapping(path = "", produces = "application/json; charset=UTF-8")
-    public ResponseEntity SearchAllByAccount() {
+    public ResponseEntity SearchSocialAll() {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         ArrayNode dataNode = result.putArray("data");
@@ -86,7 +86,7 @@ public class SocialController {
 
     @ResponseBody
     @GetMapping(path = "/annoyance", produces = "application/json; charset=UTF-8")
-    public ResponseEntity SearchAnnoyanceByAccount() {
+    public ResponseEntity SearchSocialByAnnoyance() {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         ArrayNode dataNode = result.putArray("data");
@@ -127,7 +127,7 @@ public class SocialController {
 
     @ResponseBody
     @GetMapping(path = "/diary", produces = "application/json; charset=UTF-8")
-    public ResponseEntity SearchDiaryByAccount() {
+    public ResponseEntity SearchSocialByDiary() {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         ArrayNode dataNode = result.putArray("data");
