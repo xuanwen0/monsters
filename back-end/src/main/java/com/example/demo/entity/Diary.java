@@ -21,7 +21,7 @@ public class Diary {
     @Column(name = "`content`", nullable = false)
     private String content;
 
-    @Column(name = "`monster_Id", nullable = false)
+    @Column(name = "`monster_Id`", nullable = false)
     private int monsterId;
 
     @Column(name = "`index`", nullable = false)
