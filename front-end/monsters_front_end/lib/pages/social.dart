@@ -147,7 +147,6 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
         );
       }
     });
-    print(socialResult);
     return socialResult;
   }
 
@@ -155,7 +154,6 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKEy = GlobalKey<ScaffoldState>();
     _future = getSocialMap();
-    setState(() {});
     return Scaffold(
         backgroundColor: const Color(0xfffffed4),
         key: _scaffoldKEy,

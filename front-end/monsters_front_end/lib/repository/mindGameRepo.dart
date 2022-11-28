@@ -21,6 +21,10 @@ class MindGameRepository implements MindGameApiDataSource {
     try {
       final request =
           await client.get(url, headers: {'Content-type': 'application/json'});
+      print("*" * 20);
+      print("mindGame status");
+      print("status: " + request.statusCode.toString());
+      print("*" * 20);
       if (request.statusCode == 200) {
         Map<String, dynamic> mindGame = jsonDecode(request.body);
         return Future.value(mindGame);

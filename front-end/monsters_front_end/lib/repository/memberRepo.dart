@@ -78,6 +78,10 @@ class MemberRepository implements MemberApiDataSource {
     try {
       final request =
           await client.get(url, headers: {'Content-type': 'application/json'});
+    log("*" * 20);
+    log("member status");
+    log("status: " + request.statusCode.toString());
+    log("*" * 20);
       if (request.statusCode == 200) {
         Map<String, dynamic> personalInfo = jsonDecode(request.body);
         return Future.value(personalInfo);

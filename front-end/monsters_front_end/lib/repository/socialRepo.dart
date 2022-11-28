@@ -33,6 +33,10 @@ class SocialRepository implements SocialApiDataSource {
     try {
       final request =
           await client.get(url, headers: {'Content-type': 'application/json'});
+      log("*" * 20);
+      log("social status");
+      log("status: " + request.statusCode.toString());
+      log("*" * 20);
       if (request.statusCode == 200) {
         Map<String, dynamic> social = jsonDecode(request.body);
         return Future.value(social);
