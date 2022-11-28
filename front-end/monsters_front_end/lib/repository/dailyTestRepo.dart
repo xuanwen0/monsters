@@ -10,6 +10,7 @@ import '../API/dailyTestAPI.dart';
 class DailyTestRepository implements DailyTestApiDataSource {
   final client = http.Client();
   @override
+  Future<Map<String, dynamic>> searchDailyTest() {
     return _getDailyTest(Uri.parse('$domain/interaction/dailyTest'));
   }
 
