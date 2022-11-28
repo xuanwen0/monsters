@@ -28,6 +28,7 @@ class _Daily_testState extends State<Daily_test> {
   checkAnswer(int userChoice, String userAnswer) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("LastTryDate", DateTime.now().day.toString());
+    print(pref.getString("LastTryDate"));
     if (correctChoice == userChoice) {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => DailyTest_correct(learn)));

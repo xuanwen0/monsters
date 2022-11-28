@@ -11,7 +11,7 @@ class AnswerbookRepository implements AnswerbookApiDataSource {
   final client = http.Client();
   @override
   Future<Map<String, dynamic>> searchAnswerbook() {
-    return _getAnswerBook(Uri.parse('$domain/answerBook/search'));
+    return _getAnswerBook(Uri.parse('$domain/interaction/answerBook'));
   }
 
   Future<Map<String, dynamic>> _getAnswerBook(Uri url) async {
