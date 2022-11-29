@@ -103,11 +103,12 @@ class _MainPageState extends State<MainPage>
       body: Stack(
         children: <Widget>[
           //抽屜
-          Align(
+          Container(
             alignment: Alignment.topRight,
+            padding: const EdgeInsets.only(top: 20),
             child: IconButton(
               alignment: Alignment.centerRight,
-              iconSize: 57.0,
+              iconSize: 60.0,
               icon: Icon(Icons.menu_rounded),
               color: Color(0xffffbb00),
               onPressed: () => _scaffoldKEy.currentState?.openEndDrawer(),
@@ -128,7 +129,6 @@ class _MainPageState extends State<MainPage>
             child: Padding(
               padding: const EdgeInsets.only(top: 260),
               child: Container(
-                // color: Colors.red,
                 height: maxSize * 1.1,
                 width: maxSize,
                 child: Container(
@@ -154,37 +154,6 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
-/*
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 260),
-              child: Container(
-                height: maxSize * 1.1,
-                width: maxSize,
-                child: Container(
-                  alignment: Alignment.topLeft,
-                  child: AnimatedContainer(
-                    child: Container(
-                      height: 120,
-                      width: 120,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(showImage2),
-                          fit: BoxFit.scaleDown,
-                        ),
-                      ),
-                    ),
-                    margin: EdgeInsets.only(
-                      left: _marginL2,
-                      top: _marginT2,
-                    ),
-                    duration: const Duration(milliseconds: 1211),
-                  ),
-                ),
-              ),
-            ),
-          ),
-*/
           //底部
           Pinned.fromPins(
             Pin(start: 0.0, end: 0.0),
