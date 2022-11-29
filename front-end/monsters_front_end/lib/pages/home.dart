@@ -43,11 +43,10 @@ class _MainPageState extends State<MainPage>
   bool visited = false;
   late Timer _timer;
 
-  
   // double _marginL2 = originPosition;
   // double _marginT2 = originPosition;
   // static String monsterName2 = "Cloud";
-  //資料庫拿怪獸名稱  
+  //資料庫拿怪獸名稱
   static String monsterName = getRandomMonsterName();
 
   LocalStorage storage = LocalStorage('current_tab');
@@ -204,7 +203,7 @@ class _MainPageState extends State<MainPage>
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/image/icon_top.png'),
-                  fit: BoxFit.fill,
+                  fit: BoxFit.fitWidth,
                 ),
               ),
             ),
@@ -519,6 +518,7 @@ class _MainPageState extends State<MainPage>
       ),
     );
   }
+
   //怪獸動畫主程式-隨機移動XY軸
   doAnimation() {
     setState(() {
@@ -548,6 +548,7 @@ class _MainPageState extends State<MainPage>
       }
     });
   }
+
   //怪獸動畫限制區域主程式
   checker() {
     if (_marginL <= 30 || _marginL > maxSize - 100) {
@@ -567,6 +568,7 @@ class _MainPageState extends State<MainPage>
     }
     setState(() {});
   }
+
   //怪獸動畫限制區域-X軸
   changeDirectionTop() {
     if (movingDirection == 1) {
@@ -577,6 +579,7 @@ class _MainPageState extends State<MainPage>
     _marginT = originPosition;
     // _marginT2 = originPosition;
   }
+
   //怪獸動畫限制區域-Y軸
   changeDirectionLeft() {
     if (movingDirection == 1) {
@@ -587,7 +590,6 @@ class _MainPageState extends State<MainPage>
     _marginL = originPosition;
     // _marginL2 = originPosition;
   }
-
 }
 
 class CircularButton extends StatelessWidget {
