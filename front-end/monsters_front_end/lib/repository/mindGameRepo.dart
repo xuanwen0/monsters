@@ -14,7 +14,7 @@ class MindGameRepository implements MindGameApiDataSource {
 
   @override
   Future<Map<String, dynamic>?> searchMindGame() {
-    return _searchMindGame(Uri.parse('$domain/mindGame/search'));
+    return _searchMindGame(Uri.parse('$domain/interaction/mindGame'));
   }
 
   Future<Map<String, dynamic>?> _searchMindGame(Uri url) async {
