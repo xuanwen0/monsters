@@ -44,7 +44,7 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
           duration: Duration(seconds: 1),
           backgroundColor: BackgroundColorWarm,
           content: Text(
-            "認證碼傳送成功",
+            "認證碼傳送失敗",
             style: TextStyle(color: Colors.white, fontSize: 30),
           )));
     }
