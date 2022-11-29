@@ -8,10 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -51,7 +48,7 @@ public class DiaryController {
                     }
                     diaryService.createAndReturnBean(diarybean);
                     result.put("result", true);
-                    result.put("errorCode", "");
+                    result.put("errorCode", "200");
                     result.put("message", "新增成功");
                 } catch (IOException e) {
                     System.out.println(e);
@@ -65,6 +62,18 @@ public class DiaryController {
             result.put("errorCode", "");
             result.put("message", "新增失敗");
         }
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
+
+    @ResponseBody
+    @PatchMapping("/modify/{id}")
+    public ResponseEntity modifyAnnoyance(@PathVariable(name = "id") int id, DiaryBean diaryBean){
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode result = mapper.createObjectNode();
+        diaryService.update(id, diaryBean);
+        result.put("result", true) ;
+        result.put("errorCode", "200");
+        result.put("message", "修改成功");
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 }

@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -79,7 +78,7 @@ public class HistoryController {
                     diaryNode.put("share", diaryBean.getShare());
                 }
                 result.put("result", true);
-                result.put("errorCode", "");
+                result.put("errorCode", "200");
                 result.put("message", "查詢成功");
             } else {
                 result.put("result", false);
@@ -120,7 +119,7 @@ public class HistoryController {
                     annoyanceNode.put("share", annoyanceBean.getShare());
                 }
                 result.put("result", true);
-                result.put("errorCode", "");
+                result.put("errorCode", "200");
                 result.put("message", "查詢成功");
             } else {
                 result.put("result", false);
@@ -161,7 +160,7 @@ public class HistoryController {
                     annoyanceNode.put("share", annoyanceBean.getShare());
                 }
                 result.put("result", true);
-                result.put("errorCode", "");
+                result.put("errorCode", "200");
                 result.put("message", "查詢成功");
             } else {
                 result.put("result", false);
@@ -191,20 +190,15 @@ public class HistoryController {
                 });
                 for (DiaryBean diaryBean : diaryList) {
                     ObjectNode diaryNode = dataNode.addObject();
-                    if (diaryBean.getContent().contains("D:")) {
-                        Resource file = fileUploadServiceImpl.load(diaryBean.getContent());
-                        diaryNode.put("content", file.toString());
-                    } else {
-                        diaryNode.put("content", diaryBean.getContent());
-                    }
                     diaryNode.put("id", diaryBean.getId());
+                    diaryNode.put("content", diaryBean.getContent());
                     diaryNode.put("monsterId", diaryBean.getMonsterId());
                     diaryNode.put("index", diaryBean.getIndex());
                     diaryNode.put("time", diaryBean.getTime().format(DateTimeFormatter.ofPattern("MM/dd")));
                     diaryNode.put("share", diaryBean.getShare());
                 }
                 result.put("result", true);
-                result.put("errorCode", "");
+                result.put("errorCode", "200");
                 result.put("message", "查詢成功");
             } else {
                 result.put("result", false);
@@ -212,6 +206,7 @@ public class HistoryController {
                 result.put("message", "查詢失敗");
             }
         } catch (Exception e) {
+            System.out.println(e);
             e.printStackTrace();
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(result);

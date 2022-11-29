@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.bean.BaseBean;
 import com.example.demo.dao.BaseDAO;
 import com.example.demo.service.BaseService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -14,6 +15,7 @@ public abstract class BaseServiceImplement<D extends BaseDAO<V>, V, B extends Ba
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void update(Serializable pk, B bean) {
 		try {
 			Optional<V> optional = baseDAO.getByPK(pk);

@@ -9,10 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -63,7 +60,7 @@ public class AnnoyanceController {
                     System.out.println(annoyanceBean.toString());
                     annoyanceService.createAndReturnBean(annoyanceBean);
                     result.put("result", true);
-                    result.put("errorCode", "");
+                    result.put("errorCode", "200");
                     result.put("message", "新增成功");
                 } catch (IOException e) {
                     result.put("result", false);
@@ -81,12 +78,15 @@ public class AnnoyanceController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
-//    @ResponseBody
-//    @PatchMapping("/modify/{id}")
-//    public ResponseEntity modifyAnnoyance(@PathVariable(name = "id") int id, AnnoyanceBean annoyanceBean){
-//        ObjectMapper mapper = new ObjectMapper();
-//        ObjectNode result = mapper.createObjectNode();
-//        result.putObject("data");
-//        return ResponseEntity.status(HttpStatus.CREATED).body(result);
-//    }
+    @ResponseBody
+    @PatchMapping("/modify/{id}")
+    public ResponseEntity modifyAnnoyance(@PathVariable(name = "id") int id, AnnoyanceBean annoyanceBean){
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode result = mapper.createObjectNode();
+        annoyanceService.update(id, annoyanceBean);
+        result.put("result", true) ;
+        result.put("errorCode", "200");
+        result.put("message", "修改成功");
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
 }
