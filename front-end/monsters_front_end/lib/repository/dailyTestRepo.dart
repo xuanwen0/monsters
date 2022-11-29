@@ -18,17 +18,15 @@ class DailyTestRepository implements DailyTestApiDataSource {
   Future<Map<String, dynamic>> _getDailyTest(Uri url) async {
     final request =
         await client.get(url, headers: {'Content-type': 'application/json'});
-    var str = request.body.toString();
-    const start = "[";
-    const end = "]";
-    final startIndex = str.indexOf(start);
-    final endIndex = str.indexOf(end, startIndex + start.length);
-    var stringToJson = str.substring(startIndex + start.length, endIndex);
+    log("*" * 20);
+    log("DailyTest Status");
+    log("status: " + request.statusCode.toString());
+    log("*" * 20);
     if (request.statusCode == 200) {
-      Map<String, dynamic> dailyTest = jsonDecode(stringToJson);
+      Map<String, dynamic> dailyTest = jsonDecode(request.body);
       return Future.value(dailyTest);
     } else {
-      Map<String, dynamic> dailyTest = jsonDecode(stringToJson);
+      Map<String, dynamic> dailyTest = jsonDecode(request.body);
       return dailyTest;
     }
   }
