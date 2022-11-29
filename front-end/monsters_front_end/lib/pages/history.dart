@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls, prefer_const_constructors
 
 import 'dart:async';
-import 'dart:developer' as dv;
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
@@ -416,8 +415,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                             ),
                                     ],
                                   ),
-                                  
-                                  
                                   onTap: () {
                                     print(
                                       "type: " +
@@ -803,11 +800,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     }
     if (selectionTab_type == 3) {
       type = selectionTab_type;
-      print("THIS type: " + type.toString());
     }
-    print("-------------");
-    print(type.toString());
-    print("-------------");
 
     Future<Data> histories = historyRepository
         .searchHistoryByType(type)
@@ -862,7 +855,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
         );
       }
     });
-    print(historyResult);
     return historyResult;
   }
 

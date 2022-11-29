@@ -388,9 +388,6 @@ class _SignUpState extends State<SignUp> {
                         softWrap: false,
                       ),
                       onPressed: () {
-                        debugPrint(DateTime.now().toString().substring(0, 10));
-                        debugPrint(date.toString().substring(0, 10));
-
                         var fail = false;
                         if (DateTime.now()
                                 .difference(date)
@@ -458,7 +455,7 @@ class _SignUpState extends State<SignUp> {
           account: _accountController.text,
           birthday: formatDate(date, [yyyy, '-', mm, '-', dd]).toString(),
           mail: _mailController.text,
-          nickName: _nicknameController.text,
+          nick_name: _nicknameController.text,
           password: _pwdController.text,
         ),
       );

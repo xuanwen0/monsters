@@ -698,7 +698,6 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
 
   //怪獸訊息(提示輸入格式)
   void hint() {
-    debugPrint(chatRound.toString());
     String hintDiaryMethod = "請用以下幾種方式記錄：\n★以文字記錄日記\n★點選左下角圖示新增";
     String hintAccept = "[請擇一輸入]\n是 / 否";
     if (chatRound == 0) {

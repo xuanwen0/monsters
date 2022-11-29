@@ -177,7 +177,7 @@ class _loginState extends State<LoginPage> {
             account: user.email,
             birthday: formatDate(date, [yyyy, '-', mm, '-', dd]).toString(),
             mail: user.email,
-            nickName: user.displayName,
+            nick_name: user.displayName,
             password: "",
           ),
         );

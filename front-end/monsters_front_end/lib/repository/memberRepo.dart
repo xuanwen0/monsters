@@ -6,6 +6,7 @@ import 'dart:developer';
 import 'package:monsters_front_end/repository/annoyanceRepo.dart';
 
 import '../API/memberAPI.dart';
+import '../main.dart';
 import '../model/memberModel.dart';
 import 'package:http/http.dart' as http;
 
@@ -71,12 +72,16 @@ class MemberRepository implements MemberApiDataSource {
   @override
   Future<Map<String, dynamic>?> searchPersonalInfoByAccount(String account) {
     return _searchPersonalInfoByAccount(
-        Uri.parse('$domain/member/search?account=$account'));
+        Uri.parse('$domain/member/$user_Account'));
   }
   Future<Map<String, dynamic>?> _searchPersonalInfoByAccount(Uri url) async {
     try {
       final request =
           await client.get(url, headers: {'Content-type': 'application/json'});
+    log("*" * 20);
+    log("member status");
+    log("status: " + request.statusCode.toString());
+    log("*" * 20);
       if (request.statusCode == 200) {
         Map<String, dynamic> personalInfo = jsonDecode(request.body);
         return Future.value(personalInfo);

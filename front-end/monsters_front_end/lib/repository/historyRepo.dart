@@ -1,14 +1,12 @@
 // ignore_for_file: file_names
 
 import 'dart:convert';
-import 'dart:developer';
 import 'package:monsters_front_end/main.dart';
 
 import '../API/historyAPI.dart';
-import '../model/annoyanceModel.dart';
 import 'package:http/http.dart' as http;
 
-const String domain = "http://220.132.124.140:5000";
+import 'annoyanceRepo.dart';
 
 class HistoryRepository implements HistoryApiDataSource {
   final client = http.Client();

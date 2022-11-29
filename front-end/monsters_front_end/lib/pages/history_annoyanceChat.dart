@@ -69,7 +69,6 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
       response("是");
     }
 
-    debugPrint(data["type"]);
     setState(() {});
     return Scaffold(
       appBar: AppBar(
@@ -579,8 +578,6 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
         //取得類別
         if (chatRound == 1) {
           insert(text!);
-          debugPrint("DEBUG");
-          debugPrint(text);
           reply("關於" + text + "的煩惱嗎？跟我說發生什麼事了吧！");
         }
         //取得內容

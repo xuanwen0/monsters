@@ -41,12 +41,10 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
         .then((value) => Data.fromJson(value!));
 
     await personalInfo.then((value) async {
-      personalInfoResult["nickname"] = value.data.first.nickName;
+      personalInfoResult["nick_name"] = value.data.first.nick_name;
       personalInfoResult["birthday"] = value.data.first.birthday;
       personalInfoResult["mail"] = value.data.first.mail;
-      print(personalInfoResult);
     });
-    print(personalInfoResult);
     setState(() {});
     return personalInfoResult;
   }
@@ -157,7 +155,7 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
                           children: [
                             {
                               'text': '暱稱',
-                              'content': snapshot.data["nickname"],
+                              'content': snapshot.data["nick_name"],
                             },
                             {
                               'text': '生日',
@@ -169,7 +167,7 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
                             }
                           ].map((itemData) {
                             final text = itemData['text']!;
-                            final content = itemData['content']!;
+                            final content = itemData['content'];
                             return Row(
                               children: [
                                 // 標題:暱稱/生日/信箱
