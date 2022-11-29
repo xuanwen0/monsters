@@ -71,7 +71,7 @@ public class SocialController {
                     diaryNode.put("share", diaryBean.getShare());
                 }
                 result.put("result", true);
-                result.put("errorCode", "");
+                result.put("errorCode", "200");
                 result.put("message", "查詢成功");
             } else {
                 result.put("result", false);
@@ -112,7 +112,7 @@ public class SocialController {
                     annoyanceNode.put("share", annoyanceBean.getShare());
                 }
                 result.put("result", true);
-                result.put("errorCode", "");
+                result.put("errorCode", "200");
                 result.put("message", "查詢成功");
             } else {
                 result.put("result", false);
@@ -150,7 +150,7 @@ public class SocialController {
                     diaryNode.put("share", diaryBean.getShare());
                 }
                 result.put("result", true);
-                result.put("errorCode", "");
+                result.put("errorCode", "200");
                 result.put("message", "查詢成功");
             } else {
                 result.put("result", false);

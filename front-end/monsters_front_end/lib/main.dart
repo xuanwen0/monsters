@@ -3,6 +3,8 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:monsters_front_end/pages/home.dart';
+import 'package:monsters_front_end/pages/login.dart';
 import 'package:monsters_front_end/routes.dart';
 import 'pages/style.dart';
 

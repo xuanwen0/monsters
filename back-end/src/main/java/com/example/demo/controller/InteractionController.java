@@ -70,7 +70,7 @@ public class InteractionController {
             dailyTestNode.put("learn", dailyTestsList.get(index).getLearn());
 
             result.put("result", true);
-            result.put("errorCode", "");
+            result.put("errorCode", "200");
             result.put("message", "查詢成功");
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,7 +93,7 @@ public class InteractionController {
                 mindGameNode.put("web", mindGameBean.getWeb());
             }
             result.put("result", true);
-            result.put("errorCode", "");
+            result.put("errorCode", "200");
             result.put("message", "查詢成功");
         } catch (Exception e) {
             e.printStackTrace();

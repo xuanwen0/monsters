@@ -65,7 +65,6 @@ public class AnnoyanceServiceImpl extends BaseServiceImplement<AnnoyanceDAO, Ann
         }
         return annoyanceBeanList;
     }
-
     @Override
     protected Annoyance createVO(AnnoyanceBean bean) {
         Annoyance entity = new Annoyance();

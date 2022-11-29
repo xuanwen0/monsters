@@ -251,7 +251,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
         account: _accountController.text, password: _pwdController.text));
     print("get Result: " + result.contains("result").toString() + "\n");
     print("result: " + result + "\n");
-    if (result.contains("result") == true) {
+    if (result.contains("result")) {
       saveSelfLogin(_accountController.text);
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) => MainPage()));
