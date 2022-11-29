@@ -19,11 +19,22 @@ class _CloseLockPageState extends State<CloseLockPage> {
         padding: const EdgeInsets.only(top: 50.0),
         child: Stack(
           children: [
+            //上一頁
+            Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back_rounded),
+                  color: const Color.fromRGBO(255, 187, 0, 1),
+                  iconSize: 57.0,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )),
             //標題
             const Align(
               alignment: Alignment.topCenter,
               child: Text(
-                '驗證密碼鎖',
+                '關閉密碼鎖',
                 style: TextStyle(
                   fontFamily: 'Segoe UI',
                   fontSize: 40,

@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:monsters_front_end/API/google_sign_in_API.dart';
 import 'package:monsters_front_end/pages/instructions.dart';
-import 'package:monsters_front_end/pages/lock/check_lock_page.dart';
-import 'package:monsters_front_end/pages/manual.dart';
+import 'package:monsters_front_end/pages/lock/close_lock_page.dart';
+import 'package:monsters_front_end/pages/lock/setting_lock_page.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/pages/user_Feedback.dart';
 import 'package:monsters_front_end/pages/login.dart';
@@ -51,9 +51,18 @@ Widget GetDrawer(BuildContext context) {
                   color: Color(0xffa0522d),
                 ),
               ),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CheckLockPage()));
+              onTap: () async {
+                SharedPreferences pref = await SharedPreferences.getInstance();
+                String? lock = pref.getString("lock");
+                if (lock == 'true') {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CloseLockPage()));
+                } else {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SettingLockPage()));
+                }
               },
             ),
             ListTile(

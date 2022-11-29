@@ -35,9 +35,8 @@ class _Forget_Lock_AuthState extends State<Forget_Lock_Auth> {
             "認證碼傳送成功",
             style: TextStyle(color: Colors.white, fontSize: 30),
           )));
-
     } else {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           duration: Duration(seconds: 1),
           backgroundColor: BackgroundColorWarm,
           content: Text(
@@ -51,7 +50,7 @@ class _Forget_Lock_AuthState extends State<Forget_Lock_Auth> {
     var res = emailAuth.validateOtp(
         recipientMail: _mailController.text, userOtp: _otpController.text);
     if (res) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           duration: Duration(seconds: 1),
           backgroundColor: BackgroundColorWarm,
           content: Text(
@@ -62,7 +61,7 @@ class _Forget_Lock_AuthState extends State<Forget_Lock_Auth> {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => SettingLockPage()));
     } else {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           duration: Duration(seconds: 1),
           backgroundColor: BackgroundColorWarm,
           content: Text(
@@ -106,7 +105,7 @@ class _Forget_Lock_AuthState extends State<Forget_Lock_Auth> {
                           alignment: Alignment.topCenter,
                           padding: const EdgeInsets.only(top: 8),
                           child: const Text(
-                            '忘記密碼',
+                            '忘記密碼鎖',
                             style: TextStyle(
                               fontFamily: 'Segoe UI',
                               fontSize: 40,
