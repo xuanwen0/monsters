@@ -22,9 +22,6 @@ class SocialRepository implements SocialApiDataSource {
     if (type == 3) {
       searchType = "/diary";
     }
-    if (type == 4) {
-      searchType = "/$user_Account";
-    }
 
     return _searchSocialByType(Uri.parse('$domain/social$searchType'));
   }
