@@ -427,7 +427,9 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                                 right: BorderSide(
                                                                     width: 1.0,
                                                                     color: const Color(
-                                                                        0xffa0522d))),
+                                                                    0xffa0522d),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
                                                         Pinned.fromPins(
