@@ -39,6 +39,7 @@ class Data {
 class Social {
   int? id;
   String? account;
+  String? nick_name;
   String? content;
   int? type;
   int? monsterId;
@@ -52,6 +53,7 @@ class Social {
   Social(
       {this.id,
       this.account,
+      this.nick_name,
       this.content,
       this.type,
       this.monsterId,
@@ -66,6 +68,7 @@ class Social {
   factory Social.fromJson(Map<String, dynamic> json) => Social(
         id: json['id'],
         account: json['account'],
+        nick_name: json['nick_name'],
         content: json['content'],
         type: json['type'],
         monsterId: json['monsterId'],
@@ -81,6 +84,7 @@ class Social {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['account'] = account;
+    data['nick_name'] = nick_name;
     data['content'] = content;
     data['type'] = type;
     data['monsterId'] = monsterId;
