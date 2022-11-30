@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'dart:convert';
+import 'dart:developer';
 import 'package:monsters_front_end/main.dart';
 
 import '../API/historyAPI.dart';
@@ -30,8 +31,7 @@ class HistoryRepository implements HistoryApiDataSource {
       searchType = "annoyance/1/$user_Account";
     }
 
-    return _searchHistoryByType(
-        Uri.parse('$domain/history/$searchType'));
+    return _searchHistoryByType(Uri.parse('$domain/history/$searchType'));
   }
 
   Future<Map<String, dynamic>?> searchAnnoyanceByAccount(String account) {
@@ -49,9 +49,13 @@ class HistoryRepository implements HistoryApiDataSource {
           await client.get(url, headers: {'Content-type': 'application/json'});
       if (request.statusCode == 200) {
         Map<String, dynamic> history = jsonDecode(request.body);
+        log("history body");
+        log(history.toString());
         return Future.value(history);
       } else {
         Map<String, dynamic> history = jsonDecode(request.body);
+        log("history body");
+        log(history.toString());
         return history;
       }
     } catch (e) {

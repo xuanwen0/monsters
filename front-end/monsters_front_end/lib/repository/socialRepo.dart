@@ -22,6 +22,9 @@ class SocialRepository implements SocialApiDataSource {
     if (type == 3) {
       searchType = "/diary";
     }
+    if (type == 4) {
+      searchType = "/$user_Account";
+    }
 
     return _searchSocialByType(Uri.parse('$domain/social$searchType'));
   }
@@ -36,9 +39,13 @@ class SocialRepository implements SocialApiDataSource {
       log("*" * 20);
       if (request.statusCode == 200) {
         Map<String, dynamic> social = jsonDecode(request.body);
+        log("socialBody:");
+        log(social.toString());
         return Future.value(social);
       } else {
         Map<String, dynamic> social = jsonDecode(request.body);
+        log("socialBody:");
+        log(social.toString());
         return social;
       }
     } catch (e) {

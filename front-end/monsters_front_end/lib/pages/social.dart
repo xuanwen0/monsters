@@ -2,11 +2,11 @@
 
 import 'dart:async';
 import 'dart:math';
+import 'dart:developer' as dv;
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monsters_front_end/model/annoyanceModel.dart';
 import 'package:monsters_front_end/pages/monsters_information.dart';
 import 'package:monsters_front_end/pages/diaryChat.dart';
 import 'package:monsters_front_end/pages/history.dart';
@@ -16,6 +16,7 @@ import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/state/drawer.dart';
 
+import '../model/socialModel.dart';
 import '../repository/socialRepo.dart';
 import 'annoyanceChat.dart';
 
@@ -128,13 +129,16 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
           default:
             break;
         }
+        dv.log("test:${value.data.elementAt(index).nickName}");
+        dv.log("id:${value.data.elementAt(index).id}");
 
         socialResult.putIfAbsent(
           "result $index",
           () => {
             'id': value.data.elementAt(index).id,
             // 'name': value.data.elementAt(index).account,
-            'name': "Lin",
+            // 'nickName': value.data.elementAt(index).nickName,
+            'nickName': "Lin",
             'avatar': value.data.elementAt(index).monsterId,
             'content': value.data.elementAt(index).content,
             'type': type,
@@ -387,7 +391,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
                                                     child: Text(
                                                       snapshot.data[
                                                               "result $index"]
-                                                          ["name"],
+                                                          ["nickName"],
                                                       style: TextStyle(
                                                         fontFamily: 'Segoe UI',
                                                         fontSize: 20,
