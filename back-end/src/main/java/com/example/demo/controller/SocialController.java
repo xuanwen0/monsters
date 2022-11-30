@@ -2,8 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.bean.AnnoyanceBean;
 import com.example.demo.bean.DiaryBean;
+import com.example.demo.bean.PersonalInfoBean;
 import com.example.demo.service.impl.AnnoyanceServiceImpl;
 import com.example.demo.service.impl.DiaryServiceImpl;
+import com.example.demo.service.impl.PersonalInfoServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -20,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Controller
@@ -27,6 +30,7 @@ import java.util.List;
 public class SocialController {
     private final AnnoyanceServiceImpl annoyanceService;
     private final DiaryServiceImpl diaryServiceimpl;
+    private final PersonalInfoServiceImpl personalInfoService;
 
     @ResponseBody
     @GetMapping(path = "", produces = "application/json; charset=UTF-8")
@@ -52,7 +56,10 @@ public class SocialController {
                 });
                 for (AnnoyanceBean annoyanceBean : annoyanceList) {
                     ObjectNode annoyanceNode = dataNode.addObject();
+                    Optional<PersonalInfoBean> personalInfo = personalInfoService.getByPK(annoyanceBean.getAccount());
+                    String nickName = personalInfo.get().getNickName();
                     annoyanceNode.put("id", annoyanceBean.getId());
+                    annoyanceNode.put("nickName", nickName);
                     annoyanceNode.put("content", annoyanceBean.getContent());
                     annoyanceNode.put("type", annoyanceBean.getType().getId());
                     annoyanceNode.put("monsterId", annoyanceBean.getMonsterId());
