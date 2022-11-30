@@ -2,9 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.bean.AnnoyanceBean;
 import com.example.demo.bean.DiaryBean;
-import com.example.demo.dto.file.FileUploadServiceImpl;
 import com.example.demo.service.impl.AnnoyanceServiceImpl;
 import com.example.demo.service.impl.DiaryServiceImpl;
+import com.example.demo.service.impl.PersonalInfoServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -27,12 +27,7 @@ import java.util.List;
 @RequestMapping(value = "/history")
 public class HistoryController {
     private final AnnoyanceServiceImpl annoyanceService;
-    private final DiaryServiceImpl diaryServiceimpl;
-    private final FileUploadServiceImpl fileUploadServiceImpl;
-
-    private final String ANNOYANCE_CONTENT_FILE = "D:/monsters/back-end/file/annoyance/content/";
-    private final String MOOD_FILE = "D:/monsters/back-end/file/annoyance/mood/";
-    private final String DIARY_CONTENT_FILE = "D:/monsters/back-end/file/diary/";
+    private final DiaryServiceImpl diaryService;
 
     @ResponseBody
     @GetMapping(path = "/{account}", produces = "application/json; charset=UTF-8")
@@ -42,7 +37,7 @@ public class HistoryController {
         ArrayNode dataNode = result.putArray("data");
         try {
             List<AnnoyanceBean> annoyanceList = annoyanceService.searchAnnoyanceByAccount(account);
-            List<DiaryBean> diaryList = diaryServiceimpl.searchAnnoyanceByAccount(account);
+            List<DiaryBean> diaryList = diaryService.searchAnnoyanceByAccount(account);
             if (annoyanceList.size() != 0 || diaryList.size() != 0) {
                 Collections.sort(annoyanceList, new Comparator<AnnoyanceBean>() {
                     @Override
@@ -180,7 +175,7 @@ public class HistoryController {
         ObjectNode result = mapper.createObjectNode();
         ArrayNode dataNode = result.putArray("data");
         try {
-            List<DiaryBean> diaryList = diaryServiceimpl.searchAnnoyanceByAccount(account);
+            List<DiaryBean> diaryList = diaryService.searchAnnoyanceByAccount(account);
             if (diaryList.size() != 0) {
                 Collections.sort(diaryList, new Comparator<DiaryBean>() {
                     @Override
