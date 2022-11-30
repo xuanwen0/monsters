@@ -70,7 +70,10 @@ public class SocialController {
                 }
                 for (DiaryBean diaryBean : diaryList) {
                     ObjectNode diaryNode = dataNode.addObject();
+                    Optional<PersonalInfoBean> personalInfo = personalInfoService.getByPK(diaryBean.getAccount());
+                    String nickName = personalInfo.get().getNickName();
                     diaryNode.put("id", diaryBean.getId());
+                    diaryNode.put("nickName", nickName);
                     diaryNode.put("content", diaryBean.getContent());
                     diaryNode.put("monsterId", diaryBean.getMonsterId());
                     diaryNode.put("index", diaryBean.getIndex());
