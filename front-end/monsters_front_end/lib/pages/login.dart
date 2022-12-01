@@ -171,19 +171,9 @@ class _loginState extends State<LoginPage> {
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => MainPage()));
       } else {
-        //if無 => 註冊並前往初次設定資料
-        memberRepository.createMember(
-          Member(
-            account: user.email,
-            birthday: formatDate(date, [yyyy, '-', mm, '-', dd]).toString(),
-            mail: user.email,
-            nick_name: user.displayName,
-            password: "",
-          ),
-        );
-        saveGoogleLogin(user.email);
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => FirstTime_editUserInfo()));
+        //if無 => 前往初次設定資料
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => FirstTime_editUserInfo(user: user)));
       }
     }
   }
