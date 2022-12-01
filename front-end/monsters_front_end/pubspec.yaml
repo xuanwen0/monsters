@@ -52,7 +52,7 @@ dependencies:
   permission_handler: ^8.1.2
   shared_preferences: ^2.0.6
   email_validator: ^2.1.17
-  email_auth: ^1.0.0  
+  email_auth: any 
   google_sign_in: ^5.4.1
   google_sign_in_web: ^0.10.2
   fl_chart: ^0.55.1

@@ -65,6 +65,16 @@ public class AnnoyanceServiceImpl extends BaseServiceImplement<AnnoyanceDAO, Ann
         }
         return annoyanceBeanList;
     }
+
+    public List<AnnoyanceBean> searchAnnoyanceByShareByAccount( String account) {
+        List<Annoyance> userList = annoyanceDAO.findByShareByAccount(account);
+        List<AnnoyanceBean> annoyanceBeanList = new ArrayList<>();
+        for (Annoyance annoyance : userList) {
+            annoyanceBeanList.add(createBean(annoyance));
+        }
+        return annoyanceBeanList;
+    }
+
     @Override
     protected Annoyance createVO(AnnoyanceBean bean) {
         Annoyance entity = new Annoyance();

@@ -55,6 +55,16 @@ public class DiaryServiceImpl extends BaseServiceImplement<DiaryDAO, Diary, Diar
         return diaryBeanList;
     }
 
+
+    public List<DiaryBean> searchAnnoyanceByShareByAccount(String account) {
+        List<Diary> userList = diaryDAO.findByShareByAccount(account);
+        List<DiaryBean> diaryBeanList = new ArrayList<>();
+        for (Diary diary : userList) {
+            diaryBeanList.add(createBean(diary));
+        }
+        return diaryBeanList;
+    }
+
     @Override
     protected Diary createVO(DiaryBean bean) {
         Diary entity = new Diary();

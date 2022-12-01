@@ -7,4 +7,6 @@ import java.util.List;
 public interface DiaryDAO extends BaseDAO<Diary> {
     List<Diary> findByAccount(String account);
     List<Diary> findByShare();
+
+    List<Diary> findByShareByAccount(String account);
 }

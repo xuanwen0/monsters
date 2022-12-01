@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -172,4 +173,62 @@ public class SocialController {
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
+
+    @ResponseBody
+    @GetMapping(path = "/{account}", produces = "application/json; charset=UTF-8")
+    public ResponseEntity SearchSocialbyAccount(@PathVariable(name = "account") String account) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode result = mapper.createObjectNode();
+        ArrayNode dataNode = result.putArray("data");
+        try {
+            List<AnnoyanceBean> annoyanceList = annoyanceService.searchAnnoyanceByShareByAccount(account);
+            List<DiaryBean> diaryList = diaryServiceimpl.searchAnnoyanceByShareByAccount(account);
+            if (annoyanceList.size() != 0 || diaryList.size() != 0) {
+                Collections.sort(annoyanceList, new Comparator<AnnoyanceBean>() {
+                    @Override
+                    public int compare(AnnoyanceBean o1, AnnoyanceBean o2) {
+                        return o2.getTime().compareTo(o1.getTime());
+                    }
+                });
+                Collections.sort(diaryList, new Comparator<DiaryBean>() {
+                    @Override
+                    public int compare(DiaryBean o1, DiaryBean o2) {
+                        return o2.getTime().compareTo(o1.getTime());
+                    }
+                });
+                for (AnnoyanceBean annoyanceBean : annoyanceList) {
+                    ObjectNode annoyanceNode = dataNode.addObject();
+                    annoyanceNode.put("id", annoyanceBean.getId());
+                    annoyanceNode.put("content", annoyanceBean.getContent());
+                    annoyanceNode.put("type", annoyanceBean.getType().getId());
+                    annoyanceNode.put("monsterId", annoyanceBean.getMonsterId());
+                    annoyanceNode.put("mood", annoyanceBean.getMood());
+                    annoyanceNode.put("index", annoyanceBean.getIndex());
+                    annoyanceNode.put("time", annoyanceBean.getTime().format(DateTimeFormatter.ofPattern("MM/dd")));
+                    annoyanceNode.put("solve", annoyanceBean.getSolve());
+                    annoyanceNode.put("share", annoyanceBean.getShare());
+                }
+                for (DiaryBean diaryBean : diaryList) {
+                    ObjectNode diaryNode = dataNode.addObject();
+                    diaryNode.put("id", diaryBean.getId());
+                    diaryNode.put("content", diaryBean.getContent());
+                    diaryNode.put("monsterId", diaryBean.getMonsterId());
+                    diaryNode.put("index", diaryBean.getIndex());
+                    diaryNode.put("time", diaryBean.getTime().format(DateTimeFormatter.ofPattern("MM/dd")));
+                    diaryNode.put("share", diaryBean.getShare());
+                }
+                result.put("result", true);
+                result.put("errorCode", "200");
+                result.put("message", "查詢成功");
+            } else {
+                result.put("result", false);
+                result.put("errorCode", "");
+                result.put("message", "查詢失敗");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
+
 }

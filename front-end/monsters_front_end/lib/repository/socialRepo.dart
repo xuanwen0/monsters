@@ -39,9 +39,13 @@ class SocialRepository implements SocialApiDataSource {
       log("*" * 20);
       if (request.statusCode == 200) {
         Map<String, dynamic> social = jsonDecode(request.body);
+        log("socialBody:");
+        log(social.toString());
         return Future.value(social);
       } else {
         Map<String, dynamic> social = jsonDecode(request.body);
+        log("socialBody:");
+        log(social.toString());
         return social;
       }
     } catch (e) {

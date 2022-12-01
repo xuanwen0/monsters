@@ -81,4 +81,30 @@ public class PersonalInfoController {
         result.put("message", "修改成功");
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
+
+    @ResponseBody
+    @GetMapping(path = "/{account}", produces = "application/json; charset=UTF-8")
+    public ResponseEntity SearchPersonalInfoByAccount(@PathVariable(name = "account") String account) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode result = mapper.createObjectNode();
+        ArrayNode dataNode = result.putArray("data");
+        try {
+            List<PersonalInfoBean> personalInfoList = personalInfoService.searchPersonalInfoByAccount(account);
+            ObjectNode personalInfoNode = dataNode.addObject();
+            for (PersonalInfoBean personalInfoBean : personalInfoList) {
+                ObjectNode annoyanceNode = dataNode.addObject();
+                personalInfoNode.put("nick_name",personalInfoBean.getNickName());
+                personalInfoNode.put("birthday",personalInfoBean.getBirthday().toString());
+                personalInfoNode.put("mail",personalInfoBean.getMail());
+                result.put("result", true);
+                result.put("errorCode", "200");
+                result.put("message", "查詢成功");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
+
+
 }

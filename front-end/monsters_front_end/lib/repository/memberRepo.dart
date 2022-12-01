@@ -50,8 +50,8 @@ class MemberRepository implements MemberApiDataSource {
       final request = await client.post(url,
           headers: {'Content-type': 'application/json'},
           body: json.encode(member));
-          
-          log(request.statusCode.toString());
+
+      log(request.statusCode.toString());
       if (request.statusCode == 200) {
         return request.body;
       } else {
@@ -64,18 +64,42 @@ class MemberRepository implements MemberApiDataSource {
   }
 
   @override
+  Future<String> modifyPersonalInfoByAccount(Member member) {
+    return _modifyPersonalInfoByAccount(
+        Uri.parse('$domain/member/modify/$user_Account'), member);
+  }
+
+   Future<String> _modifyPersonalInfoByAccount(
+    Uri url,
+    Member member,) async {
+    try {
+      final request = await client.post(url,
+          headers: {'Content-type': 'application/json'},
+          body: json.encode(member));
+      if (request.statusCode == 200) {
+        return request.body;
+      } else {
+        return request.body;
+      }
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  @override
   Future<Map<String, dynamic>?> searchPersonalInfoByAccount(String account) {
     return _searchPersonalInfoByAccount(
         Uri.parse('$domain/member/$user_Account'));
   }
+
   Future<Map<String, dynamic>?> _searchPersonalInfoByAccount(Uri url) async {
     try {
       final request =
           await client.get(url, headers: {'Content-type': 'application/json'});
-    log("*" * 20);
-    log("member status");
-    log("status: " + request.statusCode.toString());
-    log("*" * 20);
+      log("*" * 20);
+      log("member status");
+      log("status: " + request.statusCode.toString());
+      log("*" * 20);
       if (request.statusCode == 200) {
         Map<String, dynamic> personalInfo = jsonDecode(request.body);
         return Future.value(personalInfo);
@@ -88,4 +112,5 @@ class MemberRepository implements MemberApiDataSource {
       return null;
     }
   }
+
 }
