@@ -38,7 +38,8 @@ class Data {
 
 class Social {
   int? id;
-  String? account;
+  // String? account;
+  String? nickName;
   String? content;
   int? type;
   int? monsterId;
@@ -51,7 +52,8 @@ class Social {
   File? moodFile;
   Social(
       {this.id,
-      this.account,
+      // this.account,
+      this.nickName,
       this.content,
       this.type,
       this.monsterId,
@@ -65,7 +67,8 @@ class Social {
 
   factory Social.fromJson(Map<String, dynamic> json) => Social(
         id: json['id'],
-        account: json['account'],
+        // account: json['account'],
+        nickName: json['nickName'],
         content: json['content'],
         type: json['type'],
         monsterId: json['monsterId'],
@@ -80,7 +83,8 @@ class Social {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['account'] = account;
+    // data['account'] = account;
+    data['nickName'] = nickName;
     data['content'] = content;
     data['type'] = type;
     data['monsterId'] = monsterId;

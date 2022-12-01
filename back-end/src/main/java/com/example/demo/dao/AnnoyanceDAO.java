@@ -10,4 +10,6 @@ public interface AnnoyanceDAO extends BaseDAO<Annoyance> {
 
     List<Annoyance> findBySolve(int solve, String account);
 
+    List<Annoyance>  findByShareByAccount(String account);
+
 }

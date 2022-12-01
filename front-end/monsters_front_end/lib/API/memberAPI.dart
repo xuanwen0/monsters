@@ -8,4 +8,6 @@ abstract class MemberApiDataSource {
   Future<String> login(Member member);
 
   Future<Map<String, dynamic>?> searchPersonalInfoByAccount(String account);
+  
+  Future<String> modifyPersonalInfoByAccount(Member member);
 }
