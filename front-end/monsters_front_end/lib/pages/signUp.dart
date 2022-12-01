@@ -400,16 +400,15 @@ class _SignUpState extends State<SignUp> {
 
                         final isValidForm = _formKey.currentState!.validate();
                         if (fail) {
-                              
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                                duration: Duration(seconds: 1),
-                                backgroundColor: BackgroundColorWarm,
-                                content: Text(
-                                  "請選擇生日",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 30),
-                                )));
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                                  duration: Duration(seconds: 1),
+                                  backgroundColor: BackgroundColorWarm,
+                                  content: Text(
+                                    "請選擇生日",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 30),
+                                  )));
                           return;
                         } else {
                           signUp();
@@ -448,7 +447,7 @@ class _SignUpState extends State<SignUp> {
   }
 
   void signUp() async {
-    //註冊功能 !!尚未完成!!
+    //註冊功能
     if (isCheck == true) {
       memberRepository.createMember(
         Member(
@@ -462,8 +461,7 @@ class _SignUpState extends State<SignUp> {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Login_selfacount()));
     } else {
-
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           duration: Duration(seconds: 1),
           backgroundColor: BackgroundColorWarm,
           content: Text(
