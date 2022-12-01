@@ -26,17 +26,20 @@ class _Daily_testState extends State<Daily_test> {
   var learn = "";
 
   checkAnswer(int userChoice, String userAnswer) async {
+    int unlockProgress = 1;
     SharedPreferences pref = await SharedPreferences.getInstance();
-    //拿到上次回答時間
-    print(pref.getString("LastTryDate"));
-
-    /*
-    進行比較後判斷要不要給他獎勵
-    */
-
-    //覆蓋最後回答時間
-    await pref.setString("LastTryDate", DateTime.now().day.toString());
+    // await pref.setString("LastTryDate", "0");
+    var lastTryDay = pref.getString("LastTryDate");
     if (correctChoice == userChoice) {
+      //判斷是否跟上次作答正確同一天
+      if (lastTryDay != DateTime.now().day.toString()) {
+        //if不同
+        //增加解鎖進度條
+        unlockProgress++;
+      }
+      await pref.setString("LastTryDate", DateTime.now().day.toString());
+      print(lastTryDay);
+      print("解鎖進度 :" + unlockProgress.toString());
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => DailyTest_correct(learn)));
     } else {
@@ -58,6 +61,9 @@ class _Daily_testState extends State<Daily_test> {
         showChoice = "D";
         showAnswer = daily_D;
       }
+      await pref.setString("LastTryDate", DateTime.now().day.toString());
+      print(lastTryDay);
+      print("解鎖進度 :" + unlockProgress.toString());
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
