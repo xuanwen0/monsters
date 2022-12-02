@@ -1,8 +1,11 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:email_auth/email_auth.dart';
+import 'package:monsters_front_end/main.dart';
+import 'package:monsters_front_end/model/memberModel.dart';
 import 'package:monsters_front_end/pages/lock/setting_lock_page.dart';
 import 'package:monsters_front_end/pages/style.dart';
+import 'package:monsters_front_end/repository/memberRepo.dart';
 
 class Forget_Lock_Auth extends StatefulWidget {
   @override
@@ -14,14 +17,46 @@ class _Forget_Lock_AuthState extends State<Forget_Lock_Auth> {
   final TextEditingController _otpController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late EmailAuth emailAuth;
+  String hintEmail = "";
 
   @override
   void initState() {
     super.initState();
+    getPersonalInfo();
     // Initialize the package
     emailAuth = EmailAuth(
       sessionName: "貘nsters",
     );
+  }
+
+  //關閉
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future<Map> getPersonalInfo() async {
+    Map personalInfoResult = {};
+    print("doing...");
+    final MemberRepository memberRepository = MemberRepository();
+    Future<Data> personalInfo = memberRepository
+        .searchPersonalInfoByAccount(user_Account)
+        .then((value) => Data.fromJson(value!));
+
+    await personalInfo.then((value) async {
+      personalInfoResult["nick_name"] = value.data.first.nickName;
+      personalInfoResult["birthday"] = value.data.first.birthday;
+      personalInfoResult["mail"] = value.data.first.mail;
+    });
+    setState(() {});
+    String email = personalInfoResult["mail"];
+    List<String> splitEmail = email.split('@');
+    String hintFront = splitEmail[0].substring(0, 1);
+    var lenth = splitEmail[0].length;
+    String hintBack = splitEmail[0].substring(lenth - 1);
+    String hintMiddle = "*" * (lenth - 2);
+    hintEmail = hintFront + hintMiddle + hintBack + "@" + splitEmail[1];
+    return personalInfoResult;
   }
 
   void sendOTP() async {
@@ -122,11 +157,11 @@ class _Forget_Lock_AuthState extends State<Forget_Lock_Auth> {
                   TextFormField(
                     autofocus: false,
                     controller: _mailController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: "信箱",
-                      hintText: '請輸入信箱',
-                      prefixIcon: Icon(Icons.email),
-                      border: OutlineInputBorder(
+                      hintText: hintEmail,
+                      prefixIcon: const Icon(Icons.email),
+                      border: const OutlineInputBorder(
                         ///設定邊框四個角的弧度
                         borderRadius: BorderRadius.all(Radius.circular(90)),
 
