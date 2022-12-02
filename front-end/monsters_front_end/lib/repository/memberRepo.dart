@@ -22,7 +22,7 @@ class MemberRepository implements MemberApiDataSource {
   Future<String> login(Member member) {
     return _login(Uri.parse('$domain/member/login'), member);
   }
-  
+
   @override
   Future<String> modifyPersonalInfo(Member member) {
     return _modifyPersonalInfo(
@@ -70,23 +70,23 @@ class MemberRepository implements MemberApiDataSource {
     }
   }
 
-
   Future<String> _modifyPersonalInfo(
     Uri url,
     Member member,
   ) async {
+    log("testter");
+    log(json.encode(member).toString());
     try {
-      final request = await client.post(
+      final request = await client.patch(
         url,
         headers: {'Content-type': 'application/json'},
         body: json.encode(member),
       );
-      log("tester");
-      log(request.body.toString());
+      log(request.statusCode.toString());
       if (request.statusCode == 200) {
         return request.body;
       } else {
-        return request.body;
+        return Future.value(request.body) ;
       }
     } catch (e) {
       return e.toString();
@@ -106,6 +106,7 @@ class MemberRepository implements MemberApiDataSource {
       log("*" * 20);
       log("member status");
       log("status: " + request.statusCode.toString());
+      log("body: " + request.body.toString());
       log("*" * 20);
       if (request.statusCode == 200) {
         Map<String, dynamic> personalInfo = jsonDecode(request.body);

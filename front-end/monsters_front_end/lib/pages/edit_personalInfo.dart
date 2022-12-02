@@ -122,9 +122,7 @@ class _Edit_personalInfoState extends State<Edit_personalInfo> {
                                             Member(
                                               account: user_Account,
                                               nickName:
-                                                  _nicknameController.text,
-                                              birthday: "2000-10-03",
-                                              mail: "10846023@ntub.edu.tw",
+                                                  _nicknameController.text.toString(),
                                             ),
                                           );
 

@@ -58,7 +58,7 @@ class Member {
         account: json['account'],
         birthday: json['birthday'],
         mail: json['mail'],
-        nickName: json['nick_name'],
+        nickName: json['nickName'],
         password: json['password'],
         lock: json['lock'],
         photo: json['photo'],
@@ -70,7 +70,7 @@ class Member {
     data['account'] = account;
     data['birthday'] = birthday;
     data['mail'] = mail;
-    data['nick_name'] = nickName;
+    data['nickName'] = nickName;
     data['password'] = password;
     data['lock'] = lock;
     data['photo'] = photo;
