@@ -44,7 +44,7 @@ class _Forget_Lock_AuthState extends State<Forget_Lock_Auth> {
         .then((value) => Data.fromJson(value!));
 
     await personalInfo.then((value) async {
-      personalInfoResult["nick_name"] = value.data.first.nick_name;
+      personalInfoResult["nick_name"] = value.data.first.nickName;
       personalInfoResult["birthday"] = value.data.first.birthday;
       personalInfoResult["mail"] = value.data.first.mail;
     });
