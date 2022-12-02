@@ -7,7 +7,7 @@ import com.example.demo.service.AllMonsterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.transaction.Transactional;
 
 @Service
 public class AllMonsterServiceImpl extends BaseServiceImplement<AllMonsterDAO, AllMonster, AllMonsterBean> implements AllMonsterService {
@@ -19,14 +19,13 @@ public class AllMonsterServiceImpl extends BaseServiceImplement<AllMonsterDAO, A
         this.allMonsterDAO =baseDAO;
     }
 
+    @Transactional
     @Override
     public AllMonsterBean createAndReturnBean(AllMonsterBean bean) {
-        return null;
+        AllMonster allMonster = createVO(bean);
+        allMonsterDAO.insert(allMonster);
+        return createBean(allMonster);
     }
-    public List<AllMonster> find(){
-        return allMonsterDAO.searchAll();
-    }
-
 
     @Override
     protected AllMonster createVO(AllMonsterBean bean) {
@@ -36,8 +35,10 @@ public class AllMonsterServiceImpl extends BaseServiceImplement<AllMonsterDAO, A
         entity.setNameEnglish(bean.getNameEnglish());
         entity.setPhoto(bean.getPhoto());
         entity.setAvatar(bean.getAvatar());
-        entity.setGifRight(bean.getGifRight());
-        entity.setGitLeft(bean.getGitLeft());
+        entity.setRightGif(bean.getRightGif());
+        entity.setLeftGif(bean.getLeftGif());
+        entity.setGroup(bean.getGroup());
+        entity.setMain(bean.getMain());
         return entity;
     }
 
@@ -49,8 +50,10 @@ public class AllMonsterServiceImpl extends BaseServiceImplement<AllMonsterDAO, A
         bean.setNameEnglish(entity.getNameEnglish());
         bean.setPhoto(entity.getPhoto());
         bean.setAvatar(entity.getAvatar());
-        bean.setGifRight(entity.getGifRight());
-        bean.setGitLeft(entity.getGitLeft());
+        bean.setRightGif(entity.getRightGif());
+        bean.setLeftGif(entity.getLeftGif());
+        bean.setGroup(entity.getGroup());
+        bean.setMain(entity.getMain());
         return bean;
     }
 }

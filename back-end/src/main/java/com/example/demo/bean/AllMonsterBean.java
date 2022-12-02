@@ -1,6 +1,7 @@
 package com.example.demo.bean;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class AllMonsterBean extends BaseBean {
@@ -9,6 +10,13 @@ public class AllMonsterBean extends BaseBean {
     private String nameEnglish;
     private String photo;
     private String avatar;
-    private String gifRight;
-    private String gitLeft;
+    private String rightGif;
+    private String leftGif;
+    private Integer group;
+    private Integer main;
+
+    private MultipartFile photoFile;
+    private MultipartFile avatarFile;
+    private MultipartFile rightGifFile;
+    private MultipartFile leftGifFile;
 }
