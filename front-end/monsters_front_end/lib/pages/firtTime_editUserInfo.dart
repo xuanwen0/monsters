@@ -226,7 +226,7 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
                                             date, [yyyy, '-', mm, '-', dd])
                                         .toString(),
                                     mail: user.email,
-                                    nick_name: _nicknameController.text,
+                                    nickName: _nicknameController.text,
                                     password: "",
                                   ),
                                 );

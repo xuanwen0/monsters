@@ -49,13 +49,9 @@ class HistoryRepository implements HistoryApiDataSource {
           await client.get(url, headers: {'Content-type': 'application/json'});
       if (request.statusCode == 200) {
         Map<String, dynamic> history = jsonDecode(request.body);
-        log("history body");
-        log(history.toString());
         return Future.value(history);
       } else {
         Map<String, dynamic> history = jsonDecode(request.body);
-        log("history body");
-        log(history.toString());
         return history;
       }
     } catch (e) {
