@@ -22,6 +22,12 @@ class MemberRepository implements MemberApiDataSource {
   Future<String> login(Member member) {
     return _login(Uri.parse('$domain/member/login'), member);
   }
+  
+  @override
+  Future<String> modifyPersonalInfo(Member member) {
+    return _modifyPersonalInfo(
+        Uri.parse('$domain/member/modify/$user_Account'), member);
+  }
 
   Future<String> _createMember(
     Uri url,
@@ -52,6 +58,7 @@ class MemberRepository implements MemberApiDataSource {
           body: json.encode(member));
 
       log(request.statusCode.toString());
+      log(request.body.toString());
       if (request.statusCode == 200) {
         return request.body;
       } else {
@@ -63,19 +70,19 @@ class MemberRepository implements MemberApiDataSource {
     }
   }
 
-  @override
-  Future<String> modifyPersonalInfoByAccount(Member member) {
-    return _modifyPersonalInfoByAccount(
-        Uri.parse('$domain/member/modify/$user_Account'), member);
-  }
 
-   Future<String> _modifyPersonalInfoByAccount(
+  Future<String> _modifyPersonalInfo(
     Uri url,
-    Member member,) async {
+    Member member,
+  ) async {
     try {
-      final request = await client.post(url,
-          headers: {'Content-type': 'application/json'},
-          body: json.encode(member));
+      final request = await client.post(
+        url,
+        headers: {'Content-type': 'application/json'},
+        body: json.encode(member),
+      );
+      log("tester");
+      log(request.body.toString());
       if (request.statusCode == 200) {
         return request.body;
       } else {
@@ -112,5 +119,4 @@ class MemberRepository implements MemberApiDataSource {
       return null;
     }
   }
-
 }

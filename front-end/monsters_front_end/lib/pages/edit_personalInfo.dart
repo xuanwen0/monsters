@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';
+import 'dart:developer' as dv;
+import 'package:monsters_front_end/main.dart';
+import 'package:monsters_front_end/model/memberModel.dart';
 import 'package:monsters_front_end/pages/drawer_personalInfo.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/style.dart';
@@ -8,17 +11,24 @@ import 'package:monsters_front_end/pages/style.dart';
 import 'package:monsters_front_end/repository/memberRepo.dart';
 
 class Edit_personalInfo extends StatefulWidget {
+  var data;
+  Edit_personalInfo({required this.data});
+
   @override
-  _Edit_personalInfoState createState() => _Edit_personalInfoState();
+  _Edit_personalInfoState createState() => _Edit_personalInfoState(data);
 }
 
 class _Edit_personalInfoState extends State<Edit_personalInfo> {
   final TextEditingController _nicknameController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final MemberRepository memberRepository = MemberRepository();
+  var data;
+  _Edit_personalInfoState(this.data);
 
   @override
   Widget build(BuildContext context) {
+    dv.log(data.toString());
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: const Color(0xfffffed4),
@@ -104,6 +114,20 @@ class _Edit_personalInfoState extends State<Edit_personalInfo> {
                                         final isValidForm =
                                             _formKey.currentState!.validate();
                                         if (isValidForm) {
+                                          final MemberRepository
+                                              memberRepository =
+                                              MemberRepository();
+
+                                          memberRepository.modifyPersonalInfo(
+                                            Member(
+                                              account: user_Account,
+                                              nickName:
+                                                  _nicknameController.text,
+                                              birthday: "2000-10-03",
+                                              mail: "10846023@ntub.edu.tw",
+                                            ),
+                                          );
+
                                           // ScaffoldMessenger.of(context)
                                           //     .showSnackBar(const SnackBar(
                                           //         duration:
@@ -116,7 +140,8 @@ class _Edit_personalInfoState extends State<Edit_personalInfo> {
                                           //               color: Colors.white,
                                           //               fontSize: 30),
                                           //         )));
-                                          Navigator.of(context).pop();
+
+                                          // Navigator.of(context).pop();
                                         }
                                       },
                                     ),
