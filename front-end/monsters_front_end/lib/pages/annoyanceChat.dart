@@ -357,16 +357,16 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                             Annoyance(
                               id: 0,
                               account: user_Account, //"Lin"
-                              monsterId: 1,
-                              type: userAnswers[0], //4
                               content: userAnswers[1], //"純文字不分享無多媒體"
+                              type: userAnswers[0], //4
+                              monsterId: 1,
                               mood: userAnswers[2], //"否"
                               index: userAnswers[3], //3
+                              time: '',
+                              solve: 0,
                               share: userAnswers[4], //0
                               contentFile: contentFile, //null
                               moodFile: moodFile, //null
-                              time: '',
-                              solve: 0,
                             ),
                           );
                           Navigator.pushReplacement(

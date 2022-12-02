@@ -75,6 +75,7 @@ public class PersonalInfoController {
     public ResponseEntity modifyMemberByAccount(@PathVariable(name = "account") String account, PersonalInfoBean personalInfoBean){
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
+        System.out.println(personalInfoBean.toString());
         personalInfoService.update(account, personalInfoBean);
         result.put("result", true) ;
         result.put("errorCode", "200");
@@ -92,10 +93,10 @@ public class PersonalInfoController {
             List<PersonalInfoBean> personalInfoList = personalInfoService.searchPersonalInfoByAccount(account);
             ObjectNode personalInfoNode = dataNode.addObject();
             for (PersonalInfoBean personalInfoBean : personalInfoList) {
-                ObjectNode annoyanceNode = dataNode.addObject();
-                personalInfoNode.put("nick_name",personalInfoBean.getNickName());
+                personalInfoNode.put("nickName",personalInfoBean.getNickName());
                 personalInfoNode.put("birthday",personalInfoBean.getBirthday().toString());
                 personalInfoNode.put("mail",personalInfoBean.getMail());
+                personalInfoNode.put("account",personalInfoBean.getAccount());
                 result.put("result", true);
                 result.put("errorCode", "200");
                 result.put("message", "查詢成功");
