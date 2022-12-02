@@ -454,7 +454,7 @@ class _SignUpState extends State<SignUp> {
           account: _accountController.text,
           birthday: formatDate(date, [yyyy, '-', mm, '-', dd]).toString(),
           mail: _mailController.text,
-          nick_name: _nicknameController.text,
+          nickName: _nicknameController.text,
           password: _pwdController.text,
         ),
       );

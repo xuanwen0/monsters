@@ -37,13 +37,19 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
     print("doing...");
     final MemberRepository memberRepository = MemberRepository();
     Future<Data> personalInfo = memberRepository
-        .searchPersonalInfoByAccount(user_Account)
+        .searchPersonalInfoByAccount("Lin")
+        // .searchPersonalInfoByAccount(user_Account)
         .then((value) => Data.fromJson(value!));
 
     await personalInfo.then((value) async {
-      personalInfoResult["nick_name"] = value.data.first.nick_name;
+      personalInfoResult["nick_name"] = value.data.first.nickName;
       personalInfoResult["birthday"] = value.data.first.birthday;
       personalInfoResult["mail"] = value.data.first.mail;
+      personalInfoResult["account"] = value.data.first.account;
+      personalInfoResult["dailyTest"] = value.data.first.birthday;
+      personalInfoResult["lock"] = value.data.first.lock;
+      personalInfoResult["password"] = value.data.first.password;
+      personalInfoResult["photo"] = value.data.first.photo;
     });
     setState(() {});
     return personalInfoResult;
@@ -250,7 +256,8 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          Edit_personalInfo()));
+                                          Edit_personalInfo(
+                                          data: snapshot.data)));
                             },
                           ),
                         ),
@@ -354,9 +361,7 @@ class _AvatarWidget extends State<AvatarWidget> {
               ],
             ),
           ),
-        )
-        
-        );
+        ));
   }
 
   GestureDetector avatarButton(bool save) {
