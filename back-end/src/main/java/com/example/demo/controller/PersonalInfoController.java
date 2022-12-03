@@ -72,7 +72,7 @@ public class PersonalInfoController {
 
     @ResponseBody
     @PatchMapping(value = "/modify/{account}")
-    public ResponseEntity modifyMemberByAccount(@PathVariable(name = "account") String account, PersonalInfoBean personalInfoBean){
+    public ResponseEntity modifyMemberByAccount(@PathVariable(name = "account") String account, @RequestBody PersonalInfoBean personalInfoBean){
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         System.out.println(personalInfoBean.toString());
