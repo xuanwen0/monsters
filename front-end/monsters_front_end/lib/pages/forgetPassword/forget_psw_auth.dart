@@ -26,6 +26,7 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
   @override
   void initState() {
     super.initState();
+    VerifyCode = 0;
     // Initialize the package
     // emailAuth = EmailAuth(
     //   sessionName: "貘nsters",
@@ -198,7 +199,7 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                     alignment: Alignment.centerRight,
                     child: TextButton(
                         onPressed: () {
-                          VerifyCode = Random().nextInt(899999)+100000;
+                          VerifyCode = Random().nextInt(899999) + 100000;
                           sendVerifyEmail(
                               userEmail: _mailController.text,
                               code: VerifyCode);
