@@ -123,10 +123,10 @@ class _Login_selfacountState extends State<Login_selfacount> {
                     validator: (value) {
                       if (value!.isNotEmpty &&
                           value.length > 5 &&
-                          value.length < 9) {
+                          value.length < 21) {
                         return null;
                       } else if (value.isNotEmpty) {
-                        return '帳號須為英數字混和6-8碼';
+                        return '帳號須為英數字混和6-20碼';
                       } else {
                         return '帳號不得空白';
                       }
@@ -162,12 +162,14 @@ class _Login_selfacountState extends State<Login_selfacount> {
                             RegExp("[a-zA-Z]|[0-9]")),
                       ],
                       validator: (value) {
-                        if (value!.isNotEmpty && value.length == 8) {
+                        if (value!.isNotEmpty &&
+                            value.length > 7 &&
+                            value.length < 21) {
                           return null;
                         } else if (value.isEmpty) {
                           return '密碼不得空白';
                         } else {
-                          return '密碼須為英數字混和8碼';
+                          return '密碼須為英數字混和8-20碼';
                         }
                       }),
                   const SizedBox(height: 30.0),
