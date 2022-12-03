@@ -6,9 +6,11 @@ import 'dart:io';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:monsters_front_end/model/annoyanceModel.dart';
 import 'package:monsters_front_end/pages/Timer_Widget.dart';
 import 'package:monsters_front_end/pages/monsters_information.dart';
 import 'package:monsters_front_end/pages/style.dart';
+import 'package:monsters_front_end/repository/annoyanceRepo.dart';
 import 'package:video_player/video_player.dart';
 
 import '../model/audio_Model/audio_player.dart';
@@ -46,6 +48,7 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
   File? moodFile;
   @override
   Widget build(BuildContext context) {
+    final AnnoyanceRepository annoyanceRepository = AnnoyanceRepository();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     response();
     log(data.toString());
@@ -95,62 +98,149 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
               decoration:
                   BoxDecoration(color: Color.fromRGBO(255, 237, 151, 1)),
               alignment: Alignment.bottomCenter,
-              height: 60,
+              height: 70,
               //margin: EdgeInsets.only(bottom: 30),
               child: Container(
-                child: TextButton(
+                child: Container(
                   child: getSolved() == false
-                      ? Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                data["solve"] = 1;
-                                setState(() {});
-                                insert("我解決煩惱了！");
-                                reply("剩下的交給${getMonsterAvatarName_CH()}吧！");
-                                popUp(context);
-                              },
-                              child: Container(
-                                width: 180,
+                      ? Center(
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  insert("我解決煩惱了！");
+                                  reply("剩下的交給${getMonsterAvatarName_CH()}吧！");
+                                  data["solve"] = 1;
+
+                                  // 更新煩惱為已解決
+                                  annoyanceRepository.modifyAnnoyance(
+                                    data["id"],
+                                    Annoyance(
+                                      id: data["id"],
+                                      monsterId: data["monsterId"],
+                                      index: data["index"],
+                                      solve: 1,
+                                    ),
+                                  );
+                                  popUp(context);
+                                  setState(() {});
+                                },
+                                child: Container(
+                                  width: 180,
+                                  height: 50,
+                                  margin: EdgeInsets.only(
+                                    left: 15,
+                                    bottom: 3,
+                                  ),
+                                  padding: EdgeInsets.only(left: 13),
+                                  alignment: Alignment.centerLeft,
+                                  decoration: BoxDecoration(
+                                      color: BackgroundColorWarm,
+                                      border: Border.all(
+                                          color: BackgroundColorWarm, width: 2),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(50.0))),
+                                  child: Center(
+                                    child: Text(
+                                      "我解決煩惱了！",
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Spacer(),
+                              Container(
+                                width: 110,
                                 height: 50,
                                 margin: EdgeInsets.only(
-                                  left: 15,
+                                  right: 15,
                                   bottom: 3,
                                 ),
-                                padding: EdgeInsets.only(left: 13),
                                 alignment: Alignment.centerLeft,
                                 decoration: BoxDecoration(
-                                    color: BackgroundColorWarm,
+                                    color: getShared()
+                                        ? Colors.white
+                                        : BackgroundColorWarm,
                                     border: Border.all(
                                         color: BackgroundColorWarm, width: 2),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(50.0))),
                                 child: Center(
-                                  child: Text(
-                                    "我解決煩惱了！",
-                                    style: TextStyle(
-                                        fontSize: 18, color: Colors.white),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      int _share;
+                                      if (data["share"] == 0) {
+                                        _share = 1;
+                                      } else {
+                                        _share = 0;
+                                      }
+                                      annoyanceRepository.modifyAnnoyance(
+                                        data["id"],
+                                        Annoyance(
+                                          id: data["id"],
+                                          monsterId: data["monsterId"],
+                                          index: data["index"],
+                                          solve: data["solve"],
+                                          share: _share,
+                                        ),
+                                      );
+                                      data["share"] = _share;
+                                      setState(() {});
+                                    },
+                                    child: Text(
+                                      getShared() ? "取消分享" : "分享",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: getShared()
+                                              ? BackgroundColorWarm
+                                              : Colors.white),
+                                    ),
                                   ),
                                 ),
                               ),
+                            ],
+                          ),
+                        )
+                      : Center(
+                          child: Container(
+                            width: 110,
+                            height: 50,
+                            margin: EdgeInsets.only(
+                              right: 15,
+                              bottom: 3,
                             ),
-                            Spacer(),
-                            Container(
-                              width: 110,
-                              margin: EdgeInsets.only(
-                                right: 15,
-                                bottom: 3,
-                              ),
-                              alignment: Alignment.centerLeft,
-                              decoration: BoxDecoration(
-                                  color: getShared()
-                                      ? Colors.white
-                                      : BackgroundColorWarm,
-                                  border: Border.all(
-                                      color: BackgroundColorWarm, width: 2),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(50.0))),
-                              child: Center(
+                            alignment: Alignment.centerLeft,
+                            decoration: BoxDecoration(
+                                color: getShared()
+                                    ? Colors.white
+                                    : BackgroundColorWarm,
+                                border: Border.all(
+                                    color: BackgroundColorWarm, width: 2),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0))),
+                            child: Center(
+                              child: GestureDetector(
+                                onTap: () {
+                                  int _share;
+                                  if (data["share"] == 0) {
+                                    _share = 1;
+                                  } else {
+                                    _share = 0;
+                                  }
+                                  annoyanceRepository.modifyAnnoyance(
+                                    data["id"],
+                                    Annoyance(
+                                      id: data["id"],
+                                      monsterId: data["monsterId"],
+                                      index: data["index"],
+                                      solve: data["solve"],
+                                      share: _share,
+                                    ),
+                                  );
+                                  data["share"] = _share;
+                                  setState(() {});
+                                },
                                 child: Text(
                                   getShared() ? "取消分享" : "分享",
                                   style: TextStyle(
@@ -161,41 +251,11 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
                                 ),
                               ),
                             ),
-                          ],
-                        )
-                      : Center(
-                          child: Container(
-                            width: 110,
-                            margin: EdgeInsets.only(
-                              right: 15,
-                              bottom: 3,
-                            ),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: getShared()
-                                    ? Colors.white
-                                    : BackgroundColorWarm,
-                                border: Border.all(
-                                    color: BackgroundColorWarm, width: 2),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(50.0))),
-                            child: Center(
-                              child: Text(
-                                getShared() ? "取消分享" : "分享",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: getShared()
-                                        ? BackgroundColorWarm
-                                        : Colors.white),
-                              ),
-                            ),
                           ),
                         ),
-                  onPressed: () {},
                 ),
               ),
             ),
-            Container(color: Color.fromRGBO(255, 237, 151, 1), height: 10),
           ],
         ),
       ),

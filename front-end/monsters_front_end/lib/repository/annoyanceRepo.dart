@@ -25,6 +25,12 @@ class AnnoyanceRepository implements AnnoyanceApiDataSource {
         Uri.parse('$domain/annoyance/search/$userAccount'));
   }
 
+  @override
+  Future<String> modifyAnnoyance(int id, Annoyance annoyance) {
+    return _modifyAnnoyance(
+        Uri.parse('$domain/annoyance/modify/$id'), annoyance);
+  }
+
   Future<String> _createAnnoyance(
     Uri url,
     Annoyance annoyance,
@@ -66,6 +72,29 @@ class AnnoyanceRepository implements AnnoyanceApiDataSource {
     } catch (e) {
       print(e.toString());
       return null;
+    }
+  }
+
+  Future<String> _modifyAnnoyance(
+    Uri url,
+    Annoyance annoyance,
+  ) async {
+    log(json.encode(annoyance).toString());
+    try {
+      final request = await client.patch(
+        url,
+        headers: {'Content-type': 'application/json'},
+        body: json.encode(annoyance),
+      );
+      log("modify statusCode: " + request.statusCode.toString());
+      log("modify body: " + request.body.toString());
+      if (request.statusCode == 200) {
+        return request.body;
+      } else {
+        return Future.value(request.body);
+      }
+    } catch (e) {
+      return e.toString();
     }
   }
 }

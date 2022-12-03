@@ -418,7 +418,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                             ),
                                           ],
                                         ),
-                                  onTap: () {
+                                  onTap: () async {
                                     print(
                                       "type: " +
                                           snapshot.data["result $index"]
@@ -434,13 +434,14 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                           "\n",
                                     );
 
-                                    Navigator.push(
+                                    await Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 historyAnnoyanceChat(
                                                     data: snapshot.data[
                                                         "result $index"])));
+                                    setState(() {});
                                   }),
                             ),
                           ),

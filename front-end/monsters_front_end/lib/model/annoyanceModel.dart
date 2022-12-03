@@ -93,7 +93,7 @@ class Annoyance {
     data['moodFile'] = moodFile;
     return data;
   }
-
+  @override
   String toString() {
     return "{account:$account,id: $id,account: $account,content: $content, type: $type, monsterId: $monsterId, mood: $mood, index: $index, time: $time, solve: $solve, share: $share, contentFile: $contentFile, moodFile: $moodFile}}";
   }

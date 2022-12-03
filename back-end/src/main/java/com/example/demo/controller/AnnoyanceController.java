@@ -110,7 +110,7 @@ public class AnnoyanceController {
 
     @ResponseBody
     @PatchMapping("/modify/{id}")
-    public ResponseEntity modifyAnnoyance(@PathVariable(name = "id") int id, AnnoyanceBean annoyanceBean) {
+    public ResponseEntity modifyAnnoyance(@PathVariable(name = "id") int id,@RequestBody AnnoyanceBean annoyanceBean) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         annoyanceService.update(id, annoyanceBean);
