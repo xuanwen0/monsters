@@ -112,8 +112,11 @@ public class SocialController {
                 });
                 for (AnnoyanceBean annoyanceBean : annoyanceList) {
                     ObjectNode annoyanceNode = dataNode.addObject();
+                    Optional<PersonalInfoBean> personalInfo = personalInfoService.getByPK(annoyanceBean.getAccount());
+                    String nickName = personalInfo.get().getNickName();
                     annoyanceNode.put("id", annoyanceBean.getId());
                     annoyanceNode.put("content", annoyanceBean.getContent());
+                    annoyanceNode.put("nickName", nickName);
                     annoyanceNode.put("type", annoyanceBean.getType().getId());
                     annoyanceNode.put("monsterId", annoyanceBean.getMonsterId());
                     annoyanceNode.put("mood", annoyanceBean.getMood());
@@ -153,7 +156,10 @@ public class SocialController {
                 });
                 for (DiaryBean diaryBean : diaryList) {
                     ObjectNode diaryNode = dataNode.addObject();
+                    Optional<PersonalInfoBean> personalInfo = personalInfoService.getByPK(diaryBean.getAccount());
+                    String nickName = personalInfo.get().getNickName();
                     diaryNode.put("id", diaryBean.getId());
+                    diaryNode.put("nickName", nickName);
                     diaryNode.put("content", diaryBean.getContent());
                     diaryNode.put("monsterId", diaryBean.getMonsterId());
                     diaryNode.put("index", diaryBean.getIndex());
@@ -198,8 +204,11 @@ public class SocialController {
                 });
                 for (AnnoyanceBean annoyanceBean : annoyanceList) {
                     ObjectNode annoyanceNode = dataNode.addObject();
+                    Optional<PersonalInfoBean> personalInfo = personalInfoService.getByPK(annoyanceBean.getAccount());
+                    String nickName = personalInfo.get().getNickName();
                     annoyanceNode.put("id", annoyanceBean.getId());
                     annoyanceNode.put("content", annoyanceBean.getContent());
+                    annoyanceNode.put("nickName", nickName);
                     annoyanceNode.put("type", annoyanceBean.getType().getId());
                     annoyanceNode.put("monsterId", annoyanceBean.getMonsterId());
                     annoyanceNode.put("mood", annoyanceBean.getMood());
@@ -210,7 +219,10 @@ public class SocialController {
                 }
                 for (DiaryBean diaryBean : diaryList) {
                     ObjectNode diaryNode = dataNode.addObject();
+                    Optional<PersonalInfoBean> personalInfo = personalInfoService.getByPK(diaryBean.getAccount());
+                    String nickName = personalInfo.get().getNickName();
                     diaryNode.put("id", diaryBean.getId());
+                    diaryNode.put("nickName", nickName);
                     diaryNode.put("content", diaryBean.getContent());
                     diaryNode.put("monsterId", diaryBean.getMonsterId());
                     diaryNode.put("index", diaryBean.getIndex());
