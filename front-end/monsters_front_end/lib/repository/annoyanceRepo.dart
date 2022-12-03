@@ -12,7 +12,6 @@ import 'package:http/http.dart' as http;
 // const String domain = "http://10.0.2.2:8080";
 const String domain = "http://220.132.124.140:5000";
 
-
 class AnnoyanceRepository implements AnnoyanceApiDataSource {
   final client = http.Client();
   @override
@@ -30,13 +29,14 @@ class AnnoyanceRepository implements AnnoyanceApiDataSource {
     Uri url,
     Annoyance annoyance,
   ) async {
+    log(annoyance.toString());
     try {
       var body = json.encode(annoyance);
       var request = await client.post(url,
           headers: {'Content-type': 'application/json'}, body: body);
       // body: annoyance);
-      log(request.statusCode.toString());
-      log(request.body);
+      // log(request.statusCode.toString());
+      // log(request.body);
       if (request.statusCode == 201) {
         log(
           request.body,

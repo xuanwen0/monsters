@@ -344,15 +344,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                           ),
                         ),
                         onPressed: () {
-                          // log("userAccount: " + userAccount.toString());
-                          // log("type:" + userAnswers[0].toString());
-                          // log("content: " + userAnswers[1].toString());
-                          // log("mood: " + userAnswers[2].toString());
-                          // log("index: " + userAnswers[3].toString());
-                          // log("share: " + userAnswers[4].toString());
-                          // log("moodFile: " + moodFile.toString());
-                          // log("contentFile: " + contentFile.toString());
-                          var temp = Annoyance(
+                          annoyanceRepository.createAnnoyance(Annoyance(
                             id: 0,
                             account: userAccount, //"Lin"
                             content: userAnswers[1], //"純文字不分享無多媒體"
@@ -364,10 +356,8 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                             solve: 0,
                             share: userAnswers[4], //0
                             contentFile: contentFile, //null
-                            moodFile: moodFile, //null
-                          );
-
-                          annoyanceRepository.createAnnoyance(temp);
+                            moodFile: moodFile, //null)
+                          ));
                           // Navigator.pushReplacement(
                           //     //TODO: Level 2
                           //     //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
@@ -746,7 +736,7 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
 
   //確認是否符合選擇格式，符合->回覆 不符合->提示再次輸入
   Future<void> response([String? text, File? media]) async {
-    List<String> annoyTypeMembers = ["", "課業", "事業", "愛情", "友情", "親情", "其他"];
+    List<String> annoyTypeMembers = ["課業", "事業", "愛情", "友情", "親情", "其他"];
     List<String> emotionGradeMembers = ["", "1", "2", "3", "4", "5"];
     List<String> acceptDrawingMembers = ["是", "否"];
     //進入時自動訊息問安
