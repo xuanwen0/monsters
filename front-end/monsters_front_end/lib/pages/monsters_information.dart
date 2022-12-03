@@ -14,7 +14,7 @@ const List monsterNamesList = [
   // "Lizi", //9
   "Lory", //10
   "Magic", //11
-  "Ni" //12
+  // "Ni" //12
   "Pen", //13
   // "Pina", //14
   "Pudding", //15
@@ -37,7 +37,7 @@ const List monsterNamesList_CH = [
   // "栗茲", //9
   "酪里", //10
   "馬奇", //11
-  "阿尼", //12
+  // "阿尼", //12
   "潘恩", //13
   // "批奈", //14
   "噗叮", //15
