@@ -1,14 +1,17 @@
 // ignore_for_file: use_key_in_widget_constructors
-
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:monsters_front_end/pages/drawer_personalInfo.dart';
+import 'package:monsters_front_end/pages/history.dart';
 import 'package:monsters_front_end/pages/home.dart';
 import 'package:monsters_front_end/pages/login.dart';
+import 'package:monsters_front_end/pages/manual.dart';
 import 'package:monsters_front_end/routes.dart';
 import 'pages/style.dart';
 
-var user_Account = 'Lin';
+var tempPage = History();
+var userAccount = 'WeiChun';
 void main() async {
   runApp(Monsters());
 }
@@ -22,15 +25,15 @@ class Monsters extends StatelessWidget with WidgetsBindingObserver {
       title: '貘nsters',
       theme: _theme(),
       routes: {
-        GitmeRebornRoutes.login: (context) => LoginPage(),
-        GitmeRebornRoutes.home: (context) => MainPage(),
+        GitmeRebornRoutes.login: (context) => tempPage,
+        GitmeRebornRoutes.home: (context) => tempPage,
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case GitmeRebornRoutes.root:
-            return MaterialPageRoute(builder: (context) => LoginPage());
+            return MaterialPageRoute(builder: (context) => tempPage);
           default:
-            return MaterialPageRoute(builder: (context) => LoginPage());
+            return MaterialPageRoute(builder: (context) => tempPage);
         }
       },
       debugShowCheckedModeBanner: false,

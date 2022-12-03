@@ -48,19 +48,14 @@ class _historyAnnoyanceChat extends State<historyAnnoyanceChat> {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     response();
-    /**
-     * 
-            'id': value.data.elementAt(index).id,
-            'avatar': value.data.elementAt(index).monsterId,
-            'content': value.data.elementAt(index).content,
-            'type': type,
-            'monsterId': value.data.elementAt(index).monsterId,
-            'time': value.data.elementAt(index).time,
-            'solve': value.data.elementAt(index).solve,
-     */
+    log(data.toString());
     response(data["type"]);
     response(data["content"]);
-    response(data["mood"]);
+    if (data["mood"] != null) {
+      response("是");
+    } else {
+      response("否");
+    }
     response(data["index"].toString());
 
     if (data["share"] == 0) {

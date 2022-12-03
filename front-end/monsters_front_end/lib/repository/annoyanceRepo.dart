@@ -23,7 +23,7 @@ class AnnoyanceRepository implements AnnoyanceApiDataSource {
   @override
   Future<Map<String, dynamic>?> searchAnnoyanceByAccount(String account) {
     return _searchAnnoyanceByAccount(
-        Uri.parse('$domain/annoyance/search/$user_Account'));
+        Uri.parse('$domain/annoyance/search/$userAccount'));
   }
 
   Future<String> _createAnnoyance(
@@ -32,7 +32,6 @@ class AnnoyanceRepository implements AnnoyanceApiDataSource {
   ) async {
     try {
       var body = json.encode(annoyance);
-      log(annoyance.index.toString());
       var request = await client.post(url,
           headers: {'Content-type': 'application/json'}, body: body);
       // body: annoyance);

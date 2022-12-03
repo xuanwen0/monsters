@@ -38,7 +38,7 @@ public class AnnoyanceController {
 
     @ResponseBody
     @PostMapping("/create")
-    public ResponseEntity createAnnoyance(@ModelAttribute AnnoyanceBean annoyanceBean) {
+    public ResponseEntity createAnnoyance(@RequestBody AnnoyanceBean annoyanceBean) {
         int index = 0;
         boolean isAddMonster = true;
         ObjectMapper mapper = new ObjectMapper();

@@ -136,9 +136,7 @@ class _SocialState extends State<Social> with SingleTickerProviderStateMixin {
           "result $index",
           () => {
             'id': value.data.elementAt(index).id,
-            // 'name': value.data.elementAt(index).account,
             'nickName': value.data.elementAt(index).nickName,
-            // 'nickName': "Lin",
             'avatar': value.data.elementAt(index).monsterId,
             'content': value.data.elementAt(index).content,
             'type': type,

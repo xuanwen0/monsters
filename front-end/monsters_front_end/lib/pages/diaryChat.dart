@@ -338,7 +338,7 @@ class _diaryChat extends State<diaryChat> with WidgetsBindingObserver {
                             diaryRepository.createDiary(
                               Diary(
                                 id: 0,
-                                account: user_Account, //"Lin"
+                                account: userAccount, //"Lin"
                                 content: userAnswers[0], //"純文字不分享無多媒體"
                                 index: userAnswers[1], //3
                                 share: userAnswers[2], //0

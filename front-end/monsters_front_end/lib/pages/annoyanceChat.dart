@@ -344,37 +344,36 @@ class _AnnoyanceChat extends State<AnnoyanceChat> with WidgetsBindingObserver {
                           ),
                         ),
                         onPressed: () {
-                          log("user_Account: " + user_Account.toString());
-                          log("type:" + userAnswers[0].toString());
-                          log("content: " + userAnswers[1].toString());
-                          log("mood: " + userAnswers[2].toString());
-                          log("index: " + userAnswers[3].toString());
-                          log("share: " + userAnswers[4].toString());
-                          log("moodFile: " + moodFile.toString());
-                          log("contentFile: " + contentFile.toString());
-
-                          annoyanceRepository.createAnnoyance(
-                            Annoyance(
-                              id: 0,
-                              account: user_Account, //"Lin"
-                              content: userAnswers[1], //"純文字不分享無多媒體"
-                              type: userAnswers[0], //4
-                              monsterId: 1,
-                              mood: userAnswers[2], //"否"
-                              index: userAnswers[3], //3
-                              time: '',
-                              solve: 0,
-                              share: userAnswers[4], //0
-                              contentFile: contentFile, //null
-                              moodFile: moodFile, //null
-                            ),
+                          // log("userAccount: " + userAccount.toString());
+                          // log("type:" + userAnswers[0].toString());
+                          // log("content: " + userAnswers[1].toString());
+                          // log("mood: " + userAnswers[2].toString());
+                          // log("index: " + userAnswers[3].toString());
+                          // log("share: " + userAnswers[4].toString());
+                          // log("moodFile: " + moodFile.toString());
+                          // log("contentFile: " + contentFile.toString());
+                          var temp = Annoyance(
+                            id: 0,
+                            account: userAccount, //"Lin"
+                            content: userAnswers[1], //"純文字不分享無多媒體"
+                            type: userAnswers[0], //4
+                            monsterId: 1,
+                            mood: userAnswers[2], //"否"
+                            index: userAnswers[3], //3
+                            time: '',
+                            solve: 0,
+                            share: userAnswers[4], //0
+                            contentFile: contentFile, //null
+                            moodFile: moodFile, //null
                           );
-                          Navigator.pushReplacement(
-                              //TODO: Level 2
-                              //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => History()));
+
+                          annoyanceRepository.createAnnoyance(temp);
+                          // Navigator.pushReplacement(
+                          //     //TODO: Level 2
+                          //     //ADD HERO https://youtu.be/1xipg02Wu8s?t=657
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => History()));
                         },
                       ),
                     ),
