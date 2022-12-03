@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:flutter/services.dart';
 import 'dart:developer' as dv;
 import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/memberModel.dart';
-import 'package:monsters_front_end/pages/drawer_personalInfo.dart';
-import 'package:monsters_front_end/pages/home.dart';
-import 'package:monsters_front_end/pages/style.dart';
 
 import 'package:monsters_front_end/repository/memberRepo.dart';
 

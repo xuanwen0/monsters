@@ -37,8 +37,7 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
     print("doing...");
     final MemberRepository memberRepository = MemberRepository();
     Future<Data> personalInfo = memberRepository
-        .searchPersonalInfoByAccount("Lin")
-        // .searchPersonalInfoByAccount(user_Account)
+        .searchPersonalInfoByAccount(user_Account)
         .then((value) => Data.fromJson(value!));
 
     await personalInfo.then((value) async {
