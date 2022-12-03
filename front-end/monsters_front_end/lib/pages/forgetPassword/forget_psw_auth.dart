@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:developer' as dv;
+import 'dart:math';
 
 import 'package:adobe_xd/page_link.dart';
 import 'package:email_validator/email_validator.dart';
@@ -25,32 +27,32 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
   void initState() {
     super.initState();
     // Initialize the package
-    emailAuth = EmailAuth(
-      sessionName: "貘nsters",
-    );
+    // emailAuth = EmailAuth(
+    //   sessionName: "貘nsters",
+    // );
   }
 
-  void verifyCode(int code) {
-    print(code);
-    // if (res) {
-    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    //       duration: Duration(seconds: 1),
-    //       backgroundColor: BackgroundColorWarm,
-    //       content: Text(
-    //         "認證成功",
-    //         style: TextStyle(color: Colors.white, fontSize: 30),
-    //       )));
-    //   Navigator.pushReplacement(
-    //       context, MaterialPageRoute(builder: (context) => Reset_Password()));
-    // } else {
-    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    //       duration: Duration(seconds: 1),
-    //       backgroundColor: BackgroundColorWarm,
-    //       content: Text(
-    //         "認證失敗",
-    //         style: TextStyle(color: Colors.white, fontSize: 30),
-    //       )));
-    // }
+  void verifyCode(String input) {
+    var inputCode = int.parse(input);
+    if (inputCode == VerifyCode) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 1),
+          backgroundColor: BackgroundColorWarm,
+          content: Text(
+            "認證成功",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          )));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Reset_Password()));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 1),
+          backgroundColor: BackgroundColorWarm,
+          content: Text(
+            "認證失敗",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          )));
+    }
   }
 
   Future sendVerifyEmail({
@@ -79,7 +81,6 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
           }
         }));
 
-    setState(() {});
     if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           duration: Duration(seconds: 1),
@@ -197,9 +198,10 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                     alignment: Alignment.centerRight,
                     child: TextButton(
                         onPressed: () {
-                          int _code = 123455; //亂數
+                          VerifyCode = Random().nextInt(899999)+100000;
                           sendVerifyEmail(
-                              userEmail: _mailController.text, code: _code);
+                              userEmail: _mailController.text,
+                              code: VerifyCode);
                         },
                         child: const Text(
                           '傳送認證碼',
@@ -266,7 +268,7 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                       onPressed: () {
                         final isValidForm = _formKey.currentState!.validate();
                         if (isValidForm) {
-                          verifyCode(code);
+                          verifyCode(_otpController.text);
                         }
                       },
                     ),
@@ -281,5 +283,6 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
   }
 }
 
+int VerifyCode = 1;
 const String _svg_ryq30 =
     '<svg viewBox="13.7 21.9 45.6 41.1" ><path transform="translate(8.07, 15.61)" d="M 47.28736877441406 22.92952919006348 L 19.54702568054199 22.92952919006348 L 30.30613327026367 13.09178352355957 C 31.84870529174805 11.54302215576172 31.84870529174805 9.040220260620117 30.30613327026367 7.491456031799316 C 28.76356315612793 5.942692756652832 26.26174545288086 5.942692756652832 24.70621109008789 7.491456031799316 L 6.791648864746094 24.09420013427734 C 6.013882637023926 24.81282615661621 5.624999046325684 25.79164695739746 5.624999046325684 26.86958694458008 L 5.624999046325684 26.91914939880371 C 5.624999046325684 27.99708938598633 6.013882637023926 28.97590446472168 6.791648864746094 29.69453430175781 L 24.69325065612793 46.29727935791016 C 26.24878120422363 47.84604263305664 28.75060272216797 47.84604263305664 30.29317092895508 46.29727935791016 C 31.83573913574219 44.74851226806641 31.83573913574219 42.2457160949707 30.29317092895508 40.69694900512695 L 19.5340633392334 30.85920524597168 L 47.27440643310547 30.85920524597168 C 49.46512222290039 30.85920524597168 51.24102020263672 29.08742141723633 51.24102020263672 26.89437294006348 C 51.25398254394531 24.66414642333984 49.47808074951172 22.92952919006348 47.28736877441406 22.92952919006348 Z" fill="#ffbb00" stroke="none" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';
