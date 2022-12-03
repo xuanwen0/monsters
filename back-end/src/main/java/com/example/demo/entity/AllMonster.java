@@ -11,7 +11,6 @@ import javax.persistence.*;
 public class AllMonster {
     @Id
     @Column(name = "`id`", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "`name_chinese`", nullable = false)
