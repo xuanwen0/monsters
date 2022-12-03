@@ -184,7 +184,7 @@ class _dev_annoyanceChatState extends State<dev_annoyanceChat> {
                     annoyanceRepository.createAnnoyance(
                       Annoyance(
                         id: 0,
-                        account: "Lin", //"Lin"
+                        account: userAccount, //"Lin"
                         monsterId: 1,
                         type: _type, //4
                         content: pushContent, //"純文字不分享無多媒體"

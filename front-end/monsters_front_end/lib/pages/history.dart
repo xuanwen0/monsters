@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:math';
+import 'dart:developer' as dv;
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
@@ -362,60 +363,62 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                           ),
                                         )
                                       : Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      
-                                      Expanded(
-                                        flex: 59,
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                                flex: 59,
                                                 child: Container(
-                                          width: 55,
-                                          decoration: BoxDecoration(
-                                            color: Color.fromARGB(
-                                                255, 174, 108, 32),
-                                            borderRadius: const BorderRadius
-                                                    .all(
-                                                Radius.elliptical(10.0, 10.0)),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              snapshot.data["result $index"]
-                                                      ["type"]
-                                                  .toString(),
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Color.fromARGB(
-                                                      255, 255, 255, 255)),
+                                                  width: 55,
+                                                  decoration: BoxDecoration(
+                                                    color: Color.fromARGB(
+                                                        255, 174, 108, 32),
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                            Radius.elliptical(
+                                                                10.0, 10.0)),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      snapshot
+                                                          .data["result $index"]
+                                                              ["type"]
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          fontSize: 18,
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              255,
+                                                              255)),
+                                                    ),
+                                                  ),
+                                                )),
+                                            Expanded(
+                                              flex: 5,
+                                              child: SizedBox(),
                                             ),
-                                          ),
-                                                )
-                                            
-                                      ),
-                                          
-                                      Expanded(
-                                        flex: 5,
-                                        child: SizedBox(),
-                                      ),
-                                      Expanded(
-                                          flex: 39,
-                                          child: Container(
-                                            width: 55,
-                                            child: Center(
-                                              child: Text(
-                                                  snapshot.data["result $index"]
-                                                          ["time"]
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color:
-                                                          BackgroundColorWarm)),
-                                            ),
+                                            Expanded(
+                                              flex: 39,
+                                              child: Container(
+                                                width: 55,
+                                                child: Center(
+                                                  child: Text(
+                                                      snapshot
+                                                          .data["result $index"]
+                                                              ["time"]
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color:
+                                                              BackgroundColorWarm)),
+                                                ),
                                               ),
                                             ),
-                                    ],
-                                  ),
-                                  onTap: () {
+                                          ],
+                                        ),
+                                  onTap: () async {
                                     print(
                                       "type: " +
                                           snapshot.data["result $index"]
@@ -431,13 +434,14 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                                           "\n",
                                     );
 
-                                    Navigator.push(
+                                    await Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 historyAnnoyanceChat(
                                                     data: snapshot.data[
                                                         "result $index"])));
+                                    setState(() {});
                                   }),
                             ),
                           ),
@@ -810,7 +814,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     await histories.then((value) async {
       await historyResult.putIfAbsent(
         "itemCounter",
-        () => value.data.length,
+        () => min(value.data.length, 20),
       );
 
       for (int index = 0; index < min(value.data.length, 20); index++) {

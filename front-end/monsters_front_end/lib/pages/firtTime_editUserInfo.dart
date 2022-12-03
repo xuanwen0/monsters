@@ -251,6 +251,6 @@ class _FirstTime_editUserInfoState extends State<FirstTime_editUserInfo> {
     //儲存account shared preferences (後用來判斷此裝置是否登入過)
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("googleLogin", account);
-    user_Account = account;
+    userAccount = account;
   }
 }

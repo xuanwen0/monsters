@@ -38,7 +38,7 @@ public class AnnoyanceController {
 
     @ResponseBody
     @PostMapping("/create")
-    public ResponseEntity createAnnoyance(@ModelAttribute AnnoyanceBean annoyanceBean) {
+    public ResponseEntity createAnnoyance(@RequestBody AnnoyanceBean annoyanceBean) {
         int index = 0;
         boolean isAddMonster = true;
         ObjectMapper mapper = new ObjectMapper();
@@ -110,7 +110,7 @@ public class AnnoyanceController {
 
     @ResponseBody
     @PatchMapping("/modify/{id}")
-    public ResponseEntity modifyAnnoyance(@PathVariable(name = "id") int id, AnnoyanceBean annoyanceBean) {
+    public ResponseEntity modifyAnnoyance(@PathVariable(name = "id") int id,@RequestBody AnnoyanceBean annoyanceBean) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         annoyanceService.update(id, annoyanceBean);

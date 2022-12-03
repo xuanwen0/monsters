@@ -29,7 +29,7 @@ class _ManualState extends State<Manual> with SingleTickerProviderStateMixin {
   late Animation degOneTranslationAnimation, degTwoTranslationAnimation;
   late Animation rotationAnimation;
   StateSetter? animationState;
-  //TODO:用user_Account傳入圖鑑API獲得圖鑑資訊
+  //TODO:用userAccount傳入圖鑑API獲得圖鑑資訊
   List<int> UnlockMonsterId = [0, 1, 3, 4, 6, 9, 10, 13, 18]; //資料庫取得
   List<String> showNames = [];
   List<String> showPics = [];

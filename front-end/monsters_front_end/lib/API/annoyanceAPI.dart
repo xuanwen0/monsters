@@ -6,4 +6,6 @@ abstract class AnnoyanceApiDataSource{
   Future<String> createAnnoyance(Annoyance annoyance);
 
   Future<Map<String, dynamic>?> searchAnnoyanceByAccount(String account);
+  
+  Future<String> modifyAnnoyance(int id, Annoyance annoyance);
 }

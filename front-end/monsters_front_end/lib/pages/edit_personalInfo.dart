@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'dart:developer' as dv;
 import 'package:monsters_front_end/main.dart';
 import 'package:monsters_front_end/model/memberModel.dart';
+import 'package:monsters_front_end/pages/drawer_personalInfo.dart';
+import 'package:monsters_front_end/pages/style.dart';
 
 import 'package:monsters_front_end/repository/memberRepo.dart';
 
@@ -115,26 +119,30 @@ class _Edit_personalInfoState extends State<Edit_personalInfo> {
 
                                           memberRepository.modifyPersonalInfo(
                                             Member(
-                                              account: user_Account,
-                                              nickName:
-                                                  _nicknameController.text.toString(),
+                                              account: userAccount,
+                                              nickName: _nicknameController.text
+                                                  .toString(),
                                             ),
                                           );
 
-                                          // ScaffoldMessenger.of(context)
-                                          //     .showSnackBar(const SnackBar(
-                                          //         duration:
-                                          //             Duration(seconds: 1),
-                                          //         backgroundColor:
-                                          //             BackgroundColorWarm,
-                                          //         content: Text(
-                                          //           "儲存成功",
-                                          //           style: TextStyle(
-                                          //               color: Colors.white,
-                                          //               fontSize: 30),
-                                          //         )));
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  duration:
+                                                      Duration(seconds: 1),
+                                                  backgroundColor:
+                                                      BackgroundColorWarm,
+                                                  content: Text(
+                                                    "儲存成功",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 30),
+                                                  )));
 
-                                          // Navigator.of(context).pop();
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Drawer_personalInfo()));
                                         }
                                       },
                                     ),

@@ -21,7 +21,7 @@ class DiaryRepository implements DiaryApiDataSource {
   @override
   Future<Map<String, dynamic>?> searchDiaryByAccount(String account) {
     return _searchDiaryByAccount(
-        Uri.parse('$domain/diary/search/$user_Account'));
+        Uri.parse('$domain/diary/search/$userAccount'));
   }
 
   Future<String> _createDiary(

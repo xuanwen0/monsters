@@ -15,20 +15,20 @@ class HistoryRepository implements HistoryApiDataSource {
   Future<Map<String, dynamic>?> searchHistoryByType(int type) {
     String searchType = "";
     if (type == 1) {
-      searchType = user_Account;
+      searchType = userAccount;
     }
     if (type == 2) {
-      searchType = "annoyance/$user_Account";
+      searchType = "annoyance/$userAccount";
     }
     if (type == 3) {
-      // searchType = "diary/$user_Account";
-      searchType = "diary/Lin";
+      // searchType = "diary/$userAccount";
+      searchType = "diary/$userAccount";
     }
     if (type == 4) {
-      searchType = "annoyance/0/$user_Account";
+      searchType = "annoyance/0/$userAccount";
     }
     if (type == 5) {
-      searchType = "annoyance/1/$user_Account";
+      searchType = "annoyance/1/$userAccount";
     }
 
     return _searchHistoryByType(Uri.parse('$domain/history/$searchType'));

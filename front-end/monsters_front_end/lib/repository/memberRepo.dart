@@ -26,7 +26,7 @@ class MemberRepository implements MemberApiDataSource {
   @override
   Future<String> modifyPersonalInfo(Member member) {
     return _modifyPersonalInfo(
-        Uri.parse('$domain/member/modify/$user_Account'), member);
+        Uri.parse('$domain/member/modify/$userAccount'), member);
   }
 
   Future<String> _createMember(
@@ -96,7 +96,7 @@ class MemberRepository implements MemberApiDataSource {
   @override
   Future<Map<String, dynamic>?> searchPersonalInfoByAccount(String account) {
     return _searchPersonalInfoByAccount(
-        Uri.parse('$domain/member/$user_Account'));
+        Uri.parse('$domain/member/$userAccount'));
   }
 
   Future<Map<String, dynamic>?> _searchPersonalInfoByAccount(Uri url) async {

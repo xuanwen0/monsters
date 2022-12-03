@@ -37,7 +37,7 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
     print("doing...");
     final MemberRepository memberRepository = MemberRepository();
     Future<Data> personalInfo = memberRepository
-        .searchPersonalInfoByAccount(user_Account)
+        .searchPersonalInfoByAccount(userAccount)
         .then((value) => Data.fromJson(value!));
 
     await personalInfo.then((value) async {
@@ -56,7 +56,7 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
 
   @override
   Widget build(BuildContext context) {
-    print(choosenAvatar);
+    setState(() {});
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: secondAppBar("個人資料"),
@@ -251,12 +251,12 @@ class _Drawer_personalInfoState extends State<Drawer_personalInfo> {
                               ),
                             ),
                             onTap: () {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          Edit_personalInfo(
+                                      builder: (context) => Edit_personalInfo(
                                           data: snapshot.data)));
+
                             },
                           ),
                         ),

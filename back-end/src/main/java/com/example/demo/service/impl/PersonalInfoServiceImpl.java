@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import java.util.ArrayList;
+import java.util.List;
 @Service
 public class PersonalInfoServiceImpl extends BaseServiceImplement<PersonalInfoDAO, PersonalInfo, PersonalInfoBean> implements PersonalInfoService {
     @Autowired
@@ -32,6 +34,16 @@ public class PersonalInfoServiceImpl extends BaseServiceImplement<PersonalInfoDA
         bean = createBean(personalInfo);
         return bean;
     }
+    @Override
+    public List<PersonalInfoBean> searchPersonalInfoByAccount(String account){
+        List<PersonalInfo> userList = personalInfoDAO.findByAccount(account);
+        List<PersonalInfoBean> personalInfoBeanList = new ArrayList<>();
+        for(PersonalInfo personalInfo : userList){
+            personalInfoBeanList.add(createBean(personalInfo));
+        }
+        return personalInfoBeanList;
+    }
+
 
     @Override
     @Transactional(readOnly = false)

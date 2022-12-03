@@ -249,10 +249,9 @@ class _Login_selfacountState extends State<Login_selfacount> {
     print("start login()...");
     print("try account: " + _accountController.text);
     print("try pass: " + _pwdController.text);
+    final MemberRepository memberRepository = MemberRepository();
     var result = await memberRepository.login(Member(
         account: _accountController.text, password: _pwdController.text));
-    print("get Result: " + result.contains("result").toString() + "\n");
-    print("result: " + result + "\n");
     if (result.contains("result")) {
       saveSelfLogin(_accountController.text);
       Navigator.of(context)
@@ -272,7 +271,7 @@ class _Login_selfacountState extends State<Login_selfacount> {
     //儲存account shared preferences (後用來判斷此裝置是否登入過)
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("selfLogin", account);
-    user_Account = account;
+    userAccount = account;
   }
 }
 
