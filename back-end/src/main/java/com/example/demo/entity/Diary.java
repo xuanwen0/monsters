@@ -24,6 +24,9 @@ public class Diary {
     @Column(name = "`monster_Id`", nullable = false)
     private int monsterId;
 
+    @Column(name = "`mood`", nullable = false)
+    private String mood;
+
     @Column(name = "`index`", nullable = false)
     private Integer index;
 

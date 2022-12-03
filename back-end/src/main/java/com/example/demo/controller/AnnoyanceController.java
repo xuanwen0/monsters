@@ -1,8 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.bean.AllMonsterBean;
 import com.example.demo.bean.AnnoyanceBean;
-import com.example.demo.dto.file.FileUploadServiceImpl;
+import com.example.demo.bean.PersonalMonsterBean;
+import com.example.demo.service.impl.AllMonsterServiceImpl;
 import com.example.demo.service.impl.AnnoyanceServiceImpl;
+import com.example.demo.service.impl.PersonalMonsterServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
@@ -17,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * @author linwe
@@ -26,7 +30,8 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping(value = "/annoyance")
 public class AnnoyanceController {
     private final AnnoyanceServiceImpl annoyanceService;
-    private final FileUploadServiceImpl fileUploadService;
+    private final AllMonsterServiceImpl allMonsterService;
+    private final PersonalMonsterServiceImpl personalMonsterService;
 
     private final String CONTENT_FILE = "D:/monsters/back-end/file/annoyance/content/";
     private final String MOOD_FILE = "D:/monsters/back-end/file/annoyance/mood/";
@@ -34,6 +39,8 @@ public class AnnoyanceController {
     @ResponseBody
     @PostMapping("/create")
     public ResponseEntity createAnnoyance(@ModelAttribute AnnoyanceBean annoyanceBean) {
+        int index = 0;
+        boolean isAddMonster = true;
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         result.putObject("data");
@@ -57,12 +64,35 @@ public class AnnoyanceController {
                         Files.write(moodPath, moodBytes);
                         annoyanceBean.setMood(moodPath.toString());
                     }
-                    System.out.println(annoyanceBean.toString());
+                    List<AllMonsterBean> allMonster = allMonsterService.searchAll();
+                    index = (int) (Math.random() * allMonster.size());
+                    while (allMonster.get(index).getMain() != 1) {
+                        index = (int) (Math.random() * allMonster.size());
+                    }
+                    annoyanceBean.setMonsterId(allMonster.get(index).getId());
                     annoyanceService.createAndReturnBean(annoyanceBean);
+                    PersonalMonsterBean personalMonsterBean = new PersonalMonsterBean();
+                    List<PersonalMonsterBean> personalMonsterList = personalMonsterService.findByAccount(annoyanceBean.getAccount());
+                    for (PersonalMonsterBean personalMonster : personalMonsterList) {
+                        System.out.println(personalMonster.getMonsterId() + "/" + allMonster.get(index).getId());
+                        if (personalMonster.getMonsterId().equals(allMonster.get(index).getId())) {
+                            isAddMonster = false;
+                            break;
+                        }
+                    }
+                    System.out.println(isAddMonster);
+                    if(isAddMonster){
+                        personalMonsterBean.setAccount(annoyanceBean.getAccount());
+                        personalMonsterBean.setMonsterId(allMonster.get(index).getId());
+                        personalMonsterBean.setMonsterGroup(allMonster.get(index).getGroup());
+                        personalMonsterService.createAndReturnBean(personalMonsterBean);
+                    }
                     result.put("result", true);
                     result.put("errorCode", "200");
                     result.put("message", "新增成功");
                 } catch (IOException e) {
+                    System.out.println(annoyanceBean.toString());
+                    System.out.println(e);
                     result.put("result", false);
                     result.put("errorCode", "");
                     result.put("message", "新增失敗");
@@ -80,11 +110,11 @@ public class AnnoyanceController {
 
     @ResponseBody
     @PatchMapping("/modify/{id}")
-    public ResponseEntity modifyAnnoyance(@PathVariable(name = "id") int id, AnnoyanceBean annoyanceBean){
+    public ResponseEntity modifyAnnoyance(@PathVariable(name = "id") int id, AnnoyanceBean annoyanceBean) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         annoyanceService.update(id, annoyanceBean);
-        result.put("result", true) ;
+        result.put("result", true);
         result.put("errorCode", "200");
         result.put("message", "修改成功");
         return ResponseEntity.status(HttpStatus.CREATED).body(result);

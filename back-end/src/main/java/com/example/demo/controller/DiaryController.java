@@ -1,7 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.bean.AllMonsterBean;
 import com.example.demo.bean.DiaryBean;
+import com.example.demo.bean.PersonalMonsterBean;
+import com.example.demo.service.impl.AllMonsterServiceImpl;
 import com.example.demo.service.impl.DiaryServiceImpl;
+import com.example.demo.service.impl.PersonalMonsterServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
@@ -16,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @AllArgsConstructor
 @Controller
@@ -23,12 +28,15 @@ import java.time.format.DateTimeFormatter;
 public class DiaryController {
 
     private final DiaryServiceImpl diaryService;
-
+    private final AllMonsterServiceImpl allMonsterService;
+    private final PersonalMonsterServiceImpl personalMonsterService;
     private final String CONTENT_FILE = "D:/monsters/back-end/file/diary/";
 
     @ResponseBody
     @PostMapping("/create")
     public ResponseEntity createDiary(@ModelAttribute DiaryBean diarybean) {
+        int index = 0;
+        boolean isAddMonster = true;
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         result.putObject("data");
@@ -45,6 +53,29 @@ public class DiaryController {
                         Files.write(contentPath, contentBytes);
                         diarybean.setContent(contentPath.toString());
                         System.out.println(diarybean.getContent());
+                    }
+                    List<AllMonsterBean> allMonster = allMonsterService.searchAll();
+                    index = (int) (Math.random() * allMonster.size());
+                    while (allMonster.get(index).getMain() != 1) {
+                        index = (int) (Math.random() * allMonster.size());
+                    }
+                    diarybean.setMonsterId(allMonster.get(index).getId());
+                    diaryService.createAndReturnBean(diarybean);
+                    PersonalMonsterBean personalMonsterBean = new PersonalMonsterBean();
+                    List<PersonalMonsterBean> personalMonsterList = personalMonsterService.findByAccount(diarybean.getAccount());
+                    for (PersonalMonsterBean personalMonster : personalMonsterList) {
+                        System.out.println(personalMonster.getMonsterId() + "/" + allMonster.get(index).getId());
+                        if (personalMonster.getMonsterId().equals(allMonster.get(index).getId())) {
+                            isAddMonster = false;
+                            break;
+                        }
+                    }
+                    System.out.println(isAddMonster);
+                    if(isAddMonster){
+                        personalMonsterBean.setAccount(diarybean.getAccount());
+                        personalMonsterBean.setMonsterId(allMonster.get(index).getId());
+                        personalMonsterBean.setMonsterGroup(allMonster.get(index).getGroup());
+                        personalMonsterService.createAndReturnBean(personalMonsterBean);
                     }
                     diaryService.createAndReturnBean(diarybean);
                     result.put("result", true);

@@ -7,10 +7,9 @@ import com.example.demo.service.PersonalInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonalInfoServiceImpl extends BaseServiceImplement<PersonalInfoDAO, PersonalInfo, PersonalInfoBean> implements PersonalInfoService {
@@ -18,20 +17,10 @@ public class PersonalInfoServiceImpl extends BaseServiceImplement<PersonalInfoDA
     private final PersonalInfoDAO personalInfoDAO;
     private final PasswordEncoder passwordEncoder;
 
-    public PersonalInfoServiceImpl(PersonalInfoDAO baseDAO, PersonalInfoDAO personalInfoDAO, PasswordEncoder passwordEncoder) {
-        super(baseDAO);
+    public PersonalInfoServiceImpl(PersonalInfoDAO personalInfoDAO, PasswordEncoder passwordEncoder) {
+        super(personalInfoDAO);
         this.personalInfoDAO = personalInfoDAO;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    @Override
-    public List<PersonalInfoBean> searchPersonalInfoByAccount(String account){
-        List<PersonalInfo> userList = personalInfoDAO.findByAccount(account);
-        List<PersonalInfoBean> personalInfoBeanList = new ArrayList<>();
-        for(PersonalInfo personalInfo : userList){
-            personalInfoBeanList.add(createBean(personalInfo));
-        }
-        return personalInfoBeanList;
     }
 
     @Transactional
@@ -42,6 +31,16 @@ public class PersonalInfoServiceImpl extends BaseServiceImplement<PersonalInfoDA
         personalInfoDAO.insert(personalInfo);
         bean = createBean(personalInfo);
         return bean;
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void dailyTest(String account, PersonalInfoBean personalInfoBean) {
+        PersonalInfo personalInfo = createVO(personalInfoBean);
+        Optional<PersonalInfo> personalInfoOptional = personalInfoDAO.getByPK(account);
+        personalInfo.setDailyTest(personalInfoOptional.get().getDailyTest() + 1);
+        personalInfoDAO.update(personalInfo);
+        createBean(personalInfo);
     }
     @Override
     protected PersonalInfo createVO(PersonalInfoBean bean) {
