@@ -1,10 +1,12 @@
+import 'dart:convert';
+
 import 'package:adobe_xd/page_link.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:email_auth/email_auth.dart';
 import 'package:monsters_front_end/pages/forgetPassword/reset_password.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:monsters_front_end/pages/login_selfacount.dart';
 import 'package:monsters_front_end/pages/style.dart';
 
@@ -28,47 +30,70 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
     );
   }
 
-  void sendOTP() async {
-    emailAuth.sessionName = "貘nsters";
-    var res = await emailAuth.sendOtp(recipientMail: _mailController.text);
-    if (res) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          duration: Duration(seconds: 1),
-          backgroundColor: BackgroundColorWarm,
-          content: Text(
-            "認證碼傳送成功",
-            style: TextStyle(color: Colors.white, fontSize: 30),
-          )));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          duration: Duration(seconds: 1),
-          backgroundColor: BackgroundColorWarm,
-          content: Text(
-            "認證碼傳送失敗",
-            style: TextStyle(color: Colors.white, fontSize: 30),
-          )));
-    }
+  void verifyCode(int code) {
+    print(code);
+    // if (res) {
+    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    //       duration: Duration(seconds: 1),
+    //       backgroundColor: BackgroundColorWarm,
+    //       content: Text(
+    //         "認證成功",
+    //         style: TextStyle(color: Colors.white, fontSize: 30),
+    //       )));
+    //   Navigator.pushReplacement(
+    //       context, MaterialPageRoute(builder: (context) => Reset_Password()));
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    //       duration: Duration(seconds: 1),
+    //       backgroundColor: BackgroundColorWarm,
+    //       content: Text(
+    //         "認證失敗",
+    //         style: TextStyle(color: Colors.white, fontSize: 30),
+    //       )));
+    // }
   }
 
-  void verifyOTP() {
-    var res = emailAuth.validateOtp(
-        recipientMail: _mailController.text, userOtp: _otpController.text);
-    if (res) {
+  Future sendVerifyEmail({
+    required String userEmail,
+    required int code,
+  }) async {
+    print("sending VerifyEmail");
+    String? email = userEmail; //useremail
+    const serviceId = "service_v0eahku";
+    const templateId = "template_989nvlq";
+    const userId = "x0TtUpsa7W7aHFIbl";
+    final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+    final response = await http.post(url,
+        headers: {
+          'origin': 'http://localhost',
+          'Content-Type': 'application/json'
+        },
+        body: json.encode({
+          'service_id': serviceId,
+          'template_id': templateId,
+          'user_id': userId,
+          'accessToken': "9OoipUoZgha107DzjjE3w",
+          'template_params': {
+            'user_email': email,
+            'verify_code': code,
+          }
+        }));
+
+    setState(() {});
+    if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           duration: Duration(seconds: 1),
           backgroundColor: BackgroundColorWarm,
           content: Text(
-            "認證成功",
+            "驗證碼傳送成功",
             style: TextStyle(color: Colors.white, fontSize: 30),
           )));
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Reset_Password()));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           duration: Duration(seconds: 1),
           backgroundColor: BackgroundColorWarm,
           content: Text(
-            "認證失敗",
+            "驗證碼傳送失敗",
             style: TextStyle(color: Colors.white, fontSize: 30),
           )));
     }
@@ -171,7 +196,11 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                        onPressed: () => sendOTP(),
+                        onPressed: () {
+                          int _code = 123455; //亂數
+                          sendVerifyEmail(
+                              userEmail: _mailController.text, code: _code);
+                        },
                         child: const Text(
                           '傳送認證碼',
                           style: TextStyle(
@@ -237,7 +266,7 @@ class _Forget_password_AuthState extends State<Forget_password_Auth> {
                       onPressed: () {
                         final isValidForm = _formKey.currentState!.validate();
                         if (isValidForm) {
-                          verifyOTP();
+                          verifyCode(code);
                         }
                       },
                     ),
